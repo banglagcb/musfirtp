@@ -170,7 +170,7 @@ export default function TravelAgencyApp() {
                 "বুকিং এডিট করুন",
                 <PlaceholderPage
                   title="বুকিং এডিট করুন"
-                  description="এই ফিচারটি ��ীঘ্রই আসছে!"
+                  description="এই ফিচারটি শীঘ্রই আসছে!"
                   onBack={() => closeWindow("edit-booking")}
                 />,
               );
@@ -371,7 +371,6 @@ export default function TravelAgencyApp() {
             onClose={() => closeWindow(window.id)}
             initialState={window.state}
             zIndex={window.zIndex}
-            onMinimize={() => minimizeWindow(window.id)}
             onMaximize={() => maximizeWindow(window.id)}
           >
             {window.component}
