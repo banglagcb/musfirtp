@@ -118,12 +118,6 @@ export default function TravelAgencyApp() {
     refreshData();
   };
 
-  const minimizeWindow = (id: string) => {
-    setOpenWindows((prev) =>
-      prev.map((w) => (w.id === id ? { ...w, state: "minimized" } : w)),
-    );
-  };
-
   const maximizeWindow = (id: string) => {
     setOpenWindows((prev) =>
       prev.map((w) =>
@@ -134,15 +128,6 @@ export default function TravelAgencyApp() {
               zIndex: nextZIndex,
             }
           : w,
-      ),
-    );
-    setNextZIndex((prev) => prev + 1);
-  };
-
-  const restoreWindow = (id: string) => {
-    setOpenWindows((prev) =>
-      prev.map((w) =>
-        w.id === id ? { ...w, state: "popup", zIndex: nextZIndex } : w,
       ),
     );
     setNextZIndex((prev) => prev + 1);
