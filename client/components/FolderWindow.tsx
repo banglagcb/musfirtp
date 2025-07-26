@@ -192,12 +192,12 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
               }}
               drag={windowState === "popup" && showControls && !isDragging}
               dragMomentum={false}
-              dragElastic={0.05}
+              dragElastic={0.02}
               dragConstraints={{
-                left: -window.innerWidth / 2 + 150,
-                right: window.innerWidth / 2 - 150,
-                top: -window.innerHeight / 2 + 80,
-                bottom: window.innerHeight / 2 - 80,
+                left: -window.innerWidth / 2 + 250,
+                right: window.innerWidth / 2 - 250,
+                top: -window.innerHeight / 2 + 150,
+                bottom: window.innerHeight / 2 - 150,
               }}
               onDragStart={() => setIsDragging(true)}
               onDragEnd={() => setIsDragging(false)}
