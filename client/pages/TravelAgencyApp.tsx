@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, LogOut, RefreshCw, Folder, Maximize2 } from "lucide-react";
+import { Moon, Sun, LogOut, RefreshCw, Folder, Maximize2, Eye } from "lucide-react";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
 import FolderWindow from "@/components/FolderWindow";
@@ -40,7 +40,7 @@ export default function TravelAgencyApp() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-
+    
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -116,6 +116,15 @@ export default function TravelAgencyApp() {
     );
   };
 
+  const maximizeWindow = (id: string) => {
+    setOpenWindows((prev) =>
+      prev.map((w) =>
+        w.id === id ? { ...w, state: w.state === "fullscreen" ? "popup" : "fullscreen", zIndex: nextZIndex } : w,
+      ),
+    );
+    setNextZIndex((prev) => prev + 1);
+  };
+
   const restoreWindow = (id: string) => {
     setOpenWindows((prev) =>
       prev.map((w) =>
@@ -131,7 +140,7 @@ export default function TravelAgencyApp() {
       "bookings-list": "বুকিং লিস্ট",
       "search-filter": "সার্চ ও ফিল্টার",
       reports: "রিপোর্ট",
-      "export-data": "ডেটা এক্সপোর্ট",
+      "export-data": "ডেটা এক��সপোর্ট",
       settings: "সেটিংস",
     };
 
@@ -364,6 +373,8 @@ export default function TravelAgencyApp() {
             onClose={() => closeWindow(window.id)}
             initialState={window.state}
             zIndex={window.zIndex}
+            onMinimize={() => minimizeWindow(window.id)}
+            onMaximize={() => maximizeWindow(window.id)}
           >
             {window.component}
           </FolderWindow>
@@ -381,6 +392,14 @@ export default function TravelAgencyApp() {
             className="fixed bottom-4 lg:bottom-6 left-1/2 transform -translate-x-1/2 z-50"
           >
             <div className="flex items-center space-x-2 lg:space-x-3 p-3 lg:p-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl">
+              <motion.div
+                className="text-white/70 text-sm font-medium mr-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                Minimized:
+              </motion.div>
+              
               {minimizedWindows.map((window, index) => (
                 <motion.button
                   key={window.id}
@@ -395,7 +414,7 @@ export default function TravelAgencyApp() {
                   }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => restoreWindow(window.id)}
-                  className="group relative p-3 lg:p-4 bg-gradient-to-r from-folder-primary to-folder-secondary rounded-xl text-white shadow-glow flex flex-col items-center space-y-1 transition-all duration-200"
+                  className="group relative p-3 lg:p-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl text-white shadow-lg flex flex-col items-center space-y-1 transition-all duration-200 min-w-[80px]"
                 >
                   <Folder className="w-6 h-6 lg:w-8 lg:h-8" />
                   <span className="text-xs lg:text-sm font-medium truncate max-w-20 lg:max-w-24">
@@ -404,11 +423,16 @@ export default function TravelAgencyApp() {
 
                   {/* Restore indicator */}
                   <motion.div
-                    className="absolute -top-2 -right-2 w-4 h-4 lg:w-5 lg:h-5 bg-neon-green rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute -top-2 -right-2 w-5 h-5 lg:w-6 lg:h-6 bg-green-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border-2 border-white"
                     whileHover={{ scale: 1.2 }}
                   >
-                    <Maximize2 className="w-2 h-2 lg:w-3 lg:h-3 text-white" />
+                    <Eye className="w-2 h-2 lg:w-3 lg:h-3 text-white" />
                   </motion.div>
+
+                  {/* Tooltip */}
+                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    Click to restore
+                  </div>
                 </motion.button>
               ))}
             </div>
@@ -433,7 +457,7 @@ export default function TravelAgencyApp() {
               delay: Math.random() * 5,
               ease: "easeInOut",
             }}
-            className="absolute w-3 h-3 lg:w-4 lg:h-4 bg-gradient-to-r from-folder-primary to-folder-secondary rounded-full"
+            className="absolute w-3 h-3 lg:w-4 lg:h-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
