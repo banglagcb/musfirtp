@@ -170,7 +170,7 @@ export default function TravelAgencyApp() {
                 "বুকিং এডিট করুন",
                 <PlaceholderPage
                   title="বুকিং এডিট করুন"
-                  description="এই ফিচারটি শীঘ্রই আসছে!"
+                  description="এই ফিচারটি ��ীঘ্রই আসছে!"
                   onBack={() => closeWindow("edit-booking")}
                 />,
               );
@@ -238,8 +238,7 @@ export default function TravelAgencyApp() {
     setIsDarkMode(!isDarkMode);
   };
 
-  // Get minimized windows
-  const minimizedWindows = openWindows.filter((w) => w.state === "minimized");
+  // Check for fullscreen windows
   const hasFullscreenWindow = openWindows.some((w) => w.state === "fullscreen");
 
   if (appState === "login") {
