@@ -158,12 +158,20 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(45deg, hsl(var(--folder-primary)), hsl(var(--folder-secondary)));
+    background: linear-gradient(
+      45deg,
+      hsl(var(--folder-primary)),
+      hsl(var(--folder-secondary))
+    );
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(45deg, hsl(var(--folder-secondary)), hsl(var(--folder-accent)));
+    background: linear-gradient(
+      45deg,
+      hsl(var(--folder-secondary)),
+      hsl(var(--folder-accent))
+    );
   }
 
   /* Hardware acceleration for animations */

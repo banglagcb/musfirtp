@@ -40,10 +40,10 @@ export default function TravelAgencyApp() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Initialize dark mode
@@ -54,7 +54,9 @@ export default function TravelAgencyApp() {
   const handleLoginSuccess = (loggedInUser: User) => {
     setUser(loggedInUser);
     setAppState("dashboard");
-    setBreadcrumbs([{ label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true }]);
+    setBreadcrumbs([
+      { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
+    ]);
   };
 
   const handleLogout = () => {
@@ -65,69 +67,76 @@ export default function TravelAgencyApp() {
   };
 
   const refreshData = () => {
-    setRefreshTrigger(prev => prev + 1);
+    setRefreshTrigger((prev) => prev + 1);
   };
 
-  const openWindow = (id: string, title: string, component: React.ReactNode) => {
-    const existingWindow = openWindows.find(w => w.id === id);
-    
+  const openWindow = (
+    id: string,
+    title: string,
+    component: React.ReactNode,
+  ) => {
+    const existingWindow = openWindows.find((w) => w.id === id);
+
     if (existingWindow) {
       // Bring existing window to front and restore if minimized
-      setOpenWindows(prev => prev.map(w => 
-        w.id === id 
-          ? { ...w, isOpen: true, state: "popup", zIndex: nextZIndex }
-          : w
-      ));
-      setNextZIndex(prev => prev + 1);
+      setOpenWindows((prev) =>
+        prev.map((w) =>
+          w.id === id
+            ? { ...w, isOpen: true, state: "popup", zIndex: nextZIndex }
+            : w,
+        ),
+      );
+      setNextZIndex((prev) => prev + 1);
     } else {
       // Create new window
-      setOpenWindows(prev => [...prev, {
-        id,
-        title,
-        component,
-        isOpen: true,
-        state: "popup",
-        zIndex: nextZIndex
-      }]);
-      setNextZIndex(prev => prev + 1);
+      setOpenWindows((prev) => [
+        ...prev,
+        {
+          id,
+          title,
+          component,
+          isOpen: true,
+          state: "popup",
+          zIndex: nextZIndex,
+        },
+      ]);
+      setNextZIndex((prev) => prev + 1);
     }
   };
 
   const closeWindow = (id: string) => {
-    setOpenWindows(prev => prev.filter(w => w.id !== id));
+    setOpenWindows((prev) => prev.filter((w) => w.id !== id));
     // Refresh dashboard data when closing windows
     refreshData();
   };
 
   const minimizeWindow = (id: string) => {
-    setOpenWindows(prev => prev.map(w => 
-      w.id === id 
-        ? { ...w, state: "minimized" }
-        : w
-    ));
+    setOpenWindows((prev) =>
+      prev.map((w) => (w.id === id ? { ...w, state: "minimized" } : w)),
+    );
   };
 
   const restoreWindow = (id: string) => {
-    setOpenWindows(prev => prev.map(w => 
-      w.id === id 
-        ? { ...w, state: "popup", zIndex: nextZIndex }
-        : w
-    ));
-    setNextZIndex(prev => prev + 1);
+    setOpenWindows((prev) =>
+      prev.map((w) =>
+        w.id === id ? { ...w, state: "popup", zIndex: nextZIndex } : w,
+      ),
+    );
+    setNextZIndex((prev) => prev + 1);
   };
 
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
       "new-booking": "নতুন বুকিং",
-      "bookings-list": "বুকিং লিস্ট", 
+      "bookings-list": "বুকিং লিস্ট",
       "search-filter": "সার্চ ও ফিল্টার",
-      "reports": "রিপোর্ট",
+      reports: "রিপোর্ট",
       "export-data": "ডেটা এক্সপোর্ট",
-      "settings": "সেটিংস"
+      settings: "সেটিংস",
     };
 
     const title = cardTitles[cardId] || cardId;
-    
+
     let component;
     switch (cardId) {
       case "new-booking":
@@ -148,12 +157,14 @@ export default function TravelAgencyApp() {
             onEdit={(booking: Booking) => {
               // Open edit form (could be implemented similarly to new booking)
               closeWindow(cardId);
-              openWindow("edit-booking", "বুকিং এডিট করুন", 
-                <PlaceholderPage 
-                  title="বুকিং এডিট করুন" 
-                  description="এই ফিচারটি শীঘ্রই আসছে!" 
-                  onBack={() => closeWindow("edit-booking")} 
-                />
+              openWindow(
+                "edit-booking",
+                "বুকিং এডিট করুন",
+                <PlaceholderPage
+                  title="বুকিং এডিট করুন"
+                  description="এই ফিচারটি শীঘ্রই আসছে!"
+                  onBack={() => closeWindow("edit-booking")}
+                />,
               );
             }}
           />
@@ -174,40 +185,42 @@ export default function TravelAgencyApp() {
           <ReportsSection
             onClose={() => closeWindow(cardId)}
             onExportData={() => {
-              openWindow("export-data", "ডেটা এক্সপোর্ট", 
-                <DataExport onClose={() => closeWindow("export-data")} />
+              openWindow(
+                "export-data",
+                "ডেটা এক্সপোর্ট",
+                <DataExport onClose={() => closeWindow("export-data")} />,
               );
             }}
           />
         );
         break;
       case "export-data":
-        component = (
-          <DataExport onClose={() => closeWindow(cardId)} />
-        );
+        component = <DataExport onClose={() => closeWindow(cardId)} />;
         break;
       default:
         component = (
-          <PlaceholderPage 
-            title={title} 
-            description="এই সেকশনটি শীঘ্রই আসছে!" 
-            onBack={() => closeWindow(cardId)} 
+          <PlaceholderPage
+            title={title}
+            description="এই সেকশনটি শীঘ্রই আসছে!"
+            onBack={() => closeWindow(cardId)}
           />
         );
     }
 
     openWindow(cardId, title, component);
-    
+
     // Update breadcrumbs
     setBreadcrumbs([
       { label: "ড্যাশবোর্ড", path: "/dashboard" },
-      { label: title, path: `/${cardId}`, isActive: true }
+      { label: title, path: `/${cardId}`, isActive: true },
     ]);
   };
 
   const handleBreadcrumbClick = (path: string) => {
     if (path === "/" || path === "/dashboard") {
-      setBreadcrumbs([{ label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true }]);
+      setBreadcrumbs([
+        { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
+      ]);
       setOpenWindows([]);
       refreshData();
     }
@@ -218,8 +231,8 @@ export default function TravelAgencyApp() {
   };
 
   // Get minimized windows
-  const minimizedWindows = openWindows.filter(w => w.state === "minimized");
-  const hasFullscreenWindow = openWindows.some(w => w.state === "fullscreen");
+  const minimizedWindows = openWindows.filter((w) => w.state === "minimized");
+  const hasFullscreenWindow = openWindows.some((w) => w.state === "fullscreen");
 
   if (appState === "login") {
     return (
@@ -233,18 +246,18 @@ export default function TravelAgencyApp() {
                 x: [0, Math.random() * 200 - 100],
                 y: [0, Math.random() * 200 - 100],
                 opacity: [0, 0.15, 0],
-                scale: [0, 1.5, 0]
+                scale: [0, 1.5, 0],
               }}
               transition={{
                 duration: 4 + Math.random() * 3,
                 repeat: Infinity,
                 delay: Math.random() * 3,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
               className="absolute w-2 h-2 lg:w-3 lg:h-3 bg-white rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
+                top: `${Math.random() * 100}%`,
               }}
             />
           ))}
@@ -260,7 +273,11 @@ export default function TravelAgencyApp() {
           onClick={toggleDarkMode}
           className="absolute top-4 lg:top-6 right-4 lg:right-6 p-3 lg:p-4 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors"
         >
-          {isDarkMode ? <Sun className="w-5 h-5 lg:w-6 lg:h-6" /> : <Moon className="w-5 h-5 lg:w-6 lg:h-6" />}
+          {isDarkMode ? (
+            <Sun className="w-5 h-5 lg:w-6 lg:h-6" />
+          ) : (
+            <Moon className="w-5 h-5 lg:w-6 lg:h-6" />
+          )}
         </motion.button>
 
         {/* Login Form */}
@@ -290,7 +307,11 @@ export default function TravelAgencyApp() {
           onClick={toggleDarkMode}
           className="p-2 lg:p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors shadow-lg"
         >
-          {isDarkMode ? <Sun className="w-5 h-5 lg:w-6 lg:h-6" /> : <Moon className="w-5 h-5 lg:w-6 lg:h-6" />}
+          {isDarkMode ? (
+            <Sun className="w-5 h-5 lg:w-6 lg:h-6" />
+          ) : (
+            <Moon className="w-5 h-5 lg:w-6 lg:h-6" />
+          )}
         </motion.button>
 
         {/* Logout Button */}
@@ -311,8 +332,8 @@ export default function TravelAgencyApp() {
           animate={{ opacity: 1, y: 0 }}
           className="fixed top-4 lg:top-6 left-4 lg:left-6 z-40"
         >
-          <Breadcrumbs 
-            items={breadcrumbs} 
+          <Breadcrumbs
+            items={breadcrumbs}
             onItemClick={handleBreadcrumbClick}
           />
         </motion.div>
@@ -325,10 +346,12 @@ export default function TravelAgencyApp() {
         animate={{ opacity: 1 }}
         className={cn(
           "transition-all duration-500 will-change-transform",
-          hasFullscreenWindow ? "blur-sm scale-95" : ""
+          hasFullscreenWindow ? "blur-sm scale-95" : "",
         )}
       >
-        {user && <TravelDashboard user={user} onCardClick={handleDashboardCardClick} />}
+        {user && (
+          <TravelDashboard user={user} onCardClick={handleDashboardCardClick} />
+        )}
       </motion.div>
 
       {/* Enhanced Folder Windows */}
@@ -365,10 +388,10 @@ export default function TravelAgencyApp() {
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0, opacity: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ 
-                    scale: 1.15, 
+                  whileHover={{
+                    scale: 1.15,
                     y: -8,
-                    boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)"
+                    boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
                   }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => restoreWindow(window.id)}
@@ -378,7 +401,7 @@ export default function TravelAgencyApp() {
                   <span className="text-xs lg:text-sm font-medium truncate max-w-20 lg:max-w-24">
                     {window.title}
                   </span>
-                  
+
                   {/* Restore indicator */}
                   <motion.div
                     className="absolute -top-2 -right-2 w-4 h-4 lg:w-5 lg:h-5 bg-neon-green rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
@@ -402,18 +425,18 @@ export default function TravelAgencyApp() {
               x: [0, Math.random() * 300 - 150],
               y: [0, Math.random() * 300 - 150],
               opacity: [0, 0.08, 0],
-              scale: [0, 1.2, 0]
+              scale: [0, 1.2, 0],
             }}
             transition={{
               duration: 6 + Math.random() * 4,
               repeat: Infinity,
               delay: Math.random() * 5,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
             className="absolute w-3 h-3 lg:w-4 lg:h-4 bg-gradient-to-r from-folder-primary to-folder-secondary rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`
+              top: `${Math.random() * 100}%`,
             }}
           />
         ))}
@@ -427,7 +450,8 @@ export default function TravelAgencyApp() {
           className="fixed bottom-4 lg:bottom-6 left-4 lg:left-6 bg-white/10 backdrop-blur-md rounded-lg px-3 lg:px-4 py-2 lg:py-3 border border-white/20 z-40 shadow-lg"
         >
           <p className="text-white/70 text-sm lg:text-base">
-            <span className="text-white font-medium">{user.name}</span> - {user.role === 'owner' ? 'মালিক' : 'ম্যানেজার'}
+            <span className="text-white font-medium">{user.name}</span> -{" "}
+            {user.role === "owner" ? "মালিক" : "ম্যানেজার"}
           </p>
         </motion.div>
       )}
@@ -439,8 +463,8 @@ export default function TravelAgencyApp() {
           animate={{ opacity: 1, y: 0 }}
           className="fixed bottom-20 left-4 right-4 z-40"
         >
-          <Breadcrumbs 
-            items={breadcrumbs} 
+          <Breadcrumbs
+            items={breadcrumbs}
             onItemClick={handleBreadcrumbClick}
             className="text-sm"
           />
