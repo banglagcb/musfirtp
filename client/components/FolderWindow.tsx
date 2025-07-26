@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Minus, Square, Maximize2, Minimize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode, useState, useEffect, forwardRef } from "react";
 
 export type WindowState = "popup" | "fullscreen" | "minimized";
 
