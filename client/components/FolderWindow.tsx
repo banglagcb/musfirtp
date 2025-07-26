@@ -28,7 +28,7 @@ export default function FolderWindow({
   showControls = true,
   zIndex = 50,
   onMinimize,
-  onMaximize
+  onMaximize,
 }: FolderWindowProps) {
   const [windowState, setWindowState] = useState<WindowState>(initialState);
   const [isDragging, setIsDragging] = useState(false);
@@ -60,23 +60,23 @@ export default function FolderWindow({
   const backdropVariants = {
     hidden: {
       opacity: 0,
-      backdropFilter: "blur(0px)"
+      backdropFilter: "blur(0px)",
     },
     visible: {
       opacity: 1,
       backdropFilter: "blur(8px)",
       transition: {
         duration: 0.3,
-        ease: "easeOut"
-      }
+        ease: "easeOut",
+      },
     },
     exit: {
       opacity: 0,
       backdropFilter: "blur(0px)",
       transition: {
-        duration: 0.2
-      }
-    }
+        duration: 0.2,
+      },
+    },
   };
 
   // Main container variants
@@ -85,7 +85,7 @@ export default function FolderWindow({
       opacity: 0,
       scale: 0.7,
       y: 50,
-      filter: "blur(10px)"
+      filter: "blur(10px)",
     },
     visible: {
       opacity: 1,
@@ -96,8 +96,8 @@ export default function FolderWindow({
         type: "spring",
         stiffness: 300,
         damping: 25,
-        mass: 0.8
-      }
+        mass: 0.8,
+      },
     },
     exit: {
       opacity: 0,
@@ -106,23 +106,23 @@ export default function FolderWindow({
       filter: "blur(8px)",
       transition: {
         duration: 0.25,
-        ease: "easeIn"
-      }
-    }
+        ease: "easeIn",
+      },
+    },
   };
 
   // Content variants
   const contentVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         delay: 0.1,
         duration: 0.3,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   // Dynamic styles based on window state
@@ -136,7 +136,7 @@ export default function FolderWindow({
           width: "100vw",
           height: "100vh",
           borderRadius: "0px",
-          transform: "none"
+          transform: "none",
         };
       case "minimized":
         return {
@@ -148,7 +148,7 @@ export default function FolderWindow({
           borderRadius: "20px",
           transform: "translate(-50%, -50%) scale(0.1)",
           opacity: 0.3,
-          pointerEvents: "none" as const
+          pointerEvents: "none" as const,
         };
       default: // popup
         return {
@@ -158,7 +158,7 @@ export default function FolderWindow({
           width: "min(90vw, 900px)",
           height: "min(85vh, 700px)",
           borderRadius: "20px",
-          transform: "translate(-50%, -50%)"
+          transform: "translate(-50%, -50%)",
         };
     }
   };
@@ -193,34 +193,34 @@ export default function FolderWindow({
               "backdrop-blur-xl border border-white/30 dark:border-gray-700/50",
               "shadow-2xl shadow-black/20",
               "overflow-hidden",
-              className
+              className,
             )}
             style={{
               ...getWindowStyles(),
               zIndex,
               minHeight: windowState === "popup" ? "400px" : "100%",
-              maxHeight: windowState === "popup" ? "90vh" : "100%"
+              maxHeight: windowState === "popup" ? "90vh" : "100%",
             }}
             drag={windowState === "popup" && showControls && !isDragging}
             dragMomentum={false}
             dragElastic={0.1}
             dragConstraints={{
-              left: -window.innerWidth/2 + 200,
-              right: window.innerWidth/2 - 200,
-              top: -window.innerHeight/2 + 100,
-              bottom: window.innerHeight/2 - 100
+              left: -window.innerWidth / 2 + 200,
+              right: window.innerWidth / 2 - 200,
+              top: -window.innerHeight / 2 + 100,
+              bottom: window.innerHeight / 2 - 100,
             }}
             onDragStart={() => setIsDragging(true)}
             onDragEnd={() => setIsDragging(false)}
-            whileDrag={{ 
+            whileDrag={{
               scale: 1.02,
               boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.6)",
-              zIndex: zIndex + 10
+              zIndex: zIndex + 10,
             }}
             transition={{
               type: "spring",
               stiffness: windowState === "fullscreen" ? 200 : 300,
-              damping: windowState === "fullscreen" ? 20 : 25
+              damping: windowState === "fullscreen" ? 20 : 25,
             }}
           >
             {/* Window Header */}
@@ -232,15 +232,16 @@ export default function FolderWindow({
                   "border-b border-white/20 dark:border-gray-700/50",
                   "bg-gradient-to-r from-purple-500/10 to-blue-500/10",
                   "backdrop-blur-sm",
-                  isDragging && "cursor-grabbing"
+                  isDragging && "cursor-grabbing",
                 )}
-                style={{ 
-                  cursor: windowState === "popup" && !isDragging ? "grab" : "default"
+                style={{
+                  cursor:
+                    windowState === "popup" && !isDragging ? "grab" : "default",
                 }}
               >
                 {/* Title Section */}
                 <div className="flex items-center space-x-3">
-                  <motion.div 
+                  <motion.div
                     className="w-3 h-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500"
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
@@ -259,19 +260,23 @@ export default function FolderWindow({
                 <div className="flex items-center space-x-2 lg:space-x-3">
                   {/* Minimize Button */}
                   <motion.button
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.2,
                       backgroundColor: "rgba(255, 193, 7, 0.8)",
-                      boxShadow: "0 4px 15px rgba(255, 193, 7, 0.4)"
+                      boxShadow: "0 4px 15px rgba(255, 193, 7, 0.4)",
                     }}
                     whileTap={{ scale: 0.9 }}
-                    onClick={windowState === "minimized" ? handleRestore : handleMinimize}
+                    onClick={
+                      windowState === "minimized"
+                        ? handleRestore
+                        : handleMinimize
+                    }
                     className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-yellow-500/70 hover:bg-yellow-500 flex items-center justify-center transition-all duration-200 shadow-lg border border-yellow-400/50"
                     title={windowState === "minimized" ? "Restore" : "Minimize"}
                   >
                     <motion.div
-                      animate={{ 
-                        rotate: windowState === "minimized" ? 180 : 0 
+                      animate={{
+                        rotate: windowState === "minimized" ? 180 : 0,
                       }}
                       transition={{ duration: 0.3 }}
                     >
@@ -281,19 +286,21 @@ export default function FolderWindow({
 
                   {/* Maximize/Restore Button */}
                   <motion.button
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.2,
                       backgroundColor: "rgba(40, 167, 69, 0.8)",
-                      boxShadow: "0 4px 15px rgba(40, 167, 69, 0.4)"
+                      boxShadow: "0 4px 15px rgba(40, 167, 69, 0.4)",
                     }}
                     whileTap={{ scale: 0.9 }}
                     onClick={handleMaximize}
                     className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-green-500/70 hover:bg-green-500 flex items-center justify-center transition-all duration-200 shadow-lg border border-green-400/50"
-                    title={windowState === "fullscreen" ? "Restore" : "Maximize"}
+                    title={
+                      windowState === "fullscreen" ? "Restore" : "Maximize"
+                    }
                   >
                     <motion.div
-                      animate={{ 
-                        rotate: windowState === "fullscreen" ? 180 : 0 
+                      animate={{
+                        rotate: windowState === "fullscreen" ? 180 : 0,
                       }}
                       transition={{ duration: 0.3 }}
                     >
@@ -307,10 +314,10 @@ export default function FolderWindow({
 
                   {/* Close Button */}
                   <motion.button
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.2,
                       backgroundColor: "rgba(220, 53, 69, 0.8)",
-                      boxShadow: "0 4px 15px rgba(220, 53, 69, 0.4)"
+                      boxShadow: "0 4px 15px rgba(220, 53, 69, 0.4)",
                     }}
                     whileTap={{ scale: 0.9 }}
                     onClick={onClose}
@@ -329,24 +336,22 @@ export default function FolderWindow({
             )}
 
             {/* Window Content */}
-            <motion.div 
+            <motion.div
               variants={contentVariants}
               className="flex-1 overflow-auto"
               style={{
                 height: showControls ? "calc(100% - 70px)" : "100%",
-                scrollBehavior: "smooth"
+                scrollBehavior: "smooth",
               }}
             >
-              <div className="min-h-full w-full">
-                {children}
-              </div>
+              <div className="min-h-full w-full">{children}</div>
             </motion.div>
 
             {/* Window State Indicator */}
             <motion.div
               className="absolute top-2 right-2 text-xs px-2 py-1 bg-black/20 text-white rounded-full opacity-0"
-              animate={{ 
-                opacity: isDragging ? 1 : 0 
+              animate={{
+                opacity: isDragging ? 1 : 0,
               }}
             >
               {windowState}
@@ -361,12 +366,12 @@ export default function FolderWindow({
             <motion.div
               className="absolute inset-0 rounded-inherit bg-gradient-to-r from-purple-500/5 via-transparent to-blue-500/5 opacity-0 pointer-events-none"
               animate={{
-                opacity: windowState === "popup" ? [0, 0.3, 0] : 0
+                opacity: windowState === "popup" ? [0, 0.3, 0] : 0,
               }}
               transition={{
                 duration: 4,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
           </motion.div>

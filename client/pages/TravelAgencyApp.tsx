@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, LogOut, RefreshCw, Folder, Maximize2, Eye } from "lucide-react";
+import {
+  Moon,
+  Sun,
+  LogOut,
+  RefreshCw,
+  Folder,
+  Maximize2,
+  Eye,
+} from "lucide-react";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
 import FolderWindow from "@/components/FolderWindow";
@@ -40,7 +48,7 @@ export default function TravelAgencyApp() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -119,7 +127,13 @@ export default function TravelAgencyApp() {
   const maximizeWindow = (id: string) => {
     setOpenWindows((prev) =>
       prev.map((w) =>
-        w.id === id ? { ...w, state: w.state === "fullscreen" ? "popup" : "fullscreen", zIndex: nextZIndex } : w,
+        w.id === id
+          ? {
+              ...w,
+              state: w.state === "fullscreen" ? "popup" : "fullscreen",
+              zIndex: nextZIndex,
+            }
+          : w,
       ),
     );
     setNextZIndex((prev) => prev + 1);
@@ -399,7 +413,7 @@ export default function TravelAgencyApp() {
               >
                 Minimized:
               </motion.div>
-              
+
               {minimizedWindows.map((window, index) => (
                 <motion.button
                   key={window.id}
