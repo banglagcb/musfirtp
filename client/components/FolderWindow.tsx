@@ -118,7 +118,7 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       },
     };
 
-    // Dynamic styles with smooth transitions
+    // Dynamic styles with smooth transitions and safe positioning
     const getWindowStyles = () => {
       const baseStyles = {
         position: "fixed" as const,
@@ -141,10 +141,12 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
             ...baseStyles,
             top: "50%",
             left: "50%",
-            width: "min(95vw, 1000px)",
-            height: "min(90vh, 800px)",
+            width: "min(90vw, 900px)",
+            height: "min(85vh, 700px)",
             borderRadius: "24px",
             transform: "translate(-50%, -50%)",
+            maxWidth: "calc(100vw - 40px)",
+            maxHeight: "calc(100vh - 40px)",
           };
       }
     };
