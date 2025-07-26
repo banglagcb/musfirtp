@@ -18,7 +18,7 @@ interface FolderWindowProps {
   onMaximize?: () => void;
 }
 
-export default function FolderWindow({
+const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(({
   children,
   title,
   isOpen,
@@ -29,7 +29,7 @@ export default function FolderWindow({
   zIndex = 50,
   onMinimize,
   onMaximize,
-}: FolderWindowProps) {
+}, ref) => {
   const [windowState, setWindowState] = useState<WindowState>(initialState);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -184,6 +184,7 @@ export default function FolderWindow({
 
           {/* Main Window */}
           <motion.div
+            ref={ref}
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -379,4 +380,8 @@ export default function FolderWindow({
       )}
     </AnimatePresence>
   );
-}
+});
+
+FolderWindow.displayName = "FolderWindow";
+
+export default FolderWindow;
