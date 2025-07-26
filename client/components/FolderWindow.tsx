@@ -34,10 +34,29 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
   ) => {
     const [windowState, setWindowState] = useState<WindowState>(initialState);
     const [isDragging, setIsDragging] = useState(false);
+    const [viewportSize, setViewportSize] = useState({
+      width: typeof window !== 'undefined' ? window.innerWidth : 1024,
+      height: typeof window !== 'undefined' ? window.innerHeight : 768
+    });
 
     useEffect(() => {
       setWindowState(initialState);
     }, [initialState]);
+
+    // Monitor viewport changes
+    useEffect(() => {
+      const handleResize = () => {
+        setViewportSize({
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
+      };
+
+      if (typeof window !== 'undefined') {
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }
+    }, []);
 
     const handleMaximize = () => {
       const newState = windowState === "fullscreen" ? "popup" : "fullscreen";
