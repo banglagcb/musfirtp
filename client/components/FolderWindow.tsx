@@ -156,16 +156,19 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
             transform: "none",
           };
         default: // popup
+          const safeWidth = Math.min(900, viewportSize.width * 0.85);
+          const safeHeight = Math.min(700, viewportSize.height * 0.8);
+
           return {
             ...baseStyles,
             top: "50%",
             left: "50%",
-            width: "min(90vw, 900px)",
-            height: "min(85vh, 700px)",
+            width: `${safeWidth}px`,
+            height: `${safeHeight}px`,
             borderRadius: "24px",
             transform: "translate(-50%, -50%)",
-            maxWidth: "calc(100vw - 40px)",
-            maxHeight: "calc(100vh - 40px)",
+            maxWidth: `${viewportSize.width - 60}px`,
+            maxHeight: `${viewportSize.height - 60}px`,
           };
       }
     };
