@@ -204,6 +204,8 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
                 "backdrop-blur-2xl border border-white/40 dark:border-gray-700/60",
                 "shadow-2xl shadow-black/25",
                 "overflow-hidden",
+                // Ensure window stays within viewport
+                "max-w-[calc(100vw-60px)] max-h-[calc(100vh-60px)]",
                 className,
               )}
               style={{
