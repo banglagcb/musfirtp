@@ -25,12 +25,13 @@ const App = () => (
   </QueryClientProvider>
 );
 
-// Prevent duplicate root creation
+// Create root only once
 const container = document.getElementById("root")!;
-if (!container._reactRootContainer) {
-  const root = createRoot(container);
-  container._reactRootContainer = root;
-  root.render(<App />);
-} else {
-  container._reactRootContainer.render(<App />);
+let root = (globalThis as any).__reactRoot;
+
+if (!root) {
+  root = createRoot(container);
+  (globalThis as any).__reactRoot = root;
 }
+
+root.render(<App />);
