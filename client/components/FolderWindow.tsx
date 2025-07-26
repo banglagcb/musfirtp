@@ -214,10 +214,10 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
               dragMomentum={false}
               dragElastic={0.02}
               dragConstraints={{
-                left: -window.innerWidth / 2 + 250,
-                right: window.innerWidth / 2 - 250,
-                top: -window.innerHeight / 2 + 150,
-                bottom: window.innerHeight / 2 - 150,
+                left: -(viewportSize.width / 2) + Math.min(300, viewportSize.width * 0.3),
+                right: (viewportSize.width / 2) - Math.min(300, viewportSize.width * 0.3),
+                top: -(viewportSize.height / 2) + Math.min(200, viewportSize.height * 0.25),
+                bottom: (viewportSize.height / 2) - Math.min(200, viewportSize.height * 0.25),
               }}
               onDragStart={() => setIsDragging(true)}
               onDragEnd={() => setIsDragging(false)}
