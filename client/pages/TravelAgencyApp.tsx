@@ -136,7 +136,7 @@ export default function TravelAgencyApp() {
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
       "new-booking": "নতুন বুকিং",
-      "bookings-list": "বুকিং লিস্ট",
+      "bookings-list": "��ুকিং লিস্ট",
       "search-filter": "সার্চ ও ফিল্টার",
       reports: "রিপোর্ট",
       "export-data": "ডেটা এক��সপোর্ট",
@@ -378,64 +378,7 @@ export default function TravelAgencyApp() {
         ))}
       </AnimatePresence>
 
-      {/* Enhanced Minimized Windows Dock */}
-      <AnimatePresence>
-        {minimizedWindows.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed bottom-4 lg:bottom-6 left-1/2 transform -translate-x-1/2 z-50"
-          >
-            <div className="flex items-center space-x-2 lg:space-x-3 p-3 lg:p-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl">
-              <motion.div
-                className="text-white/70 text-sm font-medium mr-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                Minimized:
-              </motion.div>
 
-              {minimizedWindows.map((window, index) => (
-                <motion.button
-                  key={window.id}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{
-                    scale: 1.15,
-                    y: -8,
-                    boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => restoreWindow(window.id)}
-                  className="group relative p-3 lg:p-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl text-white shadow-lg flex flex-col items-center space-y-1 transition-all duration-200 min-w-[80px]"
-                >
-                  <Folder className="w-6 h-6 lg:w-8 lg:h-8" />
-                  <span className="text-xs lg:text-sm font-medium truncate max-w-20 lg:max-w-24">
-                    {window.title}
-                  </span>
-
-                  {/* Restore indicator */}
-                  <motion.div
-                    className="absolute -top-2 -right-2 w-5 h-5 lg:w-6 lg:h-6 bg-green-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border-2 border-white"
-                    whileHover={{ scale: 1.2 }}
-                  >
-                    <Eye className="w-2 h-2 lg:w-3 lg:h-3 text-white" />
-                  </motion.div>
-
-                  {/* Tooltip */}
-                  <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                    Click to restore
-                  </div>
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Enhanced Loading Animation Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
