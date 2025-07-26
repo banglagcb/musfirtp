@@ -5,9 +5,6 @@ import {
   Sun,
   LogOut,
   RefreshCw,
-  Folder,
-  Maximize2,
-  Eye,
 } from "lucide-react";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
@@ -135,8 +132,8 @@ export default function TravelAgencyApp() {
 
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
-      "new-booking": "নতুন বুকিং",
-      "bookings-list": "��ুকিং লিস্ট",
+      "new-booking": "নতুন ব��কিং",
+      "bookings-list": "বুকিং লিস্ট",
       "search-filter": "সার্চ ও ফিল্টার",
       reports: "রিপোর্ট",
       "export-data": "ডেটা এক��সপোর্ট",
@@ -219,7 +216,7 @@ export default function TravelAgencyApp() {
 
     // Update breadcrumbs
     setBreadcrumbs([
-      { label: "ড্যাশবোর্ড", path: "/dashboard" },
+      { label: "ড্যাশ���োর্ড", path: "/dashboard" },
       { label: title, path: `/${cardId}`, isActive: true },
     ]);
   };
