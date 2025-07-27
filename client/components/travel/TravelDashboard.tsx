@@ -550,7 +550,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-green to-neon-blue rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <PlusCircle className="w-5 h-5" />
-            <span>নতুন বুকিং</span>
+            <span>{t('newBooking')}</span>
           </motion.button>
 
           <motion.button
