@@ -87,7 +87,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "bulk-purchase",
     title: "বাল্ক টিকেট ক্রয়",
-    description: "অগ্রিম টিকেট ক্রয় করুন",
+    description: "অগ���রিম টিকেট ক্রয় করুন",
     icon: ShoppingCart,
     color: "from-emerald-500 to-teal-500",
     gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
@@ -228,7 +228,11 @@ export default function TravelDashboard({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+    <div className={cn(
+      "min-h-screen p-6 transition-colors duration-300",
+      "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 dark:from-slate-900 dark:via-purple-900 dark:to-slate-900",
+      "light:from-blue-50 light:via-indigo-50 light:to-purple-50"
+    )}>
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -238,10 +242,18 @@ export default function TravelDashboard({
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">ড্যাশবোর্ড</h1>
-            <p className="text-white/70">
-              স্বাগতম, {user.name} -{" "}
-              {user.role === "owner" ? "মালিক" : "ম্যানেজার"}
+            <h1 className={cn(
+              "text-4xl font-bold mb-2 transition-colors",
+              "text-white dark:text-white light:text-gray-800"
+            )}>
+              {t('dashboard')}
+            </h1>
+            <p className={cn(
+              "transition-colors",
+              "text-white/70 dark:text-white/70 light:text-gray-600"
+            )}>
+              {t('welcome')}, {user.name} -{" "}
+              {user.role === "owner" ? t('owner') : t('manager')}
             </p>
           </div>
           <motion.div
@@ -288,7 +300,7 @@ export default function TravelDashboard({
         <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-white/70 text-sm">মোট আয়</p>
+              <p className="text-white/70 text-sm">মোট আয���</p>
               <p className="text-xl font-bold text-white">
                 {formatCurrency(stats.totalRevenue)}
               </p>
