@@ -118,6 +118,23 @@ export default function NewBookingForm({
     setIsSubmitting(true);
 
     try {
+      // Check if we have inventory for this route first
+      const availableInventory =
+        ticketInventoryService.getAvailableTicketsForBooking("owner"); // Use 'owner' to see all
+      const matchingInventory = availableInventory.find(
+        (inv) =>
+          inv.route === formData.route &&
+          inv.airline === formData.airline &&
+          inv.availableTickets > 0,
+      );
+
+      // Prevent booking if no inventory available
+      if (!matchingInventory) {
+        alert(`${formData.route} রুটের ${formData.airline} এয়ারলাইনের টিকেট স্টকে ন���ই! প্রথমে টিকেট ক্রয় করুন।`);
+        setIsSubmitting(false);
+        return;
+      }
+
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -128,20 +145,8 @@ export default function NewBookingForm({
             ? Number(formData.paidAmount)
             : 0;
 
-      // Check if we have inventory for this route and deduct ticket
-      const availableInventory =
-        ticketInventoryService.getAvailableTicketsForBooking("owner"); // Use 'owner' to see all
-      const matchingInventory = availableInventory.find(
-        (inv) =>
-          inv.route === formData.route &&
-          inv.airline === formData.airline &&
-          inv.availableTickets > 0,
-      );
-
-      // Deduct from inventory if available
-      if (matchingInventory) {
-        ticketInventoryService.sellTickets(matchingInventory.id, 1);
-      }
+      // Deduct from inventory
+      ticketInventoryService.sellTickets(matchingInventory.id, 1);
 
       dataService.addBooking({
         customerName: formData.customerName,
@@ -429,7 +434,7 @@ export default function NewBookingForm({
                           : "border-white/20 focus:ring-folder-primary/50",
                       )}
                     >
-                      <option value="">এয়ারলাইন ন��র্বাচন করুন</option>
+                      <option value="">এয়ারলাইন �����র্বাচন করুন</option>
                       {AIRLINES.map((airline) => (
                         <option
                           key={airline}
