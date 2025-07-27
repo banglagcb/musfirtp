@@ -54,7 +54,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     }
 
     if (!formData.mobile.trim()) {
-      newErrors.mobile = "মোবাইল নম্বর আবশ্যিক";
+      newErrors.mobile = "মোবাইল নম���বর আবশ্যিক";
     } else if (!/^01[3-9]\d{8}$/.test(formData.mobile)) {
       newErrors.mobile = "সঠিক মোবাইল নম্বর লিখুন";
     }
@@ -113,7 +113,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
 
     // Prevent submission if in view-only mode
     if (isViewOnly) {
-      alert("বিক্রিত টিকেট পরিবর্তন করা যাবে না। কেবল ���েখা যায়।");
+      alert("বিক্রিত টিকেট পরিবর্তন করা যাবে না। কেবল দেখা যায়।");
       return;
     }
 
@@ -198,7 +198,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
           </div>
           <div>
             <h1 className="text-2xl font-bold text-white">
-              {isViewOnly ? "বুকিং দেখুন" : "বুকিং এডিট করুন"}
+              {isViewOnly ? "বুকিং দেখুন" : "ব���কিং এডিট করুন"}
             </h1>
             <p className="text-white/70">
               বুকিং আইডি: {booking.id}
@@ -352,10 +352,12 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                   type="date"
                   value={formData.flightDate}
                   onChange={(e) => handleInputChange('flightDate', e.target.value)}
+                  disabled={isViewOnly}
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white/10 border rounded-xl text-white",
                     "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
-                    errors.flightDate ? "border-red-400" : "border-white/20"
+                    errors.flightDate ? "border-red-400" : "border-white/20",
+                    isViewOnly && "opacity-50 cursor-not-allowed"
                   )}
                 />
               </div>
@@ -461,7 +463,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
             {/* Sale Price */}
             <div>
               <label className="block text-sm font-medium text-white/70 mb-2">
-                বিক্রয়মূল্য (টাকা) *
+                বিক্রয়মূল্�� (টাকা) *
               </label>
               <input
                 type="number"
@@ -547,7 +549,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
             onChange={(e) => handleInputChange('notes', e.target.value)}
             rows={3}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all resize-none"
-            placeholder="অতিরিক্ত তথ্য বা মন্তব্য..."
+            placeholder="অতিরিক্ত তথ্য বা মন্���ব্য..."
           />
         </motion.div>
 
