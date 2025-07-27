@@ -158,18 +158,13 @@ export default function Modal({
             >
               {/* Header */}
               {showControls && (
-                <motion.div 
+                <div
                   className={cn(
                     "flex items-center justify-between p-4 border-b transition-all duration-200",
-                    isScrolled 
-                      ? "border-gray-300 dark:border-gray-600 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-sm" 
+                    isScrolled
+                      ? "border-gray-300 dark:border-gray-600 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-sm"
                       : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
                   )}
-                  animate={{
-                    backgroundColor: isScrolled 
-                      ? "rgba(255, 255, 255, 0.95)" 
-                      : "rgba(249, 250, 251, 1)"
-                  }}
                 >
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white truncate pr-4">
                     {title}
@@ -202,7 +197,7 @@ export default function Modal({
                       <X className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                     </motion.button>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {/* Content */}
