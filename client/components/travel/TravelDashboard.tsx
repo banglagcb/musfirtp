@@ -1,3 +1,4 @@
+import React, { memo, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   Plane,
@@ -20,6 +21,7 @@ import { useEffect, useState, useMemo } from "react";
 import dataService from "@/services/dataService";
 import { DashboardStats, User } from "@shared/travel-types";
 import { useApp, useTranslation } from "@/contexts/AppContext";
+import { PerformanceMonitor } from "@/utils/performance";
 
 interface TravelDashboardProps {
   user: User;
