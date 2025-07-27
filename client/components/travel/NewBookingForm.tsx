@@ -1,10 +1,30 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Save, X, User, Phone, Mail, FileText, Calendar, MapPin, Plane, DollarSign, CreditCard, AlertCircle, Calculator } from "lucide-react";
+import {
+  Save,
+  X,
+  User,
+  Phone,
+  Mail,
+  FileText,
+  Calendar,
+  MapPin,
+  Plane,
+  DollarSign,
+  CreditCard,
+  AlertCircle,
+  Calculator,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import dataService from "@/services/dataService";
@@ -28,16 +48,19 @@ const airlines = [
   "তুর্কিশ এয়ারলাইনস",
   "এয়ার এশিয়া",
   "নোভো এয়ার",
-  "ইউএস-বাংলা এয়ারলাইনস"
+  "ইউএস-বাংলা এয়ারলাইনস",
 ];
 
 const paymentStatuses = [
   { value: "paid", label: "পরিশোধিত", color: "text-green-600" },
   { value: "partial", label: "আংশিক পরিশোধিত", color: "text-yellow-600" },
-  { value: "pending", label: "অপেক্ষমাণ", color: "text-red-600" }
+  { value: "pending", label: "অপেক্ষমাণ", color: "text-red-600" },
 ];
 
-export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormProps) {
+export default function NewBookingForm({
+  onClose,
+  onSuccess,
+}: NewBookingFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -64,10 +87,36 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
       color: "from-blue-500 to-cyan-500",
       bgGradient: "from-blue-500/10 to-cyan-500/10",
       fields: [
-        { key: "customerName", label: "গ্রাহকের পূর্ণ নাম", type: "input", icon: User, required: true, placeholder: "যেমন: আহমেদ রহমান" },
-        { key: "customerPhone", label: "মোবাইল নম্বর", type: "input", icon: Phone, required: true, placeholder: "01XXXXXXXXX" },
-        { key: "customerEmail", label: "ইমেইল ঠিকানা", type: "input", icon: Mail, placeholder: "example@email.com" },
-        { key: "passportNumber", label: "পাসপোর্ট নম্বর", type: "input", icon: FileText, placeholder: "A12345678" },
+        {
+          key: "customerName",
+          label: "গ্রাহকের পূর্ণ নাম",
+          type: "input",
+          icon: User,
+          required: true,
+          placeholder: "যেমন: আহমেদ রহমান",
+        },
+        {
+          key: "customerPhone",
+          label: "মোবাইল নম্বর",
+          type: "input",
+          icon: Phone,
+          required: true,
+          placeholder: "01XXXXXXXXX",
+        },
+        {
+          key: "customerEmail",
+          label: "ইমেইল ঠিকানা",
+          type: "input",
+          icon: Mail,
+          placeholder: "example@email.com",
+        },
+        {
+          key: "passportNumber",
+          label: "পাসপোর্ট নম্বর",
+          type: "input",
+          icon: FileText,
+          placeholder: "A12345678",
+        },
       ],
     },
     {
@@ -76,9 +125,29 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
       color: "from-green-500 to-emerald-500",
       bgGradient: "from-green-500/10 to-emerald-500/10",
       fields: [
-        { key: "flightDate", label: "ফ্লাইট তারিখ", type: "date", icon: Calendar, required: true },
-        { key: "route", label: "রুট", type: "input", icon: MapPin, required: true, placeholder: "যেমন: ঢাকা - দুবাই" },
-        { key: "airline", label: "এয়ারলাইন", type: "select", icon: Plane, required: true, options: airlines },
+        {
+          key: "flightDate",
+          label: "ফ্লাইট তারিখ",
+          type: "date",
+          icon: Calendar,
+          required: true,
+        },
+        {
+          key: "route",
+          label: "রুট",
+          type: "input",
+          icon: MapPin,
+          required: true,
+          placeholder: "যেমন: ঢাকা - দুবাই",
+        },
+        {
+          key: "airline",
+          label: "এয়ারলাইন",
+          type: "select",
+          icon: Plane,
+          required: true,
+          options: airlines,
+        },
       ],
     },
     {
@@ -87,15 +156,38 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
       color: "from-orange-500 to-amber-500",
       bgGradient: "from-orange-500/10 to-amber-500/10",
       fields: [
-        { key: "costPrice", label: "ক্রয়মূল্য (৳)", type: "number", icon: DollarSign, required: true, placeholder: "৫০০০০" },
-        { key: "sellingPrice", label: "বিক্রয়মূল্য (৳)", type: "number", icon: DollarSign, required: true, placeholder: "৫৫০০০" },
-        { key: "paymentStatus", label: "পেমেন্ট স্ট্যাটাস", type: "select", icon: CreditCard, required: true, options: paymentStatuses },
+        {
+          key: "costPrice",
+          label: "ক্রয়মূল্য (৳)",
+          type: "number",
+          icon: DollarSign,
+          required: true,
+          placeholder: "৫০০০০",
+        },
+        {
+          key: "sellingPrice",
+          label: "বিক্রয়মূল্য (৳)",
+          type: "number",
+          icon: DollarSign,
+          required: true,
+          placeholder: "৫৫০০০",
+        },
+        {
+          key: "paymentStatus",
+          label: "পেমেন্ট স্ট্যাটাস",
+          type: "select",
+          icon: CreditCard,
+          required: true,
+          options: paymentStatuses,
+        },
       ],
     },
   ];
 
   const profit = (formData.sellingPrice || 0) - (formData.costPrice || 0);
-  const profitPercentage = formData.costPrice ? ((profit / formData.costPrice) * 100).toFixed(1) : "0";
+  const profitPercentage = formData.costPrice
+    ? ((profit / formData.costPrice) * 100).toFixed(1)
+    : "0";
 
   const validateStep = (stepIndex: number) => {
     const section = formSections[stepIndex];
@@ -122,11 +214,19 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
         }
       }
 
-      if (field.key === "costPrice" && formData.costPrice && formData.costPrice <= 0) {
+      if (
+        field.key === "costPrice" &&
+        formData.costPrice &&
+        formData.costPrice <= 0
+      ) {
         stepErrors.costPrice = "ক্রয়মূল্য ০ এর চেয়ে বেশি হতে হবে";
       }
 
-      if (field.key === "sellingPrice" && formData.sellingPrice && formData.sellingPrice <= 0) {
+      if (
+        field.key === "sellingPrice" &&
+        formData.sellingPrice &&
+        formData.sellingPrice <= 0
+      ) {
         stepErrors.sellingPrice = "বিক্রয়মূল্য ০ এর চেয়ে বেশি হতে হবে";
       }
     });
@@ -152,10 +252,10 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
   };
 
   const handleInputChange = (key: string, value: any) => {
-    setFormData(prev => ({ ...prev, [key]: value }));
+    setFormData((prev) => ({ ...prev, [key]: value }));
     // Clear error when user starts typing
     if (errors[key]) {
-      setErrors(prev => ({ ...prev, [key]: "" }));
+      setErrors((prev) => ({ ...prev, [key]: "" }));
     }
   };
 
@@ -181,7 +281,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
       };
 
       dataService.addBooking(newBooking);
-      
+
       toast({
         title: "সফল!",
         description: "নতুন বুকিং সফলভাবে যোগ করা হয়েছে",
@@ -215,14 +315,18 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             className={cn(
               "w-16 h-16 rounded-2xl bg-gradient-to-br flex items-center justify-center mr-4",
-              currentSection.color
+              currentSection.color,
             )}
           >
             <currentSection.icon className="w-8 h-8 text-white" />
           </motion.div>
           <div>
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">নতুন বুকিং</h2>
-            <p className="text-gray-600 dark:text-gray-300">পূর্ণ তথ্য দিয়ে বুকিং তৈরি করুন</p>
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+              নতুন বুকিং
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300">
+              পূর্ণ তথ্য দিয়ে বুকিং তৈরি করুন
+            </p>
           </div>
         </div>
 
@@ -233,8 +337,13 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
               <motion.div
                 initial={{ scale: 0.8 }}
                 animate={{
-                  scale: index === currentStep ? 1.2 : index <= currentStep ? 1 : 0.8,
-                  backgroundColor: index <= currentStep ? "#10b981" : "#d1d5db"
+                  scale:
+                    index === currentStep
+                      ? 1.2
+                      : index <= currentStep
+                        ? 1
+                        : 0.8,
+                  backgroundColor: index <= currentStep ? "#10b981" : "#d1d5db",
                 }}
                 className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium"
               >
@@ -272,7 +381,8 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
           className={cn(
             "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 mb-8",
             "border border-gray-200/50 dark:border-gray-700/50",
-            "bg-gradient-to-br", currentSection.bgGradient
+            "bg-gradient-to-br",
+            currentSection.bgGradient,
           )}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -290,7 +400,9 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
                 >
                   <field.icon className="w-5 h-5 mr-2 text-gray-500" />
                   {field.label}
-                  {field.required && <span className="text-red-500 ml-1">*</span>}
+                  {field.required && (
+                    <span className="text-red-500 ml-1">*</span>
+                  )}
                 </Label>
 
                 {field.type === "input" && (
@@ -298,10 +410,12 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
                     id={field.key}
                     placeholder={field.placeholder}
                     value={formData[field.key as keyof Booking] || ""}
-                    onChange={(e) => handleInputChange(field.key, e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(field.key, e.target.value)
+                    }
                     className={cn(
                       "h-12 bg-white/50 dark:bg-gray-700/50",
-                      errors[field.key] && "border-red-500"
+                      errors[field.key] && "border-red-500",
                     )}
                   />
                 )}
@@ -311,10 +425,12 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
                     id={field.key}
                     type="date"
                     value={formData[field.key as keyof Booking] || ""}
-                    onChange={(e) => handleInputChange(field.key, e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(field.key, e.target.value)
+                    }
                     className={cn(
                       "h-12 bg-white/50 dark:bg-gray-700/50",
-                      errors[field.key] && "border-red-500"
+                      errors[field.key] && "border-red-500",
                     )}
                   />
                 )}
@@ -325,10 +441,15 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
                     type="number"
                     placeholder={field.placeholder}
                     value={formData[field.key as keyof Booking] || ""}
-                    onChange={(e) => handleInputChange(field.key, parseFloat(e.target.value) || 0)}
+                    onChange={(e) =>
+                      handleInputChange(
+                        field.key,
+                        parseFloat(e.target.value) || 0,
+                      )
+                    }
                     className={cn(
                       "h-12 bg-white/50 dark:bg-gray-700/50",
-                      errors[field.key] && "border-red-500"
+                      errors[field.key] && "border-red-500",
                     )}
                   />
                 )}
@@ -336,12 +457,16 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
                 {field.type === "select" && field.key === "airline" && (
                   <Select
                     value={formData.airline || ""}
-                    onValueChange={(value) => handleInputChange("airline", value)}
+                    onValueChange={(value) =>
+                      handleInputChange("airline", value)
+                    }
                   >
-                    <SelectTrigger className={cn(
-                      "h-12 bg-white/50 dark:bg-gray-700/50",
-                      errors[field.key] && "border-red-500"
-                    )}>
+                    <SelectTrigger
+                      className={cn(
+                        "h-12 bg-white/50 dark:bg-gray-700/50",
+                        errors[field.key] && "border-red-500",
+                      )}
+                    >
                       <SelectValue placeholder="এয়ারলাইন নির্বাচন করুন" />
                     </SelectTrigger>
                     <SelectContent>
@@ -357,12 +482,16 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
                 {field.type === "select" && field.key === "paymentStatus" && (
                   <Select
                     value={formData.paymentStatus || ""}
-                    onValueChange={(value) => handleInputChange("paymentStatus", value)}
+                    onValueChange={(value) =>
+                      handleInputChange("paymentStatus", value)
+                    }
                   >
-                    <SelectTrigger className={cn(
-                      "h-12 bg-white/50 dark:bg-gray-700/50",
-                      errors[field.key] && "border-red-500"
-                    )}>
+                    <SelectTrigger
+                      className={cn(
+                        "h-12 bg-white/50 dark:bg-gray-700/50",
+                        errors[field.key] && "border-red-500",
+                      )}
+                    >
                       <SelectValue placeholder="পেমেন্ট স্ট্যাটাস নির্বাচন করুন" />
                     </SelectTrigger>
                     <SelectContent>
@@ -398,29 +527,41 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
             >
               <div className="flex items-center mb-4">
                 <Calculator className="w-6 h-6 text-green-600 mr-2" />
-                <h4 className="text-lg font-semibold text-gray-800 dark:text-white">মুনাফা হিসাব</h4>
+                <h4 className="text-lg font-semibold text-gray-800 dark:text-white">
+                  মুনাফা হিসাব
+                </h4>
               </div>
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">মুনাফা</p>
-                  <p className={cn(
-                    "text-2xl font-bold",
-                    profit >= 0 ? "text-green-600" : "text-red-600"
-                  )}>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    মুনাফা
+                  </p>
+                  <p
+                    className={cn(
+                      "text-2xl font-bold",
+                      profit >= 0 ? "text-green-600" : "text-red-600",
+                    )}
+                  >
                     ৳{profit.toLocaleString()}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">মুনাফার হার</p>
-                  <p className={cn(
-                    "text-2xl font-bold",
-                    profit >= 0 ? "text-green-600" : "text-red-600"
-                  )}>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    মুনাফার হার
+                  </p>
+                  <p
+                    className={cn(
+                      "text-2xl font-bold",
+                      profit >= 0 ? "text-green-600" : "text-red-600",
+                    )}
+                  >
                     {profitPercentage}%
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">মোট বিক্রয়</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    মোট বিক্রয়
+                  </p>
                   <p className="text-2xl font-bold text-blue-600">
                     ৳{(formData.sellingPrice || 0).toLocaleString()}
                   </p>
@@ -472,8 +613,9 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
           disabled={isSubmitting}
           className={cn(
             "flex items-center space-x-2 px-6 py-3",
-            "bg-gradient-to-r", currentSection.color,
-            "hover:shadow-lg transition-all duration-300"
+            "bg-gradient-to-r",
+            currentSection.color,
+            "hover:shadow-lg transition-all duration-300",
           )}
         >
           {currentStep === formSections.length - 1 ? (

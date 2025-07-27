@@ -13,7 +13,13 @@ import {
   Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
@@ -63,7 +69,7 @@ export default function DataExport({ onClose }: DataExportProps) {
   }, []);
 
   const airlines = useMemo(() => {
-    return Array.from(new Set(bookings.map(b => b.airline))).sort();
+    return Array.from(new Set(bookings.map((b) => b.airline))).sort();
   }, [bookings]);
 
   const dateRange = useMemo(() => {
@@ -86,7 +92,7 @@ export default function DataExport({ onClose }: DataExportProps) {
   }, [dateFilter]);
 
   const filteredBookings = useMemo(() => {
-    return bookings.filter(booking => {
+    return bookings.filter((booking) => {
       // Date filter
       if (dateRange) {
         const bookingDate = new Date(booking.flightDate);
@@ -96,7 +102,10 @@ export default function DataExport({ onClose }: DataExportProps) {
       }
 
       // Payment status filter
-      if (paymentStatusFilter !== "all" && booking.paymentStatus !== paymentStatusFilter) {
+      if (
+        paymentStatusFilter !== "all" &&
+        booking.paymentStatus !== paymentStatusFilter
+      ) {
         return false;
       }
 
@@ -110,29 +119,42 @@ export default function DataExport({ onClose }: DataExportProps) {
   }, [bookings, dateRange, paymentStatusFilter, airlineFilter]);
 
   const exportStats = useMemo(() => {
-    const totalRevenue = filteredBookings.reduce((sum, b) => sum + b.sellingPrice, 0);
-    const totalProfit = filteredBookings.reduce((sum, b) => sum + (b.sellingPrice - b.costPrice), 0);
-    
+    const totalRevenue = filteredBookings.reduce(
+      (sum, b) => sum + b.sellingPrice,
+      0,
+    );
+    const totalProfit = filteredBookings.reduce(
+      (sum, b) => sum + (b.sellingPrice - b.costPrice),
+      0,
+    );
+
     return {
       count: filteredBookings.length,
       totalRevenue,
       totalProfit,
-      averageProfit: filteredBookings.length > 0 ? totalProfit / filteredBookings.length : 0,
+      averageProfit:
+        filteredBookings.length > 0 ? totalProfit / filteredBookings.length : 0,
     };
   }, [filteredBookings]);
 
   const toggleField = (index: number) => {
-    setExportFields(prev => prev.map((field, i) => 
-      i === index ? { ...field, enabled: !field.enabled } : field
-    ));
+    setExportFields((prev) =>
+      prev.map((field, i) =>
+        i === index ? { ...field, enabled: !field.enabled } : field,
+      ),
+    );
   };
 
   const selectAllFields = () => {
-    setExportFields(prev => prev.map(field => ({ ...field, enabled: true })));
+    setExportFields((prev) =>
+      prev.map((field) => ({ ...field, enabled: true })),
+    );
   };
 
   const deselectAllFields = () => {
-    setExportFields(prev => prev.map(field => ({ ...field, enabled: false })));
+    setExportFields((prev) =>
+      prev.map((field) => ({ ...field, enabled: false })),
+    );
   };
 
   const formatValue = (booking: Booking, key: string): string => {
@@ -141,7 +163,8 @@ export default function DataExport({ onClose }: DataExportProps) {
         return (booking.sellingPrice - booking.costPrice).toString();
       case "profitPercentage":
         const profit = booking.sellingPrice - booking.costPrice;
-        const percentage = booking.costPrice > 0 ? (profit / booking.costPrice) * 100 : 0;
+        const percentage =
+          booking.costPrice > 0 ? (profit / booking.costPrice) * 100 : 0;
         return percentage.toFixed(2);
       case "flightDate":
         return format(new Date(booking.flightDate), "yyyy-MM-dd");
@@ -151,7 +174,7 @@ export default function DataExport({ onClose }: DataExportProps) {
         const statusMap = {
           paid: "পরিশোধিত",
           partial: "আংশিক পরিশোধিত",
-          pending: "অপেক্ষমাণ"
+          pending: "অপেক্ষমাণ",
         };
         return statusMap[booking.paymentStatus] || booking.paymentStatus;
       default:
@@ -160,49 +183,57 @@ export default function DataExport({ onClose }: DataExportProps) {
   };
 
   const generateCSV = (): string => {
-    const enabledFields = exportFields.filter(field => field.enabled);
-    
+    const enabledFields = exportFields.filter((field) => field.enabled);
+
     // Header
-    const headers = enabledFields.map(field => field.label);
+    const headers = enabledFields.map((field) => field.label);
     let csv = headers.join(",") + "\n";
-    
+
     // Data rows
-    filteredBookings.forEach(booking => {
-      const row = enabledFields.map(field => {
+    filteredBookings.forEach((booking) => {
+      const row = enabledFields.map((field) => {
         const value = formatValue(booking, field.key);
         // Escape commas and quotes in CSV
         return `"${value.replace(/"/g, '""')}"`;
       });
       csv += row.join(",") + "\n";
     });
-    
+
     return csv;
   };
 
   const generateJSON = (): string => {
-    const enabledFields = exportFields.filter(field => field.enabled);
-    
-    const data = filteredBookings.map(booking => {
+    const enabledFields = exportFields.filter((field) => field.enabled);
+
+    const data = filteredBookings.map((booking) => {
       const row: Record<string, any> = {};
-      enabledFields.forEach(field => {
+      enabledFields.forEach((field) => {
         row[field.label] = formatValue(booking, field.key);
       });
       return row;
     });
-    
-    return JSON.stringify({
-      exportDate: new Date().toISOString(),
-      filters: {
-        dateFilter,
-        paymentStatusFilter,
-        airlineFilter,
+
+    return JSON.stringify(
+      {
+        exportDate: new Date().toISOString(),
+        filters: {
+          dateFilter,
+          paymentStatusFilter,
+          airlineFilter,
+        },
+        stats: exportStats,
+        data,
       },
-      stats: exportStats,
-      data,
-    }, null, 2);
+      null,
+      2,
+    );
   };
 
-  const downloadFile = (content: string, filename: string, mimeType: string) => {
+  const downloadFile = (
+    content: string,
+    filename: string,
+    mimeType: string,
+  ) => {
     const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -215,8 +246,8 @@ export default function DataExport({ onClose }: DataExportProps) {
   };
 
   const handleExport = async () => {
-    const enabledFields = exportFields.filter(field => field.enabled);
-    
+    const enabledFields = exportFields.filter((field) => field.enabled);
+
     if (enabledFields.length === 0) {
       toast({
         title: "ত্রুটি!",
@@ -238,7 +269,7 @@ export default function DataExport({ onClose }: DataExportProps) {
     setIsExporting(true);
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate processing time
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate processing time
 
       const timestamp = format(new Date(), "yyyy-MM-dd_HH-mm-ss");
       const baseFilename = `travel-bookings_${timestamp}`;
@@ -255,7 +286,6 @@ export default function DataExport({ onClose }: DataExportProps) {
         title: "সফল!",
         description: `${filteredBookings.length}টি বুকিং সফলভাবে এক্সপোর্ট করা হয়েছে`,
       });
-
     } catch (error) {
       toast({
         title: "ত্রুটি!",
@@ -277,9 +307,9 @@ export default function DataExport({ onClose }: DataExportProps) {
       >
         <div className="flex items-center">
           <motion.div
-            animate={{ 
+            animate={{
               rotate: [0, 10, -10, 0],
-              scale: [1, 1.1, 1]
+              scale: [1, 1.1, 1],
             }}
             transition={{ duration: 3, repeat: Infinity }}
             className="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4"
@@ -287,7 +317,9 @@ export default function DataExport({ onClose }: DataExportProps) {
             <Download className="w-6 h-6 text-white" />
           </motion.div>
           <div>
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">ডেটা এক্সপোর্ট</h2>
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+              ডেটা এক্সপোর্ট
+            </h2>
             <p className="text-gray-600 dark:text-gray-300">
               {exportStats.count}টি বুকিং এক্সপোর্ট করার জন্য প্রস্তুত
             </p>
@@ -314,8 +346,12 @@ export default function DataExport({ onClose }: DataExportProps) {
         <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 backdrop-blur-sm rounded-2xl p-6 border border-blue-200/50 dark:border-blue-700/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">মোট বুকিং</p>
-              <p className="text-2xl font-bold text-blue-600">{exportStats.count}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                মোট বুকিং
+              </p>
+              <p className="text-2xl font-bold text-blue-600">
+                {exportStats.count}
+              </p>
             </div>
             <Database className="w-8 h-8 text-blue-600/50" />
           </div>
@@ -324,8 +360,12 @@ export default function DataExport({ onClose }: DataExportProps) {
         <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 backdrop-blur-sm rounded-2xl p-6 border border-green-200/50 dark:border-green-700/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">মোট আয়</p>
-              <p className="text-2xl font-bold text-green-600">৳{exportStats.totalRevenue.toLocaleString()}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                মোট আয়
+              </p>
+              <p className="text-2xl font-bold text-green-600">
+                ৳{exportStats.totalRevenue.toLocaleString()}
+              </p>
             </div>
             <FileSpreadsheet className="w-8 h-8 text-green-600/50" />
           </div>
@@ -334,8 +374,12 @@ export default function DataExport({ onClose }: DataExportProps) {
         <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-2xl p-6 border border-purple-200/50 dark:border-purple-700/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">মোট মুনাফা</p>
-              <p className="text-2xl font-bold text-purple-600">৳{exportStats.totalProfit.toLocaleString()}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                মোট মুনাফা
+              </p>
+              <p className="text-2xl font-bold text-purple-600">
+                ৳{exportStats.totalProfit.toLocaleString()}
+              </p>
             </div>
             <FileText className="w-8 h-8 text-purple-600/50" />
           </div>
@@ -344,8 +388,12 @@ export default function DataExport({ onClose }: DataExportProps) {
         <div className="bg-gradient-to-r from-orange-500/10 to-amber-500/10 backdrop-blur-sm rounded-2xl p-6 border border-orange-200/50 dark:border-orange-700/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">গড় মুনাফা</p>
-              <p className="text-2xl font-bold text-orange-600">৳{Math.round(exportStats.averageProfit).toLocaleString()}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                গড় মুনাফা
+              </p>
+              <p className="text-2xl font-bold text-orange-600">
+                ৳{Math.round(exportStats.averageProfit).toLocaleString()}
+              </p>
             </div>
             <Settings className="w-8 h-8 text-orange-600/50" />
           </div>
@@ -371,13 +419,20 @@ export default function DataExport({ onClose }: DataExportProps) {
               <Label className="text-sm font-medium text-gray-700 dark:text-gray-200 mb-2 block">
                 এক্সপোর্ট ফরম্যাট
               </Label>
-              <Select value={exportFormat} onValueChange={(value: "csv" | "json") => setExportFormat(value)}>
+              <Select
+                value={exportFormat}
+                onValueChange={(value: "csv" | "json") =>
+                  setExportFormat(value)
+                }
+              >
                 <SelectTrigger className="h-12 bg-white/50 dark:bg-gray-700/50">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="csv">CSV (Excel এ খোলা যাবে)</SelectItem>
-                  <SelectItem value="json">JSON (প্রোগ্রামিং এর জন্য)</SelectItem>
+                  <SelectItem value="json">
+                    JSON (প্রোগ্রামিং এর জন্য)
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -407,7 +462,10 @@ export default function DataExport({ onClose }: DataExportProps) {
               <Label className="text-sm font-medium text-gray-700 dark:text-gray-200 mb-2 block">
                 পেমেন্ট স্ট্যাটাস
               </Label>
-              <Select value={paymentStatusFilter} onValueChange={setPaymentStatusFilter}>
+              <Select
+                value={paymentStatusFilter}
+                onValueChange={setPaymentStatusFilter}
+              >
                 <SelectTrigger className="h-12 bg-white/50 dark:bg-gray-700/50">
                   <SelectValue />
                 </SelectTrigger>
@@ -431,8 +489,10 @@ export default function DataExport({ onClose }: DataExportProps) {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">সব এয়ারলাইন</SelectItem>
-                  {airlines.map(airline => (
-                    <SelectItem key={airline} value={airline}>{airline}</SelectItem>
+                  {airlines.map((airline) => (
+                    <SelectItem key={airline} value={airline}>
+                      {airline}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -481,9 +541,9 @@ export default function DataExport({ onClose }: DataExportProps) {
                 transition={{ delay: 0.4 + index * 0.02 }}
                 className={cn(
                   "flex items-center space-x-3 p-3 rounded-xl border transition-all duration-200",
-                  field.enabled 
-                    ? "bg-green-50/50 dark:bg-green-900/20 border-green-200 dark:border-green-700" 
-                    : "bg-gray-50/50 dark:bg-gray-700/20 border-gray-200 dark:border-gray-600"
+                  field.enabled
+                    ? "bg-green-50/50 dark:bg-green-900/20 border-green-200 dark:border-green-700"
+                    : "bg-gray-50/50 dark:bg-gray-700/20 border-gray-200 dark:border-gray-600",
                 )}
               >
                 <Checkbox
@@ -496,9 +556,9 @@ export default function DataExport({ onClose }: DataExportProps) {
                   htmlFor={`field-${field.key}`}
                   className={cn(
                     "flex-1 cursor-pointer transition-colors",
-                    field.enabled 
-                      ? "text-gray-800 dark:text-white font-medium" 
-                      : "text-gray-500 dark:text-gray-400"
+                    field.enabled
+                      ? "text-gray-800 dark:text-white font-medium"
+                      : "text-gray-500 dark:text-gray-400",
                   )}
                 >
                   {field.label}
@@ -509,7 +569,8 @@ export default function DataExport({ onClose }: DataExportProps) {
 
           <div className="mt-6 p-4 bg-blue-50/50 dark:bg-blue-900/20 rounded-xl border border-blue-200/50 dark:border-blue-700/50">
             <p className="text-sm text-blue-700 dark:text-blue-300">
-              <strong>{exportFields.filter(f => f.enabled).length}</strong> টি ফিল্ড নির্বাচিত
+              <strong>{exportFields.filter((f) => f.enabled).length}</strong> টি
+              ফিল্ড নির্বাচিত
             </p>
           </div>
         </motion.div>
@@ -524,12 +585,14 @@ export default function DataExport({ onClose }: DataExportProps) {
       >
         <Button
           onClick={handleExport}
-          disabled={isExporting || exportFields.filter(f => f.enabled).length === 0}
+          disabled={
+            isExporting || exportFields.filter((f) => f.enabled).length === 0
+          }
           className={cn(
             "px-8 py-4 text-lg font-semibold",
             "bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700",
             "disabled:from-gray-400 disabled:to-gray-500",
-            "shadow-lg hover:shadow-xl transition-all duration-300"
+            "shadow-lg hover:shadow-xl transition-all duration-300",
           )}
         >
           {isExporting ? (
@@ -548,7 +611,9 @@ export default function DataExport({ onClose }: DataExportProps) {
         </Button>
 
         <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
-          {filteredBookings.length}টি বুকিং • {exportFields.filter(f => f.enabled).length}টি ফিল্ড • {exportFormat.toUpperCase()} ফরম্যাট
+          {filteredBookings.length}টি বুকিং •{" "}
+          {exportFields.filter((f) => f.enabled).length}টি ফিল্ড •{" "}
+          {exportFormat.toUpperCase()} ফরম্যাট
         </p>
       </motion.div>
     </div>

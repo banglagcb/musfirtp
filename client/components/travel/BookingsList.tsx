@@ -23,7 +23,13 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import dataService from "@/services/dataService";
@@ -41,7 +47,8 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState<string>("all");
+  const [selectedPaymentStatus, setSelectedPaymentStatus] =
+    useState<string>("all");
   const [selectedAirline, setSelectedAirline] = useState<string>("all");
   const [dateFilter, setDateFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("newest");
@@ -70,7 +77,7 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
   const deleteBooking = (id: string) => {
     try {
       dataService.deleteBooking(id);
-      setBookings(prev => prev.filter(booking => booking.id !== id));
+      setBookings((prev) => prev.filter((booking) => booking.id !== id));
       toast({
         title: "সফল!",
         description: "বুকিং সফলভাবে ডিলিট করা হয়েছে",
@@ -91,22 +98,23 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
   };
 
   const airlines = useMemo(() => {
-    const uniqueAirlines = Array.from(new Set(bookings.map(b => b.airline)));
+    const uniqueAirlines = Array.from(new Set(bookings.map((b) => b.airline)));
     return uniqueAirlines.sort();
   }, [bookings]);
 
   const filteredAndSortedBookings = useMemo(() => {
-    let filtered = bookings.filter(booking => {
-      const matchesSearch = 
+    let filtered = bookings.filter((booking) => {
+      const matchesSearch =
         booking.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         booking.customerPhone.includes(searchTerm) ||
         booking.route.toLowerCase().includes(searchTerm.toLowerCase()) ||
         booking.airline.toLowerCase().includes(searchTerm.toLowerCase());
 
-      const matchesPaymentStatus = 
-        selectedPaymentStatus === "all" || booking.paymentStatus === selectedPaymentStatus;
+      const matchesPaymentStatus =
+        selectedPaymentStatus === "all" ||
+        booking.paymentStatus === selectedPaymentStatus;
 
-      const matchesAirline = 
+      const matchesAirline =
         selectedAirline === "all" || booking.airline === selectedAirline;
 
       const bookingDate = new Date(booking.flightDate);
@@ -134,40 +142,56 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
           break;
       }
 
-      return matchesSearch && matchesPaymentStatus && matchesAirline && matchesDate;
+      return (
+        matchesSearch && matchesPaymentStatus && matchesAirline && matchesDate
+      );
     });
 
     // Sort
     filtered.sort((a, b) => {
       switch (sortBy) {
         case "newest":
-          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
         case "oldest":
-          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          return (
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          );
         case "amount_high":
           return b.sellingPrice - a.sellingPrice;
         case "amount_low":
           return a.sellingPrice - b.sellingPrice;
         case "profit_high":
-          return (b.sellingPrice - b.costPrice) - (a.sellingPrice - a.costPrice);
+          return b.sellingPrice - b.costPrice - (a.sellingPrice - a.costPrice);
         case "profit_low":
-          return (a.sellingPrice - a.costPrice) - (b.sellingPrice - b.costPrice);
+          return a.sellingPrice - a.costPrice - (b.sellingPrice - b.costPrice);
         case "name":
-          return a.customerName.localeCompare(b.customerName, 'bn');
+          return a.customerName.localeCompare(b.customerName, "bn");
         default:
           return 0;
       }
     });
 
     return filtered;
-  }, [bookings, searchTerm, selectedPaymentStatus, selectedAirline, dateFilter, sortBy]);
+  }, [
+    bookings,
+    searchTerm,
+    selectedPaymentStatus,
+    selectedAirline,
+    dateFilter,
+    sortBy,
+  ]);
 
   const totalStats = useMemo(() => {
-    const total = filteredAndSortedBookings.reduce((acc, booking) => {
-      acc.totalAmount += booking.sellingPrice;
-      acc.totalProfit += (booking.sellingPrice - booking.costPrice);
-      return acc;
-    }, { totalAmount: 0, totalProfit: 0 });
+    const total = filteredAndSortedBookings.reduce(
+      (acc, booking) => {
+        acc.totalAmount += booking.sellingPrice;
+        acc.totalProfit += booking.sellingPrice - booking.costPrice;
+        return acc;
+      },
+      { totalAmount: 0, totalProfit: 0 },
+    );
 
     return {
       ...total,
@@ -183,7 +207,9 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"
         />
-        <span className="ml-4 text-xl text-gray-600 dark:text-gray-300">লোড হচ্ছে...</span>
+        <span className="ml-4 text-xl text-gray-600 dark:text-gray-300">
+          লোড হচ্ছে...
+        </span>
       </div>
     );
   }
@@ -205,9 +231,12 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
             <Plane className="w-6 h-6 text-white" />
           </motion.div>
           <div>
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">বুকিং তালিকা</h2>
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+              বুকিং তালিকা
+            </h2>
             <p className="text-gray-600 dark:text-gray-300">
-              মোট {totalStats.count}টি বুকিং (৳{totalStats.totalAmount.toLocaleString()} আয়)
+              মোট {totalStats.count}টি বুকিং (৳
+              {totalStats.totalAmount.toLocaleString()} আয়)
             </p>
           </div>
         </div>
@@ -242,8 +271,12 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
         <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm rounded-2xl p-6 border border-blue-200/50 dark:border-blue-700/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">মোট বুকিং</p>
-              <p className="text-2xl font-bold text-blue-600">{totalStats.count}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                মোট বুকিং
+              </p>
+              <p className="text-2xl font-bold text-blue-600">
+                {totalStats.count}
+              </p>
             </div>
             <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
               <Plane className="w-6 h-6 text-blue-600" />
@@ -254,8 +287,12 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
         <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 backdrop-blur-sm rounded-2xl p-6 border border-green-200/50 dark:border-green-700/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">মোট আয়</p>
-              <p className="text-2xl font-bold text-green-600">৳{totalStats.totalAmount.toLocaleString()}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                মোট আয়
+              </p>
+              <p className="text-2xl font-bold text-green-600">
+                ৳{totalStats.totalAmount.toLocaleString()}
+              </p>
             </div>
             <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
               <DollarSign className="w-6 h-6 text-green-600" />
@@ -266,8 +303,12 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
         <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 backdrop-blur-sm rounded-2xl p-6 border border-yellow-200/50 dark:border-yellow-700/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">মোট মুনাফা</p>
-              <p className="text-2xl font-bold text-yellow-600">৳{totalStats.totalProfit.toLocaleString()}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                মোট মুনাফা
+              </p>
+              <p className="text-2xl font-bold text-yellow-600">
+                ৳{totalStats.totalProfit.toLocaleString()}
+              </p>
             </div>
             <div className="w-12 h-12 bg-yellow-500/20 rounded-full flex items-center justify-center">
               <DollarSign className="w-6 h-6 text-yellow-600" />
@@ -278,9 +319,16 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
         <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-2xl p-6 border border-purple-200/50 dark:border-purple-700/50">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">গড় মুনাফা</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                গড় মুনাফা
+              </p>
               <p className="text-2xl font-bold text-purple-600">
-                ৳{totalStats.count > 0 ? Math.round(totalStats.totalProfit / totalStats.count).toLocaleString() : 0}
+                ৳
+                {totalStats.count > 0
+                  ? Math.round(
+                      totalStats.totalProfit / totalStats.count,
+                    ).toLocaleString()
+                  : 0}
               </p>
             </div>
             <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center">
@@ -312,7 +360,10 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
           </div>
 
           {/* Payment Status Filter */}
-          <Select value={selectedPaymentStatus} onValueChange={setSelectedPaymentStatus}>
+          <Select
+            value={selectedPaymentStatus}
+            onValueChange={setSelectedPaymentStatus}
+          >
             <SelectTrigger className="h-12 bg-white/50 dark:bg-gray-700/50">
               <SelectValue placeholder="পেমেন্ট স্ট্যাটাস" />
             </SelectTrigger>
@@ -331,8 +382,10 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">সব এয়ারলাইন</SelectItem>
-              {airlines.map(airline => (
-                <SelectItem key={airline} value={airline}>{airline}</SelectItem>
+              {airlines.map((airline) => (
+                <SelectItem key={airline} value={airline}>
+                  {airline}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -379,7 +432,10 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
         <AnimatePresence>
           {filteredAndSortedBookings.map((booking, index) => {
             const profit = booking.sellingPrice - booking.costPrice;
-            const profitPercentage = booking.costPrice > 0 ? ((profit / booking.costPrice) * 100).toFixed(1) : "0";
+            const profitPercentage =
+              booking.costPrice > 0
+                ? ((profit / booking.costPrice) * 100).toFixed(1)
+                : "0";
             const statusConfig = paymentStatusConfig[booking.paymentStatus];
 
             return (
@@ -400,7 +456,9 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
                         <User className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-800 dark:text-white">{booking.customerName}</h3>
+                        <h3 className="font-semibold text-gray-800 dark:text-white">
+                          {booking.customerName}
+                        </h3>
                         <p className="text-sm text-gray-600 dark:text-gray-300 flex items-center">
                           <Phone className="w-4 h-4 mr-1" />
                           {booking.customerPhone}
@@ -437,19 +495,31 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
                   <div className="lg:col-span-3">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600 dark:text-gray-300">বিক্রয়মূল্য:</span>
-                        <span className="font-semibold text-green-600">৳{booking.sellingPrice.toLocaleString()}</span>
+                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                          বিক্রয়মূল্য:
+                        </span>
+                        <span className="font-semibold text-green-600">
+                          ৳{booking.sellingPrice.toLocaleString()}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600 dark:text-gray-300">ক্রয়মূল্য:</span>
-                        <span className="font-medium text-gray-800 dark:text-white">৳{booking.costPrice.toLocaleString()}</span>
+                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                          ক্রয়মূল্য:
+                        </span>
+                        <span className="font-medium text-gray-800 dark:text-white">
+                          ৳{booking.costPrice.toLocaleString()}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600 dark:text-gray-300">মুনাফা:</span>
-                        <span className={cn(
-                          "font-bold",
-                          profit >= 0 ? "text-green-600" : "text-red-600"
-                        )}>
+                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                          মুনাফা:
+                        </span>
+                        <span
+                          className={cn(
+                            "font-bold",
+                            profit >= 0 ? "text-green-600" : "text-red-600",
+                          )}
+                        >
                           ৳{profit.toLocaleString()} ({profitPercentage}%)
                         </span>
                       </div>
@@ -459,10 +529,10 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
                   {/* Status and Actions */}
                   <div className="lg:col-span-3">
                     <div className="flex items-center justify-between">
-                      <Badge 
+                      <Badge
                         className={cn(
                           "flex items-center space-x-1 text-white",
-                          statusConfig.color
+                          statusConfig.color,
                         )}
                       >
                         <statusConfig.icon className="w-3 h-3" />
@@ -540,7 +610,9 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
               className="bg-white dark:bg-gray-800 rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-white">বুকিং বিস্তারিত</h3>
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-white">
+                  বুকিং বিস্তারিত
+                </h3>
                 <Button
                   variant="outline"
                   onClick={() => setSelectedBooking(null)}
@@ -552,44 +624,99 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold text-gray-700 dark:text-gray-200 mb-3">গ্রাহক তথ্য</h4>
+                  <h4 className="font-semibold text-gray-700 dark:text-gray-200 mb-3">
+                    গ্রাহক তথ্য
+                  </h4>
                   <div className="space-y-2 text-sm">
-                    <p><span className="font-medium">নাম:</span> {selectedBooking.customerName}</p>
-                    <p><span className="font-medium">ফোন:</span> {selectedBooking.customerPhone}</p>
+                    <p>
+                      <span className="font-medium">নাম:</span>{" "}
+                      {selectedBooking.customerName}
+                    </p>
+                    <p>
+                      <span className="font-medium">ফোন:</span>{" "}
+                      {selectedBooking.customerPhone}
+                    </p>
                     {selectedBooking.customerEmail && (
-                      <p><span className="font-medium">ইমেইল:</span> {selectedBooking.customerEmail}</p>
+                      <p>
+                        <span className="font-medium">ইমেইল:</span>{" "}
+                        {selectedBooking.customerEmail}
+                      </p>
                     )}
                     {selectedBooking.passportNumber && (
-                      <p><span className="font-medium">পাসপোর্ট:</span> {selectedBooking.passportNumber}</p>
+                      <p>
+                        <span className="font-medium">পাসপোর্ট:</span>{" "}
+                        {selectedBooking.passportNumber}
+                      </p>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-gray-700 dark:text-gray-200 mb-3">ফ্লাইট তথ্য</h4>
+                  <h4 className="font-semibold text-gray-700 dark:text-gray-200 mb-3">
+                    ফ্লাইট তথ্য
+                  </h4>
                   <div className="space-y-2 text-sm">
-                    <p><span className="font-medium">এয়ারলাইন:</span> {selectedBooking.airline}</p>
-                    <p><span className="font-medium">রুট:</span> {selectedBooking.route}</p>
-                    <p><span className="font-medium">তারিখ:</span> {format(new Date(selectedBooking.flightDate), "dd MMM yyyy")}</p>
+                    <p>
+                      <span className="font-medium">এয়ারলাইন:</span>{" "}
+                      {selectedBooking.airline}
+                    </p>
+                    <p>
+                      <span className="font-medium">রুট:</span>{" "}
+                      {selectedBooking.route}
+                    </p>
+                    <p>
+                      <span className="font-medium">তারিখ:</span>{" "}
+                      {format(
+                        new Date(selectedBooking.flightDate),
+                        "dd MMM yyyy",
+                      )}
+                    </p>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-gray-700 dark:text-gray-200 mb-3">আর্থিক তথ্য</h4>
+                  <h4 className="font-semibold text-gray-700 dark:text-gray-200 mb-3">
+                    আর্থিক তথ্য
+                  </h4>
                   <div className="space-y-2 text-sm">
-                    <p><span className="font-medium">ক্রয়মূল্য:</span> ৳{selectedBooking.costPrice.toLocaleString()}</p>
-                    <p><span className="font-medium">বিক্রয়মূল্য:</span> ৳{selectedBooking.sellingPrice.toLocaleString()}</p>
-                    <p><span className="font-medium">মুনাফা:</span> ৳{(selectedBooking.sellingPrice - selectedBooking.costPrice).toLocaleString()}</p>
+                    <p>
+                      <span className="font-medium">ক্রয়মূল্য:</span> ৳
+                      {selectedBooking.costPrice.toLocaleString()}
+                    </p>
+                    <p>
+                      <span className="font-medium">বিক্রয়মূল্য:</span> ৳
+                      {selectedBooking.sellingPrice.toLocaleString()}
+                    </p>
+                    <p>
+                      <span className="font-medium">মুনাফা:</span> ৳
+                      {(
+                        selectedBooking.sellingPrice - selectedBooking.costPrice
+                      ).toLocaleString()}
+                    </p>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-gray-700 dark:text-gray-200 mb-3">অন্যান্য</h4>
+                  <h4 className="font-semibold text-gray-700 dark:text-gray-200 mb-3">
+                    অন্যান্য
+                  </h4>
                   <div className="space-y-2 text-sm">
-                    <p><span className="font-medium">পেমেন্ট:</span> {paymentStatusConfig[selectedBooking.paymentStatus].label}</p>
-                    <p><span className="font-medium">তৈরি:</span> {format(new Date(selectedBooking.createdAt), "dd MMM yyyy, hh:mm a")}</p>
+                    <p>
+                      <span className="font-medium">পেমেন্ট:</span>{" "}
+                      {paymentStatusConfig[selectedBooking.paymentStatus].label}
+                    </p>
+                    <p>
+                      <span className="font-medium">তৈরি:</span>{" "}
+                      {format(
+                        new Date(selectedBooking.createdAt),
+                        "dd MMM yyyy, hh:mm a",
+                      )}
+                    </p>
                     {selectedBooking.notes && (
-                      <p><span className="font-medium">মন্তব্য:</span> {selectedBooking.notes}</p>
+                      <p>
+                        <span className="font-medium">মন্তব্য:</span>{" "}
+                        {selectedBooking.notes}
+                      </p>
                     )}
                   </div>
                 </div>

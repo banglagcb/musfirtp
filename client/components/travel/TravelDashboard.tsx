@@ -42,7 +42,10 @@ interface DashboardStats {
   thisMonthProfit: number;
 }
 
-export default function TravelDashboard({ user, onCardClick }: TravelDashboardProps) {
+export default function TravelDashboard({
+  user,
+  onCardClick,
+}: TravelDashboardProps) {
   const [stats, setStats] = useState<DashboardStats>({
     totalBookings: 0,
     totalRevenue: 0,
@@ -64,7 +67,7 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
       const thisYear = new Date().getFullYear();
 
       const todayBookings = bookings.filter(
-        (booking) => new Date(booking.flightDate).toDateString() === today
+        (booking) => new Date(booking.flightDate).toDateString() === today,
       );
 
       const thisMonthBookings = bookings.filter((booking) => {
@@ -75,29 +78,35 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
         );
       });
 
-      const totalRevenue = bookings.reduce((sum, booking) => sum + booking.sellingPrice, 0);
+      const totalRevenue = bookings.reduce(
+        (sum, booking) => sum + booking.sellingPrice,
+        0,
+      );
       const totalProfit = bookings.reduce(
         (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
-        0
+        0,
       );
 
-      const dailyRevenue = todayBookings.reduce((sum, booking) => sum + booking.sellingPrice, 0);
+      const dailyRevenue = todayBookings.reduce(
+        (sum, booking) => sum + booking.sellingPrice,
+        0,
+      );
       const dailyProfit = todayBookings.reduce(
         (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
-        0
+        0,
       );
 
       const thisMonthProfit = thisMonthBookings.reduce(
         (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
-        0
+        0,
       );
 
       const pendingPayments = bookings.filter(
-        (booking) => booking.paymentStatus === "pending"
+        (booking) => booking.paymentStatus === "pending",
       ).length;
 
       const completedBookings = bookings.filter(
-        (booking) => booking.paymentStatus === "paid"
+        (booking) => booking.paymentStatus === "paid",
       ).length;
 
       setStats({
@@ -259,7 +268,8 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
           transition={{ delay: 0.3, duration: 0.6 }}
           className="text-lg lg:text-xl text-white/70 mb-2"
         >
-          স্বাগতম, {user.name}! ({user.role === "owner" ? "মালিক" : "ম্যানেজার"})
+          স্বাগতম, {user.name}! ({user.role === "owner" ? "মালিক" : "ম্যানেজার"}
+          )
         </motion.p>
         <motion.div
           initial={{ scaleX: 0 }}
@@ -286,7 +296,7 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
             className={cn(
               "p-4 lg:p-6 rounded-2xl border border-white/10 backdrop-blur-md",
               stat.bgColor,
-              "hover:border-white/20 transition-all duration-300"
+              "hover:border-white/20 transition-all duration-300",
             )}
           >
             <div className="flex items-center justify-between mb-3">
@@ -299,10 +309,14 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
             </div>
             <div className="text-2xl lg:text-3xl font-bold text-white mb-1">
               {stat.prefix}
-              {typeof stat.value === "number" ? stat.value.toLocaleString() : stat.value}
+              {typeof stat.value === "number"
+                ? stat.value.toLocaleString()
+                : stat.value}
               {stat.suffix}
             </div>
-            <div className="text-sm lg:text-base text-white/60">{stat.title}</div>
+            <div className="text-sm lg:text-base text-white/60">
+              {stat.title}
+            </div>
           </motion.div>
         ))}
       </motion.div>
@@ -339,7 +353,7 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
               "border border-white/10 hover:border-white/20",
               "backdrop-blur-md transition-all duration-500",
               "shadow-lg hover:shadow-2xl",
-              card.bgGradient
+              card.bgGradient,
             )}
             style={{
               transformStyle: "preserve-3d",
@@ -349,7 +363,7 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
             <motion.div
               className={cn(
                 "absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500",
-                card.gradient
+                card.gradient,
               )}
               style={{ mixBlendMode: "overlay" }}
             />
@@ -369,10 +383,12 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
                 "relative z-10 w-16 h-16 lg:w-20 lg:h-20 rounded-2xl mb-6",
                 `bg-gradient-to-br ${card.gradient}`,
                 "flex items-center justify-center",
-                "shadow-lg group-hover:shadow-xl transition-all duration-500"
+                "shadow-lg group-hover:shadow-xl transition-all duration-500",
               )}
             >
-              <card.icon className={cn("w-8 h-8 lg:w-10 lg:h-10", card.iconColor)} />
+              <card.icon
+                className={cn("w-8 h-8 lg:w-10 lg:h-10", card.iconColor)}
+              />
             </motion.div>
 
             {/* Enhanced Content */}
@@ -392,7 +408,9 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
                   transition={{ delay: 0.8 + index * 0.1 }}
                   className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-medium text-white"
                 >
-                  {typeof card.stats === "number" ? card.stats.toLocaleString() : card.stats}
+                  {typeof card.stats === "number"
+                    ? card.stats.toLocaleString()
+                    : card.stats}
                 </motion.div>
               )}
             </div>
