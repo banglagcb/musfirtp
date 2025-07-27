@@ -176,17 +176,17 @@ export default function TravelAgencyApp() {
       case "bookings-list":
         component = (
           <BookingsList
-            onClose={() => closeWindow(cardId)}
+            onClose={() => closeModal(cardId)}
             onEdit={(booking: Booking) => {
-              closeWindow(cardId);
-              openWindow(
+              closeModal(cardId);
+              openModal(
                 "edit-booking",
                 "বুকিং ��ডিট করুন",
                 <EditBookingForm
                   booking={booking}
-                  onClose={() => closeWindow("edit-booking")}
+                  onClose={() => closeModal("edit-booking")}
                   onSuccess={() => {
-                    closeWindow("edit-booking");
+                    closeModal("edit-booking");
                     refreshData();
                   }}
                 />,
@@ -198,9 +198,9 @@ export default function TravelAgencyApp() {
       case "search-filter":
         component = (
           <BookingsList
-            onClose={() => closeWindow(cardId)}
+            onClose={() => closeModal(cardId)}
             onEdit={(booking: Booking) => {
-              closeWindow(cardId);
+              closeModal(cardId);
             }}
           />
         );
@@ -208,23 +208,23 @@ export default function TravelAgencyApp() {
       case "reports":
         component = (
           <ReportsSection
-            onClose={() => closeWindow(cardId)}
+            onClose={() => closeModal(cardId)}
             onExportData={() => {
-              openWindow(
+              openModal(
                 "export-data",
                 "ডেটা এক্সপোর্ট",
-                <DataExport onClose={() => closeWindow("export-data")} />,
+                <DataExport onClose={() => closeModal("export-data")} />,
               );
             }}
           />
         );
         break;
       case "export-data":
-        component = <DataExport onClose={() => closeWindow(cardId)} />;
+        component = <DataExport onClose={() => closeModal(cardId)} />;
         break;
       case "settings":
         component = (
-          <SettingsPage user={user!} onClose={() => closeWindow(cardId)} />
+          <SettingsPage user={user!} onClose={() => closeModal(cardId)} />
         );
         break;
       default:
@@ -232,12 +232,12 @@ export default function TravelAgencyApp() {
           <PlaceholderPage
             title={title}
             description="এই সেকশনটি শীঘ্রই আসছে!"
-            onBack={() => closeWindow(cardId)}
+            onBack={() => closeModal(cardId)}
           />
         );
     }
 
-    openWindow(cardId, title, component);
+    openModal(cardId, title, component);
 
     // Update breadcrumbs
     setBreadcrumbs([
@@ -261,7 +261,7 @@ export default function TravelAgencyApp() {
   };
 
   // Check for fullscreen windows
-  const hasFullscreenWindow = openWindows.some((w) => w.state === "fullscreen");
+  const hasFullscreenWindow = openModals.some((w) => w.state === "fullscreen");
 
   if (appState === "login") {
     return (
@@ -385,12 +385,12 @@ export default function TravelAgencyApp() {
 
       {/* Enhanced Folder Windows */}
       <AnimatePresence mode="popLayout">
-        {openWindows.map((window) => (
+        {openModals.map((window) => (
           <FolderWindow
             key={window.id}
             title={window.title}
             isOpen={window.isOpen}
-            onClose={() => closeWindow(window.id)}
+            onClose={() => closeModal(window.id)}
             initialState={window.state}
             zIndex={window.zIndex}
             onMaximize={() => maximizeWindow(window.id)}
