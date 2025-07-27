@@ -34,6 +34,7 @@ import { cn } from "@/lib/utils";
 interface NewBookingFormProps {
   onClose: () => void;
   onSuccess: () => void;
+  editBooking?: Booking;
 }
 
 const airlines = [
@@ -47,7 +48,7 @@ const airlines = [
   "���াই এয়ারওয়েজ",
   "তুর্কিশ এয়ারলাইনস",
   "এয়ার এশিয়া",
-  "নোভো এয়ার",
+  "নোভ��� এয়ার",
   "ইউএস-বাংলা এয়ারলাই���স",
 ];
 
