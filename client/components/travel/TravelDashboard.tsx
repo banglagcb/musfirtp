@@ -106,7 +106,7 @@ export default function TravelDashboard({
   user,
   onCardClick,
 }: TravelDashboardProps) {
-  const { isMobile, isTablet } = useApp();
+  const { isMobile, isTablet, theme } = useApp();
   const { t, language } = useTranslation();
 
   const [stats, setStats] = useState<DashboardStats>({
@@ -129,7 +129,7 @@ export default function TravelDashboard({
     {
       id: "new-booking",
       title: t("newBooking"),
-      description: language === 'bn' ? "নতুন ফ্লাইট বুকিং যোগ করুন" : "Add new flight booking",
+      description: language === 'bn' ? "��তুন ফ্লাইট বুকিং যোগ করুন" : "Add new flight booking",
       icon: PlusCircle,
       color: "from-neon-green to-neon-blue",
       gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
