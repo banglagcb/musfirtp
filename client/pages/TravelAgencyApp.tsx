@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
 import dataService from "@/services/dataService";
 import { PerformanceMonitor, analyzeBundleUsage } from "@/utils/performance";
+import { registerServiceWorker } from "@/utils/serviceWorker";
 
 type AppState = "login" | "dashboard";
 
@@ -241,7 +242,7 @@ function TravelAgencyAppInner() {
               closeModal(cardId);
               openModal(
                 "bulk-purchase",
-                "বাল্ক টিকেট ক্রয়",
+                "বাল���ক টিকেট ক্রয়",
                 <BulkTicketPurchaseForm
                   onClose={() => closeModal("bulk-purchase")}
                   onSuccess={() => {
