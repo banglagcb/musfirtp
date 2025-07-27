@@ -97,7 +97,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           transition={{ delay: 0.6 }}
           className="text-white/70"
         >
-          ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...
+          ড্যাশবোর্ডে নিয়ে যাওয়া ���চ্ছে...
         </motion.p>
       </motion.div>
     );
@@ -108,8 +108,41 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full max-w-md mx-auto"
+      className="w-full max-w-md mx-auto relative"
     >
+      {/* Theme and Language Controls */}
+      <div className="absolute -top-4 right-0 flex items-center space-x-2">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={toggleLanguage}
+          className={cn(
+            "p-2 backdrop-blur-md rounded-full border transition-colors",
+            theme === 'dark'
+              ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
+              : "bg-white/20 border-gray-300/50 text-gray-700 hover:bg-white/40"
+          )}
+          title={language === 'bn' ? 'Switch to English' : 'বাংলায় পরিবর্তন করুন'}
+        >
+          <Globe className="w-4 h-4" />
+        </motion.button>
+
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={toggleTheme}
+          className={cn(
+            "p-2 backdrop-blur-md rounded-full border transition-colors",
+            theme === 'dark'
+              ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
+              : "bg-white/20 border-gray-300/50 text-gray-700 hover:bg-white/40"
+          )}
+          title={theme === 'dark' ? t('lightMode') : t('darkMode')}
+        >
+          {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </motion.button>
+      </div>
+
       {/* Header with travel theme */}
       <div className="text-center mb-8">
         <motion.div
