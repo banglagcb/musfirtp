@@ -73,7 +73,7 @@ export default function Modal({
     if (isMaximized) {
       return "w-screen h-screen max-w-none max-h-none rounded-none m-0";
     }
-    
+
     switch (size) {
       case "sm":
         return "w-full max-w-md max-h-[80vh] mx-4";
@@ -152,7 +152,7 @@ export default function Modal({
                 "border border-gray-200 dark:border-gray-700",
                 "flex flex-col relative",
                 getSizeClasses(),
-                className
+                className,
               )}
               onClick={(e) => e.stopPropagation()}
             >
@@ -163,13 +163,13 @@ export default function Modal({
                     "flex items-center justify-between p-4 border-b transition-all duration-200",
                     isScrolled
                       ? "border-gray-300 dark:border-gray-600 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-sm"
-                      : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+                      : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800",
                   )}
                 >
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white truncate pr-4">
                     {title}
                   </h2>
-                  
+
                   <div className="flex items-center space-x-2 flex-shrink-0">
                     {/* Maximize Button */}
                     <motion.button
@@ -201,7 +201,7 @@ export default function Modal({
               )}
 
               {/* Content */}
-              <div 
+              <div
                 ref={contentRef}
                 className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent"
               >
@@ -227,9 +227,9 @@ export default function Modal({
               </AnimatePresence>
 
               {/* Modal size indicator */}
-              {process.env.NODE_ENV === 'development' && (
+              {process.env.NODE_ENV === "development" && (
                 <div className="absolute top-2 left-2 text-xs px-2 py-1 bg-black/50 text-white rounded">
-                  {isMaximized ? 'Maximized' : size}
+                  {isMaximized ? "Maximized" : size}
                 </div>
               )}
             </motion.div>
