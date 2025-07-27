@@ -87,7 +87,8 @@ function TravelAgencyAppInner() {
     ]);
   }, []);
 
-  const handleLogout = () => {
+  // Memoized logout handler
+  const handleLogout = useCallback(() => {
     // Remove user session from localStorage
     localStorage.removeItem("air_musafir_user");
 
@@ -95,7 +96,7 @@ function TravelAgencyAppInner() {
     setAppState("login");
     setOpenModals([]);
     setBreadcrumbs([]);
-  };
+  }, []);
 
   const refreshData = () => {
     setIsLoading(true);
