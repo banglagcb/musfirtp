@@ -79,6 +79,19 @@ export default function NewBookingForm({
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [profit, setProfit] = useState(0);
+  const [profitMargin, setProfitMargin] = useState(0);
+
+  // Calculate profit when prices change
+  useEffect(() => {
+    const costPrice = Number(formData.costPrice) || 0;
+    const sellingPrice = Number(formData.sellingPrice) || 0;
+    const calculatedProfit = sellingPrice - costPrice;
+    const calculatedMargin = costPrice > 0 ? (calculatedProfit / costPrice) * 100 : 0;
+
+    setProfit(calculatedProfit);
+    setProfitMargin(calculatedMargin);
+  }, [formData.costPrice, formData.sellingPrice]);
 
   const formSections = [
     {
@@ -93,7 +106,7 @@ export default function NewBookingForm({
           type: "input",
           icon: User,
           required: true,
-          placeholder: "যেমন: আহমেদ রহমান",
+          placeholder: "যেমন: আহমেদ র���মান",
         },
         {
           key: "customerPhone",
