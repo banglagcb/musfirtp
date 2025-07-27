@@ -179,7 +179,7 @@ export default function TravelDashboard({
     ...(user.role === 'owner' ? [{
       id: "bulk-purchase",
       title: t("bulkPurchase"),
-      description: language === 'bn' ? "অগ্রিম টি��েট ক্রয় করুন" : "Purchase tickets in advance",
+      description: language === 'bn' ? "অগ্রিম টি��ে��� ক্রয় করুন" : "Purchase tickets in advance",
       icon: ShoppingCart,
       color: "from-emerald-500 to-teal-500",
       gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
@@ -193,6 +193,11 @@ export default function TravelDashboard({
       gradient: "bg-gradient-to-br from-red-500/20 to-pink-500/20",
     },
   ], [user.role, t, language]);
+
+  // Memoized card click handler to prevent unnecessary re-renders
+  const handleCardClick = useCallback((cardId: string) => {
+    onCardClick(cardId);
+  }, [onCardClick]);
 
   // Memoized animation variants for better performance
   const containerVariants = useMemo(() => ({
