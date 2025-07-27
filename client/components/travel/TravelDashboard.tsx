@@ -235,65 +235,75 @@ export default function TravelDashboard({
 
   return (
     <div className="max-w-7xl mx-auto">
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+      {/* Enhanced Statistics Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4 mb-6 lg:mb-8">
         {statCards.map((stat, index) => (
           <div
             key={stat.title}
             className={cn(
-              "p-4 lg:p-6 rounded-lg border bg-white dark:bg-gray-800",
+              "p-3 sm:p-4 lg:p-6 rounded-lg border bg-white dark:bg-gray-800",
               stat.bgColor,
-              "hover:shadow-lg transition-shadow duration-300",
+              "hover:shadow-lg transition-all duration-300 hover:scale-105",
             )}
           >
-            <div className="flex items-center justify-between mb-3">
-              <stat.icon className={cn("w-6 h-6 lg:w-8 lg:h-8", stat.color)} />
+            <div className="flex items-center justify-between mb-2 lg:mb-3">
+              <stat.icon className={cn("w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8", stat.color)} />
             </div>
-            <div className="text-2xl lg:text-3xl font-bold text-gray-800 dark:text-white mb-1">
+            <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-800 dark:text-white mb-1">
               {stat.prefix}
               {typeof stat.value === "number"
                 ? stat.value.toLocaleString()
                 : stat.value}
               {stat.suffix}
             </div>
-            <div className="text-sm lg:text-base text-gray-600 dark:text-gray-300">
+            <div className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-gray-300 leading-tight">
               {stat.title}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Main Dashboard Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Enhanced Main Dashboard Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
         {dashboardCards.map((card, index) => (
           <div
             key={card.id}
             onClick={() => onCardClick(card.id)}
             className={cn(
-              "group p-6 rounded-lg cursor-pointer border bg-white dark:bg-gray-800",
+              "group p-4 sm:p-5 lg:p-6 rounded-lg cursor-pointer border bg-white dark:bg-gray-800",
               card.bgColor,
               card.borderColor,
-              "hover:shadow-lg transition-all duration-300 hover:-translate-y-1",
+              "hover:shadow-lg transition-all duration-300 hover:-translate-y-1 active:scale-95",
+              index === 0 && "ring-2 ring-emerald-200 dark:ring-emerald-700", // Highlight New Booking card
             )}
           >
-            {/* Icon */}
+            {/* Enhanced Icon */}
             <div
               className={cn(
-                "w-16 h-16 rounded-lg mb-4 flex items-center justify-center",
+                "w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-lg mb-3 lg:mb-4 flex items-center justify-center",
                 card.bgColor,
+                "group-hover:scale-110 transition-transform duration-300",
               )}
             >
-              <card.icon className={cn("w-8 h-8", card.color)} />
+              <card.icon className={cn("w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8", card.color)} />
             </div>
 
-            {/* Content */}
+            {/* Enhanced Content */}
             <div>
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+              <h3 className="text-lg sm:text-xl lg:text-xl font-bold text-gray-800 dark:text-white mb-2">
                 {card.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
                 {card.description}
               </p>
+
+              {/* Add Quick Action Indicator for New Booking */}
+              {index === 0 && (
+                <div className="mt-3 flex items-center text-xs text-emerald-600 dark:text-emerald-400">
+                  <div className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
+                  দ্রুত অ্যাকশন
+                </div>
+              )}
             </div>
           </div>
         ))}
