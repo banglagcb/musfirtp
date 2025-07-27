@@ -81,7 +81,7 @@ export default function NewBookingForm({
     }
 
     if (!formData.airline) {
-      newErrors.airline = "এয়ারলাইন নির্বাচন করুন";
+      newErrors.airline = "এয়ারলাইন নির্বাচন ক���ুন";
     }
 
     if (!formData.purchasePrice || isNaN(Number(formData.purchasePrice))) {
@@ -105,7 +105,7 @@ export default function NewBookingForm({
         newErrors.paidAmount = "পেইড পরিম���ণ আবশ্যিক";
       } else if (paidAmount <= 0 || paidAmount >= salePrice) {
         newErrors.paidAmount =
-          "পেইড পরিমাণ ০ এর ���েয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে";
+          "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে";
       }
     }
 
@@ -253,7 +253,7 @@ export default function NewBookingForm({
               className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
             >
               <h2 className="text-xl font-semibold text-white mb-4 flex items-center space-x-2">
-                <User className="w-6 h-6" />
+                <UserIcon className="w-6 h-6" />
                 <span>গ্রাহকের তথ্য</span>
               </h2>
 
