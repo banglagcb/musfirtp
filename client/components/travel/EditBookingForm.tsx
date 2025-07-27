@@ -50,7 +50,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     const newErrors: Record<string, string> = {};
 
     if (!formData.customerName.trim()) {
-      newErrors.customerName = "গ্রাহকের ��াম আবশ্যিক";
+      newErrors.customerName = "গ্রাহকের ��া�� আবশ্যিক";
     }
 
     if (!formData.mobile.trim()) {
@@ -158,7 +158,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
       if (success) {
         onSuccess();
       } else {
-        setErrors({ submit: "বুকিং আপডেট করতে সম���্যা হয়েছে" });
+        setErrors({ submit: "বুকিং আপড���ট করতে সম���্যা হয়েছে" });
       }
     } catch (error) {
       setErrors({ submit: "একটি ত্রুটি ঘটেছে" });
@@ -528,10 +528,12 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 type="number"
                 value={formData.paidAmount}
                 onChange={(e) => handleInputChange('paidAmount', e.target.value)}
+                disabled={isViewOnly}
                 className={cn(
                   "w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                   "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
-                  errors.paidAmount ? "border-red-400" : "border-white/20"
+                  errors.paidAmount ? "border-red-400" : "border-white/20",
+                  isViewOnly && "opacity-50 cursor-not-allowed"
                 )}
                 placeholder="25000"
               />
