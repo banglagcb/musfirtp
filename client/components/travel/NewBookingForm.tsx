@@ -153,7 +153,7 @@ export default function NewBookingForm({
       // Deduct from inventory
       ticketInventoryService.sellTickets(matchingInventory.id, 1);
 
-      dataService.addBooking({
+      const newBooking = dataService.addBooking({
         customerName: formData.customerName,
         mobile: formData.mobile,
         passport: formData.passport,
@@ -168,7 +168,8 @@ export default function NewBookingForm({
         notes: formData.notes,
       });
 
-      onSuccess();
+      // Show ticket details instead of closing immediately
+      setCreatedBooking(newBooking);
     } catch (error) {
       console.error("Error adding booking:", error);
     } finally {
@@ -381,7 +382,7 @@ export default function NewBookingForm({
             >
               <h2 className="text-xl font-semibold text-white mb-4 flex items-center space-x-2">
                 <Plane className="w-6 h-6" />
-                <span>��্��াইট তথ্য</span>
+                <span>��্লাইট তথ্য</span>
               </h2>
 
               <div className="space-y-4">
@@ -520,7 +521,7 @@ export default function NewBookingForm({
                           ? "border-red-400 focus:ring-red-400/50"
                           : "border-white/20 focus:ring-folder-primary/50",
                       )}
-                      placeholder="যেমন: 45000"
+                      placeholder="��েমন: 45000"
                     />
                   </div>
                   {errors.purchasePrice && (
