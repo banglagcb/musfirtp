@@ -5,7 +5,7 @@ import {
   Search,
   BarChart3,
   Download,
-  Settings,
+  Settings as SettingsIcon,
   Plane,
   Calendar,
   DollarSign,
@@ -161,7 +161,7 @@ export default function TravelDashboard({
     },
     {
       id: "reports",
-      title: "আর্থিক রিপোর্ট",
+      title: "আর্থিক রি���োর্ট",
       description: `আজকের মুনাফা ৳${stats.dailyProfit.toLocaleString()}`,
       details: "বিস্তারিত আয়-ব্যয় ও মুনাফা বিশ্লেষণ",
       icon: TrendingUp,
@@ -333,7 +333,7 @@ export default function TravelDashboard({
               {card.priority === "high" && (
                 <div className="mt-3 flex items-center text-xs text-emerald-600 dark:text-emerald-400">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
-                  {card.id === "new-booking" ? "দ্রুত টিকেট বুক করুন" : "গুরুত্বপূর্ণ"}
+                  {card.id === "new-booking" ? "দ্রু��� টিকেট বুক করুন" : "গুরুত্বপূর্ণ"}
                 </div>
               )}
 
