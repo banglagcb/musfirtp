@@ -54,7 +54,7 @@ const dashboardCards: DashboardCard[] = [
   },
   {
     id: "search-filter",
-    title: "সার্চ ও ফিল্টার",
+    title: "সার্চ ও ফ���ল্টার",
     description: "���ুকিং খুঁজুন ও ফিল্টার করুন",
     icon: Search,
     color: "from-neon-purple to-neon-pink",
@@ -129,7 +129,7 @@ export default function TravelDashboard({
     {
       id: "new-booking",
       title: t("newBooking"),
-      description: language === 'bn' ? "নতুন ফ্লাইট বুকিং যোগ করুন" : "Add new flight booking",
+      description: language === 'bn' ? "নতুন ফ্লাইট বুকি��� যোগ করুন" : "Add new flight booking",
       icon: PlusCircle,
       color: "from-neon-green to-neon-blue",
       gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
@@ -560,7 +560,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <FileText className="w-5 h-5" />
-            <span>সব বুকিং</span>
+            <span>{language === 'bn' ? 'সব বুকিং' : 'All Bookings'}</span>
           </motion.button>
 
           <motion.button
