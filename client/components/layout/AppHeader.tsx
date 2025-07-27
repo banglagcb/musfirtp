@@ -32,6 +32,7 @@ export default function AppHeader({
 }: AppHeaderProps) {
   const { theme, toggleTheme, language, toggleLanguage, isMobile } = useApp();
   const { t } = useTranslation();
+  const { showMonitor, PerformanceDashboard } = usePerformanceMonitor();
 
   return (
     <motion.header
