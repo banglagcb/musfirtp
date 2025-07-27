@@ -78,7 +78,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     }
 
     if (!formData.airline) {
-      newErrors.airline = "এয়ারলাইন নির্বাচন করুন";
+      newErrors.airline = "এয়ারলাইন নির্বাচন ��রুন";
     }
 
     if (!formData.purchasePrice || isNaN(Number(formData.purchasePrice))) {
@@ -237,10 +237,12 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 type="text"
                 value={formData.customerName}
                 onChange={(e) => handleInputChange('customerName', e.target.value)}
+                disabled={isViewOnly}
                 className={cn(
                   "w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                   "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
-                  errors.customerName ? "border-red-400" : "border-white/20"
+                  errors.customerName ? "border-red-400" : "border-white/20",
+                  isViewOnly && "opacity-50 cursor-not-allowed"
                 )}
                 placeholder="গ্রাহকের সম্পূর্ণ নাম"
               />
