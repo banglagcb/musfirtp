@@ -97,7 +97,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           transition={{ delay: 0.6 }}
           className="text-white/70"
         >
-          ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...
+          ��্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...
         </motion.p>
       </motion.div>
     );
@@ -198,7 +198,10 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         {/* Username Field */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <User className="h-5 w-5 text-white/50" />
+            <User className={cn(
+              "h-5 w-5",
+              theme === 'dark' ? "text-white/50" : "text-gray-500"
+            )} />
           </div>
           <input
             type="text"
@@ -206,9 +209,11 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             onChange={(e) => setUsername(e.target.value)}
             placeholder="ইউজারনেম"
             className={cn(
-              "w-full pl-10 pr-12 py-4 bg-white/10 backdrop-blur-md border rounded-xl",
-              "text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-all duration-300",
-              usernameValid === null && "border-white/20 focus:ring-folder-primary/50",
+              "w-full pl-10 pr-12 py-4 backdrop-blur-md border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300",
+              theme === 'dark'
+                ? "bg-white/10 text-white placeholder-white/50"
+                : "bg-white/80 text-gray-800 placeholder-gray-500",
+              usernameValid === null && (theme === 'dark' ? "border-white/20 focus:ring-folder-primary/50" : "border-gray-300 focus:ring-blue-500/50"),
               usernameValid === true && "border-neon-green focus:ring-neon-green/50",
               usernameValid === false && "border-red-400 focus:ring-red-400/50"
             )}
@@ -325,7 +330,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         transition={{ delay: 1 }}
         className="mt-6 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10"
       >
-        <p className="text-sm text-white/60 mb-2">ডেমো লগইন তথ্য:</p>
+        <p className="text-sm text-white/60 mb-2">��েমো লগইন তথ্য:</p>
         <div className="grid grid-cols-1 gap-2">
           <div>
             <p className="text-sm text-white/80"><strong>মালিক:</strong> admin / admin123</p>
