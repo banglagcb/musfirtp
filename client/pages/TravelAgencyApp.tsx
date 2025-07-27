@@ -163,7 +163,7 @@ export default function TravelAgencyApp() {
                 "বুকিং এডিট করুন",
                 <PlaceholderPage
                   title="বুকিং এডিট করুন"
-                  description="এই ফিচারটি শীঘ্রই আস���ে!"
+                  description="এই ফিচারটি শীঘ্রই আস�����ে!"
                   onBack={() => closeWindow("edit-booking")}
                 />,
               );
@@ -373,8 +373,8 @@ export default function TravelAgencyApp() {
             title={window.title}
             isOpen={window.isOpen}
             onClose={() => closeWindow(window.id)}
-            width={900}
-            height={700}
+            width={isMobile ? window.innerWidth - 32 : 900}
+            height={isMobile ? window.innerHeight - 120 : 700}
           >
             {window.component}
           </Window>
