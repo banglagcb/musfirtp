@@ -325,7 +325,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         transition={{ delay: 1 }}
         className="mt-6 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10"
       >
-        <p className="text-sm text-white/60 mb-2">ডেমো লগ��ন তথ্য:</p>
+        <p className="text-sm text-white/60 mb-2">ডেমো লগইন তথ্য:</p>
         <div className="grid grid-cols-1 gap-2">
           <div>
             <p className="text-sm text-white/80"><strong>মালিক:</strong> admin / admin123</p>
