@@ -22,6 +22,14 @@ import dataService from "@/services/dataService";
 import { DashboardStats, User } from "@shared/travel-types";
 import { useApp, useTranslation } from "@/contexts/AppContext";
 import { PerformanceMonitor } from "@/utils/performance";
+import {
+  staggeredContainer,
+  scaleIn,
+  cardHover,
+  cardTap,
+  fadeInUp,
+  getOptimizedVariants
+} from "@/utils/animationConfig";
 
 interface TravelDashboardProps {
   user: User;
@@ -147,7 +155,7 @@ export default function TravelDashboard({
     {
       id: "search-filter",
       title: language === 'bn' ? "সার্চ ও ফিল্টার" : "Search & Filter",
-      description: language === 'bn' ? "বুকিং খুঁজুন ও ফিল্টার করুন" : "Search and filter bookings",
+      description: language === 'bn' ? "বু��িং খুঁজুন ও ফিল্টার করুন" : "Search and filter bookings",
       icon: Search,
       color: "from-neon-purple to-neon-pink",
       gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20",
@@ -155,7 +163,7 @@ export default function TravelDashboard({
     {
       id: "reports",
       title: t("reports"),
-      description: language === 'bn' ? "বিক���রয় ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
+      description: language === 'bn' ? "বিক্রয় ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
       icon: TrendingUp,
       color: "from-orange-500 to-red-500",
       gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
