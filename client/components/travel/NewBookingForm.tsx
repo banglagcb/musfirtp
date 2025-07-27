@@ -66,19 +66,21 @@ export default function NewBookingForm({
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState<Partial<Booking>>({
-    customerName: "",
-    customerPhone: "",
-    customerEmail: "",
-    passportNumber: "",
-    flightDate: "",
-    route: "",
-    airline: "",
-    costPrice: 0,
-    sellingPrice: 0,
-    paymentStatus: "pending",
-    notes: "",
-  });
+  const [formData, setFormData] = useState<Partial<Booking>>(
+    editBooking || {
+      customerName: "",
+      customerPhone: "",
+      customerEmail: "",
+      passportNumber: "",
+      flightDate: "",
+      route: "",
+      airline: "",
+      costPrice: 0,
+      sellingPrice: 0,
+      paymentStatus: "pending",
+      notes: "",
+    }
+  );
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [profit, setProfit] = useState(0);
