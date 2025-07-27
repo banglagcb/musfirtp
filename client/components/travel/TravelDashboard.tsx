@@ -141,7 +141,7 @@ export default function TravelDashboard({
       id: "bookings-list",
       title: "বুকিং ম্যানেজমেন্ট",
       description: `মোট ${stats.totalBookings}টি বুকিং রয়েছে`,
-      details: "সব বুকিং দেখুন, এডিট ও ট্র্��াক করুন",
+      details: "সব বুকিং দেখুন, এডিট ও ট্র্যাক করুন",
       icon: Package,
       color: "text-blue-600",
       bgColor: "bg-blue-50 dark:bg-blue-900/20",
@@ -172,7 +172,7 @@ export default function TravelDashboard({
     },
     {
       id: "export-data",
-      title: "ডেটা ���্যাকআপ",
+      title: "ডেটা ব্যাকআপ",
       description: "Excel/CSV ফরম্যাটে ডাউনলোড",
       details: "সম্পূর্ণ ডেটা এক্সপোর্ট ও ইমপোর্ট",
       icon: Download,
@@ -312,18 +312,34 @@ export default function TravelDashboard({
 
             {/* Enhanced Content */}
             <div>
-              <h3 className="text-lg sm:text-xl lg:text-xl font-bold text-gray-800 dark:text-white mb-2">
-                {card.title}
-              </h3>
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg sm:text-xl lg:text-xl font-bold text-gray-800 dark:text-white">
+                  {card.title}
+                </h3>
+                {card.priority === "high" && (
+                  <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                )}
+              </div>
+
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-2">
                 {card.description}
               </p>
 
-              {/* Add Quick Action Indicator for New Booking */}
-              {index === 0 && (
+              <p className="text-xs text-gray-500 dark:text-gray-400 leading-tight">
+                {card.details}
+              </p>
+
+              {/* Priority-based Action Indicators */}
+              {card.priority === "high" && (
                 <div className="mt-3 flex items-center text-xs text-emerald-600 dark:text-emerald-400">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
-                  দ্রুত অ্যাকশন
+                  {card.id === "new-booking" ? "দ্রুত টিকেট বুক করুন" : "গুরুত্বপূর্ণ"}
+                </div>
+              )}
+
+              {card.id === "bookings-list" && stats.pendingPayments > 0 && (
+                <div className="mt-2 text-xs bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 px-2 py-1 rounded">
+                  {stats.pendingPayments}টি পেমেন্ট পেন্ডিং
                 </div>
               )}
             </div>
