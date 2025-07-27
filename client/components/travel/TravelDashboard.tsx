@@ -243,15 +243,12 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
         <motion.h1
           className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent mb-4"
           animate={{
-            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+            scale: [1, 1.02, 1],
           }}
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: "linear",
-          }}
-          style={{
-            backgroundSize: "200% 200%",
+            ease: "easeInOut",
           }}
         >
           ট্রাভেল এজেন্সি ম্যানেজমেন্ট
