@@ -275,7 +275,7 @@ export default function TravelAgencyApp() {
 
     // Update breadcrumbs
     setBreadcrumbs([
-      { label: "ড্যাশ���োর্ড", path: "/dashboard" },
+      { label: "ড্য���শ���োর্ড", path: "/dashboard" },
       { label: title, path: `/${cardId}`, isActive: true },
     ]);
   };
@@ -428,6 +428,8 @@ export default function TravelAgencyApp() {
             initialState={window.state}
             zIndex={window.zIndex}
             onMaximize={() => maximizeWindow(window.id)}
+            onMinimize={() => minimizeWindow(window.id)}
+            resizable={true}
           >
             {window.component}
           </FolderWindow>
