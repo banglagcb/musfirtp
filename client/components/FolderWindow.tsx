@@ -1,9 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Maximize2, Minimize2 } from "lucide-react";
+import { X, Maximize2, Minimize2, Square, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ReactNode, useState, useEffect, forwardRef } from "react";
+import { ReactNode, useState, useEffect, forwardRef, useRef } from "react";
 
-export type WindowState = "popup" | "fullscreen";
+export type WindowState = "popup" | "fullscreen" | "minimized";
 
 interface FolderWindowProps {
   children: ReactNode;
@@ -15,6 +15,8 @@ interface FolderWindowProps {
   showControls?: boolean;
   zIndex?: number;
   onMaximize?: () => void;
+  onMinimize?: () => void;
+  resizable?: boolean;
 }
 
 const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
@@ -29,11 +31,18 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       showControls = true,
       zIndex = 50,
       onMaximize,
+      onMinimize,
+      resizable = true,
     },
     ref,
   ) => {
     const [windowState, setWindowState] = useState<WindowState>(initialState);
     const [isDragging, setIsDragging] = useState(false);
+    const [isResizing, setIsResizing] = useState(false);
+    const [windowSize, setWindowSize] = useState({ width: 900, height: 700 });
+    const [windowPosition, setWindowPosition] = useState({ x: 0, y: 0 });
+    const windowRef = useRef<HTMLDivElement>(null);
+    
     const [viewportSize, setViewportSize] = useState({
       width: typeof window !== 'undefined' ? window.innerWidth : 1024,
       height: typeof window !== 'undefined' ? window.innerHeight : 768
@@ -58,6 +67,15 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       }
     }, []);
 
+    // Auto-center window when opening
+    useEffect(() => {
+      if (isOpen && windowState === "popup") {
+        const centerX = (viewportSize.width - windowSize.width) / 2;
+        const centerY = (viewportSize.height - windowSize.height) / 2;
+        setWindowPosition({ x: centerX, y: centerY });
+      }
+    }, [isOpen, viewportSize, windowSize, windowState]);
+
     const handleMaximize = () => {
       const newState = windowState === "fullscreen" ? "popup" : "fullscreen";
       setWindowState(newState);
@@ -66,7 +84,18 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       }
     };
 
-    // Enhanced backdrop variants for smoother transitions
+    const handleMinimize = () => {
+      setWindowState("minimized");
+      if (onMinimize) {
+        onMinimize();
+      }
+    };
+
+    const handleRestore = () => {
+      setWindowState("popup");
+    };
+
+    // Enhanced backdrop variants
     const backdropVariants = {
       hidden: {
         opacity: 0,
@@ -74,70 +103,72 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       },
       visible: {
         opacity: 1,
-        backdropFilter: "blur(12px)",
+        backdropFilter: "blur(8px)",
         transition: {
-          duration: 0.4,
-          ease: [0.25, 0.46, 0.45, 0.94], // Custom cubic-bezier for smooth easing
+          duration: 0.3,
+          ease: [0.4, 0, 0.2, 1],
         },
       },
       exit: {
         opacity: 0,
         backdropFilter: "blur(0px)",
         transition: {
-          duration: 0.3,
-          ease: [0.25, 0.46, 0.45, 0.94],
+          duration: 0.2,
+          ease: [0.4, 0, 0.2, 1],
         },
       },
     };
 
-    // Smoother container variants
+    // Windows-style container variants
     const containerVariants = {
       hidden: {
         opacity: 0,
-        scale: 0.85,
-        y: 40,
-        filter: "blur(8px)",
+        scale: 0.9,
+        y: 20,
       },
       visible: {
         opacity: 1,
         scale: 1,
         y: 0,
-        filter: "blur(0px)",
+        transition: {
+          type: "spring",
+          stiffness: 400,
+          damping: 25,
+          duration: 0.4,
+        },
+      },
+      fullscreen: {
+        opacity: 1,
+        scale: 1,
+        y: 0,
         transition: {
           type: "spring",
           stiffness: 300,
           damping: 30,
-          mass: 0.8,
           duration: 0.5,
+        },
+      },
+      minimized: {
+        opacity: 0,
+        scale: 0.8,
+        y: 50,
+        transition: {
+          duration: 0.3,
+          ease: [0.4, 0, 0.2, 1],
         },
       },
       exit: {
         opacity: 0,
         scale: 0.9,
-        y: -20,
-        filter: "blur(4px)",
+        y: -10,
         transition: {
-          duration: 0.3,
-          ease: [0.25, 0.46, 0.45, 0.94],
+          duration: 0.2,
+          ease: [0.4, 0, 0.2, 1],
         },
       },
     };
 
-    // Content variants for staggered animation
-    const contentVariants = {
-      hidden: { opacity: 0, y: 15 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-          delay: 0.1,
-          duration: 0.4,
-          ease: [0.25, 0.46, 0.45, 0.94],
-        },
-      },
-    };
-
-    // Dynamic styles with smooth transitions and safe positioning
+    // Dynamic styles with Windows-like behavior
     const getWindowStyles = () => {
       const baseStyles = {
         position: "fixed" as const,
@@ -155,20 +186,28 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
             borderRadius: "0px",
             transform: "none",
           };
-        default: // popup
-          const safeWidth = Math.min(900, viewportSize.width * 0.85);
-          const safeHeight = Math.min(700, viewportSize.height * 0.8);
-
+        case "minimized":
           return {
             ...baseStyles,
-            top: "50%",
-            left: "50%",
+            top: viewportSize.height - 100,
+            left: 20,
+            width: "300px",
+            height: "60px",
+            borderRadius: "8px",
+            transform: "none",
+          };
+        default: // popup
+          const safeWidth = Math.min(windowSize.width, viewportSize.width - 40);
+          const safeHeight = Math.min(windowSize.height, viewportSize.height - 40);
+          
+          return {
+            ...baseStyles,
+            top: Math.max(20, Math.min(windowPosition.y, viewportSize.height - safeHeight - 20)),
+            left: Math.max(20, Math.min(windowPosition.x, viewportSize.width - safeWidth - 20)),
             width: `${safeWidth}px`,
             height: `${safeHeight}px`,
-            borderRadius: "24px",
-            transform: "translate(-50%, -50%)",
-            maxWidth: `${viewportSize.width - 60}px`,
-            maxHeight: `${viewportSize.height - 60}px`,
+            borderRadius: "12px",
+            transform: "none",
           };
       }
     };
@@ -179,231 +218,210 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       <AnimatePresence mode="wait">
         {isOpen && (
           <>
-            {/* Enhanced Backdrop - only show for popup mode */}
-            {windowState === "popup" && (
+            {/* Enhanced Backdrop */}
+            {(windowState === "popup" || windowState === "fullscreen") && (
               <motion.div
                 variants={backdropVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="fixed inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/30"
+                className="fixed inset-0 bg-black/30"
                 style={{ zIndex: zIndex - 1 }}
-                onClick={onClose}
+                onClick={windowState === "popup" ? onClose : undefined}
               />
             )}
 
-            {/* Main Window with enhanced animations */}
+            {/* Main Window with Windows-style design */}
             <motion.div
-              ref={ref}
+              ref={windowRef}
               variants={containerVariants}
               initial="hidden"
-              animate="visible"
+              animate={windowState}
               exit="exit"
               className={cn(
-                "bg-gradient-to-br from-white/98 to-white/95 dark:from-gray-900/98 dark:to-gray-800/95",
-                "backdrop-blur-2xl border border-white/40 dark:border-gray-700/60",
-                "shadow-2xl shadow-black/25",
+                // Windows-style window design
+                "bg-white/95 dark:bg-gray-900/95",
+                "backdrop-blur-xl border border-gray-300/50 dark:border-gray-600/50",
+                "shadow-2xl shadow-black/20",
                 "overflow-hidden",
-                // Ensure window stays within viewport
-                "max-w-[calc(100vw-60px)] max-h-[calc(100vh-60px)]",
+                // Windows-style rounded corners
+                windowState === "fullscreen" ? "rounded-none" : "rounded-xl",
+                // Enhanced visual effects
+                "ring-1 ring-white/20",
                 className,
               )}
               style={{
                 ...getWindowStyles(),
-                minHeight: windowState === "popup" ? "400px" : "100%",
-                maxHeight: windowState === "popup" ? "85vh" : "100%",
-                willChange: "transform, opacity", // Performance optimization
-                containIntrinsicSize: "auto auto", // Better layout containment
+                minHeight: windowState === "minimized" ? "60px" : windowState === "popup" ? "400px" : "100%",
+                willChange: "transform, opacity",
               }}
-              drag={windowState === "popup" && showControls && !isDragging}
+              drag={windowState === "popup" && showControls && !isDragging && !isResizing}
               dragMomentum={false}
-              dragElastic={0.02}
+              dragElastic={0}
               dragConstraints={{
-                left: -(viewportSize.width / 2) + Math.min(300, viewportSize.width * 0.3),
-                right: (viewportSize.width / 2) - Math.min(300, viewportSize.width * 0.3),
-                top: -(viewportSize.height / 2) + Math.min(200, viewportSize.height * 0.25),
-                bottom: (viewportSize.height / 2) - Math.min(200, viewportSize.height * 0.25),
+                left: 0,
+                right: viewportSize.width - windowSize.width,
+                top: 0,
+                bottom: viewportSize.height - windowSize.height,
               }}
               onDragStart={() => setIsDragging(true)}
-              onDragEnd={() => setIsDragging(false)}
-              whileDrag={{
+              onDragEnd={(_, info) => {
+                setIsDragging(false);
+                setWindowPosition({
+                  x: Math.max(0, windowPosition.x + info.offset.x),
+                  y: Math.max(0, windowPosition.y + info.offset.y),
+                });
+              }}
+              whileDrag={windowState === "popup" ? {
                 scale: 1.02,
-                boxShadow: "0 30px 60px -12px rgba(0, 0, 0, 0.4)",
+                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
                 zIndex: zIndex + 10,
-                transition: { duration: 0.2 },
-              }}
-              transition={{
-                type: "spring",
-                stiffness: windowState === "fullscreen" ? 280 : 320,
-                damping: windowState === "fullscreen" ? 25 : 30,
-                mass: 0.8,
-              }}
-              layout
+              } : {}}
+              layout={windowState !== "popup"}
             >
-              {/* Enhanced Window Header */}
-              {showControls && (
+              {/* Windows-style Title Bar */}
+              {showControls && windowState !== "minimized" && (
                 <motion.div
-                  variants={contentVariants}
                   className={cn(
-                    "flex items-center justify-between p-5 lg:p-6",
-                    "border-b border-white/30 dark:border-gray-700/60",
-                    "bg-gradient-to-r from-blue-500/8 via-purple-500/8 to-pink-500/8",
+                    "flex items-center justify-between px-4 py-3",
+                    "border-b border-gray-200/50 dark:border-gray-700/50",
+                    "bg-gradient-to-r from-gray-50/50 to-gray-100/50 dark:from-gray-800/50 dark:to-gray-700/50",
                     "backdrop-blur-sm",
                     isDragging && "cursor-grabbing",
                   )}
                   style={{
-                    cursor:
-                      windowState === "popup" && !isDragging
-                        ? "grab"
-                        : "default",
+                    cursor: windowState === "popup" && !isDragging ? "grab" : "default",
                   }}
                 >
-                  {/* Enhanced Title Section */}
-                  <div className="flex items-center space-x-4">
-                    <motion.div
-                      className="w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
-                      animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.8, 1, 0.8],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    />
-                    <h3 className="text-xl lg:text-2xl font-bold text-gray-900 dark:text-white truncate max-w-xs lg:max-w-lg">
+                  {/* Window Icon & Title */}
+                  <div className="flex items-center space-x-3">
+                    <div className="w-4 h-4 rounded bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg" />
+                    <h3 className="text-sm font-medium text-gray-900 dark:text-white truncate max-w-xs">
                       {title}
                     </h3>
                   </div>
 
-                  {/* Enhanced Control Buttons */}
-                  <div className="flex items-center space-x-3 lg:space-x-4">
+                  {/* Windows-style Control Buttons */}
+                  <div className="flex items-center space-x-1">
+                    {/* Minimize Button */}
+                    <motion.button
+                      whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={handleMinimize}
+                      className="w-12 h-8 rounded-sm flex items-center justify-center transition-colors hover:bg-gray-200/50 dark:hover:bg-gray-600/50"
+                      title="Minimize"
+                    >
+                      <Minus className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                    </motion.button>
+
                     {/* Maximize/Restore Button */}
                     <motion.button
-                      whileHover={{
-                        scale: 1.25,
-                        backgroundColor: "rgba(34, 197, 94, 0.9)",
-                        boxShadow: "0 8px 25px rgba(34, 197, 94, 0.4)",
-                        rotate: 180,
-                      }}
-                      whileTap={{ scale: 0.85 }}
+                      whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+                      whileTap={{ scale: 0.95 }}
                       onClick={handleMaximize}
-                      className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-emerald-500/80 hover:bg-emerald-500 flex items-center justify-center transition-all duration-300 shadow-xl border-2 border-emerald-400/60"
-                      title={
-                        windowState === "fullscreen" ? "Restore" : "Maximize"
-                      }
+                      className="w-12 h-8 rounded-sm flex items-center justify-center transition-colors hover:bg-gray-200/50 dark:hover:bg-gray-600/50"
+                      title={windowState === "fullscreen" ? "Restore Down" : "Maximize"}
                     >
-                      <motion.div
-                        animate={{
-                          rotate: windowState === "fullscreen" ? 180 : 0,
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 15,
-                        }}
-                      >
-                        {windowState === "fullscreen" ? (
-                          <Minimize2 className="w-5 h-5 lg:w-6 lg:h-6 text-white drop-shadow-lg" />
-                        ) : (
-                          <Maximize2 className="w-5 h-5 lg:w-6 lg:h-6 text-white drop-shadow-lg" />
-                        )}
-                      </motion.div>
+                      {windowState === "fullscreen" ? (
+                        <Square className="w-3 h-3 text-gray-600 dark:text-gray-300" />
+                      ) : (
+                        <Maximize2 className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                      )}
                     </motion.button>
 
                     {/* Close Button */}
                     <motion.button
-                      whileHover={{
-                        scale: 1.25,
-                        backgroundColor: "rgba(239, 68, 68, 0.9)",
-                        boxShadow: "0 8px 25px rgba(239, 68, 68, 0.4)",
-                        rotate: 90,
-                      }}
-                      whileTap={{ scale: 0.85 }}
+                      whileHover={{ backgroundColor: "#e81123", color: "white" }}
+                      whileTap={{ scale: 0.95 }}
                       onClick={onClose}
-                      className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-red-500/80 hover:bg-red-500 flex items-center justify-center transition-all duration-300 shadow-xl border-2 border-red-400/60"
+                      className="w-12 h-8 rounded-sm flex items-center justify-center transition-colors hover:bg-red-600"
                       title="Close"
                     >
-                      <motion.div
-                        whileHover={{
-                          rotate: 90,
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 15,
-                        }}
-                      >
-                        <X className="w-5 h-5 lg:w-6 lg:h-6 text-white drop-shadow-lg" />
-                      </motion.div>
+                      <X className="w-4 h-4 text-gray-600 dark:text-gray-300" />
                     </motion.button>
                   </div>
                 </motion.div>
               )}
 
-              {/* Enhanced Window Content */}
-              <motion.div
-                variants={contentVariants}
-                className="flex-1 overflow-auto"
-                style={{
-                  height: showControls ? "calc(100% - 80px)" : "100%",
-                  scrollBehavior: "smooth",
-                }}
-              >
-                <div className="min-h-full w-full">{children}</div>
-              </motion.div>
-
-              {/* Enhanced State Indicator */}
-              <motion.div
-                className="absolute top-3 right-3 text-xs px-3 py-1 bg-black/30 text-white rounded-full backdrop-blur-sm"
-                animate={{
-                  opacity: isDragging ? 1 : 0,
-                  scale: isDragging ? 1 : 0.8,
-                }}
-                transition={{ duration: 0.2 }}
-              >
-                {windowState === "fullscreen" ? "Fullscreen" : "Window"}
-              </motion.div>
-
-              {/* Enhanced Resize Handle for popup mode */}
-              {windowState === "popup" && showControls && (
+              {/* Minimized State */}
+              {windowState === "minimized" && (
                 <motion.div
-                  className="absolute bottom-0 right-0 w-6 h-6 bg-gradient-to-br from-blue-500/40 to-purple-500/40 hover:from-blue-500/60 hover:to-purple-500/60 cursor-se-resize opacity-0 hover:opacity-100 transition-all duration-300 rounded-tl-2xl"
-                  whileHover={{ scale: 1.2 }}
-                />
+                  className="flex items-center justify-between px-4 py-3 cursor-pointer"
+                  onClick={handleRestore}
+                  whileHover={{ backgroundColor: "rgba(59, 130, 246, 0.1)" }}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-6 h-6 rounded bg-gradient-to-r from-blue-500 to-purple-500" />
+                    <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                      {title}
+                    </span>
+                  </div>
+                </motion.div>
               )}
 
-              {/* Enhanced Ambient Glow Effect */}
-              <motion.div
-                className="absolute inset-0 rounded-inherit bg-gradient-to-r from-blue-500/3 via-purple-500/3 to-pink-500/3 opacity-0 pointer-events-none"
-                animate={{
-                  opacity: windowState === "popup" ? [0, 0.5, 0] : 0,
-                }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
+              {/* Window Content */}
+              {windowState !== "minimized" && (
+                <motion.div
+                  className="flex-1 overflow-auto bg-white/50 dark:bg-gray-900/50"
+                  style={{
+                    height: showControls ? "calc(100% - 56px)" : "100%",
+                    scrollBehavior: "smooth",
+                  }}
+                >
+                  <div className="min-h-full w-full p-6">{children}</div>
+                </motion.div>
+              )}
 
-              {/* Enhanced Border Glow */}
-              <motion.div
-                className="absolute inset-0 rounded-inherit"
-                style={{
-                  background:
-                    "linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.1), transparent, rgba(168, 85, 247, 0.1), transparent)",
-                  backgroundSize: "400% 400%",
-                }}
-                animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
+              {/* Resize Handles for popup mode */}
+              {windowState === "popup" && resizable && showControls && (
+                <>
+                  {/* Bottom-right corner resize handle */}
+                  <div
+                    className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize opacity-0 hover:opacity-100 transition-opacity"
+                    style={{
+                      background: "linear-gradient(-45deg, transparent 40%, #666 40%, #666 60%, transparent 60%)",
+                    }}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      setIsResizing(true);
+                      
+                      const startSize = { ...windowSize };
+                      const startPos = { x: e.clientX, y: e.clientY };
+                      
+                      const handleMouseMove = (e: MouseEvent) => {
+                        const deltaX = e.clientX - startPos.x;
+                        const deltaY = e.clientY - startPos.y;
+                        
+                        setWindowSize({
+                          width: Math.max(400, Math.min(viewportSize.width - 40, startSize.width + deltaX)),
+                          height: Math.max(300, Math.min(viewportSize.height - 40, startSize.height + deltaY)),
+                        });
+                      };
+                      
+                      const handleMouseUp = () => {
+                        setIsResizing(false);
+                        document.removeEventListener('mousemove', handleMouseMove);
+                        document.removeEventListener('mouseup', handleMouseUp);
+                      };
+                      
+                      document.addEventListener('mousemove', handleMouseMove);
+                      document.addEventListener('mouseup', handleMouseUp);
+                    }}
+                  />
+                </>
+              )}
+
+              {/* Windows-style status indicator */}
+              {windowState === "popup" && isDragging && (
+                <motion.div
+                  className="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs px-2 py-1 bg-black/80 text-white rounded backdrop-blur-sm"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  Moving Window
+                </motion.div>
+              )}
             </motion.div>
           </>
         )}
