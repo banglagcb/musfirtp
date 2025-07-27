@@ -699,6 +699,17 @@ export default function NewBookingForm({
           </motion.div>
         </form>
       </motion.div>
+
+      {/* Ticket Details Modal */}
+      {createdBooking && (
+        <TicketDetails
+          booking={createdBooking}
+          onClose={() => {
+            setCreatedBooking(null);
+            onSuccess();
+          }}
+        />
+      )}
     </div>
   );
 }
