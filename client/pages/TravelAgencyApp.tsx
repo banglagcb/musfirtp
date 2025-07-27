@@ -237,7 +237,9 @@ export default function TravelAgencyApp() {
         );
     }
 
-    openModal(cardId, title, component);
+    const modalSize = cardId === "new-booking" || cardId === "edit-booking" ? "xl" :
+                     cardId === "settings" ? "full" : "lg";
+    openModal(cardId, title, component, modalSize);
 
     // Update breadcrumbs
     setBreadcrumbs([
