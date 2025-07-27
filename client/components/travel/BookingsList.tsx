@@ -186,8 +186,10 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
   const totalStats = useMemo(() => {
     const total = filteredAndSortedBookings.reduce(
       (acc, booking) => {
-        acc.totalAmount += booking.sellingPrice;
-        acc.totalProfit += booking.sellingPrice - booking.costPrice;
+        const sellingPrice = booking.sellingPrice || 0;
+        const costPrice = booking.costPrice || 0;
+        acc.totalAmount += sellingPrice;
+        acc.totalProfit += sellingPrice - costPrice;
         return acc;
       },
       { totalAmount: 0, totalProfit: 0 },
