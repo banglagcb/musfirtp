@@ -160,7 +160,7 @@ class DataService {
     return false;
   }
 
-  updateBooking(id: string, updatedBooking: Partial<Booking>): boolean {
+  updateBookingPartial(id: string, updatedBooking: Partial<Booking>): boolean {
     const bookings = this.getBookings();
     const index = bookings.findIndex((booking) => booking.id === id);
     if (index !== -1) {
@@ -321,7 +321,7 @@ class DataService {
       "এয়ারলাইন",
       "ক্রয়মূল্য",
       "বিক্রয়মূল্য",
-      "পেমেন��ট স্ট্যাটাস",
+      "পেমেন���ট স্ট্যাটাস",
       "পেইড পরিমাণ",
       "বুকিং তারিখ",
       "নোট",
