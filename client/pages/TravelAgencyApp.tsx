@@ -198,6 +198,9 @@ export default function TravelAgencyApp() {
       case "export-data":
         component = <DataExport onClose={() => closeWindow(cardId)} />;
         break;
+      case "settings":
+        component = <Settings onClose={() => closeWindow(cardId)} />;
+        break;
       default:
         component = (
           <PlaceholderPage
