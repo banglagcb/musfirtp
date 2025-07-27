@@ -135,7 +135,7 @@ export default function TravelDashboard({
       id: "new-booking",
       title: "নতুন টিকেট ক্রয়",
       description: "গ্রাহকের জন্য নতুন টিকেট বুক করুন",
-      details: "সম্পূর্ণ বুকিং প্রক্রিয়া ও মুনাফা গণনা",
+      details: "সম্পূর্ণ বুকিং প্রক্রিয়া ও ���ুনাফা গণনা",
       icon: Plus,
       color: "text-emerald-600",
       bgColor: "bg-emerald-50 dark:bg-emerald-900/20",
@@ -321,6 +321,33 @@ export default function TravelDashboard({
           </div>
         ))}
       </div>
+
+      {/* Pending Payments Alert */}
+      {stats.pendingPayments > 0 && (
+        <div className="mb-6 p-4 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-lg border border-orange-200/50 dark:border-orange-700/50">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
+                <AlertCircle className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-orange-800 dark:text-orange-200">
+                  পেন্ডিং পেমেন্ট সতর্কতা
+                </h4>
+                <p className="text-sm text-orange-700 dark:text-orange-300">
+                  {stats.pendingPayments}টি বুকিং এর পেমেন্ট এখনো বাকি আছে
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => onCardClick("search-filter")}
+              className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors text-sm"
+            >
+              দেখুন
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Enhanced Main Dashboard Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
