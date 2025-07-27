@@ -50,7 +50,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     const newErrors: Record<string, string> = {};
 
     if (!formData.customerName.trim()) {
-      newErrors.customerName = "গ্রাহকের ��া�� আবশ্যিক";
+      newErrors.customerName = "গ্রাহকের ��াম আবশ্যিক";
     }
 
     if (!formData.mobile.trim()) {
@@ -158,7 +158,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
       if (success) {
         onSuccess();
       } else {
-        setErrors({ submit: "বুকিং আপড���ট করতে সম���্যা হয়েছে" });
+        setErrors({ submit: "বুকিং আপডেট করতে সম���্যা হয়েছে" });
       }
     } catch (error) {
       setErrors({ submit: "একটি ত্রুটি ঘটেছে" });
@@ -504,12 +504,14 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 <button
                   key={status.value}
                   type="button"
-                  onClick={() => handlePaymentStatusChange(status.value as any)}
+                  onClick={() => !isViewOnly && handlePaymentStatusChange(status.value as any)}
+                  disabled={isViewOnly}
                   className={cn(
                     "px-4 py-2 rounded-lg font-medium transition-all",
                     formData.paymentStatus === status.value
                       ? `bg-gradient-to-r ${status.color} text-white`
-                      : "bg-white/10 text-white/70 hover:bg-white/20"
+                      : "bg-white/10 text-white/70 hover:bg-white/20",
+                    isViewOnly && "opacity-50 cursor-not-allowed"
                   )}
                 >
                   {status.label}
