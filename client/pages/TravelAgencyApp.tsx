@@ -41,6 +41,29 @@ export default function TravelAgencyApp() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
+  // Initialize user session on component mount
+  useEffect(() => {
+    const savedUser = localStorage.getItem('air_musafir_user');
+    if (savedUser) {
+      try {
+        const userData = JSON.parse(savedUser);
+        // Validate user still exists in system
+        const validUser = dataService.validateUser(userData.username, userData.password);
+        if (validUser) {
+          setUser(validUser);
+          setAppState("dashboard");
+          setBreadcrumbs([
+            { label: "ড���যাশবোর্ড", path: "/dashboard", isActive: true },
+          ]);
+        } else {
+          localStorage.removeItem('air_musafir_user');
+        }
+      } catch (error) {
+        localStorage.removeItem('air_musafir_user');
+      }
+    }
+  }, []);
+
   // Check mobile screen size
   useEffect(() => {
     const checkMobile = () => {
