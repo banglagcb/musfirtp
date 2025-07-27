@@ -67,7 +67,7 @@ export default function Settings({ onClose }: SettingsProps) {
     darkMode: true,
     soundEffects: true,
     autoSave: true,
-
+    
     // Company Information
     companyName: "এয়ার মুসাফির টিকেট ম্যানেজমেন্ট সিস্টেম",
     companyAddress: "ঢাকা, বাংলাদেশ",
@@ -77,18 +77,18 @@ export default function Settings({ onClose }: SettingsProps) {
     companyLogo: "",
     tradeLicense: "",
     taxNumber: "",
-
+    
     // Security Settings
     sessionTimeout: "30",
     passwordExpiry: "90",
     twoFactorAuth: false,
     loginAttempts: "5",
-
+    
     // Printing & Export
     defaultPrintFormat: "A4",
     includeCompanyLogo: true,
     watermark: false,
-
+    
     // System Settings
     dataRetention: "365",
     backupFrequency: "weekly",
@@ -132,7 +132,7 @@ export default function Settings({ onClose }: SettingsProps) {
     try {
       // Save settings to localStorage
       localStorage.setItem("app_settings", JSON.stringify(settings));
-
+      
       // Apply dark mode setting immediately
       if (settings.darkMode) {
         document.documentElement.classList.add('dark');
@@ -164,7 +164,7 @@ export default function Settings({ onClose }: SettingsProps) {
       });
       return;
     }
-
+    
     if (newPassword.length < 6) {
       toast({
         title: "ত্রুটি!",
@@ -180,7 +180,7 @@ export default function Settings({ onClose }: SettingsProps) {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-
+      
       toast({
         title: "সফল!",
         description: "পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে",
@@ -195,7 +195,7 @@ export default function Settings({ onClose }: SettingsProps) {
   };
 
   const handleResetSettings = () => {
-    if (confirm("আপন��� কি নিশ্চিত যে সব সেটিংস রিসেট করতে চান?")) {
+    if (confirm("আপনি কি নিশ্চিত যে সব সেটিংস রিসেট করতে চান?")) {
       localStorage.removeItem("app_settings");
       window.location.reload();
     }
@@ -272,7 +272,7 @@ export default function Settings({ onClose }: SettingsProps) {
         localStorage.removeItem("travel_bookings");
         toast({
           title: "সফল!",
-          description: "সব ডেটা সফলভাবে মুছে ফেলা হয়েছে",
+          description: "সব ডেটা সফল���াবে মুছে ফেলা হয়েছে",
         });
       } catch (error) {
         toast({
@@ -290,72 +290,130 @@ export default function Settings({ onClose }: SettingsProps) {
         return (
           <div className="space-y-6">
             <div className="space-y-4">
-              <div>
-                <Label>মুদ্রা</Label>
-                <Select
-                  value={settings.currency}
-                  onValueChange={(value) =>
-                    handleSettingChange("currency", value)
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="BDT">টাকা (BDT)</SelectItem>
-                    <SelectItem value="USD">ডলার (USD)</SelectItem>
-                    <SelectItem value="EUR">ইউরো (EUR)</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label className="flex items-center space-x-2">
+                    <CreditCard className="w-4 h-4" />
+                    <span>মুদ্রা</span>
+                  </Label>
+                  <Select
+                    value={settings.currency}
+                    onValueChange={(value) =>
+                      handleSettingChange("currency", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="BDT">টাকা (BDT)</SelectItem>
+                      <SelectItem value="USD">ডলার (USD)</SelectItem>
+                      <SelectItem value="EUR">ইউরো (EUR)</SelectItem>
+                      <SelectItem value="INR">রুপি (INR)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label className="flex items-center space-x-2">
+                    <Languages className="w-4 h-4" />
+                    <span>ভাষা</span>
+                  </Label>
+                  <Select
+                    value={settings.language}
+                    onValueChange={(value) =>
+                      handleSettingChange("language", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="bn">বাংলা</SelectItem>
+                      <SelectItem value="en">English</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label className="flex items-center space-x-2">
+                    <Calendar className="w-4 h-4" />
+                    <span>তারিখ ফরম্যাট</span>
+                  </Label>
+                  <Select
+                    value={settings.dateFormat}
+                    onValueChange={(value) =>
+                      handleSettingChange("dateFormat", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="DD/MM/YYYY">DD/MM/YYYY</SelectItem>
+                      <SelectItem value="MM/DD/YYYY">MM/DD/YYYY</SelectItem>
+                      <SelectItem value="YYYY-MM-DD">YYYY-MM-DD</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label className="flex items-center space-x-2">
+                    <Clock className="w-4 h-4" />
+                    <span>সময় ফরম্যাট</span>
+                  </Label>
+                  <Select
+                    value={settings.timeFormat}
+                    onValueChange={(value) =>
+                      handleSettingChange("timeFormat", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="12">১২ ঘন্টা</SelectItem>
+                      <SelectItem value="24">২৪ ঘন্টা</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              <div>
-                <Label>তারিখ ফরম্যাট</Label>
-                <Select
-                  value={settings.dateFormat}
-                  onValueChange={(value) =>
-                    handleSettingChange("dateFormat", value)
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="DD/MM/YYYY">DD/MM/YYYY</SelectItem>
-                    <SelectItem value="MM/DD/YYYY">MM/DD/YYYY</SelectItem>
-                    <SelectItem value="YYYY-MM-DD">YYYY-MM-DD</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <div className="space-y-4 border-t pt-4">
+                <h4 className="font-medium flex items-center space-x-2">
+                  <Palette className="w-4 h-4" />
+                  <span>ইন্টারফেস সেটিংস</span>
+                </h4>
+                
+                <div className="flex items-center justify-between">
+                  <Label>ডার্ক মোড</Label>
+                  <Switch
+                    checked={settings.darkMode}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("darkMode", checked)
+                    }
+                  />
+                </div>
 
-              <div className="flex items-center justify-between">
-                <Label>নোটিফিকেশন</Label>
-                <Switch
-                  checked={settings.notifications}
-                  onCheckedChange={(checked) =>
-                    handleSettingChange("notifications", checked)
-                  }
-                />
-              </div>
+                <div className="flex items-center justify-between">
+                  <Label>অটো সেভ</Label>
+                  <Switch
+                    checked={settings.autoSave}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("autoSave", checked)
+                    }
+                  />
+                </div>
 
-              <div className="flex items-center justify-between">
-                <Label>অটো ব্যাকআপ</Label>
-                <Switch
-                  checked={settings.autoBackup}
-                  onCheckedChange={(checked) =>
-                    handleSettingChange("autoBackup", checked)
-                  }
-                />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <Label>ডার্ক মোড</Label>
-                <Switch
-                  checked={settings.darkMode}
-                  onCheckedChange={(checked) =>
-                    handleSettingChange("darkMode", checked)
-                  }
-                />
+                <div className="flex items-center justify-between">
+                  <Label>সাউন্ড ইফেক্ট</Label>
+                  <Switch
+                    checked={settings.soundEffects}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("soundEffects", checked)
+                    }
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -363,46 +421,98 @@ export default function Settings({ onClose }: SettingsProps) {
 
       case "company":
         return (
-          <div className="space-y-4">
-            <div>
-              <Label>কোম্পানির নাম</Label>
-              <Input
-                value={settings.companyName}
-                onChange={(e) =>
-                  handleSettingChange("companyName", e.target.value)
-                }
-              />
-            </div>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="md:col-span-2">
+                <Label className="flex items-center space-x-2">
+                  <Building className="w-4 h-4" />
+                  <span>কোম্পানির নাম</span>
+                </Label>
+                <Input
+                  value={settings.companyName}
+                  onChange={(e) =>
+                    handleSettingChange("companyName", e.target.value)
+                  }
+                />
+              </div>
 
-            <div>
-              <Label>ঠিকানা</Label>
-              <Input
-                value={settings.companyAddress}
-                onChange={(e) =>
-                  handleSettingChange("companyAddress", e.target.value)
-                }
-              />
-            </div>
+              <div className="md:col-span-2">
+                <Label className="flex items-center space-x-2">
+                  <MapPin className="w-4 h-4" />
+                  <span>ঠিকানা</span>
+                </Label>
+                <Textarea
+                  value={settings.companyAddress}
+                  onChange={(e) =>
+                    handleSettingChange("companyAddress", e.target.value)
+                  }
+                  rows={3}
+                />
+              </div>
 
-            <div>
-              <Label>ফ���ন নম্বর</Label>
-              <Input
-                value={settings.companyPhone}
-                onChange={(e) =>
-                  handleSettingChange("companyPhone", e.target.value)
-                }
-              />
-            </div>
+              <div>
+                <Label className="flex items-center space-x-2">
+                  <Phone className="w-4 h-4" />
+                  <span>ফোন নম্বর</span>
+                </Label>
+                <Input
+                  value={settings.companyPhone}
+                  onChange={(e) =>
+                    handleSettingChange("companyPhone", e.target.value)
+                  }
+                />
+              </div>
 
-            <div>
-              <Label>ইমেইল</Label>
-              <Input
-                type="email"
-                value={settings.companyEmail}
-                onChange={(e) =>
-                  handleSettingChange("companyEmail", e.target.value)
-                }
-              />
+              <div>
+                <Label className="flex items-center space-x-2">
+                  <Mail className="w-4 h-4" />
+                  <span>ইমেইল</span>
+                </Label>
+                <Input
+                  type="email"
+                  value={settings.companyEmail}
+                  onChange={(e) =>
+                    handleSettingChange("companyEmail", e.target.value)
+                  }
+                />
+              </div>
+
+              <div>
+                <Label className="flex items-center space-x-2">
+                  <Globe className="w-4 h-4" />
+                  <span>ওয়েবসাইট</span>
+                </Label>
+                <Input
+                  value={settings.companyWebsite}
+                  onChange={(e) =>
+                    handleSettingChange("companyWebsite", e.target.value)
+                  }
+                />
+              </div>
+
+              <div>
+                <Label className="flex items-center space-x-2">
+                  <FileText className="w-4 h-4" />
+                  <span>ট্রেড লাইসেন্স</span>
+                </Label>
+                <Input
+                  value={settings.tradeLicense}
+                  onChange={(e) =>
+                    handleSettingChange("tradeLicense", e.target.value)
+                  }
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <Label>কোম্পানি লোগো URL</Label>
+                <Input
+                  value={settings.companyLogo}
+                  onChange={(e) =>
+                    handleSettingChange("companyLogo", e.target.value)
+                  }
+                  placeholder="https://example.com/logo.png"
+                />
+              </div>
             </div>
           </div>
         );
@@ -423,16 +533,260 @@ export default function Settings({ onClose }: SettingsProps) {
               </p>
             </div>
 
-            <div className="space-y-4">
-              <Button variant="outline" className="w-full justify-start">
-                <Shield className="w-4 h-4 mr-2" />
-                পাসওয়ার্ড পরিবর্তন করুন
-              </Button>
+            <div className="space-y-6">
+              <div>
+                <h4 className="font-medium mb-4 flex items-center space-x-2">
+                  <Key className="w-4 h-4" />
+                  <span>পাসওয়ার্ড পরিবর্তন</span>
+                </h4>
+                <div className="space-y-3">
+                  <div>
+                    <Label>বর্তমান পাসওয়ার্ড</Label>
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute right-2 top-1/2 -translate-y-1/2"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="w-4 h-4" />
+                        ) : (
+                          <Eye className="w-4 h-4" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <Label>নতুন পাসওয়ার্ড</Label>
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                    />
+                  </div>
+                  
+                  <div>
+                    <Label>নিশ্চিতকরণ পাসওয়ার্ড</Label>
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                  </div>
+                  
+                  <Button onClick={handlePasswordChange} className="w-full">
+                    <Lock className="w-4 h-4 mr-2" />
+                    পাসওয়ার্ড পরিবর্তন করুন
+                  </Button>
+                </div>
+              </div>
 
-              <Button variant="outline" className="w-full justify-start">
-                <RefreshCw className="w-4 h-4 mr-2" />
-                সিকিউরিটি লগ দেখুন
-              </Button>
+              <div className="border-t pt-4">
+                <h4 className="font-medium mb-4">নিরাপত্তা সেটিংস</h4>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label>সেশন টাইমআউট (মিনিট)</Label>
+                      <Select
+                        value={settings.sessionTimeout}
+                        onValueChange={(value) =>
+                          handleSettingChange("sessionTimeout", value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="15">১৫ মিনিট</SelectItem>
+                          <SelectItem value="30">৩০ মিনিট</SelectItem>
+                          <SelectItem value="60">১ ঘন্টা</SelectItem>
+                          <SelectItem value="120">২ ঘন্টা</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label>লগইন প্রচেষ্টার সীমা</Label>
+                      <Select
+                        value={settings.loginAttempts}
+                        onValueChange={(value) =>
+                          handleSettingChange("loginAttempts", value)
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="3">৩ বার</SelectItem>
+                          <SelectItem value="5">৫ বার</SelectItem>
+                          <SelectItem value="10">১০ বার</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>টু-ফ্যাক্টর অথেন্টিকেশন</Label>
+                    <Switch
+                      checked={settings.twoFactorAuth}
+                      onCheckedChange={(checked) =>
+                        handleSettingChange("twoFactorAuth", checked)
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case "printing":
+        return (
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <h4 className="font-medium flex items-center space-x-2">
+                <Printer className="w-4 h-4" />
+                <span>প্রিন্টিং সেটিংস</span>
+              </h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label>ডিফল্ট প্রিন্ট ফরম্যাট</Label>
+                  <Select
+                    value={settings.defaultPrintFormat}
+                    onValueChange={(value) =>
+                      handleSettingChange("defaultPrintFormat", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="A4">A4</SelectItem>
+                      <SelectItem value="A5">A5</SelectItem>
+                      <SelectItem value="Letter">Letter</SelectItem>
+                      <SelectItem value="Thermal">Thermal</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Label>কোম্পানি লোগো অন্তর্ভুক্ত করুন</Label>
+                  <Switch
+                    checked={settings.includeCompanyLogo}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("includeCompanyLogo", checked)
+                    }
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Label>ওয়াটারমার্ক</Label>
+                  <Switch
+                    checked={settings.watermark}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("watermark", checked)
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case "notifications":
+        return (
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <h4 className="font-medium flex items-center space-x-2">
+                <Bell className="w-4 h-4" />
+                <span>নোটিফিকেশন সেটিংস</span>
+              </h4>
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>সিস্টেম নোটিফিকেশন</Label>
+                    <p className="text-sm text-gray-500">সাধারণ সিস্টেম আপডেট ও সতর্কতা</p>
+                  </div>
+                  <Switch
+                    checked={settings.notifications}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("notifications", checked)
+                    }
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>ইমেইল নোটিফিকেশন</Label>
+                    <p className="text-sm text-gray-500">গুরুত্বপূর্ণ আপডেটের জন্য ইমেইল</p>
+                  </div>
+                  <Switch
+                    checked={settings.emailNotifications}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("emailNotifications", checked)
+                    }
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>SMS নোটিফিকেশন</Label>
+                    <p className="text-sm text-gray-500">জরুরি সতর্কতার জন্য SMS</p>
+                  </div>
+                  <Switch
+                    checked={settings.smsNotifications}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("smsNotifications", checked)
+                    }
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label>অটো ব্যাকআপ</Label>
+                    <p className="text-sm text-gray-500">স্বয়ংক্রিয় ডেটা ব্যাকআপ</p>
+                  </div>
+                  <Switch
+                    checked={settings.autoBackup}
+                    onCheckedChange={(checked) =>
+                      handleSettingChange("autoBackup", checked)
+                    }
+                  />
+                </div>
+              </div>
+
+              {settings.autoBackup && (
+                <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
+                  <Label>ব্যাকআপের ফ্রিকোয়েন্সি</Label>
+                  <Select
+                    value={settings.backupFrequency}
+                    onValueChange={(value) =>
+                      handleSettingChange("backupFrequency", value)
+                    }
+                  >
+                    <SelectTrigger className="mt-2">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="daily">প্রতিদিন</SelectItem>
+                      <SelectItem value="weekly">সাপ্তাহিক</SelectItem>
+                      <SelectItem value="monthly">মাসিক</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
             </div>
           </div>
         );
@@ -442,7 +796,10 @@ export default function Settings({ onClose }: SettingsProps) {
           <div className="space-y-6">
             <div className="space-y-4">
               <div>
-                <h4 className="font-medium mb-2">ডেটা ব্যাকআপ</h4>
+                <h4 className="font-medium mb-2 flex items-center space-x-2">
+                  <Download className="w-4 h-4" />
+                  <span>ডেটা ব্যাকআপ</span>
+                </h4>
                 <Button
                   onClick={handleExportData}
                   className="w-full justify-start"
@@ -453,7 +810,10 @@ export default function Settings({ onClose }: SettingsProps) {
               </div>
 
               <div>
-                <h4 className="font-medium mb-2">ডেটা ইমপোর্ট</h4>
+                <h4 className="font-medium mb-2 flex items-center space-x-2">
+                  <Upload className="w-4 h-4" />
+                  <span>ডেটা ইমপোর্ট</span>
+                </h4>
                 <input
                   type="file"
                   accept=".json"
@@ -474,15 +834,58 @@ export default function Settings({ onClose }: SettingsProps) {
               </div>
 
               <div className="border-t pt-4">
-                <h4 className="font-medium mb-2 text-red-600">বিপজ্জনক কাজ</h4>
-                <Button
-                  variant="destructive"
-                  onClick={handleClearData}
-                  className="w-full justify-start"
-                >
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  সব ডেটা মুছে ফেলুন
-                </Button>
+                <h4 className="font-medium mb-2 flex items-center space-x-2">
+                  <HardDrive className="w-4 h-4" />
+                  <span>ডেটা পরিচালনা</span>
+                </h4>
+                <div className="space-y-3">
+                  <div>
+                    <Label>ডেটা ধরে রাখার সময় (দিন)</Label>
+                    <Select
+                      value={settings.dataRetention}
+                      onValueChange={(value) =>
+                        handleSettingChange("dataRetention", value)
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="90">৯০ দিন</SelectItem>
+                        <SelectItem value="180">১৮০ দিন</SelectItem>
+                        <SelectItem value="365">১ বছর</SelectItem>
+                        <SelectItem value="730">২ বছর</SelectItem>
+                        <SelectItem value="-1">স্থায়ী</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t pt-4">
+                <h4 className="font-medium mb-2 text-red-600 flex items-center space-x-2">
+                  <Trash2 className="w-4 h-4" />
+                  <span>বিপজ্জনক কাজ</span>
+                </h4>
+                <div className="space-y-3">
+                  <Button
+                    variant="destructive"
+                    onClick={handleClearData}
+                    className="w-full justify-start"
+                  >
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    সব ডেটা মুছে ফেলুন
+                  </Button>
+                  
+                  <Button
+                    variant="outline"
+                    onClick={handleResetSettings}
+                    className="w-full justify-start border-red-200 text-red-600 hover:bg-red-50"
+                  >
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    সেটিংস রিসেট করুন
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -534,7 +937,7 @@ export default function Settings({ onClose }: SettingsProps) {
                   )}
                 >
                   <tab.icon className="w-5 h-5" />
-                  <span>{tab.label}</span>
+                  <span className="text-sm">{tab.label}</span>
                 </button>
               ))}
             </nav>
