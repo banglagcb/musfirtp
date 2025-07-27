@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { AIRLINES, ROUTES, User } from "@shared/travel-types";
 import dataService from "@/services/dataService";
 import ticketInventoryService from "@/services/ticketInventoryService";
+import TicketDetails from "./TicketDetails";
 
 interface NewBookingFormProps {
   user: User;
@@ -79,7 +80,7 @@ export default function NewBookingForm({
     }
 
     if (!formData.airline) {
-      newErrors.airline = "এয়ারলাইন নির্বাচন করুন";
+      newErrors.airline = "এয়ারলা��ন নির্বাচন করুন";
     }
 
     if (!formData.purchasePrice || isNaN(Number(formData.purchasePrice))) {
@@ -313,7 +314,7 @@ export default function NewBookingForm({
                 {/* Passport */}
                 <div>
                   <label className="block text-white/70 text-sm mb-2">
-                    পাসপোর্ট নম্বর *
+                    পাসপোর্ট নম��বর *
                   </label>
                   <div className="relative">
                     <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
