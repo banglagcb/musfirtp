@@ -13,6 +13,7 @@ import {
 import { useApp, useTranslation } from '@/contexts/AppContext';
 import { User } from '@shared/travel-types';
 import { cn } from '@/lib/utils';
+import { usePerformanceMonitor } from '@/components/PerformanceMonitor';
 
 interface AppHeaderProps {
   user: User;
