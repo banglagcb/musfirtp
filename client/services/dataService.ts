@@ -232,7 +232,9 @@ class DataService {
     const today = new Date().toISOString().split("T")[0];
 
     const todayBookings = bookings.filter((booking) => {
-      const bookingDate = booking.createdAt ? new Date(booking.createdAt).toISOString().split("T")[0] : today;
+      const bookingDate = booking.createdAt
+        ? new Date(booking.createdAt).toISOString().split("T")[0]
+        : today;
       return bookingDate === today;
     });
 
@@ -283,14 +285,19 @@ class DataService {
     const monthStr = month.toString().padStart(2, "0");
     const yearMonth = `${year}-${monthStr}`;
 
-    const monthlyBookings = bookings.filter((booking) =>
-      booking.bookingDate.startsWith(yearMonth),
-    );
+    const monthlyBookings = bookings.filter((booking) => {
+      const bookingDate = booking.createdAt
+        ? booking.createdAt.substring(0, 7)
+        : yearMonth;
+      return bookingDate === yearMonth;
+    });
 
     const reportMap = new Map<string, ReportData>();
 
     monthlyBookings.forEach((booking) => {
-      const date = booking.bookingDate;
+      const date = booking.createdAt
+        ? booking.createdAt.split("T")[0]
+        : `${yearMonth}-01`;
 
       if (!reportMap.has(date)) {
         reportMap.set(date, {
@@ -306,15 +313,16 @@ class DataService {
       report.totalBookings++;
 
       if (booking.paymentStatus === "paid") {
-        report.totalRevenue += booking.salePrice;
-        report.totalCost += booking.purchasePrice;
-        report.totalProfit += booking.salePrice - booking.purchasePrice;
+        report.totalRevenue += booking.sellingPrice || 0;
+        report.totalCost += booking.costPrice || 0;
+        report.totalProfit +=
+          (booking.sellingPrice || 0) - (booking.costPrice || 0);
       } else if (booking.paymentStatus === "partial") {
-        report.totalRevenue += booking.paidAmount;
-        const percentage = booking.paidAmount / booking.salePrice;
-        const partialCost = booking.purchasePrice * percentage;
+        const partialRevenue = (booking.sellingPrice || 0) * 0.5;
+        const partialCost = (booking.costPrice || 0) * 0.5;
+        report.totalRevenue += partialRevenue;
         report.totalCost += partialCost;
-        report.totalProfit += booking.paidAmount - partialCost;
+        report.totalProfit += partialRevenue - partialCost;
       }
     });
 
@@ -327,44 +335,51 @@ class DataService {
   exportToCSV(): string {
     const bookings = this.getBookings();
     const headers = [
+      "PNR নম্বর",
       "গ্রাহকের নাম",
       "মোবাইল",
-      "পাসপোর্ট",
       "ইমেইল",
+      "পাসপোর্ট",
       "ফ্লাইট তারিখ",
       "রুট",
       "এয়ারলাইন",
+      "যাত্রী সংখ্যা",
       "ক্রয়মূল্য",
       "বিক্রয়মূল্য",
-      "পেমেন���ট স্ট্যাটাস",
-      "পেইড পরিমাণ",
+      "মুনাফা",
+      "পেমেন্ট স্ট্যাটাস",
       "বুকিং তারিখ",
       "নোট",
     ];
 
     const csvContent = [
       headers.join(","),
-      ...bookings.map((booking) =>
-        [
+      ...bookings.map((booking) => {
+        const profit = (booking.sellingPrice || 0) - (booking.costPrice || 0);
+        return [
+          booking.pnrNumber || "",
           booking.customerName,
-          booking.mobile,
-          booking.passport,
-          booking.email,
+          booking.customerPhone,
+          booking.customerEmail || "",
+          booking.passportNumber || "",
           booking.flightDate,
           booking.route,
           booking.airline,
-          booking.purchasePrice,
-          booking.salePrice,
+          booking.passengerCount || 1,
+          booking.costPrice || 0,
+          booking.sellingPrice || 0,
+          profit,
           booking.paymentStatus === "paid"
             ? "পেইড"
             : booking.paymentStatus === "pending"
               ? "পেন্ডিং"
               : "আংশিক",
-          booking.paidAmount,
-          booking.bookingDate,
+          booking.createdAt
+            ? new Date(booking.createdAt).toLocaleDateString("bn-BD")
+            : "",
           booking.notes || "",
-        ].join(","),
-      ),
+        ].join(",");
+      }),
     ].join("\n");
 
     return csvContent;
