@@ -237,7 +237,7 @@ export default function NewBookingForm({
                 PNR নম্বর *
               </Label>
               <Input
-                placeholder="PNR নম্বর লিখুন"
+                placeholder="PNR নম্বর ���িখুন"
                 value={formData.pnrNumber}
                 onChange={(e) => handleInputChange("pnrNumber", e.target.value)}
                 className={cn(
@@ -325,6 +325,7 @@ export default function NewBookingForm({
               </Label>
               <Input
                 type="date"
+                placeholder="mm/dd/yyyy"
                 value={formData.flightDate}
                 onChange={(e) => handleInputChange("flightDate", e.target.value)}
                 className={cn(
@@ -371,7 +372,7 @@ export default function NewBookingForm({
             <div>
               <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
                 <DollarSign className="w-4 h-4 mr-2" />
-                ক্রয়মূল্য (টাকা) *
+                ��্রয়মূল্য (টাকা) *
               </Label>
               <Input
                 type="number"
