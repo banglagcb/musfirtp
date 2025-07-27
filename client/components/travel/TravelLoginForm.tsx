@@ -204,7 +204,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="ইউজারন���ম"
+            placeholder="ইউজারনেম"
             className={cn(
               "w-full pl-10 pr-12 py-4 bg-white/10 backdrop-blur-md border rounded-xl",
               "text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-all duration-300",
@@ -310,7 +310,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           {isLoading ? (
             <div className="flex items-center justify-center space-x-2">
               <Loader2 className="w-5 h-5 animate-spin" />
-              <span>লগইন হচ্ছে...</span>
+              <span>লগ���ন হচ্ছে...</span>
             </div>
           ) : (
             "লগইন করুন"
