@@ -87,7 +87,10 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-2xl font-bold text-white"
+          className={cn(
+            "text-2xl font-bold",
+            theme === 'dark' ? "text-white" : "text-gray-800"
+          )}
         >
           সফলভাবে লগইন হয়েছে!
         </motion.h2>
@@ -95,7 +98,9 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-white/70"
+          className={cn(
+            theme === 'dark' ? "text-white/70" : "text-gray-600"
+          )}
         >
           ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...
         </motion.p>
@@ -174,7 +179,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             theme === 'dark' ? "text-white/90" : "text-gray-700"
           )}
         >
-          {language === 'bn' ? 'ট্রাভেল ম্যানেজমে��্ট সিস্টেম' : 'Travel Management System'}
+          {language === 'bn' ? 'ট্রাভেল ম্যানেজমেন্ট সিস্টেম' : 'Travel Management System'}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
@@ -184,7 +189,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             theme === 'dark' ? "text-white/70" : "text-gray-600"
           )}
         >
-          {language === 'bn' ? 'আপনার লগইন তথ্য প্রবেশ করান' : 'Enter your login credentials'}
+          {language === 'bn' ? 'আপনা�� লগইন তথ্য প্রবেশ করান' : 'Enter your login credentials'}
         </motion.p>
       </div>
 
