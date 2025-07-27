@@ -180,6 +180,7 @@ export default function TravelAgencyApp() {
                 "বুকিং ��ডিট করুন",
                 <EditBookingForm
                   booking={booking}
+                  user={user!}
                   onClose={() => closeModal("edit-booking")}
                   onSuccess={() => {
                     closeModal("edit-booking");
@@ -227,7 +228,7 @@ export default function TravelAgencyApp() {
               closeModal(cardId);
               openModal(
                 "bulk-purchase",
-                "বাল্ক টিকেট ক্রয়",
+                "বাল্ক ট��কেট ক্রয়",
                 <BulkTicketPurchaseForm
                   onClose={() => closeModal("bulk-purchase")}
                   onSuccess={() => {
