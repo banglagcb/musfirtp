@@ -260,49 +260,18 @@ export default function TravelAgencyApp() {
 
   if (appState === "login") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 lg:p-6 relative overflow-hidden">
-        {/* Enhanced Animated Background */}
-        <div className="absolute inset-0">
-          {[...Array(30)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{
-                x: [0, Math.random() * 200 - 100],
-                y: [0, Math.random() * 200 - 100],
-                opacity: [0, 0.15, 0],
-                scale: [0, 1.5, 0],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 3,
-                repeat: Infinity,
-                delay: Math.random() * 3,
-                ease: "easeInOut",
-              }}
-              className="absolute w-2 h-2 lg:w-3 lg:h-3 bg-white rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Dark Mode Toggle */}
-        <motion.button
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 lg:p-6">
+        {/* Simple Dark Mode Toggle */}
+        <button
           onClick={toggleDarkMode}
-          className="absolute top-4 lg:top-6 right-4 lg:right-6 p-3 lg:p-4 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors"
+          className="absolute top-4 right-4 p-3 bg-white/10 rounded-lg border border-white/20 text-white hover:bg-white/20 transition-colors"
         >
           {isDarkMode ? (
-            <Sun className="w-5 h-5 lg:w-6 lg:h-6" />
+            <Sun className="w-5 h-5" />
           ) : (
-            <Moon className="w-5 h-5 lg:w-6 lg:h-6" />
+            <Moon className="w-5 h-5" />
           )}
-        </motion.button>
+        </button>
 
         {/* Login Form */}
         <TravelLoginForm onLoginSuccess={handleLoginSuccess} />
