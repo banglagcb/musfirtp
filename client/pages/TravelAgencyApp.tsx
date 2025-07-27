@@ -29,7 +29,7 @@ interface OpenModal {
   size?: "sm" | "md" | "lg" | "xl" | "full";
 }
 
-export default function TravelAgencyApp() {
+function TravelAgencyAppInner() {
   const [appState, setAppState] = useState<AppState>("login");
   const [user, setUser] = useState<User | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
