@@ -60,7 +60,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     }
 
     if (!formData.passport.trim()) {
-      newErrors.passport = "পাসপোর্ট নম্বর আবশ্যিক";
+      newErrors.passport = "পাসপোর্ট নম্বর আবশ্��িক";
     }
 
     if (!formData.email.trim()) {
@@ -110,10 +110,16 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    // Prevent submission if in view-only mode
+    if (isViewOnly) {
+      alert("বিক্রিত টিকেট পরিবর্তন করা যাবে না। কেবল দেখা যায়।");
+      return;
+    }
+
     const newErrors = validateForm();
     setErrors(newErrors);
-    
+
     if (Object.keys(newErrors).length > 0) {
       return;
     }
