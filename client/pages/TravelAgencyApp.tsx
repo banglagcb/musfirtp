@@ -129,7 +129,7 @@ export default function TravelAgencyApp() {
     const cardTitles: Record<string, string> = {
       "new-booking": "নতুন ব��কিং",
       "bookings-list": "বুকিং লিস্ট",
-      "search-filter": "সার্চ ও ফিল্টার",
+      "search-filter": "সার্চ ও ���িল্টার",
       reports: "রিপোর্ট",
       "export-data": "ডেটা এক��সপোর্ট",
       settings: "সেটিংস",
@@ -292,7 +292,7 @@ export default function TravelAgencyApp() {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-              ট্রাভেল এজেন্সি ম্যানেজমেন্ট
+              এয়ার মুসাফির টিকেট ম্যানেজমেন্ট সিস্টেম
             </h1>
             {user && (
               <span className="text-sm text-gray-600 dark:text-gray-300">
