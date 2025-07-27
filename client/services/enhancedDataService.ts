@@ -40,12 +40,13 @@ class EnhancedDataService {
     }
   }
 
-  async addBooking(booking: Omit<Booking, 'id' | 'bookingDate'>): Promise<string> {
+  async addBooking(booking: Omit<Booking, 'id' | 'bookingDate'>): Promise<Booking> {
     try {
       await this.simulateDelay(800);
       return dataService.addBooking(booking);
     } catch (error) {
       this.handleError('নতুন বুকিং যোগ', error);
+      throw error;
     }
   }
 
