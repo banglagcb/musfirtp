@@ -295,14 +295,10 @@ export default function TravelDashboard({
             className={cn(
               "relative group cursor-pointer rounded-2xl p-6 border border-white/20",
               "bg-white/10 backdrop-blur-md hover:bg-white/20",
-              "transition-all duration-500 hover:shadow-3xl hover:shadow-purple-500/40",
+              "transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25",
               "overflow-hidden",
-              "transform-gpu perspective-1000",
               "hover:border-white/40",
             )}
-            style={{
-              transformStyle: "preserve-3d",
-            }}
           >
             {/* Background Gradient */}
             <div
