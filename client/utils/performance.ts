@@ -1,4 +1,5 @@
-import { useCallback, useRef, useEffect, useMemo } from 'react';
+import { useCallback, useRef, useEffect, useMemo, useState } from 'react';
+import React from 'react';
 
 // Debounce hook for search/filter inputs
 export function useDebounce<T>(value: T, delay: number): T {
@@ -164,7 +165,7 @@ export function withPerformanceMonitoring<P extends object>(
       return endTimer;
     });
 
-    return <Component {...props} />;
+    return React.createElement(Component, props);
   });
 }
 
@@ -196,7 +197,10 @@ export function useOptimizedImage(src: string, placeholder?: string) {
 export function analyzeBundleUsage() {
   if (typeof window === 'undefined') return;
 
-  const loadTimes = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+  const navigationEntries = performance.getEntriesByType('navigation');
+  if (navigationEntries.length === 0) return;
+  
+  const loadTimes = navigationEntries[0] as PerformanceNavigationTiming;
   const paintTimes = performance.getEntriesByType('paint');
   
   console.group('🚀 Performance Metrics');
