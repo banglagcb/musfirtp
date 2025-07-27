@@ -37,7 +37,7 @@ export const translations = {
     edit: 'এডিট',
     view: 'দেখুন',
     print: 'প্রিন্ট করুন',
-    export: 'এক্সপোর্ট',
+    export: 'এক্সপ��র্ট',
     search: 'সার্চ করুন',
     filter: 'ফিল্টার',
     clear: 'ক্লিয়ার',
@@ -55,7 +55,7 @@ export const translations = {
     // User
     owner: 'মালিক',
     manager: 'ম্যানেজার',
-    welcome: 'স্���াগতম',
+    welcome: 'স্বাগতম',
     logout: 'লগআউট',
     
     // Forms
@@ -72,7 +72,7 @@ export const translations = {
     
     // Status
     paid: 'পেইড',
-    pending: 'পেন্ডিং',
+    pending: 'প���ন্ডিং',
     partial: 'আংশিক',
     
     // Stats
@@ -219,7 +219,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
   
-  const value: AppContextType = {
+  // Memoize context value to prevent unnecessary re-renders
+  const value: AppContextType = useMemo(() => ({
     theme,
     setTheme,
     toggleTheme,
@@ -231,7 +232,19 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     isMobile,
     isTablet,
     isDesktop,
-  };
+  }), [
+    theme,
+    setTheme,
+    toggleTheme,
+    language,
+    setLanguage,
+    toggleLanguage,
+    isLoading,
+    setIsLoading,
+    isMobile,
+    isTablet,
+    isDesktop,
+  ]);
   
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
