@@ -71,9 +71,10 @@ function TravelAgencyAppInner() {
       }
     }
 
-    // Bundle analysis in production
+    // Bundle analysis and service worker registration in production
     if (process.env.NODE_ENV === 'production') {
       setTimeout(() => analyzeBundleUsage(), 1000);
+      registerServiceWorker();
     }
 
     return endTimer;
@@ -242,7 +243,7 @@ function TravelAgencyAppInner() {
               closeModal(cardId);
               openModal(
                 "bulk-purchase",
-                "বাল���ক টিকেট ক্রয়",
+                "বাল্ক টিকেট ক্রয়",
                 <BulkTicketPurchaseForm
                   onClose={() => closeModal("bulk-purchase")}
                   onSuccess={() => {
