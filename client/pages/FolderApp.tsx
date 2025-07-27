@@ -34,36 +34,47 @@ export default function FolderApp() {
 
   const handleLoginSuccess = () => {
     setAppState("dashboard");
-    setBreadcrumbs([{ label: "Dashboard", path: "/dashboard", isActive: true }]);
+    setBreadcrumbs([
+      { label: "Dashboard", path: "/dashboard", isActive: true },
+    ]);
   };
 
-  const openWindow = (id: string, title: string, component: React.ReactNode) => {
-    const existingWindow = openWindows.find(w => w.id === id);
-    
+  const openWindow = (
+    id: string,
+    title: string,
+    component: React.ReactNode,
+  ) => {
+    const existingWindow = openWindows.find((w) => w.id === id);
+
     if (existingWindow) {
       // Bring existing window to front
-      setOpenWindows(prev => prev.map(w => 
-        w.id === id 
-          ? { ...w, isOpen: true, state: "popup", zIndex: nextZIndex }
-          : w
-      ));
-      setNextZIndex(prev => prev + 1);
+      setOpenWindows((prev) =>
+        prev.map((w) =>
+          w.id === id
+            ? { ...w, isOpen: true, state: "popup", zIndex: nextZIndex }
+            : w,
+        ),
+      );
+      setNextZIndex((prev) => prev + 1);
     } else {
       // Create new window
-      setOpenWindows(prev => [...prev, {
-        id,
-        title,
-        component,
-        isOpen: true,
-        state: "popup",
-        zIndex: nextZIndex
-      }]);
-      setNextZIndex(prev => prev + 1);
+      setOpenWindows((prev) => [
+        ...prev,
+        {
+          id,
+          title,
+          component,
+          isOpen: true,
+          state: "popup",
+          zIndex: nextZIndex,
+        },
+      ]);
+      setNextZIndex((prev) => prev + 1);
     }
   };
 
   const closeWindow = (id: string) => {
-    setOpenWindows(prev => prev.filter(w => w.id !== id));
+    setOpenWindows((prev) => prev.filter((w) => w.id !== id));
   };
 
   const handleDashboardCardClick = (cardId: string) => {
@@ -75,54 +86,69 @@ export default function FolderApp() {
       reports: "Reports",
       calendar: "Calendar",
       security: "Security",
-      performance: "Performance"
+      performance: "Performance",
     };
 
     const title = cardTitles[cardId] || cardId;
-    
+
     let component;
     if (cardId === "reports") {
-      component = <ReportsPage onSubPageClick={(subPageId) => handleReportsSubPage(subPageId)} />;
+      component = (
+        <ReportsPage
+          onSubPageClick={(subPageId) => handleReportsSubPage(subPageId)}
+        />
+      );
     } else {
-      component = <PlaceholderPage title={title} onBack={() => closeWindow(cardId)} />;
+      component = (
+        <PlaceholderPage title={title} onBack={() => closeWindow(cardId)} />
+      );
     }
 
     openWindow(cardId, title, component);
-    
+
     // Update breadcrumbs
     setBreadcrumbs([
       { label: "Dashboard", path: "/dashboard" },
-      { label: title, path: `/${cardId}`, isActive: true }
+      { label: title, path: `/${cardId}`, isActive: true },
     ]);
   };
 
   const handleReportsSubPage = (subPageId: string) => {
     const subPageTitles: Record<string, string> = {
       sales: "Sales Reports",
-      analytics: "Analytics Reports", 
-      financial: "Financial Reports"
+      analytics: "Analytics Reports",
+      financial: "Financial Reports",
     };
 
     const title = subPageTitles[subPageId] || subPageId;
-    const component = <PlaceholderPage title={title} onBack={() => closeWindow(`reports-${subPageId}`)} />;
-    
+    const component = (
+      <PlaceholderPage
+        title={title}
+        onBack={() => closeWindow(`reports-${subPageId}`)}
+      />
+    );
+
     openWindow(`reports-${subPageId}`, title, component);
-    
+
     // Update breadcrumbs for nested navigation
     setBreadcrumbs([
       { label: "Dashboard", path: "/dashboard" },
       { label: "Reports", path: "/reports" },
-      { label: title, path: `/reports/${subPageId}`, isActive: true }
+      { label: title, path: `/reports/${subPageId}`, isActive: true },
     ]);
   };
 
   const handleBreadcrumbClick = (path: string) => {
     if (path === "/") {
       setAppState("dashboard");
-      setBreadcrumbs([{ label: "Dashboard", path: "/dashboard", isActive: true }]);
+      setBreadcrumbs([
+        { label: "Dashboard", path: "/dashboard", isActive: true },
+      ]);
       setOpenWindows([]);
     } else if (path === "/dashboard") {
-      setBreadcrumbs([{ label: "Dashboard", path: "/dashboard", isActive: true }]);
+      setBreadcrumbs([
+        { label: "Dashboard", path: "/dashboard", isActive: true },
+      ]);
       setOpenWindows([]);
     }
   };
@@ -132,7 +158,7 @@ export default function FolderApp() {
   };
 
   // Minimized windows dock
-  const minimizedWindows = openWindows.filter(w => w.state === "minimized");
+  const minimizedWindows = openWindows.filter((w) => w.state === "minimized");
 
   if (appState === "login") {
     return (
@@ -146,18 +172,18 @@ export default function FolderApp() {
                 x: [0, Math.random() * 100 - 50],
                 y: [0, Math.random() * 100 - 50],
                 opacity: [0, 0.1, 0],
-                scale: [0, 1, 0]
+                scale: [0, 1, 0],
               }}
               transition={{
                 duration: 3 + Math.random() * 2,
                 repeat: Infinity,
                 delay: Math.random() * 2,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
               className="absolute w-2 h-2 bg-white rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
+                top: `${Math.random() * 100}%`,
               }}
             />
           ))}
@@ -173,7 +199,11 @@ export default function FolderApp() {
           onClick={toggleDarkMode}
           className="absolute top-6 right-6 p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors"
         >
-          {isDarkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+          {isDarkMode ? (
+            <Sun className="w-6 h-6" />
+          ) : (
+            <Moon className="w-6 h-6" />
+          )}
         </motion.button>
 
         {/* Login Form */}
@@ -194,7 +224,11 @@ export default function FolderApp() {
         onClick={toggleDarkMode}
         className="fixed top-6 right-6 p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors z-50"
       >
-        {isDarkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+        {isDarkMode ? (
+          <Sun className="w-6 h-6" />
+        ) : (
+          <Moon className="w-6 h-6" />
+        )}
       </motion.button>
 
       {/* Breadcrumbs */}
@@ -204,8 +238,8 @@ export default function FolderApp() {
           animate={{ opacity: 1, y: 0 }}
           className="fixed top-6 left-6 z-40"
         >
-          <Breadcrumbs 
-            items={breadcrumbs} 
+          <Breadcrumbs
+            items={breadcrumbs}
             onItemClick={handleBreadcrumbClick}
           />
         </motion.div>
@@ -217,7 +251,9 @@ export default function FolderApp() {
         animate={{ opacity: 1 }}
         className={cn(
           "transition-all duration-500",
-          openWindows.some(w => w.state === "fullscreen") ? "blur-sm scale-95" : ""
+          openWindows.some((w) => w.state === "fullscreen")
+            ? "blur-sm scale-95"
+            : "",
         )}
       >
         <Dashboard onCardClick={handleDashboardCardClick} />
@@ -251,11 +287,15 @@ export default function FolderApp() {
                 key={window.id}
                 whileHover={{ scale: 1.1, y: -5 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => setOpenWindows(prev => prev.map(w => 
-                  w.id === window.id 
-                    ? { ...w, state: "popup", zIndex: nextZIndex }
-                    : w
-                ))}
+                onClick={() =>
+                  setOpenWindows((prev) =>
+                    prev.map((w) =>
+                      w.id === window.id
+                        ? { ...w, state: "popup", zIndex: nextZIndex }
+                        : w,
+                    ),
+                  )
+                }
                 className="p-3 bg-gradient-to-r from-folder-primary to-folder-secondary rounded-xl text-white shadow-glow flex items-center space-x-2"
               >
                 <Folder className="w-5 h-5" />
@@ -275,18 +315,18 @@ export default function FolderApp() {
               x: [0, Math.random() * 200 - 100],
               y: [0, Math.random() * 200 - 100],
               opacity: [0, 0.05, 0],
-              scale: [0, 1, 0]
+              scale: [0, 1, 0],
             }}
             transition={{
               duration: 4 + Math.random() * 2,
               repeat: Infinity,
               delay: Math.random() * 3,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
             className="absolute w-3 h-3 bg-gradient-to-r from-folder-primary to-folder-secondary rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`
+              top: `${Math.random() * 100}%`,
             }}
           />
         ))}

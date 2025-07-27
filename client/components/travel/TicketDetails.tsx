@@ -22,7 +22,10 @@ interface TicketDetailsProps {
   onClose: () => void;
 }
 
-export default function TicketDetails({ booking, onClose }: TicketDetailsProps) {
+export default function TicketDetails({
+  booking,
+  onClose,
+}: TicketDetailsProps) {
   const [isPrinting, setIsPrinting] = useState(false);
 
   const handlePrint = () => {
@@ -193,7 +196,11 @@ export default function TicketDetails({ booking, onClose }: TicketDetailsProps) 
                 {isPrinting ? (
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                   >
                     <Printer className="w-5 h-5" />
                   </motion.div>
@@ -313,11 +320,13 @@ export default function TicketDetails({ booking, onClose }: TicketDetailsProps) 
                     </span>
                   </div>
                   <div className="print-field">
-                    <span className="print-field-label">পেমেন্ট স্ট্যাটাস:</span>
+                    <span className="print-field-label">
+                      পেমেন্ট স্ট্যাটাস:
+                    </span>
                     <span
                       className={cn(
                         "print-field-value px-3 py-1 rounded-full text-sm font-semibold",
-                        getPaymentStatusColor(booking.paymentStatus)
+                        getPaymentStatusColor(booking.paymentStatus),
                       )}
                     >
                       {getPaymentStatusText(booking.paymentStatus)}
@@ -333,17 +342,23 @@ export default function TicketDetails({ booking, onClose }: TicketDetailsProps) 
                     <FileText className="w-6 h-6" />
                     <span>অতিরিক্ত তথ্য</span>
                   </h2>
-                  <p className="text-gray-700 leading-relaxed">{booking.notes}</p>
+                  <p className="text-gray-700 leading-relaxed">
+                    {booking.notes}
+                  </p>
                 </div>
               )}
 
               {/* Important Notes */}
               <div className="print-section bg-red-50 border-red-200">
-                <h2 className="print-section-title text-red-600">গুরুত্বপূর্ণ নির্দেশনা</h2>
+                <h2 className="print-section-title text-red-600">
+                  গুরুত্বপূর্ণ নির্দেশনা
+                </h2>
                 <ul className="list-disc list-inside space-y-2 text-gray-700">
                   <li>ফ্লাইটের কমপক্ষে ২ ঘন্টা আগে এয়ারপোর্টে পৌঁছান</li>
                   <li>পাসপোর্ট এবং ভিসা সাথে রাখুন</li>
-                  <li>টিকেটের যেকোনো পরিবর্তনের জন���য আমাদের সাথে যোগাযোগ করুন</li>
+                  <li>
+                    টিকেটের যেকোনো পরিবর্তনের জন���য আমাদের সাথে যোগাযোগ করুন
+                  </li>
                   <li>এই টিকেটটি প্রিন্ট করে সাথে রাখুন</li>
                 </ul>
               </div>
@@ -352,7 +367,9 @@ export default function TicketDetails({ booking, onClose }: TicketDetailsProps) 
               <div className="print-section bg-blue-50 border-blue-200">
                 <h2 className="print-section-title">যোগাযোগ</h2>
                 <div className="text-center">
-                  <p className="text-lg font-semibold text-blue-600 mb-2">Air-Musafir ট্রাভেল এজেন্সি</p>
+                  <p className="text-lg font-semibold text-blue-600 mb-2">
+                    Air-Musafir ট্রাভেল এজেন্সি
+                  </p>
                   <p className="text-gray-600">
                     যেকোনো সহায়তার জন্য আমাদের সাথে যোগাযোগ করুন
                   </p>
@@ -364,7 +381,10 @@ export default function TicketDetails({ booking, onClose }: TicketDetailsProps) 
 
               {/* Print Footer */}
               <div className="print-footer">
-                <p>© {new Date().getFullYear()} Air-Musafir ট্রাভেল এজেন্সি - সকল অধিকার সংরক্ষিত</p>
+                <p>
+                  © {new Date().getFullYear()} Air-Musafir ট্রাভেল এজেন্সি -
+                  সকল অধিকার সংরক্ষিত
+                </p>
                 <p>প্রিন্ট তারিখ: {formatDate(new Date().toISOString())}</p>
               </div>
             </div>

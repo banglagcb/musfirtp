@@ -11,7 +11,7 @@ import {
   Save,
   X,
   MapPin,
-  Edit3
+  Edit3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AIRLINES, ROUTES, Booking, User } from "@shared/travel-types";
@@ -24,7 +24,12 @@ interface EditBookingFormProps {
   onSuccess: () => void;
 }
 
-export default function EditBookingForm({ booking, user, onClose, onSuccess }: EditBookingFormProps) {
+export default function EditBookingForm({
+  booking,
+  user,
+  onClose,
+  onSuccess,
+}: EditBookingFormProps) {
   const [formData, setFormData] = useState({
     customerName: booking.customerName,
     mobile: booking.mobile,
@@ -35,16 +40,17 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     airline: booking.airline,
     purchasePrice: booking.purchasePrice.toString(),
     salePrice: booking.salePrice.toString(),
-    paymentStatus: booking.paymentStatus as 'paid' | 'pending' | 'partial',
+    paymentStatus: booking.paymentStatus as "paid" | "pending" | "partial",
     paidAmount: booking.paidAmount.toString(),
-    notes: booking.notes || ""
+    notes: booking.notes || "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Check if this booking should be view-only for managers
-  const isViewOnly = user.role === "manager" && booking.paymentStatus === "paid";
+  const isViewOnly =
+    user.role === "manager" && booking.paymentStatus === "paid";
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -91,17 +97,18 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
 
     const purchasePrice = Number(formData.purchasePrice);
     const salePrice = Number(formData.salePrice);
-    
+
     if (salePrice <= purchasePrice) {
       newErrors.salePrice = "বিক্রয়মূল্য ক্রয়মূল্যের চেয়ে বেশি হতে হবে";
     }
 
-    if (formData.paymentStatus === 'partial') {
+    if (formData.paymentStatus === "partial") {
       const paidAmount = Number(formData.paidAmount);
       if (!formData.paidAmount || isNaN(paidAmount)) {
         newErrors.paidAmount = "পেইড পরিমাণ আবশ্যিক";
       } else if (paidAmount <= 0 || paidAmount >= salePrice) {
-        newErrors.paidAmount = "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে ��ম হতে হবে";
+        newErrors.paidAmount =
+          "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে ��ম হতে হবে";
       }
     }
 
@@ -129,9 +136,9 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     try {
       // Calculate paid amount based on payment status
       let paidAmount = 0;
-      if (formData.paymentStatus === 'paid') {
+      if (formData.paymentStatus === "paid") {
         paidAmount = Number(formData.salePrice);
-      } else if (formData.paymentStatus === 'partial') {
+      } else if (formData.paymentStatus === "partial") {
         paidAmount = Number(formData.paidAmount);
       }
 
@@ -147,14 +154,14 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
         salePrice: Number(formData.salePrice),
         paymentStatus: formData.paymentStatus,
         paidAmount,
-        notes: formData.notes.trim()
+        notes: formData.notes.trim(),
       };
 
       // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       const success = dataService.updateBooking(booking.id, updatedBooking);
-      
+
       if (success) {
         onSuccess();
       } else {
@@ -168,19 +175,26 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    
+    setFormData((prev) => ({ ...prev, [field]: value }));
+
     // Clear error when user starts typing
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: "" }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
 
-  const handlePaymentStatusChange = (status: 'paid' | 'pending' | 'partial') => {
-    setFormData(prev => ({
+  const handlePaymentStatusChange = (
+    status: "paid" | "pending" | "partial",
+  ) => {
+    setFormData((prev) => ({
       ...prev,
       paymentStatus: status,
-      paidAmount: status === 'paid' ? prev.salePrice : status === 'pending' ? '0' : prev.paidAmount
+      paidAmount:
+        status === "paid"
+          ? prev.salePrice
+          : status === "pending"
+            ? "0"
+            : prev.paidAmount,
     }));
   };
 
@@ -236,18 +250,22 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
               <input
                 type="text"
                 value={formData.customerName}
-                onChange={(e) => handleInputChange('customerName', e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("customerName", e.target.value)
+                }
                 disabled={isViewOnly}
                 className={cn(
                   "w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                   "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
                   errors.customerName ? "border-red-400" : "border-white/20",
-                  isViewOnly && "opacity-50 cursor-not-allowed"
+                  isViewOnly && "opacity-50 cursor-not-allowed",
                 )}
                 placeholder="গ্রাহকের সম্পূর্ণ নাম"
               />
               {errors.customerName && (
-                <p className="mt-1 text-sm text-red-400">{errors.customerName}</p>
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.customerName}
+                </p>
               )}
             </div>
 
@@ -261,13 +279,13 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 <input
                   type="tel"
                   value={formData.mobile}
-                  onChange={(e) => handleInputChange('mobile', e.target.value)}
+                  onChange={(e) => handleInputChange("mobile", e.target.value)}
                   disabled={isViewOnly}
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                     "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
                     errors.mobile ? "border-red-400" : "border-white/20",
-                    isViewOnly && "opacity-50 cursor-not-allowed"
+                    isViewOnly && "opacity-50 cursor-not-allowed",
                   )}
                   placeholder="01XXXXXXXXX"
                 />
@@ -285,13 +303,13 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
               <input
                 type="text"
                 value={formData.passport}
-                onChange={(e) => handleInputChange('passport', e.target.value)}
+                onChange={(e) => handleInputChange("passport", e.target.value)}
                 disabled={isViewOnly}
                 className={cn(
                   "w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                   "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
                   errors.passport ? "border-red-400" : "border-white/20",
-                  isViewOnly && "opacity-50 cursor-not-allowed"
+                  isViewOnly && "opacity-50 cursor-not-allowed",
                 )}
                 placeholder="BE1234567"
               />
@@ -310,13 +328,13 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 <input
                   type="email"
                   value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
                   disabled={isViewOnly}
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                     "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
                     errors.email ? "border-red-400" : "border-white/20",
-                    isViewOnly && "opacity-50 cursor-not-allowed"
+                    isViewOnly && "opacity-50 cursor-not-allowed",
                   )}
                   placeholder="example@email.com"
                 />
@@ -351,13 +369,15 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 <input
                   type="date"
                   value={formData.flightDate}
-                  onChange={(e) => handleInputChange('flightDate', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("flightDate", e.target.value)
+                  }
                   disabled={isViewOnly}
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white/10 border rounded-xl text-white",
                     "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
                     errors.flightDate ? "border-red-400" : "border-white/20",
-                    isViewOnly && "opacity-50 cursor-not-allowed"
+                    isViewOnly && "opacity-50 cursor-not-allowed",
                   )}
                 />
               </div>
@@ -375,16 +395,18 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                 <select
                   value={formData.route}
-                  onChange={(e) => handleInputChange('route', e.target.value)}
+                  onChange={(e) => handleInputChange("route", e.target.value)}
                   disabled={isViewOnly}
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white/10 border rounded-xl text-white",
                     "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
                     errors.route ? "border-red-400" : "border-white/20",
-                    isViewOnly && "opacity-50 cursor-not-allowed"
+                    isViewOnly && "opacity-50 cursor-not-allowed",
                   )}
                 >
-                  <option value="" className="bg-gray-800">রুট নির্বাচন করুন</option>
+                  <option value="" className="bg-gray-800">
+                    রুট নির্বাচন করুন
+                  </option>
                   {ROUTES.map((route) => (
                     <option key={route} value={route} className="bg-gray-800">
                       {route}
@@ -406,18 +428,24 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 <Plane className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                 <select
                   value={formData.airline}
-                  onChange={(e) => handleInputChange('airline', e.target.value)}
+                  onChange={(e) => handleInputChange("airline", e.target.value)}
                   disabled={isViewOnly}
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white/10 border rounded-xl text-white",
                     "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
                     errors.airline ? "border-red-400" : "border-white/20",
-                    isViewOnly && "opacity-50 cursor-not-allowed"
+                    isViewOnly && "opacity-50 cursor-not-allowed",
                   )}
                 >
-                  <option value="" className="bg-gray-800">এয়ারলাইন নির্বাচন করুন</option>
+                  <option value="" className="bg-gray-800">
+                    এয়ারলাইন নির্বাচন করুন
+                  </option>
                   {AIRLINES.map((airline) => (
-                    <option key={airline} value={airline} className="bg-gray-800">
+                    <option
+                      key={airline}
+                      value={airline}
+                      className="bg-gray-800"
+                    >
                       {airline}
                     </option>
                   ))}
@@ -451,18 +479,22 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
               <input
                 type="number"
                 value={formData.purchasePrice}
-                onChange={(e) => handleInputChange('purchasePrice', e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("purchasePrice", e.target.value)
+                }
                 disabled={isViewOnly}
                 className={cn(
                   "w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                   "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
                   errors.purchasePrice ? "border-red-400" : "border-white/20",
-                  isViewOnly && "opacity-50 cursor-not-allowed"
+                  isViewOnly && "opacity-50 cursor-not-allowed",
                 )}
                 placeholder="45000"
               />
               {errors.purchasePrice && (
-                <p className="mt-1 text-sm text-red-400">{errors.purchasePrice}</p>
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.purchasePrice}
+                </p>
               )}
             </div>
 
@@ -474,13 +506,13 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
               <input
                 type="number"
                 value={formData.salePrice}
-                onChange={(e) => handleInputChange('salePrice', e.target.value)}
+                onChange={(e) => handleInputChange("salePrice", e.target.value)}
                 disabled={isViewOnly}
                 className={cn(
                   "w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                   "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
                   errors.salePrice ? "border-red-400" : "border-white/20",
-                  isViewOnly && "opacity-50 cursor-not-allowed"
+                  isViewOnly && "opacity-50 cursor-not-allowed",
                 )}
                 placeholder="50000"
               />
@@ -497,21 +529,36 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
             </label>
             <div className="flex flex-wrap gap-3">
               {[
-                { value: 'paid', label: 'পেইড', color: 'from-green-500 to-green-600' },
-                { value: 'pending', label: 'পেন্ডিং', color: 'from-red-500 to-red-600' },
-                { value: 'partial', label: 'আংশিক', color: 'from-yellow-500 to-yellow-600' }
+                {
+                  value: "paid",
+                  label: "পেইড",
+                  color: "from-green-500 to-green-600",
+                },
+                {
+                  value: "pending",
+                  label: "পেন্ডিং",
+                  color: "from-red-500 to-red-600",
+                },
+                {
+                  value: "partial",
+                  label: "আংশিক",
+                  color: "from-yellow-500 to-yellow-600",
+                },
               ].map((status) => (
                 <button
                   key={status.value}
                   type="button"
-                  onClick={() => !isViewOnly && handlePaymentStatusChange(status.value as any)}
+                  onClick={() =>
+                    !isViewOnly &&
+                    handlePaymentStatusChange(status.value as any)
+                  }
                   disabled={isViewOnly}
                   className={cn(
                     "px-4 py-2 rounded-lg font-medium transition-all",
                     formData.paymentStatus === status.value
                       ? `bg-gradient-to-r ${status.color} text-white`
                       : "bg-white/10 text-white/70 hover:bg-white/20",
-                    isViewOnly && "opacity-50 cursor-not-allowed"
+                    isViewOnly && "opacity-50 cursor-not-allowed",
                   )}
                 >
                   {status.label}
@@ -521,7 +568,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
           </div>
 
           {/* Paid Amount (for partial payment) */}
-          {formData.paymentStatus === 'partial' && (
+          {formData.paymentStatus === "partial" && (
             <div>
               <label className="block text-sm font-medium text-white/70 mb-2">
                 পেইড পরিমাণ (টাকা) *
@@ -529,13 +576,15 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
               <input
                 type="number"
                 value={formData.paidAmount}
-                onChange={(e) => handleInputChange('paidAmount', e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("paidAmount", e.target.value)
+                }
                 disabled={isViewOnly}
                 className={cn(
                   "w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                   "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
                   errors.paidAmount ? "border-red-400" : "border-white/20",
-                  isViewOnly && "opacity-50 cursor-not-allowed"
+                  isViewOnly && "opacity-50 cursor-not-allowed",
                 )}
                 placeholder="25000"
               />
@@ -558,12 +607,12 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
           </label>
           <textarea
             value={formData.notes}
-            onChange={(e) => handleInputChange('notes', e.target.value)}
+            onChange={(e) => handleInputChange("notes", e.target.value)}
             disabled={isViewOnly}
             rows={3}
             className={cn(
               "w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all resize-none",
-              isViewOnly && "opacity-50 cursor-not-allowed"
+              isViewOnly && "opacity-50 cursor-not-allowed",
             )}
             placeholder="অতিরিক্ত তথ্য বা মন্তব্য..."
           />
@@ -602,7 +651,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 "px-6 py-3 bg-gradient-to-r from-folder-primary to-folder-secondary text-white rounded-xl font-medium",
                 "hover:from-folder-secondary hover:to-folder-accent transition-all shadow-glow",
                 "flex items-center space-x-2",
-                isSubmitting && "opacity-70 cursor-not-allowed"
+                isSubmitting && "opacity-70 cursor-not-allowed",
               )}
             >
               {isSubmitting ? (

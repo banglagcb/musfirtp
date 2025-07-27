@@ -15,7 +15,7 @@ import {
   Clock,
   AlertCircle,
   X,
-  Eye
+  Eye,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Booking, FilterOptions, AIRLINES, User } from "@shared/travel-types";
@@ -27,18 +27,22 @@ interface BookingsListProps {
   onEdit: (booking: Booking) => void;
 }
 
-export default function BookingsList({ user, onClose, onEdit }: BookingsListProps) {
+export default function BookingsList({
+  user,
+  onClose,
+  onEdit,
+}: BookingsListProps) {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [filteredBookings, setFilteredBookings] = useState<Booking[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
-  
+
   const [filters, setFilters] = useState<FilterOptions>({
     customerName: "",
     dateFrom: "",
     dateTo: "",
     paymentStatus: "all",
-    airline: ""
+    airline: "",
   });
 
   useEffect(() => {
@@ -60,7 +64,7 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
   };
 
   const handleFilterChange = (field: keyof FilterOptions, value: string) => {
-    setFilters(prev => ({ ...prev, [field]: value }));
+    setFilters((prev) => ({ ...prev, [field]: value }));
   };
 
   const clearFilters = () => {
@@ -69,7 +73,7 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
       dateFrom: "",
       dateTo: "",
       paymentStatus: "all",
-      airline: ""
+      airline: "",
     });
   };
 
@@ -89,11 +93,11 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
 
   const getPaymentStatusIcon = (status: string) => {
     switch (status) {
-      case 'paid':
+      case "paid":
         return <CheckCircle className="w-5 h-5 text-green-400" />;
-      case 'partial':
+      case "partial":
         return <Clock className="w-5 h-5 text-yellow-400" />;
-      case 'pending':
+      case "pending":
         return <AlertCircle className="w-5 h-5 text-red-400" />;
       default:
         return <AlertCircle className="w-5 h-5 text-gray-400" />;
@@ -102,27 +106,27 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
 
   const getPaymentStatusText = (status: string) => {
     switch (status) {
-      case 'paid':
-        return 'পেইড';
-      case 'partial':
-        return 'আংশিক';
-      case 'pending':
-        return 'পেন্ডিং';
+      case "paid":
+        return "পেইড";
+      case "partial":
+        return "আংশিক";
+      case "pending":
+        return "পেন্ডিং";
       default:
-        return 'অজানা';
+        return "অজানা";
     }
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('bn-BD', {
-      style: 'currency',
-      currency: 'BDT'
+    return new Intl.NumberFormat("bn-BD", {
+      style: "currency",
+      currency: "BDT",
     }).format(amount);
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('bn-BD');
+    return date.toLocaleDateString("bn-BD");
   };
 
   return (
@@ -136,7 +140,9 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">বুকিং লিস্ট</h1>
-            <p className="text-white/70">মোট {filteredBookings.length} টি বুকিং পাওয়া গেছে</p>
+            <p className="text-white/70">
+              মোট {filteredBookings.length} টি বুকিং পাওয়া গেছে
+            </p>
           </div>
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -162,7 +168,9 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
               <input
                 type="text"
                 value={filters.customerName}
-                onChange={(e) => handleFilterChange('customerName', e.target.value)}
+                onChange={(e) =>
+                  handleFilterChange("customerName", e.target.value)
+                }
                 placeholder="গ্রাহকের নাম দিয়ে খুঁজুন..."
                 className="w-full pl-10 pr-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-folder-primary/50"
               />
@@ -175,9 +183,9 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
               onClick={() => setShowFilters(!showFilters)}
               className={cn(
                 "px-6 py-3 backdrop-blur-md border rounded-xl transition-colors flex items-center space-x-2",
-                showFilters 
-                  ? "bg-folder-primary/20 border-folder-primary/50 text-white" 
-                  : "bg-white/10 border-white/20 text-white hover:bg-white/20"
+                showFilters
+                  ? "bg-folder-primary/20 border-folder-primary/50 text-white"
+                  : "bg-white/10 border-white/20 text-white hover:bg-white/20",
               )}
             >
               <Filter className="w-5 h-5" />
@@ -206,52 +214,82 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
               >
                 {/* Date From */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">তারিখ থেকে</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    তারিখ থেকে
+                  </label>
                   <input
                     type="date"
                     value={filters.dateFrom}
-                    onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
+                    onChange={(e) =>
+                      handleFilterChange("dateFrom", e.target.value)
+                    }
                     className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-folder-primary/50"
                   />
                 </div>
 
                 {/* Date To */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">তারিখ পর্যন্ত</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    তারিখ পর্যন্ত
+                  </label>
                   <input
                     type="date"
                     value={filters.dateTo}
-                    onChange={(e) => handleFilterChange('dateTo', e.target.value)}
+                    onChange={(e) =>
+                      handleFilterChange("dateTo", e.target.value)
+                    }
                     className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-folder-primary/50"
                   />
                 </div>
 
                 {/* Payment Status */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">পেমেন্ট স্ট্যাটাস</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    পেমেন্ট স্ট্যাটাস
+                  </label>
                   <select
                     value={filters.paymentStatus}
-                    onChange={(e) => handleFilterChange('paymentStatus', e.target.value)}
+                    onChange={(e) =>
+                      handleFilterChange("paymentStatus", e.target.value)
+                    }
                     className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-folder-primary/50"
                   >
-                    <option value="all" className="bg-slate-800">সব</option>
-                    <option value="paid" className="bg-slate-800">পেইড</option>
-                    <option value="partial" className="bg-slate-800">আংশিক</option>
-                    <option value="pending" className="bg-slate-800">পেন্ডিং</option>
+                    <option value="all" className="bg-slate-800">
+                      সব
+                    </option>
+                    <option value="paid" className="bg-slate-800">
+                      পেইড
+                    </option>
+                    <option value="partial" className="bg-slate-800">
+                      আংশিক
+                    </option>
+                    <option value="pending" className="bg-slate-800">
+                      পেন্ডিং
+                    </option>
                   </select>
                 </div>
 
                 {/* Airline */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">এয়ারলাইন</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    এয়ারলাইন
+                  </label>
                   <select
                     value={filters.airline}
-                    onChange={(e) => handleFilterChange('airline', e.target.value)}
+                    onChange={(e) =>
+                      handleFilterChange("airline", e.target.value)
+                    }
                     className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-folder-primary/50"
                   >
-                    <option value="" className="bg-slate-800">সব এয়ারলাইন</option>
+                    <option value="" className="bg-slate-800">
+                      সব এয়ারলাইন
+                    </option>
                     {AIRLINES.map((airline) => (
-                      <option key={airline} value={airline} className="bg-slate-800">
+                      <option
+                        key={airline}
+                        value={airline}
+                        className="bg-slate-800"
+                      >
                         {airline}
                       </option>
                     ))}
@@ -296,7 +334,8 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
                     <Eye className="w-4 h-4" />
                   </motion.button>
                   {/* Only show edit/delete for owners OR if booking is not fully paid */}
-                  {(user.role === "owner" || booking.paymentStatus !== "paid") && (
+                  {(user.role === "owner" ||
+                    booking.paymentStatus !== "paid") && (
                     <>
                       <motion.button
                         whileHover={{ scale: 1.1 }}
@@ -324,7 +363,9 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
                 <div className="flex items-center space-x-3">
                   <UserIcon className="w-5 h-5 text-white/50" />
                   <div>
-                    <p className="text-white font-medium">{booking.customerName}</p>
+                    <p className="text-white font-medium">
+                      {booking.customerName}
+                    </p>
                     <p className="text-white/70 text-sm">{booking.passport}</p>
                   </div>
                 </div>
@@ -344,19 +385,25 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
 
                 <div className="flex items-center space-x-3">
                   <Calendar className="w-5 h-5 text-white/50" />
-                  <p className="text-white/70 text-sm">{formatDate(booking.flightDate)}</p>
+                  <p className="text-white/70 text-sm">
+                    {formatDate(booking.flightDate)}
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <DollarSign className="w-5 h-5 text-white/50" />
                     <div>
-                      <p className="text-white font-medium">{formatCurrency(booking.salePrice)}</p>
+                      <p className="text-white font-medium">
+                        {formatCurrency(booking.salePrice)}
+                      </p>
                       <p className="text-white/70 text-xs">বিক্রয়মূল্য</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-green-400 font-medium">{formatCurrency(booking.paidAmount)}</p>
+                    <p className="text-green-400 font-medium">
+                      {formatCurrency(booking.paidAmount)}
+                    </p>
                     <p className="text-white/70 text-xs">পেইড</p>
                   </div>
                 </div>
@@ -366,7 +413,11 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
                   <div className="flex items-center justify-between">
                     <span className="text-white/70 text-sm">মুনাফা:</span>
                     <span className="text-neon-green font-medium">
-                      {formatCurrency(booking.paidAmount - (booking.purchasePrice * (booking.paidAmount / booking.salePrice)))}
+                      {formatCurrency(
+                        booking.paidAmount -
+                          booking.purchasePrice *
+                            (booking.paidAmount / booking.salePrice),
+                      )}
                     </span>
                   </div>
                 </div>
@@ -383,7 +434,9 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
             className="text-center py-12"
           >
             <p className="text-white/70 text-lg">কোনো বুকিং পাওয়া যায়নি</p>
-            <p className="text-white/50 text-sm mt-2">ফিল����টার পরিবর্তন করে আবার চেষ্টা করুন</p>
+            <p className="text-white/50 text-sm mt-2">
+              ফিল����টার পরিবর্তন করে আবার চেষ্টা করুন
+            </p>
           </motion.div>
         )}
 
@@ -405,7 +458,9 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
                 className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
               >
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold text-white">বুকিং বিস্তারিত</h2>
+                  <h2 className="text-2xl font-bold text-white">
+                    বুকিং বিস্তারিত
+                  </h2>
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -419,54 +474,111 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Customer Details */}
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-3">গ্রাহকের তথ্য</h3>
+                    <h3 className="text-lg font-semibold text-white mb-3">
+                      গ্রাহকের তথ্য
+                    </h3>
                     <div className="space-y-2">
-                      <p className="text-white/70"><span className="text-white">নাম:</span> {selectedBooking.customerName}</p>
-                      <p className="text-white/70"><span className="text-white">মোবাইল:</span> {selectedBooking.mobile}</p>
-                      <p className="text-white/70"><span className="text-white">ইমেইল:</span> {selectedBooking.email}</p>
-                      <p className="text-white/70"><span className="text-white">পাসপোর্ট:</span> {selectedBooking.passport}</p>
+                      <p className="text-white/70">
+                        <span className="text-white">নাম:</span>{" "}
+                        {selectedBooking.customerName}
+                      </p>
+                      <p className="text-white/70">
+                        <span className="text-white">মোবাইল:</span>{" "}
+                        {selectedBooking.mobile}
+                      </p>
+                      <p className="text-white/70">
+                        <span className="text-white">ইমেইল:</span>{" "}
+                        {selectedBooking.email}
+                      </p>
+                      <p className="text-white/70">
+                        <span className="text-white">পাসপোর্ট:</span>{" "}
+                        {selectedBooking.passport}
+                      </p>
                     </div>
                   </div>
 
                   {/* Flight Details */}
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-3">ফ্লাইট ��থ্য</h3>
+                    <h3 className="text-lg font-semibold text-white mb-3">
+                      ফ্লাইট ��থ্য
+                    </h3>
                     <div className="space-y-2">
-                      <p className="text-white/70"><span className="text-white">রুট:</span> {selectedBooking.route}</p>
-                      <p className="text-white/70"><span className="text-white">এয়ারলাইন:</span> {selectedBooking.airline}</p>
-                      <p className="text-white/70"><span className="text-white">ফ্লাইট তারিখ:</span> {formatDate(selectedBooking.flightDate)}</p>
-                      <p className="text-white/70"><span className="text-white">বুকিং তারিখ:</span> {formatDate(selectedBooking.bookingDate)}</p>
+                      <p className="text-white/70">
+                        <span className="text-white">রুট:</span>{" "}
+                        {selectedBooking.route}
+                      </p>
+                      <p className="text-white/70">
+                        <span className="text-white">এয়ারলাইন:</span>{" "}
+                        {selectedBooking.airline}
+                      </p>
+                      <p className="text-white/70">
+                        <span className="text-white">ফ্লাইট তারিখ:</span>{" "}
+                        {formatDate(selectedBooking.flightDate)}
+                      </p>
+                      <p className="text-white/70">
+                        <span className="text-white">বুকিং তারিখ:</span>{" "}
+                        {formatDate(selectedBooking.bookingDate)}
+                      </p>
                     </div>
                   </div>
 
                   {/* Payment Details */}
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-3">পেমেন্ট তথ্য</h3>
+                    <h3 className="text-lg font-semibold text-white mb-3">
+                      পেমেন্ট তথ্য
+                    </h3>
                     <div className="space-y-2">
-                      <p className="text-white/70"><span className="text-white">ক্রয়মূল্য:</span> {formatCurrency(selectedBooking.purchasePrice)}</p>
-                      <p className="text-white/70"><span className="text-white">বিক্রয়মূল্য:</span> {formatCurrency(selectedBooking.salePrice)}</p>
-                      <p className="text-white/70"><span className="text-white">পেইড:</span> {formatCurrency(selectedBooking.paidAmount)}</p>
+                      <p className="text-white/70">
+                        <span className="text-white">ক্রয়মূল্য:</span>{" "}
+                        {formatCurrency(selectedBooking.purchasePrice)}
+                      </p>
+                      <p className="text-white/70">
+                        <span className="text-white">বিক্রয়মূল্য:</span>{" "}
+                        {formatCurrency(selectedBooking.salePrice)}
+                      </p>
+                      <p className="text-white/70">
+                        <span className="text-white">পেইড:</span>{" "}
+                        {formatCurrency(selectedBooking.paidAmount)}
+                      </p>
                       <div className="flex items-center space-x-2">
                         <span className="text-white">স্ট্যাটাস:</span>
                         {getPaymentStatusIcon(selectedBooking.paymentStatus)}
-                        <span className="text-white/70">{getPaymentStatusText(selectedBooking.paymentStatus)}</span>
+                        <span className="text-white/70">
+                          {getPaymentStatusText(selectedBooking.paymentStatus)}
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   {/* Profit Calculation */}
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-3">মুনাফা হিসাব</h3>
+                    <h3 className="text-lg font-semibold text-white mb-3">
+                      মুনাফা হিসাব
+                    </h3>
                     <div className="space-y-2">
                       <p className="text-white/70">
-                        <span className="text-white">মোট মুনাফা:</span> {formatCurrency(selectedBooking.salePrice - selectedBooking.purchasePrice)}
+                        <span className="text-white">মোট মুনাফা:</span>{" "}
+                        {formatCurrency(
+                          selectedBooking.salePrice -
+                            selectedBooking.purchasePrice,
+                        )}
                       </p>
                       <p className="text-neon-green font-medium">
-                        <span className="text-white">অর্জিত মুনাফা:</span> {formatCurrency(selectedBooking.paidAmount - (selectedBooking.purchasePrice * (selectedBooking.paidAmount / selectedBooking.salePrice)))}
+                        <span className="text-white">অর্জিত মুনাফা:</span>{" "}
+                        {formatCurrency(
+                          selectedBooking.paidAmount -
+                            selectedBooking.purchasePrice *
+                              (selectedBooking.paidAmount /
+                                selectedBooking.salePrice),
+                        )}
                       </p>
-                      {selectedBooking.paymentStatus !== 'paid' && (
+                      {selectedBooking.paymentStatus !== "paid" && (
                         <p className="text-yellow-400">
-                          <span className="text-white">বাকি:</span> {formatCurrency(selectedBooking.salePrice - selectedBooking.paidAmount)}
+                          <span className="text-white">বাকি:</span>{" "}
+                          {formatCurrency(
+                            selectedBooking.salePrice -
+                              selectedBooking.paidAmount,
+                          )}
                         </p>
                       )}
                     </div>
@@ -476,8 +588,12 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
                 {/* Notes */}
                 {selectedBooking.notes && (
                   <div className="mt-6">
-                    <h3 className="text-lg font-semibold text-white mb-3">নোট</h3>
-                    <p className="text-white/70 bg-white/5 p-3 rounded-lg">{selectedBooking.notes}</p>
+                    <h3 className="text-lg font-semibold text-white mb-3">
+                      নোট
+                    </h3>
+                    <p className="text-white/70 bg-white/5 p-3 rounded-lg">
+                      {selectedBooking.notes}
+                    </p>
                   </div>
                 )}
               </motion.div>

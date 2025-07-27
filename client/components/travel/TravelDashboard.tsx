@@ -289,77 +289,79 @@ export default function TravelDashboard({
         animate="visible"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        {dashboardCards.filter(card => {
-          // Hide bulk purchase card for managers
-          if (card.id === 'bulk-purchase' && user.role === 'manager') {
-            return false;
-          }
-          return true;
-        }).map((card) => (
-          <motion.div
-            key={card.id}
-            variants={cardVariants}
-            whileHover={{
-              scale: 1.08,
-              y: -10,
-              transition: {
-                type: "spring",
-                stiffness: 300,
-                damping: 25,
-              },
-            }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => onCardClick(card.id)}
-            className={cn(
-              "relative group cursor-pointer rounded-2xl p-6 border border-white/20",
-              "bg-white/10 backdrop-blur-md hover:bg-white/20",
-              "transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25",
-              "overflow-hidden",
-              "hover:border-white/40",
-            )}
-          >
-            {/* Background Gradient */}
-            <div
+        {dashboardCards
+          .filter((card) => {
+            // Hide bulk purchase card for managers
+            if (card.id === "bulk-purchase" && user.role === "manager") {
+              return false;
+            }
+            return true;
+          })
+          .map((card) => (
+            <motion.div
+              key={card.id}
+              variants={cardVariants}
+              whileHover={{
+                scale: 1.08,
+                y: -10,
+                transition: {
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 25,
+                },
+              }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => onCardClick(card.id)}
               className={cn(
-                "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-                card.gradient,
+                "relative group cursor-pointer rounded-2xl p-6 border border-white/20",
+                "bg-white/10 backdrop-blur-md hover:bg-white/20",
+                "transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25",
+                "overflow-hidden",
+                "hover:border-white/40",
               )}
-            />
-
-            {/* Content */}
-            <div className="relative z-10">
-              {/* Icon */}
-              <motion.div
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
+            >
+              {/* Background Gradient */}
+              <div
                 className={cn(
-                  "w-12 h-12 rounded-xl mb-4 flex items-center justify-center",
-                  `bg-gradient-to-r ${card.color}`,
+                  "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+                  card.gradient,
                 )}
-              >
-                <card.icon className="w-6 h-6 text-white" />
-              </motion.div>
-
-              {/* Title & Description */}
-              <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-white transition-colors">
-                {card.title}
-              </h3>
-              <p className="text-white/70 text-sm mb-4 group-hover:text-white/90 transition-colors">
-                {card.description}
-              </p>
-
-              {/* Hover Effect Indicator */}
-              <motion.div
-                className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
               />
-            </div>
 
-            {/* Glow Effect */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </motion.div>
-        ))}
+              {/* Content */}
+              <div className="relative z-10">
+                {/* Icon */}
+                <motion.div
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                  className={cn(
+                    "w-12 h-12 rounded-xl mb-4 flex items-center justify-center",
+                    `bg-gradient-to-r ${card.color}`,
+                  )}
+                >
+                  <card.icon className="w-6 h-6 text-white" />
+                </motion.div>
+
+                {/* Title & Description */}
+                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-white transition-colors">
+                  {card.title}
+                </h3>
+                <p className="text-white/70 text-sm mb-4 group-hover:text-white/90 transition-colors">
+                  {card.description}
+                </p>
+
+                {/* Hover Effect Indicator */}
+                <motion.div
+                  className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+              </div>
+
+              {/* Glow Effect */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </motion.div>
+          ))}
       </motion.div>
 
       {/* Quick Actions */}

@@ -1,5 +1,11 @@
-import { Booking, User, DashboardStats, FilterOptions, ReportData } from '@shared/travel-types';
-import dataService from './dataService';
+import {
+  Booking,
+  User,
+  DashboardStats,
+  FilterOptions,
+  ReportData,
+} from "@shared/travel-types";
+import dataService from "./dataService";
 
 class EnhancedDataService {
   private static instance: EnhancedDataService;
@@ -14,7 +20,7 @@ class EnhancedDataService {
   }
 
   private async simulateDelay(ms: number = 500): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   private handleError(operation: string, error: any): never {
@@ -27,7 +33,7 @@ class EnhancedDataService {
       await this.simulateDelay(300);
       return dataService.getBookings();
     } catch (error) {
-      this.handleError('বুকিং তালিকা লোড', error);
+      this.handleError("বুকিং তালিকা লোড", error);
     }
   }
 
@@ -36,30 +42,35 @@ class EnhancedDataService {
       await this.simulateDelay(200);
       return dataService.getBookingById(id);
     } catch (error) {
-      this.handleError('বুকিং বিস্তারিত লোড', error);
+      this.handleError("বুকিং বিস্তারিত লোড", error);
     }
   }
 
-  async addBooking(booking: Omit<Booking, 'id' | 'bookingDate'>): Promise<Booking> {
+  async addBooking(
+    booking: Omit<Booking, "id" | "bookingDate">,
+  ): Promise<Booking> {
     try {
       await this.simulateDelay(800);
       return dataService.addBooking(booking);
     } catch (error) {
-      this.handleError('নতুন বুকিং যোগ', error);
+      this.handleError("নতুন বুকিং যোগ", error);
       throw error;
     }
   }
 
-  async updateBooking(id: string, updatedBooking: Partial<Booking>): Promise<boolean> {
+  async updateBooking(
+    id: string,
+    updatedBooking: Partial<Booking>,
+  ): Promise<boolean> {
     try {
       await this.simulateDelay(700);
       const result = dataService.updateBooking(id, updatedBooking);
       if (!result) {
-        throw new Error('বুকিং আপডেট করা যায়নি');
+        throw new Error("বুকিং আপডেট করা যায়নি");
       }
       return result;
     } catch (error) {
-      this.handleError('বুকিং আপডেট', error);
+      this.handleError("বুকিং আপডেট", error);
     }
   }
 
@@ -68,11 +79,11 @@ class EnhancedDataService {
       await this.simulateDelay(500);
       const result = dataService.deleteBooking(id);
       if (!result) {
-        throw new Error('বুকিং ডিলিট করা যায়নি');
+        throw new Error("বুকিং ডিলিট করা যায়নি");
       }
       return result;
     } catch (error) {
-      this.handleError('বুকিং ডিলিট', error);
+      this.handleError("বুকিং ডিলিট", error);
     }
   }
 
@@ -81,7 +92,7 @@ class EnhancedDataService {
       await this.simulateDelay(400);
       return dataService.searchBookings(filters);
     } catch (error) {
-      this.handleError('বুকিং সার্চ', error);
+      this.handleError("বুকিং সার্চ", error);
     }
   }
 
@@ -90,7 +101,7 @@ class EnhancedDataService {
       await this.simulateDelay(600);
       return dataService.getDashboardStats();
     } catch (error) {
-      this.handleError('ড্যাশবোর্ড পরিসংখ্যান লোড', error);
+      this.handleError("ড্যাশবোর্ড পরিসংখ্যান লোড", error);
     }
   }
 
@@ -99,7 +110,7 @@ class EnhancedDataService {
       await this.simulateDelay(800);
       return dataService.getMonthlyReport(year, month);
     } catch (error) {
-      this.handleError('মাসিক রিপোর্ট তৈরি', error);
+      this.handleError("মাসিক রিপোর্ট তৈরি", error);
     }
   }
 
@@ -108,7 +119,7 @@ class EnhancedDataService {
       await this.simulateDelay(1000);
       return dataService.exportToCSV();
     } catch (error) {
-      this.handleError('CSV এক্সপোর্ট', error);
+      this.handleError("CSV এক্সপোর্ট", error);
     }
   }
 
@@ -117,7 +128,7 @@ class EnhancedDataService {
       await this.simulateDelay(1000);
       return dataService.validateUser(username, password);
     } catch (error) {
-      this.handleError('ইউজার যাচাই', error);
+      this.handleError("ইউজার যাচাই", error);
     }
   }
 
