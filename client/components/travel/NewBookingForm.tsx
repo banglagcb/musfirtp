@@ -86,6 +86,31 @@ export default function NewBookingForm({
   const [profit, setProfit] = useState(0);
   const [profitMargin, setProfitMargin] = useState(0);
 
+  // Quick templates for common routes
+  const quickTemplates = [
+    {
+      name: "ঢাকা-দুবাই",
+      route: "ঢাকা - দুবাই",
+      airline: "এমিরেটস",
+      costPrice: 45000,
+      sellingPrice: 50000,
+    },
+    {
+      name: "ঢাকা-কুয়ালালামপুর",
+      route: "ঢাকা - কুয়ালালামপুর",
+      airline: "মালয়েশিয়া এয়ারলাইনস",
+      costPrice: 35000,
+      sellingPrice: 40000,
+    },
+    {
+      name: "ঢাকা-চট্টগ্রাম",
+      route: "ঢাকা - চট্টগ্রাম",
+      airline: "বিমান বাংলাদেশ এয়ারলাইনস",
+      costPrice: 6000,
+      sellingPrice: 7500,
+    },
+  ];
+
   // Calculate profit when prices change
   useEffect(() => {
     const costPrice = Number(formData.costPrice) || 0;
