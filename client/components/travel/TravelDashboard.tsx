@@ -71,7 +71,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "export-data",
     title: "ডেটা এক্সপো��্ট",
-    description: "CSV/Excel ফাইলে ডাউনলোড করুন",
+    description: "CSV/Excel ��াইলে ডাউনলোড করুন",
     icon: DollarSign,
     color: "from-green-500 to-teal-500",
     gradient: "bg-gradient-to-br from-green-500/20 to-teal-500/20",
@@ -276,20 +276,19 @@ export default function TravelDashboard({
       >
         <div className={cn(
           "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          "bg-white/10 dark:bg-white/10 light:bg-white/80",
-          "border-white/20 dark:border-white/20 light:border-gray-200"
+          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
         )}>
           <div className="flex items-center justify-between">
             <div>
               <p className={cn(
                 "text-sm transition-colors",
-                "text-white/70 dark:text-white/70 light:text-gray-600"
+                theme === 'dark' ? "text-white/70" : "text-gray-600"
               )}>
                 {t('totalBookings')}
               </p>
               <p className={cn(
                 "text-2xl font-bold transition-colors",
-                "text-white dark:text-white light:text-gray-800"
+                theme === 'dark' ? "text-white" : "text-gray-800"
               )}>
                 {stats.totalBookings}
               </p>
@@ -300,20 +299,19 @@ export default function TravelDashboard({
 
         <div className={cn(
           "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          "bg-white/10 dark:bg-white/10 light:bg-white/80",
-          "border-white/20 dark:border-white/20 light:border-gray-200"
+          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
         )}>
           <div className="flex items-center justify-between">
             <div>
               <p className={cn(
                 "text-sm transition-colors",
-                "text-white/70 dark:text-white/70 light:text-gray-600"
+                theme === 'dark' ? "text-white/70" : "text-gray-600"
               )}>
                 {t('todayBookings')}
               </p>
               <p className={cn(
                 "text-2xl font-bold transition-colors",
-                "text-white dark:text-white light:text-gray-800"
+                theme === 'dark' ? "text-white" : "text-gray-800"
               )}>
                 {stats.todayBookings}
               </p>
@@ -324,20 +322,19 @@ export default function TravelDashboard({
 
         <div className={cn(
           "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          "bg-white/10 dark:bg-white/10 light:bg-white/80",
-          "border-white/20 dark:border-white/20 light:border-gray-200"
+          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
         )}>
           <div className="flex items-center justify-between">
             <div>
               <p className={cn(
                 "text-sm transition-colors",
-                "text-white/70 dark:text-white/70 light:text-gray-600"
+                theme === 'dark' ? "text-white/70" : "text-gray-600"
               )}>
                 {t('totalRevenue')}
               </p>
               <p className={cn(
                 "text-xl font-bold transition-colors",
-                "text-white dark:text-white light:text-gray-800"
+                theme === 'dark' ? "text-white" : "text-gray-800"
               )}>
                 {formatCurrency(stats.totalRevenue)}
               </p>
@@ -348,20 +345,19 @@ export default function TravelDashboard({
 
         <div className={cn(
           "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          "bg-white/10 dark:bg-white/10 light:bg-white/80",
-          "border-white/20 dark:border-white/20 light:border-gray-200"
+          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
         )}>
           <div className="flex items-center justify-between">
             <div>
               <p className={cn(
                 "text-sm transition-colors",
-                "text-white/70 dark:text-white/70 light:text-gray-600"
+                theme === 'dark' ? "text-white/70" : "text-gray-600"
               )}>
                 {t('totalProfit')}
               </p>
               <p className={cn(
                 "text-xl font-bold transition-colors",
-                "text-white dark:text-white light:text-gray-800"
+                theme === 'dark' ? "text-white" : "text-gray-800"
               )}>
                 {formatCurrency(stats.totalProfit)}
               </p>
