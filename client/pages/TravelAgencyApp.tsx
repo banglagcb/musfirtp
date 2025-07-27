@@ -46,7 +46,7 @@ function TravelAgencyAppInner() {
   useEffect(() => {
     // Performance monitoring for app initialization
     const monitor = PerformanceMonitor.getInstance();
-    const endTimer = monitor.startTimer('app-initialization');
+    const endTimer = monitor.startTimer("app-initialization");
 
     const savedUser = localStorage.getItem("air_musafir_user");
     if (savedUser) {
@@ -72,15 +72,13 @@ function TravelAgencyAppInner() {
     }
 
     // Bundle analysis and service worker registration in production
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       setTimeout(() => analyzeBundleUsage(), 1000);
       registerServiceWorker();
     }
 
     return endTimer;
   }, []);
-
-
 
   // Memoized login handler for better performance
   const handleLoginSuccess = useCallback((loggedInUser: User) => {
@@ -319,16 +317,16 @@ function TravelAgencyAppInner() {
     }
   };
 
-
-
   if (appState === "login") {
     return (
-      <div className={cn(
-        "min-h-screen flex items-center justify-center p-4 lg:p-6 relative overflow-hidden transition-colors duration-300",
-        theme === 'dark'
-          ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
-          : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
-      )}>
+      <div
+        className={cn(
+          "min-h-screen flex items-center justify-center p-4 lg:p-6 relative overflow-hidden transition-colors duration-300",
+          theme === "dark"
+            ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+            : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50",
+        )}
+      >
         {/* Enhanced Animated Background */}
         <div className="absolute inset-0">
           {[...Array(isMobile ? 15 : 30)].map((_, i) => (
@@ -337,7 +335,7 @@ function TravelAgencyAppInner() {
               animate={{
                 x: [0, Math.random() * 200 - 100],
                 y: [0, Math.random() * 200 - 100],
-                opacity: [0, theme === 'dark' ? 0.15 : 0.1, 0],
+                opacity: [0, theme === "dark" ? 0.15 : 0.1, 0],
                 scale: [0, 1.5, 0],
               }}
               transition={{
@@ -348,7 +346,7 @@ function TravelAgencyAppInner() {
               }}
               className={cn(
                 "absolute w-2 h-2 lg:w-3 lg:h-3 rounded-full",
-                theme === 'dark' ? "bg-white" : "bg-purple-500"
+                theme === "dark" ? "bg-white" : "bg-purple-500",
               )}
               style={{
                 left: `${Math.random() * 100}%`,
@@ -365,12 +363,14 @@ function TravelAgencyAppInner() {
   }
 
   return (
-    <div className={cn(
-      "min-h-screen relative overflow-hidden transition-colors duration-300",
-      theme === 'dark'
-        ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
-        : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
-    )}>
+    <div
+      className={cn(
+        "min-h-screen relative overflow-hidden transition-colors duration-300",
+        theme === "dark"
+          ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+          : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50",
+      )}
+    >
       {/* App Header */}
       <AppHeader
         user={user!}
@@ -395,7 +395,9 @@ function TravelAgencyAppInner() {
       )}
 
       {/* Main Dashboard */}
-      <main className="pt-16"> {/* Account for fixed header */}
+      <main className="pt-16">
+        {" "}
+        {/* Account for fixed header */}
         <motion.div
           key={refreshTrigger} // Force re-render when data changes
           initial={{ opacity: 0 }}
@@ -403,7 +405,10 @@ function TravelAgencyAppInner() {
           className="transition-all duration-500 will-change-transform"
         >
           {user && (
-            <TravelDashboard user={user} onCardClick={handleDashboardCardClick} />
+            <TravelDashboard
+              user={user}
+              onCardClick={handleDashboardCardClick}
+            />
           )}
         </motion.div>
       </main>

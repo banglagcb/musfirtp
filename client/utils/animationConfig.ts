@@ -1,4 +1,4 @@
-import { Variants, Transition, Target } from 'framer-motion';
+import { Variants, Transition, Target } from "framer-motion";
 
 // Optimized animation configurations for better performance
 export const ANIMATION_CONFIG = {
@@ -9,26 +9,26 @@ export const ANIMATION_CONFIG = {
     animate: {},
     exit: {},
   },
-  
+
   // Fast transitions for better perceived performance
   fast: {
     duration: 0.2,
     ease: "easeOut",
   },
-  
+
   // Standard transitions
   standard: {
     duration: 0.3,
     ease: "easeInOut",
   },
-  
+
   // Smooth springs for interactive elements
   spring: {
     type: "spring" as const,
     stiffness: 300,
     damping: 25,
   },
-  
+
   // Optimized stagger for lists
   stagger: {
     staggerChildren: 0.05, // Reduced from 0.1 for faster rendering
@@ -181,8 +181,8 @@ export const pulse = {
 
 // Performance utilities
 export function shouldReduceMotion(): boolean {
-  if (typeof window === 'undefined') return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 export function getOptimizedVariants(variants: Variants): Variants {

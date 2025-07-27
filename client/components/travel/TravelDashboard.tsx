@@ -28,7 +28,7 @@ import {
   cardHover,
   cardTap,
   fadeInUp,
-  getOptimizedVariants
+  getOptimizedVariants,
 } from "@/utils/animationConfig";
 
 interface TravelDashboardProps {
@@ -135,80 +135,117 @@ export default function TravelDashboard({
   }, []);
 
   // Memoized dashboard cards with translations
-  const dashboardCards = useMemo(() => [
-    {
-      id: "new-booking",
-      title: t("newBooking"),
-      description: language === 'bn' ? "নতুন ফ্লাইট বুকিং যোগ করুন" : "Add new flight booking",
-      icon: PlusCircle,
-      color: "from-neon-green to-neon-blue",
-      gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
-    },
-    {
-      id: "bookings-list",
-      title: t("bookings"),
-      description: language === 'bn' ? "সব বুকিং দেখুন ও ম্যানেজ করুন" : "View and manage all bookings",
-      icon: FileText,
-      color: "from-neon-blue to-neon-purple",
-      gradient: "bg-gradient-to-br from-blue-500/20 to-purple-500/20",
-    },
-    {
-      id: "search-filter",
-      title: language === 'bn' ? "সার্চ ও ফিল্টার" : "Search & Filter",
-      description: language === 'bn' ? "বুকিং খুঁজুন ও ফিল্টার করুন" : "Search and filter bookings",
-      icon: Search,
-      color: "from-neon-purple to-neon-pink",
-      gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20",
-    },
-    {
-      id: "reports",
-      title: t("reports"),
-      description: language === 'bn' ? "বিক্রয় ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
-      icon: TrendingUp,
-      color: "from-orange-500 to-red-500",
-      gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
-    },
-    {
-      id: "export-data",
-      title: language === 'bn' ? "ডেটা এক্সপোর্ট" : "Data Export",
-      description: language === 'bn' ? "CSV/Excel ফাইলে ডাউনলোড করুন" : "Download as CSV/Excel files",
-      icon: DollarSign,
-      color: "from-green-500 to-teal-500",
-      gradient: "bg-gradient-to-br from-green-500/20 to-teal-500/20",
-    },
-    {
-      id: "ticket-inventory",
-      title: t("inventory"),
-      description: language === 'bn' ? "টিকেট স্টক দেখুন ও ম্যানেজ করুন" : "View and manage ticket inventory",
-      icon: Package,
-      color: "from-indigo-500 to-purple-500",
-      gradient: "bg-gradient-to-br from-indigo-500/20 to-purple-500/20",
-    },
-    ...(user.role === 'owner' ? [{
-      id: "bulk-purchase",
-      title: t("bulkPurchase"),
-      description: language === 'bn' ? "অগ্রিম টি��েট ক্রয় করুন" : "Purchase tickets in advance",
-      icon: ShoppingCart,
-      color: "from-emerald-500 to-teal-500",
-      gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
-    }] : []),
-    {
-      id: "settings",
-      title: t("settings"),
-      description: language === 'bn' ? "সিস্টেম সেটিংস ও কনফিগারেশন" : "System settings and configuration",
-      icon: Calendar,
-      color: "from-red-500 to-pink-500",
-      gradient: "bg-gradient-to-br from-red-500/20 to-pink-500/20",
-    },
-  ], [user.role, t, language]);
+  const dashboardCards = useMemo(
+    () => [
+      {
+        id: "new-booking",
+        title: t("newBooking"),
+        description:
+          language === "bn"
+            ? "নতুন ফ্লাইট বুকিং যোগ করুন"
+            : "Add new flight booking",
+        icon: PlusCircle,
+        color: "from-neon-green to-neon-blue",
+        gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
+      },
+      {
+        id: "bookings-list",
+        title: t("bookings"),
+        description:
+          language === "bn"
+            ? "সব বুকিং দেখুন ও ম্যানেজ করুন"
+            : "View and manage all bookings",
+        icon: FileText,
+        color: "from-neon-blue to-neon-purple",
+        gradient: "bg-gradient-to-br from-blue-500/20 to-purple-500/20",
+      },
+      {
+        id: "search-filter",
+        title: language === "bn" ? "সার্চ ও ফিল্টার" : "Search & Filter",
+        description:
+          language === "bn"
+            ? "বুকিং খুঁজুন ও ফিল্টার করুন"
+            : "Search and filter bookings",
+        icon: Search,
+        color: "from-neon-purple to-neon-pink",
+        gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20",
+      },
+      {
+        id: "reports",
+        title: t("reports"),
+        description:
+          language === "bn"
+            ? "বিক্রয় ও মুনাফার রিপোর্ট দেখুন"
+            : "View sales and profit reports",
+        icon: TrendingUp,
+        color: "from-orange-500 to-red-500",
+        gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
+      },
+      {
+        id: "export-data",
+        title: language === "bn" ? "ডেটা এক্সপোর্ট" : "Data Export",
+        description:
+          language === "bn"
+            ? "CSV/Excel ফাইলে ডাউনলোড করুন"
+            : "Download as CSV/Excel files",
+        icon: DollarSign,
+        color: "from-green-500 to-teal-500",
+        gradient: "bg-gradient-to-br from-green-500/20 to-teal-500/20",
+      },
+      {
+        id: "ticket-inventory",
+        title: t("inventory"),
+        description:
+          language === "bn"
+            ? "টিকেট স্টক দেখুন ও ম্যানেজ করুন"
+            : "View and manage ticket inventory",
+        icon: Package,
+        color: "from-indigo-500 to-purple-500",
+        gradient: "bg-gradient-to-br from-indigo-500/20 to-purple-500/20",
+      },
+      ...(user.role === "owner"
+        ? [
+            {
+              id: "bulk-purchase",
+              title: t("bulkPurchase"),
+              description:
+                language === "bn"
+                  ? "অগ্রিম টি��েট ক্রয় করুন"
+                  : "Purchase tickets in advance",
+              icon: ShoppingCart,
+              color: "from-emerald-500 to-teal-500",
+              gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
+            },
+          ]
+        : []),
+      {
+        id: "settings",
+        title: t("settings"),
+        description:
+          language === "bn"
+            ? "সিস্টেম সেটিংস ও কনফিগারেশন"
+            : "System settings and configuration",
+        icon: Calendar,
+        color: "from-red-500 to-pink-500",
+        gradient: "bg-gradient-to-br from-red-500/20 to-pink-500/20",
+      },
+    ],
+    [user.role, t, language],
+  );
 
   // Memoized card click handler to prevent unnecessary re-renders
-  const handleCardClick = useCallback((cardId: string) => {
-    onCardClick(cardId);
-  }, [onCardClick]);
+  const handleCardClick = useCallback(
+    (cardId: string) => {
+      onCardClick(cardId);
+    },
+    [onCardClick],
+  );
 
   // Optimized animation variants for better performance
-  const containerVariants = useMemo(() => getOptimizedVariants(staggeredContainer), []);
+  const containerVariants = useMemo(
+    () => getOptimizedVariants(staggeredContainer),
+    [],
+  );
   const cardVariants = useMemo(() => getOptimizedVariants(scaleIn), []);
 
   // Memoized currency formatter for better performance
@@ -223,17 +260,19 @@ export default function TravelDashboard({
   // Performance monitoring
   useEffect(() => {
     const monitor = PerformanceMonitor.getInstance();
-    const endTimer = monitor.startTimer('dashboard-render');
+    const endTimer = monitor.startTimer("dashboard-render");
     return endTimer;
   }, []);
 
   return (
-    <div className={cn(
-      "min-h-screen p-6 transition-colors duration-300",
-      theme === 'dark'
-        ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
-        : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
-    )}>
+    <div
+      className={cn(
+        "min-h-screen p-6 transition-colors duration-300",
+        theme === "dark"
+          ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+          : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50",
+      )}
+    >
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -243,18 +282,22 @@ export default function TravelDashboard({
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className={cn(
-              "text-4xl font-bold mb-2 transition-colors",
-              theme === 'dark' ? "text-white" : "text-gray-800"
-            )}>
-              {t('dashboard')}
+            <h1
+              className={cn(
+                "text-4xl font-bold mb-2 transition-colors",
+                theme === "dark" ? "text-white" : "text-gray-800",
+              )}
+            >
+              {t("dashboard")}
             </h1>
-            <p className={cn(
-              "transition-colors",
-              theme === 'dark' ? "text-white/70" : "text-gray-600"
-            )}>
-              {t('welcome')}, {user.name} -{" "}
-              {user.role === "owner" ? t('owner') : t('manager')}
+            <p
+              className={cn(
+                "transition-colors",
+                theme === "dark" ? "text-white/70" : "text-gray-600",
+              )}
+            >
+              {t("welcome")}, {user.name} -{" "}
+              {user.role === "owner" ? t("owner") : t("manager")}
             </p>
           </div>
           <motion.div
@@ -274,22 +317,30 @@ export default function TravelDashboard({
         transition={{ duration: 0.6, delay: 0.2 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
       >
-        <div className={cn(
-          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
-        )}>
+        <div
+          className={cn(
+            "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+            theme === "dark"
+              ? "bg-white/10 border-white/20"
+              : "bg-white/80 border-gray-200",
+          )}
+        >
           <div className="flex items-center justify-between">
             <div>
-              <p className={cn(
-                "text-sm transition-colors",
-                theme === 'dark' ? "text-white/70" : "text-gray-600"
-              )}>
-                {t('totalBookings')}
+              <p
+                className={cn(
+                  "text-sm transition-colors",
+                  theme === "dark" ? "text-white/70" : "text-gray-600",
+                )}
+              >
+                {t("totalBookings")}
               </p>
-              <p className={cn(
-                "text-2xl font-bold transition-colors",
-                theme === 'dark' ? "text-white" : "text-gray-800"
-              )}>
+              <p
+                className={cn(
+                  "text-2xl font-bold transition-colors",
+                  theme === "dark" ? "text-white" : "text-gray-800",
+                )}
+              >
                 {stats.totalBookings}
               </p>
             </div>
@@ -297,22 +348,30 @@ export default function TravelDashboard({
           </div>
         </div>
 
-        <div className={cn(
-          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
-        )}>
+        <div
+          className={cn(
+            "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+            theme === "dark"
+              ? "bg-white/10 border-white/20"
+              : "bg-white/80 border-gray-200",
+          )}
+        >
           <div className="flex items-center justify-between">
             <div>
-              <p className={cn(
-                "text-sm transition-colors",
-                theme === 'dark' ? "text-white/70" : "text-gray-600"
-              )}>
-                {t('todayBookings')}
+              <p
+                className={cn(
+                  "text-sm transition-colors",
+                  theme === "dark" ? "text-white/70" : "text-gray-600",
+                )}
+              >
+                {t("todayBookings")}
               </p>
-              <p className={cn(
-                "text-2xl font-bold transition-colors",
-                theme === 'dark' ? "text-white" : "text-gray-800"
-              )}>
+              <p
+                className={cn(
+                  "text-2xl font-bold transition-colors",
+                  theme === "dark" ? "text-white" : "text-gray-800",
+                )}
+              >
                 {stats.todayBookings}
               </p>
             </div>
@@ -320,22 +379,30 @@ export default function TravelDashboard({
           </div>
         </div>
 
-        <div className={cn(
-          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
-        )}>
+        <div
+          className={cn(
+            "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+            theme === "dark"
+              ? "bg-white/10 border-white/20"
+              : "bg-white/80 border-gray-200",
+          )}
+        >
           <div className="flex items-center justify-between">
             <div>
-              <p className={cn(
-                "text-sm transition-colors",
-                theme === 'dark' ? "text-white/70" : "text-gray-600"
-              )}>
-                {t('totalRevenue')}
+              <p
+                className={cn(
+                  "text-sm transition-colors",
+                  theme === "dark" ? "text-white/70" : "text-gray-600",
+                )}
+              >
+                {t("totalRevenue")}
               </p>
-              <p className={cn(
-                "text-xl font-bold transition-colors",
-                theme === 'dark' ? "text-white" : "text-gray-800"
-              )}>
+              <p
+                className={cn(
+                  "text-xl font-bold transition-colors",
+                  theme === "dark" ? "text-white" : "text-gray-800",
+                )}
+              >
                 {formatCurrency(stats.totalRevenue)}
               </p>
             </div>
@@ -343,22 +410,30 @@ export default function TravelDashboard({
           </div>
         </div>
 
-        <div className={cn(
-          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
-        )}>
+        <div
+          className={cn(
+            "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+            theme === "dark"
+              ? "bg-white/10 border-white/20"
+              : "bg-white/80 border-gray-200",
+          )}
+        >
           <div className="flex items-center justify-between">
             <div>
-              <p className={cn(
-                "text-sm transition-colors",
-                theme === 'dark' ? "text-white/70" : "text-gray-600"
-              )}>
-                {t('totalProfit')}
+              <p
+                className={cn(
+                  "text-sm transition-colors",
+                  theme === "dark" ? "text-white/70" : "text-gray-600",
+                )}
+              >
+                {t("totalProfit")}
               </p>
-              <p className={cn(
-                "text-xl font-bold transition-colors",
-                theme === 'dark' ? "text-white" : "text-gray-800"
-              )}>
+              <p
+                className={cn(
+                  "text-xl font-bold transition-colors",
+                  theme === "dark" ? "text-white" : "text-gray-800",
+                )}
+              >
                 {formatCurrency(stats.totalProfit)}
               </p>
             </div>
@@ -374,69 +449,93 @@ export default function TravelDashboard({
         transition={{ duration: 0.6, delay: 0.3 }}
         className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
       >
-        <div className={cn(
-          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
-        )}>
+        <div
+          className={cn(
+            "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+            theme === "dark"
+              ? "bg-white/10 border-white/20"
+              : "bg-white/80 border-gray-200",
+          )}
+        >
           <div className="flex items-center space-x-3">
             <CheckCircle className="w-8 h-8 text-neon-green" />
             <div>
-              <p className={cn(
-                "text-sm transition-colors",
-                theme === 'dark' ? "text-white/70" : "text-gray-600"
-              )}>
-                {language === 'bn' ? 'পেই��� ���ুকিং' : 'Paid Bookings'}
+              <p
+                className={cn(
+                  "text-sm transition-colors",
+                  theme === "dark" ? "text-white/70" : "text-gray-600",
+                )}
+              >
+                {language === "bn" ? "পেই��� ���ুকিং" : "Paid Bookings"}
               </p>
-              <p className={cn(
-                "text-2xl font-bold transition-colors",
-                theme === 'dark' ? "text-white" : "text-gray-800"
-              )}>
+              <p
+                className={cn(
+                  "text-2xl font-bold transition-colors",
+                  theme === "dark" ? "text-white" : "text-gray-800",
+                )}
+              >
                 {stats.paidBookings}
               </p>
             </div>
           </div>
         </div>
 
-        <div className={cn(
-          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
-        )}>
+        <div
+          className={cn(
+            "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+            theme === "dark"
+              ? "bg-white/10 border-white/20"
+              : "bg-white/80 border-gray-200",
+          )}
+        >
           <div className="flex items-center space-x-3">
             <Clock className="w-8 h-8 text-yellow-400" />
             <div>
-              <p className={cn(
-                "text-sm transition-colors",
-                theme === 'dark' ? "text-white/70" : "text-gray-600"
-              )}>
-                {language === 'bn' ? 'আংশিক পেমেন্ট' : 'Partial Payments'}
+              <p
+                className={cn(
+                  "text-sm transition-colors",
+                  theme === "dark" ? "text-white/70" : "text-gray-600",
+                )}
+              >
+                {language === "bn" ? "আংশিক পেমেন্ট" : "Partial Payments"}
               </p>
-              <p className={cn(
-                "text-2xl font-bold transition-colors",
-                theme === 'dark' ? "text-white" : "text-gray-800"
-              )}>
+              <p
+                className={cn(
+                  "text-2xl font-bold transition-colors",
+                  theme === "dark" ? "text-white" : "text-gray-800",
+                )}
+              >
                 {stats.partialPayments}
               </p>
             </div>
           </div>
         </div>
 
-        <div className={cn(
-          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
-        )}>
+        <div
+          className={cn(
+            "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+            theme === "dark"
+              ? "bg-white/10 border-white/20"
+              : "bg-white/80 border-gray-200",
+          )}
+        >
           <div className="flex items-center space-x-3">
             <AlertCircle className="w-8 h-8 text-red-400" />
             <div>
-              <p className={cn(
-                "text-sm transition-colors",
-                theme === 'dark' ? "text-white/70" : "text-gray-600"
-              )}>
-                {language === 'bn' ? 'পেন্ডিং পেমেন্ট' : 'Pending Payments'}
+              <p
+                className={cn(
+                  "text-sm transition-colors",
+                  theme === "dark" ? "text-white/70" : "text-gray-600",
+                )}
+              >
+                {language === "bn" ? "পেন্ডিং পেমেন্ট" : "Pending Payments"}
               </p>
-              <p className={cn(
-                "text-2xl font-bold transition-colors",
-                theme === 'dark' ? "text-white" : "text-gray-800"
-              )}>
+              <p
+                className={cn(
+                  "text-2xl font-bold transition-colors",
+                  theme === "dark" ? "text-white" : "text-gray-800",
+                )}
+              >
                 {stats.pendingPayments}
               </p>
             </div>
@@ -468,9 +567,9 @@ export default function TravelDashboard({
               onClick={() => handleCardClick(card.id)}
               className={cn(
                 "relative group cursor-pointer rounded-2xl p-6 border transition-all duration-300 overflow-hidden",
-                theme === 'dark'
+                theme === "dark"
                   ? "border-white/20 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-white/40 hover:shadow-2xl hover:shadow-purple-500/25"
-                  : "border-gray-200 bg-white/90 backdrop-blur-md hover:bg-white hover:border-gray-300 hover:shadow-2xl hover:shadow-blue-500/25"
+                  : "border-gray-200 bg-white/90 backdrop-blur-md hover:bg-white hover:border-gray-300 hover:shadow-2xl hover:shadow-blue-500/25",
               )}
             >
               {/* Background Gradient */}
@@ -496,16 +595,24 @@ export default function TravelDashboard({
                 </motion.div>
 
                 {/* Title & Description */}
-                <h3 className={cn(
-                  "text-xl font-semibold mb-2 transition-colors",
-                  theme === 'dark' ? "text-white group-hover:text-white" : "text-gray-800 group-hover:text-gray-900"
-                )}>
+                <h3
+                  className={cn(
+                    "text-xl font-semibold mb-2 transition-colors",
+                    theme === "dark"
+                      ? "text-white group-hover:text-white"
+                      : "text-gray-800 group-hover:text-gray-900",
+                  )}
+                >
                   {card.title}
                 </h3>
-                <p className={cn(
-                  "text-sm mb-4 transition-colors",
-                  theme === 'dark' ? "text-white/70 group-hover:text-white/90" : "text-gray-600 group-hover:text-gray-700"
-                )}>
+                <p
+                  className={cn(
+                    "text-sm mb-4 transition-colors",
+                    theme === "dark"
+                      ? "text-white/70 group-hover:text-white/90"
+                      : "text-gray-600 group-hover:text-gray-700",
+                  )}
+                >
                   {card.description}
                 </p>
 
@@ -513,7 +620,7 @@ export default function TravelDashboard({
                 <motion.div
                   className={cn(
                     "absolute top-4 right-4 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity",
-                    theme === 'dark' ? "bg-white" : "bg-gray-800"
+                    theme === "dark" ? "bg-white" : "bg-gray-800",
                   )}
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
@@ -521,10 +628,12 @@ export default function TravelDashboard({
               </div>
 
               {/* Glow Effect */}
-              <div className={cn(
-                "absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-                theme === 'dark' ? "via-white/5" : "via-gray-900/5"
-              )} />
+              <div
+                className={cn(
+                  "absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+                  theme === "dark" ? "via-white/5" : "via-gray-900/5",
+                )}
+              />
             </motion.div>
           ))}
       </motion.div>
@@ -536,14 +645,18 @@ export default function TravelDashboard({
         transition={{ duration: 0.6, delay: 0.6 }}
         className={cn(
           "mt-8 backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
+          theme === "dark"
+            ? "bg-white/10 border-white/20"
+            : "bg-white/80 border-gray-200",
         )}
       >
-        <h2 className={cn(
-          "text-2xl font-semibold mb-4 transition-colors",
-          theme === 'dark' ? "text-white" : "text-gray-800"
-        )}>
-          {language === 'bn' ? 'দ্���ুত অ্যাকশন' : 'Quick Actions'}
+        <h2
+          className={cn(
+            "text-2xl font-semibold mb-4 transition-colors",
+            theme === "dark" ? "text-white" : "text-gray-800",
+          )}
+        >
+          {language === "bn" ? "দ্���ুত অ্যাকশন" : "Quick Actions"}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <motion.button
@@ -553,7 +666,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-green to-neon-blue rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <PlusCircle className="w-5 h-5" />
-            <span>{t('newBooking')}</span>
+            <span>{t("newBooking")}</span>
           </motion.button>
 
           <motion.button
@@ -563,7 +676,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <FileText className="w-5 h-5" />
-            <span>{language === 'bn' ? 'সব বুকিং' : 'All Bookings'}</span>
+            <span>{language === "bn" ? "সব বুকিং" : "All Bookings"}</span>
           </motion.button>
 
           <motion.button
@@ -573,7 +686,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-purple to-neon-pink rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <Search className="w-5 h-5" />
-            <span>{language === 'bn' ? 'সার্চ করুন' : 'Search'}</span>
+            <span>{language === "bn" ? "সার্চ করুন" : "Search"}</span>
           </motion.button>
 
           <motion.button
@@ -583,7 +696,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <TrendingUp className="w-5 h-5" />
-            <span>{t('reports')}</span>
+            <span>{t("reports")}</span>
           </motion.button>
         </div>
       </motion.div>

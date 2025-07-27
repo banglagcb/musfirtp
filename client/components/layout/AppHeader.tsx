@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 import {
   Sun,
   Moon,
@@ -9,11 +9,11 @@ import {
   Menu,
   X,
   Activity,
-} from 'lucide-react';
-import { useApp, useTranslation } from '@/contexts/AppContext';
-import { User } from '@shared/travel-types';
-import { cn } from '@/lib/utils';
-import { usePerformanceMonitor } from '@/components/PerformanceMonitor';
+} from "lucide-react";
+import { useApp, useTranslation } from "@/contexts/AppContext";
+import { User } from "@shared/travel-types";
+import { cn } from "@/lib/utils";
+import { usePerformanceMonitor } from "@/components/PerformanceMonitor";
 
 interface AppHeaderProps {
   user: User;
@@ -60,9 +60,9 @@ export default function AppHeader({
             {/* User Info */}
             <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-lg px-3 py-2 border border-white/20 dark:border-gray-700/30">
               <p className="text-sm text-gray-700 dark:text-gray-300">
-                <span className="font-medium">{user.name}</span> - {' '}
+                <span className="font-medium">{user.name}</span> -{" "}
                 <span className="text-blue-600 dark:text-blue-400">
-                  {user.role === 'owner' ? t('owner') : t('manager')}
+                  {user.role === "owner" ? t("owner") : t("manager")}
                 </span>
               </p>
             </div>
@@ -73,7 +73,11 @@ export default function AppHeader({
               whileTap={{ scale: 0.95 }}
               onClick={toggleLanguage}
               className="p-2 bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-lg border border-white/20 dark:border-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-gray-700/50 transition-colors"
-              title={language === 'bn' ? 'Switch to English' : 'বাংলায় পরিবর্তন করুন'}
+              title={
+                language === "bn"
+                  ? "Switch to English"
+                  : "বাংলায় পরিবর্তন করুন"
+              }
             >
               <Globe className="w-5 h-5" />
             </motion.button>
@@ -84,9 +88,9 @@ export default function AppHeader({
               whileTap={{ scale: 0.95 }}
               onClick={toggleTheme}
               className="p-2 bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-lg border border-white/20 dark:border-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-gray-700/50 transition-colors"
-              title={theme === 'dark' ? t('lightMode') : t('darkMode')}
+              title={theme === "dark" ? t("lightMode") : t("darkMode")}
             >
-              {theme === 'dark' ? (
+              {theme === "dark" ? (
                 <Sun className="w-5 h-5" />
               ) : (
                 <Moon className="w-5 h-5" />
@@ -94,7 +98,7 @@ export default function AppHeader({
             </motion.button>
 
             {/* Performance Monitor Button (only in development) */}
-            {process.env.NODE_ENV === 'development' && (
+            {process.env.NODE_ENV === "development" && (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -123,7 +127,7 @@ export default function AppHeader({
               whileTap={{ scale: 0.95 }}
               onClick={onLogout}
               className="p-2 bg-red-500/20 dark:bg-red-900/30 backdrop-blur-md rounded-lg border border-red-400/30 dark:border-red-700/30 text-red-600 dark:text-red-400 hover:bg-red-500/30 dark:hover:bg-red-900/50 transition-colors"
-              title={t('logout')}
+              title={t("logout")}
             >
               <LogOut className="w-5 h-5" />
             </motion.button>
@@ -150,7 +154,7 @@ export default function AppHeader({
         {isMobile && isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             className="border-t border-white/20 dark:border-gray-700/30 py-4"
           >
@@ -158,9 +162,9 @@ export default function AppHeader({
               {/* User Info */}
               <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-lg p-3 border border-white/20 dark:border-gray-700/30">
                 <p className="text-sm text-gray-700 dark:text-gray-300">
-                  <span className="font-medium">{user.name}</span> - {' '}
+                  <span className="font-medium">{user.name}</span> -{" "}
                   <span className="text-blue-600 dark:text-blue-400">
-                    {user.role === 'owner' ? t('owner') : t('manager')}
+                    {user.role === "owner" ? t("owner") : t("manager")}
                   </span>
                 </p>
               </div>
@@ -173,7 +177,9 @@ export default function AppHeader({
                   className="p-3 bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-lg border border-white/20 dark:border-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-gray-700/50 transition-colors flex items-center justify-center space-x-2"
                 >
                   <Globe className="w-5 h-5" />
-                  <span className="text-sm">{language === 'bn' ? 'English' : 'বাংলা'}</span>
+                  <span className="text-sm">
+                    {language === "bn" ? "English" : "বাংলা"}
+                  </span>
                 </motion.button>
 
                 <motion.button
@@ -181,8 +187,14 @@ export default function AppHeader({
                   onClick={toggleTheme}
                   className="p-3 bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-lg border border-white/20 dark:border-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-gray-700/50 transition-colors flex items-center justify-center space-x-2"
                 >
-                  {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                  <span className="text-sm">{theme === 'dark' ? t('lightMode') : t('darkMode')}</span>
+                  {theme === "dark" ? (
+                    <Sun className="w-5 h-5" />
+                  ) : (
+                    <Moon className="w-5 h-5" />
+                  )}
+                  <span className="text-sm">
+                    {theme === "dark" ? t("lightMode") : t("darkMode")}
+                  </span>
                 </motion.button>
 
                 <motion.button
@@ -200,7 +212,7 @@ export default function AppHeader({
                   className="p-3 bg-red-500/20 dark:bg-red-900/30 backdrop-blur-md rounded-lg border border-red-400/30 dark:border-red-700/30 text-red-600 dark:text-red-400 hover:bg-red-500/30 dark:hover:bg-red-900/50 transition-colors flex items-center justify-center space-x-2"
                 >
                   <LogOut className="w-5 h-5" />
-                  <span className="text-sm">{t('logout')}</span>
+                  <span className="text-sm">{t("logout")}</span>
                 </motion.button>
               </div>
             </div>

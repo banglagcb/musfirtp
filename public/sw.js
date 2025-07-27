@@ -1,23 +1,15 @@
-const CACHE_NAME = 'air-musafir-v1';
-const STATIC_CACHE = 'air-musafir-static-v1';
-const DYNAMIC_CACHE = 'air-musafir-dynamic-v1';
+const CACHE_NAME = "air-musafir-v1";
+const STATIC_CACHE = "air-musafir-static-v1";
+const DYNAMIC_CACHE = "air-musafir-dynamic-v1";
 
 // Assets to cache immediately
-const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/placeholder.svg',
-  '/robots.txt',
-];
+const STATIC_ASSETS = ["/", "/index.html", "/placeholder.svg", "/robots.txt"];
 
 // API endpoints to cache
-const API_CACHE_PATTERNS = [
-  /^\/api\//,
-  /^\/\.netlify\/functions\//,
-];
+const API_CACHE_PATTERNS = [/^\/api\//, /^\/\.netlify\/functions\//];
 
 // Install event - cache static assets
-self.addEventListener('install', (event) => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
     Promise.all([
       caches.open(STATIC_CACHE).then((cache) => {
@@ -25,12 +17,12 @@ self.addEventListener('install', (event) => {
       }),
       // Skip waiting to activate immediately
       self.skipWaiting(),
-    ])
+    ]),
   );
 });
 
 // Activate event - clean old caches
-self.addEventListener('activate', (event) => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
     Promise.all([
       // Clean old caches
@@ -44,22 +36,22 @@ self.addEventListener('activate', (event) => {
                 cacheName !== CACHE_NAME
               );
             })
-            .map((cacheName) => caches.delete(cacheName))
+            .map((cacheName) => caches.delete(cacheName)),
         );
       }),
       // Claim clients to start controlling them immediately
       self.clients.claim(),
-    ])
+    ]),
   );
 });
 
 // Fetch event - implement caching strategies
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
   // Skip non-GET requests
-  if (request.method !== 'GET') {
+  if (request.method !== "GET") {
     return;
   }
 
@@ -91,7 +83,9 @@ async function cacheFirst(request, cacheName) {
     return networkResponse;
   } catch (error) {
     // Return offline fallback if available
-    return caches.match('/index.html') || new Response('Offline', { status: 503 });
+    return (
+      caches.match("/index.html") || new Response("Offline", { status: 503 })
+    );
   }
 }
 
@@ -130,15 +124,15 @@ async function staleWhileRevalidate(request, cacheName) {
 function isStaticAsset(request) {
   const url = new URL(request.url);
   return (
-    url.pathname.endsWith('.js') ||
-    url.pathname.endsWith('.css') ||
-    url.pathname.endsWith('.png') ||
-    url.pathname.endsWith('.jpg') ||
-    url.pathname.endsWith('.jpeg') ||
-    url.pathname.endsWith('.svg') ||
-    url.pathname.endsWith('.ico') ||
-    url.pathname.endsWith('.woff') ||
-    url.pathname.endsWith('.woff2')
+    url.pathname.endsWith(".js") ||
+    url.pathname.endsWith(".css") ||
+    url.pathname.endsWith(".png") ||
+    url.pathname.endsWith(".jpg") ||
+    url.pathname.endsWith(".jpeg") ||
+    url.pathname.endsWith(".svg") ||
+    url.pathname.endsWith(".ico") ||
+    url.pathname.endsWith(".woff") ||
+    url.pathname.endsWith(".woff2")
   );
 }
 
@@ -148,46 +142,44 @@ function isAPIRequest(request) {
 }
 
 function isNavigationRequest(request) {
-  return request.mode === 'navigate';
+  return request.mode === "navigate";
 }
 
 // Background sync for offline actions
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'background-sync') {
+self.addEventListener("sync", (event) => {
+  if (event.tag === "background-sync") {
     event.waitUntil(syncOfflineActions());
   }
 });
 
 async function syncOfflineActions() {
   // Implement offline action sync when connection is restored
-  console.log('Syncing offline actions...');
+  console.log("Syncing offline actions...");
 }
 
 // Push notifications (future enhancement)
-self.addEventListener('push', (event) => {
+self.addEventListener("push", (event) => {
   if (event.data) {
     const data = event.data.json();
     self.registration.showNotification(data.title, {
       body: data.body,
-      icon: '/placeholder.svg',
-      badge: '/placeholder.svg',
-      tag: 'air-musafir-notification',
+      icon: "/placeholder.svg",
+      badge: "/placeholder.svg",
+      tag: "air-musafir-notification",
     });
   }
 });
 
 // Notification click handler
-self.addEventListener('notificationclick', (event) => {
+self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  event.waitUntil(
-    clients.openWindow('/')
-  );
+  event.waitUntil(clients.openWindow("/"));
 });
 
 // Performance monitoring
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'PERFORMANCE_METRICS') {
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "PERFORMANCE_METRICS") {
     // Handle performance metrics from client
-    console.log('Performance metrics:', event.data.metrics);
+    console.log("Performance metrics:", event.data.metrics);
   }
 });

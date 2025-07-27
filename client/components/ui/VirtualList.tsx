@@ -1,7 +1,14 @@
-import React, { memo, useMemo, useRef, useEffect, useState, useCallback } from 'react';
-import { motion } from 'framer-motion';
-import { useVirtualList, useThrottle } from '@/utils/performance';
-import { cn } from '@/lib/utils';
+import React, {
+  memo,
+  useMemo,
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
+import { motion } from "framer-motion";
+import { useVirtualList, useThrottle } from "@/utils/performance";
+import { cn } from "@/lib/utils";
 
 interface VirtualListProps<T> {
   items: T[];
@@ -29,17 +36,20 @@ function VirtualListInner<T>({
     items,
     containerHeight,
     itemHeight,
-    overscan
+    overscan,
   );
 
   // Throttled scroll handler for better performance
   const handleScroll = useThrottle(
-    useCallback((e: React.UIEvent<HTMLDivElement>) => {
-      const newScrollTop = e.currentTarget.scrollTop;
-      setScrollTop(newScrollTop);
-      onScroll?.(newScrollTop);
-    }, [onScroll]),
-    16 // ~60fps
+    useCallback(
+      (e: React.UIEvent<HTMLDivElement>) => {
+        const newScrollTop = e.currentTarget.scrollTop;
+        setScrollTop(newScrollTop);
+        onScroll?.(newScrollTop);
+      },
+      [onScroll],
+    ),
+    16, // ~60fps
   );
 
   return (
@@ -49,12 +59,12 @@ function VirtualListInner<T>({
       style={{ height: containerHeight }}
       onScroll={handleScroll}
     >
-      <div style={{ height: totalHeight, position: 'relative' }}>
+      <div style={{ height: totalHeight, position: "relative" }}>
         {visibleItems.map(({ item, index }) => (
           <div
             key={index}
             style={{
-              position: 'absolute',
+              position: "absolute",
               top: index * itemHeight,
               left: 0,
               right: 0,
@@ -71,7 +81,7 @@ function VirtualListInner<T>({
 
 // Memoized virtual list component
 export const VirtualList = memo(VirtualListInner) as <T>(
-  props: VirtualListProps<T>
+  props: VirtualListProps<T>,
 ) => JSX.Element;
 
 // Enhanced virtual list with search and filtering
@@ -85,16 +95,16 @@ interface EnhancedVirtualListProps<T> extends VirtualListProps<T> {
 
 function EnhancedVirtualListInner<T>({
   items,
-  searchTerm = '',
+  searchTerm = "",
   filterFn,
-  emptyMessage = 'No items found',
-  loadingMessage = 'Loading...',
+  emptyMessage = "No items found",
+  loadingMessage = "Loading...",
   isLoading = false,
   ...virtualListProps
 }: EnhancedVirtualListProps<T>) {
   const filteredItems = useMemo(() => {
     if (!searchTerm || !filterFn) return items;
-    return items.filter(item => filterFn(item, searchTerm));
+    return items.filter((item) => filterFn(item, searchTerm));
   }, [items, searchTerm, filterFn]);
 
   if (isLoading) {
@@ -122,7 +132,7 @@ function EnhancedVirtualListInner<T>({
 }
 
 export const EnhancedVirtualList = memo(EnhancedVirtualListInner) as <T>(
-  props: EnhancedVirtualListProps<T>
+  props: EnhancedVirtualListProps<T>,
 ) => JSX.Element;
 
 // Infinite scrolling virtual list
@@ -148,13 +158,25 @@ function InfiniteVirtualListInner<T>({
 
       // Check if we need to load more items
       if (hasNextPage && !isLoadingMore && onLoadMore) {
-        const scrollPercentage = scrollTop / (virtualListProps.itemHeight * virtualListProps.items.length - containerHeight);
+        const scrollPercentage =
+          scrollTop /
+          (virtualListProps.itemHeight * virtualListProps.items.length -
+            containerHeight);
         if (scrollPercentage >= loadMoreThreshold) {
           onLoadMore();
         }
       }
     },
-    [hasNextPage, isLoadingMore, onLoadMore, loadMoreThreshold, containerHeight, virtualListProps.itemHeight, virtualListProps.items.length, onScroll]
+    [
+      hasNextPage,
+      isLoadingMore,
+      onLoadMore,
+      loadMoreThreshold,
+      containerHeight,
+      virtualListProps.itemHeight,
+      virtualListProps.items.length,
+      onScroll,
+    ],
   );
 
   return (
@@ -167,7 +189,7 @@ function InfiniteVirtualListInner<T>({
 }
 
 export const InfiniteVirtualList = memo(InfiniteVirtualListInner) as <T>(
-  props: InfiniteVirtualListProps<T>
+  props: InfiniteVirtualListProps<T>,
 ) => JSX.Element;
 
 // Grid virtual list for card layouts
@@ -193,20 +215,24 @@ function VirtualGridInner<T>({
   className,
 }: VirtualGridProps<T>) {
   const [scrollTop, setScrollTop] = useState(0);
-  
+
   const itemsPerRow = Math.floor((containerWidth + gap) / (itemWidth + gap));
   const totalRows = Math.ceil(items.length / itemsPerRow);
   const rowHeight = itemHeight + gap;
 
   const visibleRange = useMemo(() => {
     const start = Math.floor(scrollTop / rowHeight);
-    const end = Math.min(totalRows, Math.ceil((scrollTop + containerHeight) / rowHeight) + 2);
+    const end = Math.min(
+      totalRows,
+      Math.ceil((scrollTop + containerHeight) / rowHeight) + 2,
+    );
     return { start: Math.max(0, start - 1), end };
   }, [scrollTop, rowHeight, containerHeight, totalRows]);
 
   const visibleItems = useMemo(() => {
-    const result: Array<{ item: T; index: number; row: number; col: number }> = [];
-    
+    const result: Array<{ item: T; index: number; row: number; col: number }> =
+      [];
+
     for (let row = visibleRange.start; row < visibleRange.end; row++) {
       for (let col = 0; col < itemsPerRow; col++) {
         const index = row * itemsPerRow + col;
@@ -220,7 +246,7 @@ function VirtualGridInner<T>({
         }
       }
     }
-    
+
     return result;
   }, [items, visibleRange, itemsPerRow]);
 
@@ -228,7 +254,7 @@ function VirtualGridInner<T>({
     useCallback((e: React.UIEvent<HTMLDivElement>) => {
       setScrollTop(e.currentTarget.scrollTop);
     }, []),
-    16
+    16,
   );
 
   return (
@@ -237,12 +263,12 @@ function VirtualGridInner<T>({
       style={{ height: containerHeight }}
       onScroll={handleScroll}
     >
-      <div style={{ height: totalRows * rowHeight, position: 'relative' }}>
+      <div style={{ height: totalRows * rowHeight, position: "relative" }}>
         {visibleItems.map(({ item, index, row, col }) => (
           <div
             key={index}
             style={{
-              position: 'absolute',
+              position: "absolute",
               top: row * rowHeight,
               left: col * (itemWidth + gap),
               width: itemWidth,
@@ -258,5 +284,5 @@ function VirtualGridInner<T>({
 }
 
 export const VirtualGrid = memo(VirtualGridInner) as <T>(
-  props: VirtualGridProps<T>
+  props: VirtualGridProps<T>,
 ) => JSX.Element;

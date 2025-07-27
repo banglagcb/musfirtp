@@ -1,16 +1,19 @@
 // Service Worker registration and management
 
 export function registerServiceWorker() {
-  if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-    window.addEventListener('load', async () => {
+  if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
+    window.addEventListener("load", async () => {
       try {
-        const registration = await navigator.serviceWorker.register('/sw.js');
-        
-        registration.addEventListener('updatefound', () => {
+        const registration = await navigator.serviceWorker.register("/sw.js");
+
+        registration.addEventListener("updatefound", () => {
           const newWorker = registration.installing;
           if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            newWorker.addEventListener("statechange", () => {
+              if (
+                newWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
                 // New version available
                 showUpdateNotification();
               }
@@ -18,16 +21,16 @@ export function registerServiceWorker() {
           }
         });
 
-        console.log('Service Worker registered successfully');
+        console.log("Service Worker registered successfully");
       } catch (error) {
-        console.error('Service Worker registration failed:', error);
+        console.error("Service Worker registration failed:", error);
       }
     });
   }
 }
 
 export function unregisterServiceWorker() {
-  if ('serviceWorker' in navigator) {
+  if ("serviceWorker" in navigator) {
     navigator.serviceWorker.ready.then((registration) => {
       registration.unregister();
     });
@@ -36,7 +39,7 @@ export function unregisterServiceWorker() {
 
 function showUpdateNotification() {
   // Create a custom notification or use a toast
-  const notification = document.createElement('div');
+  const notification = document.createElement("div");
   notification.style.cssText = `
     position: fixed;
     top: 20px;
@@ -50,7 +53,7 @@ function showUpdateNotification() {
     font-family: system-ui;
     max-width: 300px;
   `;
-  
+
   notification.innerHTML = `
     <div style="margin-bottom: 8px; font-weight: 600;">Update Available</div>
     <div style="font-size: 14px; margin-bottom: 12px; opacity: 0.9;">
@@ -66,9 +69,9 @@ function showUpdateNotification() {
       font-size: 12px;
     ">Refresh</button>
   `;
-  
+
   document.body.appendChild(notification);
-  
+
   setTimeout(() => {
     notification.remove();
   }, 10000);
@@ -76,9 +79,9 @@ function showUpdateNotification() {
 
 // Performance metrics sender
 export function sendPerformanceMetrics(metrics: any) {
-  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+  if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
     navigator.serviceWorker.controller.postMessage({
-      type: 'PERFORMANCE_METRICS',
+      type: "PERFORMANCE_METRICS",
       metrics,
     });
   }
@@ -92,14 +95,14 @@ export function createOfflineDetector() {
   function updateOnlineStatus() {
     const wasOnline = isOnline;
     isOnline = navigator.onLine;
-    
+
     if (wasOnline !== isOnline) {
-      listeners.forEach(listener => listener(isOnline));
+      listeners.forEach((listener) => listener(isOnline));
     }
   }
 
-  window.addEventListener('online', updateOnlineStatus);
-  window.addEventListener('offline', updateOnlineStatus);
+  window.addEventListener("online", updateOnlineStatus);
+  window.addEventListener("offline", updateOnlineStatus);
 
   return {
     isOnline: () => isOnline,
@@ -111,8 +114,8 @@ export function createOfflineDetector() {
       };
     },
     cleanup: () => {
-      window.removeEventListener('online', updateOnlineStatus);
-      window.removeEventListener('offline', updateOnlineStatus);
+      window.removeEventListener("online", updateOnlineStatus);
+      window.removeEventListener("offline", updateOnlineStatus);
     },
   };
 }
