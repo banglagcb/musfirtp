@@ -247,7 +247,12 @@ export default function TravelDashboard({
             )}
           >
             <div className="flex items-center justify-between mb-2 lg:mb-3">
-              <stat.icon className={cn("w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8", stat.color)} />
+              <stat.icon
+                className={cn(
+                  "w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8",
+                  stat.color,
+                )}
+              />
             </div>
             <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-800 dark:text-white mb-1">
               {stat.prefix}
@@ -285,7 +290,12 @@ export default function TravelDashboard({
                 "group-hover:scale-110 transition-transform duration-300",
               )}
             >
-              <card.icon className={cn("w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8", card.color)} />
+              <card.icon
+                className={cn(
+                  "w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8",
+                  card.color,
+                )}
+              />
             </div>
 
             {/* Enhanced Content */}

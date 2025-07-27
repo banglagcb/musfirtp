@@ -87,7 +87,8 @@ export default function NewBookingForm({
     const costPrice = Number(formData.costPrice) || 0;
     const sellingPrice = Number(formData.sellingPrice) || 0;
     const calculatedProfit = sellingPrice - costPrice;
-    const calculatedMargin = costPrice > 0 ? (calculatedProfit / costPrice) * 100 : 0;
+    const calculatedMargin =
+      costPrice > 0 ? (calculatedProfit / costPrice) * 100 : 0;
 
     setProfit(calculatedProfit);
     setProfitMargin(calculatedMargin);

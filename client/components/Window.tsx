@@ -49,12 +49,14 @@ export default function Window({
           className,
         )}
         style={
-          !isMaximized ? {
-            width: `min(${width}px, calc(100vw - 2rem))`,
-            height: `min(${height}px, calc(100vh - 8rem))`,
-            maxWidth: "calc(100vw - 2rem)",
-            maxHeight: "calc(100vh - 8rem)",
-          } : {}
+          !isMaximized
+            ? {
+                width: `min(${width}px, calc(100vw - 2rem))`,
+                height: `min(${height}px, calc(100vh - 8rem))`,
+                maxWidth: "calc(100vw - 2rem)",
+                maxHeight: "calc(100vh - 8rem)",
+              }
+            : {}
         }
       >
         {/* Window Header */}
