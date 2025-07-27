@@ -155,7 +155,7 @@ export default function TravelDashboard({
     {
       id: "reports",
       title: t("reports"),
-      description: language === 'bn' ? "বিক্রয় ও মুনাফার রিপোর্ট দ���খুন" : "View sales and profit reports",
+      description: language === 'bn' ? "বিক্রয় ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
       icon: TrendingUp,
       color: "from-orange-500 to-red-500",
       gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
@@ -604,7 +604,7 @@ export default function TravelDashboard({
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => onCardClick("reports")}
+            onClick={() => handleCardClick("reports")}
             className="p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <TrendingUp className="w-5 h-5" />
