@@ -14,6 +14,7 @@ import NewBookingForm from "@/components/travel/NewBookingForm";
 import BookingsList from "@/components/travel/BookingsList";
 import ReportsSection from "@/components/travel/ReportsSection";
 import DataExport from "@/components/travel/DataExport";
+import EditBookingForm from "@/components/travel/EditBookingForm";
 import PlaceholderPage from "@/components/PlaceholderPage";
 import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
