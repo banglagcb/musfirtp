@@ -63,7 +63,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "reports",
     title: "রিপোর্ট",
-    description: "বিক্রয় ও মুনাফার রিপোর্ট দেখুন",
+    description: "বিক্রয় ও মুনাফার ���িপোর্ট দেখুন",
     icon: TrendingUp,
     color: "from-orange-500 to-red-500",
     gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
@@ -475,11 +475,10 @@ export default function TravelDashboard({
               whileTap={{ scale: 0.95 }}
               onClick={() => onCardClick(card.id)}
               className={cn(
-                "relative group cursor-pointer rounded-2xl p-6 border border-white/20",
-                "bg-white/10 backdrop-blur-md hover:bg-white/20",
-                "transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25",
-                "overflow-hidden",
-                "hover:border-white/40",
+                "relative group cursor-pointer rounded-2xl p-6 border transition-all duration-300 overflow-hidden",
+                theme === 'dark'
+                  ? "border-white/20 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-white/40 hover:shadow-2xl hover:shadow-purple-500/25"
+                  : "border-gray-200 bg-white/90 backdrop-blur-md hover:bg-white hover:border-gray-300 hover:shadow-2xl hover:shadow-blue-500/25"
               )}
             >
               {/* Background Gradient */}
