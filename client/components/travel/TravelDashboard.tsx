@@ -47,7 +47,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "bookings-list",
     title: "বুকিং লিস্ট",
-    description: "সব বুকিং দেখুন ও ম্যানেজ করুন",
+    description: "সব বুকিং দে���ুন ও ম্যানেজ করুন",
     icon: FileText,
     color: "from-neon-blue to-neon-purple",
     gradient: "bg-gradient-to-br from-blue-500/20 to-purple-500/20",
@@ -129,7 +129,7 @@ export default function TravelDashboard({
     {
       id: "new-booking",
       title: t("newBooking"),
-      description: language === 'bn' ? "নতুন ফ্লাইট বুকি��� যোগ করুন" : "Add new flight booking",
+      description: language === 'bn' ? "নতুন ফ্লাইট বুকিং যোগ করুন" : "Add new flight booking",
       icon: PlusCircle,
       color: "from-neon-green to-neon-blue",
       gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
@@ -177,7 +177,7 @@ export default function TravelDashboard({
     ...(user.role === 'owner' ? [{
       id: "bulk-purchase",
       title: t("bulkPurchase"),
-      description: language === 'bn' ? "অগ্রিম টিকেট ক্রয় করুন" : "Purchase tickets in advance",
+      description: language === 'bn' ? "অগ্রিম টি��েট ক্রয় করুন" : "Purchase tickets in advance",
       icon: ShoppingCart,
       color: "from-emerald-500 to-teal-500",
       gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
@@ -540,7 +540,7 @@ export default function TravelDashboard({
           "text-2xl font-semibold mb-4 transition-colors",
           theme === 'dark' ? "text-white" : "text-gray-800"
         )}>
-          {language === 'bn' ? 'দ্রুত অ্যাকশন' : 'Quick Actions'}
+          {language === 'bn' ? 'দ্���ুত অ্যাকশন' : 'Quick Actions'}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <motion.button
