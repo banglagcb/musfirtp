@@ -35,8 +35,8 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
     const [windowState, setWindowState] = useState<WindowState>(initialState);
     const [isDragging, setIsDragging] = useState(false);
     const [viewportSize, setViewportSize] = useState({
-      width: typeof window !== 'undefined' ? window.innerWidth : 1024,
-      height: typeof window !== 'undefined' ? window.innerHeight : 768
+      width: typeof window !== "undefined" ? window.innerWidth : 1024,
+      height: typeof window !== "undefined" ? window.innerHeight : 768,
     });
 
     useEffect(() => {
@@ -48,13 +48,13 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       const handleResize = () => {
         setViewportSize({
           width: window.innerWidth,
-          height: window.innerHeight
+          height: window.innerHeight,
         });
       };
 
-      if (typeof window !== 'undefined') {
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+      if (typeof window !== "undefined") {
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
       }
     }, []);
 
@@ -90,35 +90,50 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       },
     };
 
-    // Smoother container variants
+    // Flower blooming animation variants from center
     const containerVariants = {
       hidden: {
         opacity: 0,
-        scale: 0.85,
-        y: 40,
-        filter: "blur(8px)",
+        scale: 0.1,
+        rotate: -180,
+        filter: "blur(20px)",
+        borderRadius: "50%",
       },
       visible: {
         opacity: 1,
         scale: 1,
-        y: 0,
+        rotate: 0,
         filter: "blur(0px)",
+        borderRadius: windowState === "fullscreen" ? "0px" : "24px",
         transition: {
           type: "spring",
-          stiffness: 300,
-          damping: 30,
+          stiffness: 200,
+          damping: 25,
           mass: 0.8,
-          duration: 0.5,
+          duration: 0.8,
+          opacity: { duration: 0.6, ease: "easeOut" },
+          scale: {
+            type: "spring",
+            stiffness: 180,
+            damping: 20,
+            duration: 0.9,
+          },
+          rotate: { duration: 0.8, ease: "easeInOut" },
+          filter: { duration: 0.6, ease: "easeOut" },
+          borderRadius: { duration: 0.5, ease: "easeInOut" },
         },
       },
       exit: {
         opacity: 0,
-        scale: 0.9,
-        y: -20,
-        filter: "blur(4px)",
+        scale: 0.1,
+        rotate: 180,
+        filter: "blur(15px)",
+        borderRadius: "50%",
         transition: {
-          duration: 0.3,
+          duration: 0.4,
           ease: [0.25, 0.46, 0.45, 0.94],
+          scale: { duration: 0.5, ease: "easeIn" },
+          rotate: { duration: 0.4, ease: "easeInOut" },
         },
       },
     };
@@ -155,20 +170,35 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
             borderRadius: "0px",
             transform: "none",
           };
-        default: // popup
-          const safeWidth = Math.min(900, viewportSize.width * 0.85);
-          const safeHeight = Math.min(700, viewportSize.height * 0.8);
+        default: // popup - takes 2/4 (half) of screen like normal computer folder
+          // Take exactly half (2/4) of the screen space
+          const folderWidth = Math.min(viewportSize.width * 0.5, 800);
+          const folderHeight = Math.min(viewportSize.height * 0.5, 600);
+
+          // Mobile responsiveness - use more space on small screens
+          let finalWidth = folderWidth;
+          let finalHeight = folderHeight;
+
+          if (viewportSize.width < 768) {
+            finalWidth = Math.min(viewportSize.width * 0.9, 600);
+            finalHeight = Math.min(viewportSize.height * 0.7, 500);
+          } else if (viewportSize.width < 1024) {
+            finalWidth = Math.min(viewportSize.width * 0.65, 700);
+            finalHeight = Math.min(viewportSize.height * 0.6, 550);
+          }
 
           return {
             ...baseStyles,
             top: "50%",
             left: "50%",
-            width: `${safeWidth}px`,
-            height: `${safeHeight}px`,
-            borderRadius: "24px",
+            width: `${finalWidth}px`,
+            height: `${finalHeight}px`,
+            borderRadius: "16px",
             transform: "translate(-50%, -50%)",
             maxWidth: `${viewportSize.width - 60}px`,
             maxHeight: `${viewportSize.height - 60}px`,
+            minWidth: "400px",
+            minHeight: "300px",
           };
       }
     };
@@ -179,7 +209,7 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       <AnimatePresence mode="wait">
         {isOpen && (
           <>
-            {/* Enhanced Backdrop - only show for popup mode */}
+            {/* Enhanced Backdrop with flower blooming effect - only show for popup mode */}
             {windowState === "popup" && (
               <motion.div
                 variants={backdropVariants}
@@ -189,7 +219,36 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
                 className="fixed inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/30"
                 style={{ zIndex: zIndex - 1 }}
                 onClick={onClose}
-              />
+              >
+                {/* Flower petal effects radiating from center */}
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-32 h-32 rounded-full"
+                    style={{
+                      background: `conic-gradient(from ${i * 45}deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.05), transparent)`,
+                      left: "50%",
+                      top: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                    initial={{
+                      scale: 0,
+                      rotate: i * 45,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      scale: [0, 2, 1.5],
+                      rotate: i * 45 + 360,
+                      opacity: [0, 0.6, 0.2],
+                    }}
+                    transition={{
+                      duration: 1.2,
+                      delay: i * 0.1,
+                      ease: "easeOut",
+                    }}
+                  />
+                ))}
+              </motion.div>
             )}
 
             {/* Main Window with enhanced animations */}
@@ -210,19 +269,26 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
               )}
               style={{
                 ...getWindowStyles(),
-                minHeight: windowState === "popup" ? "400px" : "100%",
-                maxHeight: windowState === "popup" ? "85vh" : "100%",
-                willChange: "transform, opacity", // Performance optimization
+                willChange: "transform, opacity, scale, rotate", // Performance optimization
                 containIntrinsicSize: "auto auto", // Better layout containment
+                transformOrigin: "center center", // Ensure blooming from center
               }}
               drag={windowState === "popup" && showControls && !isDragging}
               dragMomentum={false}
               dragElastic={0.02}
               dragConstraints={{
-                left: -(viewportSize.width / 2) + Math.min(300, viewportSize.width * 0.3),
-                right: (viewportSize.width / 2) - Math.min(300, viewportSize.width * 0.3),
-                top: -(viewportSize.height / 2) + Math.min(200, viewportSize.height * 0.25),
-                bottom: (viewportSize.height / 2) - Math.min(200, viewportSize.height * 0.25),
+                left:
+                  -(viewportSize.width / 2) +
+                  Math.min(300, viewportSize.width * 0.3),
+                right:
+                  viewportSize.width / 2 -
+                  Math.min(300, viewportSize.width * 0.3),
+                top:
+                  -(viewportSize.height / 2) +
+                  Math.min(200, viewportSize.height * 0.25),
+                bottom:
+                  viewportSize.height / 2 -
+                  Math.min(200, viewportSize.height * 0.25),
               }}
               onDragStart={() => setIsDragging(true)}
               onDragEnd={() => setIsDragging(false)}
