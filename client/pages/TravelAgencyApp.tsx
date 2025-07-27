@@ -461,3 +461,12 @@ function TravelAgencyAppInner() {
     </div>
   );
 }
+
+// Export component wrapped with providers
+export default function TravelAgencyApp() {
+  return (
+    <AppProvider>
+      <TravelAgencyAppInner />
+    </AppProvider>
+  );
+}
