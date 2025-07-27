@@ -289,7 +289,13 @@ export default function TravelDashboard({
         animate="visible"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        {dashboardCards.map((card) => (
+        {dashboardCards.filter(card => {
+          // Hide bulk purchase card for managers
+          if (card.id === 'bulk-purchase' && user.role === 'manager') {
+            return false;
+          }
+          return true;
+        }).map((card) => (
           <motion.div
             key={card.id}
             variants={cardVariants}
