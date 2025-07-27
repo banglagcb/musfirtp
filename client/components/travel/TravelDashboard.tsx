@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { 
-  Plane, 
-  Users, 
-  CreditCard, 
-  TrendingUp, 
+import {
+  Plane,
+  Users,
+  CreditCard,
+  TrendingUp,
   Calendar,
   FileText,
   DollarSign,
@@ -11,7 +11,7 @@ import {
   CheckCircle,
   AlertCircle,
   PlusCircle,
-  Search
+  Search,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -80,10 +80,13 @@ const dashboardCards: DashboardCard[] = [
     icon: Calendar,
     color: "from-red-500 to-pink-500",
     gradient: "bg-gradient-to-br from-red-500/20 to-pink-500/20",
-  }
+  },
 ];
 
-export default function TravelDashboard({ user, onCardClick }: TravelDashboardProps) {
+export default function TravelDashboard({
+  user,
+  onCardClick,
+}: TravelDashboardProps) {
   const [stats, setStats] = useState<DashboardStats>({
     totalBookings: 0,
     todayBookings: 0,
@@ -91,7 +94,7 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
     totalProfit: 0,
     pendingPayments: 0,
     paidBookings: 0,
-    partialPayments: 0
+    partialPayments: 0,
   });
 
   useEffect(() => {
@@ -104,33 +107,33 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const cardVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: 50,
-      scale: 0.8
+      scale: 0.8,
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       scale: 1,
       transition: {
         type: "spring",
         stiffness: 300,
-        damping: 25
-      }
-    }
+        damping: 25,
+      },
+    },
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('bn-BD', {
-      style: 'currency',
-      currency: 'BDT'
+    return new Intl.NumberFormat("bn-BD", {
+      style: "currency",
+      currency: "BDT",
     }).format(amount);
   };
 
@@ -146,7 +149,10 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">ড্যাশবোর্ড</h1>
-            <p className="text-white/70">স্বাগতম, {user.name} - {user.role === 'owner' ? 'মালিক' : 'ম্যানেজার'}</p>
+            <p className="text-white/70">
+              স্বাগতম, {user.name} -{" "}
+              {user.role === "owner" ? "মালিক" : "ম্যানেজার"}
+            </p>
           </div>
           <motion.div
             animate={{ rotate: 360 }}
@@ -169,17 +175,21 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/70 text-sm">মোট বুকিং</p>
-              <p className="text-2xl font-bold text-white">{stats.totalBookings}</p>
+              <p className="text-2xl font-bold text-white">
+                {stats.totalBookings}
+              </p>
             </div>
             <Users className="w-8 h-8 text-neon-blue" />
           </div>
         </div>
-        
+
         <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/70 text-sm">আজকের বুকিং</p>
-              <p className="text-2xl font-bold text-white">{stats.todayBookings}</p>
+              <p className="text-2xl font-bold text-white">
+                {stats.todayBookings}
+              </p>
             </div>
             <Calendar className="w-8 h-8 text-neon-green" />
           </div>
@@ -189,7 +199,9 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/70 text-sm">মোট আয়</p>
-              <p className="text-xl font-bold text-white">{formatCurrency(stats.totalRevenue)}</p>
+              <p className="text-xl font-bold text-white">
+                {formatCurrency(stats.totalRevenue)}
+              </p>
             </div>
             <DollarSign className="w-8 h-8 text-neon-purple" />
           </div>
@@ -199,7 +211,9 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
           <div className="flex items-center justify-between">
             <div>
               <p className="text-white/70 text-sm">মোট মুনাফা</p>
-              <p className="text-xl font-bold text-white">{formatCurrency(stats.totalProfit)}</p>
+              <p className="text-xl font-bold text-white">
+                {formatCurrency(stats.totalProfit)}
+              </p>
             </div>
             <TrendingUp className="w-8 h-8 text-neon-pink" />
           </div>
@@ -218,7 +232,9 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
             <CheckCircle className="w-8 h-8 text-neon-green" />
             <div>
               <p className="text-white/70 text-sm">পেইড বুকিং</p>
-              <p className="text-2xl font-bold text-white">{stats.paidBookings}</p>
+              <p className="text-2xl font-bold text-white">
+                {stats.paidBookings}
+              </p>
             </div>
           </div>
         </div>
@@ -228,7 +244,9 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
             <Clock className="w-8 h-8 text-yellow-400" />
             <div>
               <p className="text-white/70 text-sm">আংশিক পেমেন্ট</p>
-              <p className="text-2xl font-bold text-white">{stats.partialPayments}</p>
+              <p className="text-2xl font-bold text-white">
+                {stats.partialPayments}
+              </p>
             </div>
           </div>
         </div>
@@ -238,7 +256,9 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
             <AlertCircle className="w-8 h-8 text-red-400" />
             <div>
               <p className="text-white/70 text-sm">পেন্ডিং পেমেন্ট</p>
-              <p className="text-2xl font-bold text-white">{stats.pendingPayments}</p>
+              <p className="text-2xl font-bold text-white">
+                {stats.pendingPayments}
+              </p>
             </div>
           </div>
         </div>
@@ -263,13 +283,13 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
                 type: "spring",
                 stiffness: 300,
                 damping: 20,
-                duration: 0.4
-              }
+                duration: 0.4,
+              },
             }}
             whileTap={{
               scale: 0.98,
               rotateX: 0,
-              transition: { duration: 0.1 }
+              transition: { duration: 0.1 },
             }}
             onClick={() => onCardClick(card.id)}
             className={cn(
@@ -278,17 +298,19 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
               "transition-all duration-500 hover:shadow-3xl hover:shadow-purple-500/40",
               "overflow-hidden",
               "transform-gpu perspective-1000",
-              "hover:border-white/40"
+              "hover:border-white/40",
             )}
             style={{
               transformStyle: "preserve-3d",
             }}
           >
             {/* Background Gradient */}
-            <div className={cn(
-              "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-              card.gradient
-            )} />
+            <div
+              className={cn(
+                "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+                card.gradient,
+              )}
+            />
 
             {/* Content */}
             <div className="relative z-10">
@@ -298,7 +320,7 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
                 transition={{ duration: 0.6 }}
                 className={cn(
                   "w-12 h-12 rounded-xl mb-4 flex items-center justify-center",
-                  `bg-gradient-to-r ${card.color}`
+                  `bg-gradient-to-r ${card.color}`,
                 )}
               >
                 <card.icon className="w-6 h-6 text-white" />
@@ -333,7 +355,9 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
         transition={{ duration: 0.6, delay: 0.6 }}
         className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
       >
-        <h2 className="text-2xl font-semibold text-white mb-4">দ্রুত অ্যাকশন</h2>
+        <h2 className="text-2xl font-semibold text-white mb-4">
+          দ্রুত অ্যাকশন
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <motion.button
             whileHover={{ scale: 1.05 }}

@@ -14,7 +14,7 @@ export interface ViewportSize {
 export function constrainToViewport(
   windowBounds: WindowBounds,
   viewport: ViewportSize,
-  margin: number = 20
+  margin: number = 20,
 ): WindowBounds {
   const maxX = viewport.width - windowBounds.width - margin;
   const maxY = viewport.height - windowBounds.height - margin;
@@ -30,26 +30,26 @@ export function constrainToViewport(
 export function calculateOptimalSize(
   contentSize: { width: number; height: number },
   viewport: ViewportSize,
-  maxRatio: number = 0.9
+  maxRatio: number = 0.9,
 ): { width: number; height: number } {
   const maxWidth = viewport.width * maxRatio;
   const maxHeight = viewport.height * maxRatio;
-  
+
   let { width, height } = contentSize;
-  
+
   // Scale down if needed while maintaining aspect ratio
   if (width > maxWidth) {
     const ratio = maxWidth / width;
     width = maxWidth;
     height = height * ratio;
   }
-  
+
   if (height > maxHeight) {
     const ratio = maxHeight / height;
     height = maxHeight;
     width = width * ratio;
   }
-  
+
   return {
     width: Math.max(400, width), // Minimum width
     height: Math.max(300, height), // Minimum height
@@ -59,7 +59,7 @@ export function calculateOptimalSize(
 // Center window in viewport
 export function centerInViewport(
   windowSize: { width: number; height: number },
-  viewport: ViewportSize
+  viewport: ViewportSize,
 ): { x: number; y: number } {
   return {
     x: (viewport.width - windowSize.width) / 2,
@@ -71,18 +71,18 @@ export function centerInViewport(
 export function cascadeWindow(
   index: number,
   basePosition: { x: number; y: number },
-  offset: number = 30
+  offset: number = 30,
 ): { x: number; y: number } {
   return {
-    x: basePosition.x + (index * offset),
-    y: basePosition.y + (index * offset),
+    x: basePosition.x + index * offset,
+    y: basePosition.y + index * offset,
   };
 }
 
 // Snap to grid for organized layout
 export function snapToGrid(
   position: { x: number; y: number },
-  gridSize: number = 20
+  gridSize: number = 20,
 ): { x: number; y: number } {
   return {
     x: Math.round(position.x / gridSize) * gridSize,
@@ -93,7 +93,7 @@ export function snapToGrid(
 // Check if two windows overlap
 export function windowsOverlap(
   window1: WindowBounds,
-  window2: WindowBounds
+  window2: WindowBounds,
 ): boolean {
   return !(
     window1.x + window1.width < window2.x ||
@@ -107,7 +107,7 @@ export function windowsOverlap(
 export function findNonOverlappingPosition(
   newWindow: WindowBounds,
   existingWindows: WindowBounds[],
-  viewport: ViewportSize
+  viewport: ViewportSize,
 ): { x: number; y: number } {
   let position = { x: newWindow.x, y: newWindow.y };
   let attempts = 0;
@@ -116,22 +116,22 @@ export function findNonOverlappingPosition(
 
   while (attempts < maxAttempts) {
     const testWindow = { ...newWindow, ...position };
-    
+
     // Check if position is valid and doesn't overlap
     if (
       position.x >= 0 &&
       position.y >= 0 &&
       position.x + newWindow.width <= viewport.width &&
       position.y + newWindow.height <= viewport.height &&
-      !existingWindows.some(existing => windowsOverlap(testWindow, existing))
+      !existingWindows.some((existing) => windowsOverlap(testWindow, existing))
     ) {
       return position;
     }
 
     // Try next position in a spiral pattern
-    const angle = (attempts * 30) * (Math.PI / 180);
+    const angle = attempts * 30 * (Math.PI / 180);
     const radius = Math.floor(attempts / 12) * stepSize + stepSize;
-    
+
     position = {
       x: newWindow.x + Math.cos(angle) * radius,
       y: newWindow.y + Math.sin(angle) * radius,
@@ -150,7 +150,7 @@ export function saveWindowState(windowId: string, state: any): void {
     const key = `air_musafir_window_${windowId}`;
     localStorage.setItem(key, JSON.stringify(state));
   } catch (error) {
-    console.warn('Failed to save window state:', error);
+    console.warn("Failed to save window state:", error);
   }
 }
 
@@ -160,7 +160,7 @@ export function loadWindowState(windowId: string): any | null {
     const saved = localStorage.getItem(key);
     return saved ? JSON.parse(saved) : null;
   } catch (error) {
-    console.warn('Failed to load window state:', error);
+    console.warn("Failed to load window state:", error);
     return null;
   }
 }
@@ -170,6 +170,6 @@ export function clearWindowState(windowId: string): void {
     const key = `air_musafir_window_${windowId}`;
     localStorage.removeItem(key);
   } catch (error) {
-    console.warn('Failed to clear window state:', error);
+    console.warn("Failed to clear window state:", error);
   }
 }

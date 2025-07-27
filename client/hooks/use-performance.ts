@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useRef, useEffect, useState } from 'react';
+import { useCallback, useMemo, useRef, useEffect, useState } from "react";
 
 // Debounce hook for performance optimization
 export function useDebounce<T extends (...args: any[]) => any>(
   callback: T,
-  delay: number
+  delay: number,
 ): T {
   const timeoutRef = useRef<NodeJS.Timeout>();
 
@@ -16,7 +16,7 @@ export function useDebounce<T extends (...args: any[]) => any>(
         callback(...args);
       }, delay);
     },
-    [callback, delay]
+    [callback, delay],
   );
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export function useDebounce<T extends (...args: any[]) => any>(
 // Throttle hook for performance optimization
 export function useThrottle<T extends (...args: any[]) => any>(
   callback: T,
-  delay: number
+  delay: number,
 ): T {
   const lastCallRef = useRef(0);
 
@@ -45,7 +45,7 @@ export function useThrottle<T extends (...args: any[]) => any>(
         callback(...args);
       }
     },
-    [callback, delay]
+    [callback, delay],
   );
 
   return throttledCallback as T;
@@ -54,7 +54,7 @@ export function useThrottle<T extends (...args: any[]) => any>(
 // Memoized calculation hook
 export function useMemoizedValue<T>(
   calculation: () => T,
-  dependencies: React.DependencyList
+  dependencies: React.DependencyList,
 ): T {
   return useMemo(calculation, dependencies);
 }
@@ -62,10 +62,10 @@ export function useMemoizedValue<T>(
 // Optimized render check
 export function useRenderCount(componentName: string) {
   const renderCountRef = useRef(0);
-  
+
   useEffect(() => {
     renderCountRef.current += 1;
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       console.log(`${componentName} rendered ${renderCountRef.current} times`);
     }
   });
@@ -74,7 +74,7 @@ export function useRenderCount(componentName: string) {
 // Intersection observer for lazy loading
 export function useIntersectionObserver(
   elementRef: React.RefObject<Element>,
-  options: IntersectionObserverInit = {}
+  options: IntersectionObserverInit = {},
 ) {
   const [isIntersecting, setIsIntersecting] = useState(false);
 
@@ -89,7 +89,7 @@ export function useIntersectionObserver(
       {
         threshold: 0.1,
         ...options,
-      }
+      },
     );
 
     observer.observe(element);

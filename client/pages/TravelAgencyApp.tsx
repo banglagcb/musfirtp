@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Moon,
-  Sun,
-  LogOut,
-  RefreshCw,
-} from "lucide-react";
+import { Moon, Sun, LogOut, RefreshCw } from "lucide-react";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
 import FolderWindow from "@/components/FolderWindow";
@@ -44,12 +39,15 @@ export default function TravelAgencyApp() {
 
   // Initialize user session on component mount
   useEffect(() => {
-    const savedUser = localStorage.getItem('air_musafir_user');
+    const savedUser = localStorage.getItem("air_musafir_user");
     if (savedUser) {
       try {
         const userData = JSON.parse(savedUser);
         // Validate user still exists in system
-        const validUser = dataService.validateUser(userData.username, userData.password);
+        const validUser = dataService.validateUser(
+          userData.username,
+          userData.password,
+        );
         if (validUser) {
           setUser(validUser);
           setAppState("dashboard");
@@ -57,10 +55,10 @@ export default function TravelAgencyApp() {
             { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
           ]);
         } else {
-          localStorage.removeItem('air_musafir_user');
+          localStorage.removeItem("air_musafir_user");
         }
       } catch (error) {
-        localStorage.removeItem('air_musafir_user');
+        localStorage.removeItem("air_musafir_user");
       }
     }
   }, []);
@@ -83,10 +81,13 @@ export default function TravelAgencyApp() {
 
   const handleLoginSuccess = (loggedInUser: User) => {
     // Save user session to localStorage
-    localStorage.setItem('air_musafir_user', JSON.stringify({
-      username: loggedInUser.username,
-      password: loggedInUser.password
-    }));
+    localStorage.setItem(
+      "air_musafir_user",
+      JSON.stringify({
+        username: loggedInUser.username,
+        password: loggedInUser.password,
+      }),
+    );
 
     setUser(loggedInUser);
     setAppState("dashboard");
@@ -97,7 +98,7 @@ export default function TravelAgencyApp() {
 
   const handleLogout = () => {
     // Remove user session from localStorage
-    localStorage.removeItem('air_musafir_user');
+    localStorage.removeItem("air_musafir_user");
 
     setUser(null);
     setAppState("login");
@@ -255,10 +256,7 @@ export default function TravelAgencyApp() {
         break;
       case "settings":
         component = (
-          <SettingsPage
-            user={user!}
-            onClose={() => closeWindow(cardId)}
-          />
+          <SettingsPage user={user!} onClose={() => closeWindow(cardId)} />
         );
         break;
       default:
@@ -435,8 +433,6 @@ export default function TravelAgencyApp() {
           </FolderWindow>
         ))}
       </AnimatePresence>
-
-
 
       {/* Enhanced Loading Animation Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">

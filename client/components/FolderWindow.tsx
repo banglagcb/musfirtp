@@ -42,10 +42,10 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
     const [windowSize, setWindowSize] = useState({ width: 900, height: 700 });
     const [windowPosition, setWindowPosition] = useState({ x: 0, y: 0 });
     const windowRef = useRef<HTMLDivElement>(null);
-    
+
     const [viewportSize, setViewportSize] = useState({
-      width: typeof window !== 'undefined' ? window.innerWidth : 1024,
-      height: typeof window !== 'undefined' ? window.innerHeight : 768
+      width: typeof window !== "undefined" ? window.innerWidth : 1024,
+      height: typeof window !== "undefined" ? window.innerHeight : 768,
     });
 
     useEffect(() => {
@@ -57,13 +57,13 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       const handleResize = () => {
         setViewportSize({
           width: window.innerWidth,
-          height: window.innerHeight
+          height: window.innerHeight,
         });
       };
 
-      if (typeof window !== 'undefined') {
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+      if (typeof window !== "undefined") {
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
       }
     }, []);
 
@@ -198,12 +198,21 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
           };
         default: // popup
           const safeWidth = Math.min(windowSize.width, viewportSize.width - 40);
-          const safeHeight = Math.min(windowSize.height, viewportSize.height - 40);
-          
+          const safeHeight = Math.min(
+            windowSize.height,
+            viewportSize.height - 40,
+          );
+
           return {
             ...baseStyles,
-            top: Math.max(20, Math.min(windowPosition.y, viewportSize.height - safeHeight - 20)),
-            left: Math.max(20, Math.min(windowPosition.x, viewportSize.width - safeWidth - 20)),
+            top: Math.max(
+              20,
+              Math.min(windowPosition.y, viewportSize.height - safeHeight - 20),
+            ),
+            left: Math.max(
+              20,
+              Math.min(windowPosition.x, viewportSize.width - safeWidth - 20),
+            ),
             width: `${safeWidth}px`,
             height: `${safeHeight}px`,
             borderRadius: "12px",
@@ -252,10 +261,20 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
               )}
               style={{
                 ...getWindowStyles(),
-                minHeight: windowState === "minimized" ? "60px" : windowState === "popup" ? "400px" : "100%",
+                minHeight:
+                  windowState === "minimized"
+                    ? "60px"
+                    : windowState === "popup"
+                      ? "400px"
+                      : "100%",
                 willChange: "transform, opacity",
               }}
-              drag={windowState === "popup" && showControls && !isDragging && !isResizing}
+              drag={
+                windowState === "popup" &&
+                showControls &&
+                !isDragging &&
+                !isResizing
+              }
               dragMomentum={false}
               dragElastic={0}
               dragConstraints={{
@@ -272,11 +291,15 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
                   y: Math.max(0, windowPosition.y + info.offset.y),
                 });
               }}
-              whileDrag={windowState === "popup" ? {
-                scale: 1.02,
-                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
-                zIndex: zIndex + 10,
-              } : {}}
+              whileDrag={
+                windowState === "popup"
+                  ? {
+                      scale: 1.02,
+                      boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
+                      zIndex: zIndex + 10,
+                    }
+                  : {}
+              }
               layout={windowState !== "popup"}
             >
               {/* Windows-style Title Bar */}
@@ -290,7 +313,10 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
                     isDragging && "cursor-grabbing",
                   )}
                   style={{
-                    cursor: windowState === "popup" && !isDragging ? "grab" : "default",
+                    cursor:
+                      windowState === "popup" && !isDragging
+                        ? "grab"
+                        : "default",
                   }}
                 >
                   {/* Window Icon & Title */}
@@ -320,7 +346,11 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
                       whileTap={{ scale: 0.95 }}
                       onClick={handleMaximize}
                       className="w-12 h-8 rounded-sm flex items-center justify-center transition-colors hover:bg-gray-200/50 dark:hover:bg-gray-600/50"
-                      title={windowState === "fullscreen" ? "Restore Down" : "Maximize"}
+                      title={
+                        windowState === "fullscreen"
+                          ? "Restore Down"
+                          : "Maximize"
+                      }
                     >
                       {windowState === "fullscreen" ? (
                         <Square className="w-3 h-3 text-gray-600 dark:text-gray-300" />
@@ -331,7 +361,10 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
 
                     {/* Close Button */}
                     <motion.button
-                      whileHover={{ backgroundColor: "#e81123", color: "white" }}
+                      whileHover={{
+                        backgroundColor: "#e81123",
+                        color: "white",
+                      }}
                       whileTap={{ scale: 0.95 }}
                       onClick={onClose}
                       className="w-12 h-8 rounded-sm flex items-center justify-center transition-colors hover:bg-red-600"
@@ -379,33 +412,49 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
                   <div
                     className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize opacity-0 hover:opacity-100 transition-opacity"
                     style={{
-                      background: "linear-gradient(-45deg, transparent 40%, #666 40%, #666 60%, transparent 60%)",
+                      background:
+                        "linear-gradient(-45deg, transparent 40%, #666 40%, #666 60%, transparent 60%)",
                     }}
                     onMouseDown={(e) => {
                       e.preventDefault();
                       setIsResizing(true);
-                      
+
                       const startSize = { ...windowSize };
                       const startPos = { x: e.clientX, y: e.clientY };
-                      
+
                       const handleMouseMove = (e: MouseEvent) => {
                         const deltaX = e.clientX - startPos.x;
                         const deltaY = e.clientY - startPos.y;
-                        
+
                         setWindowSize({
-                          width: Math.max(400, Math.min(viewportSize.width - 40, startSize.width + deltaX)),
-                          height: Math.max(300, Math.min(viewportSize.height - 40, startSize.height + deltaY)),
+                          width: Math.max(
+                            400,
+                            Math.min(
+                              viewportSize.width - 40,
+                              startSize.width + deltaX,
+                            ),
+                          ),
+                          height: Math.max(
+                            300,
+                            Math.min(
+                              viewportSize.height - 40,
+                              startSize.height + deltaY,
+                            ),
+                          ),
                         });
                       };
-                      
+
                       const handleMouseUp = () => {
                         setIsResizing(false);
-                        document.removeEventListener('mousemove', handleMouseMove);
-                        document.removeEventListener('mouseup', handleMouseUp);
+                        document.removeEventListener(
+                          "mousemove",
+                          handleMouseMove,
+                        );
+                        document.removeEventListener("mouseup", handleMouseUp);
                       };
-                      
-                      document.addEventListener('mousemove', handleMouseMove);
-                      document.addEventListener('mouseup', handleMouseUp);
+
+                      document.addEventListener("mousemove", handleMouseMove);
+                      document.addEventListener("mouseup", handleMouseUp);
                     }}
                   />
                 </>
