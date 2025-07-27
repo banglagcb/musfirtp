@@ -161,7 +161,7 @@ export default function TravelDashboard({
     },
     {
       id: "reports",
-      title: "আর্থিক রি���োর্ট",
+      title: "আর্থিক রিপোর্ট",
       description: `আজকের মুনাফা ৳${stats.dailyProfit.toLocaleString()}`,
       details: "বিস্তারিত আয়-ব্যয় ও মুনাফা বিশ্লেষণ",
       icon: TrendingUp,
@@ -247,6 +247,43 @@ export default function TravelDashboard({
 
   return (
     <div className="max-w-7xl mx-auto">
+      {/* Quick Actions Bar */}
+      <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg border border-blue-200/50 dark:border-blue-700/50">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+              দ্রুত অ্যাকশন
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              সবচেয়ে ব্যবহৃত ফিচারসমূহ
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => onCardClick("new-booking")}
+              className="flex items-center space-x-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              <span className="hidden sm:inline">নতুন টিকেট</span>
+            </button>
+            <button
+              onClick={() => onCardClick("bookings-list")}
+              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+            >
+              <Package className="w-4 h-4" />
+              <span className="hidden sm:inline">বুকিং লিস্ট</span>
+            </button>
+            <button
+              onClick={() => onCardClick("reports")}
+              className="flex items-center space-x-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+            >
+              <TrendingUp className="w-4 h-4" />
+              <span className="hidden sm:inline">রিপোর্ট</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Enhanced Statistics Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4 mb-6 lg:mb-8">
         {statCards.map((stat, index) => (
@@ -333,7 +370,7 @@ export default function TravelDashboard({
               {card.priority === "high" && (
                 <div className="mt-3 flex items-center text-xs text-emerald-600 dark:text-emerald-400">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
-                  {card.id === "new-booking" ? "দ্রু��� টিকেট বুক করুন" : "গুরুত্বপূর্ণ"}
+                  {card.id === "new-booking" ? "দ্রুত টিকেট বুক করুন" : "গুরুত্বপূর্ণ"}
                 </div>
               )}
 
