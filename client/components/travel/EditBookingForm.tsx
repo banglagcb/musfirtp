@@ -60,7 +60,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     }
 
     if (!formData.passport.trim()) {
-      newErrors.passport = "পাসপোর্ট নম্বর আবশ্��িক";
+      newErrors.passport = "পাসপোর্ট নম্বর আবশ্যিক";
     }
 
     if (!formData.email.trim()) {
@@ -197,8 +197,13 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
             <Edit3 className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">বুকিং এডিট করুন</h1>
-            <p className="text-white/70">বুকিং আইডি: {booking.id}</p>
+            <h1 className="text-2xl font-bold text-white">
+              {isViewOnly ? "বুকিং দেখুন" : "বুকিং এডিট করুন"}
+            </h1>
+            <p className="text-white/70">
+              বুকিং আইডি: {booking.id}
+              {isViewOnly && " (কেবল দেখার জন্য)"}
+            </p>
           </div>
         </div>
         <button
