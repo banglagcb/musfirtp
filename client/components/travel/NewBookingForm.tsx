@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Save,
   X,
@@ -14,6 +14,7 @@ import {
   CreditCard,
   AlertCircle,
   Calculator,
+  Ticket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,22 +41,31 @@ interface NewBookingFormProps {
 const airlines = [
   "বিমান বাংলাদেশ এয়ারলাইনস",
   "এমিরেটস",
-  "সিঙ্���াপুর এয়ারলাইনস",
+  "সিঙ্গাপুর এয়ারলাইনস",
   "কাতার এয়ারওয়েজ",
   "ফ্লাইদুবাই",
   "ইন্ডিগো",
   "মালয়েশিয়া এয়ারলাইনস",
-  "�����াই এয়ারওয়েজ",
+  "থাই এয়ারওয়েজ",
   "তুর্কিশ এয়ারলাইনস",
   "এয়ার এশিয়া",
   "নোভো এয়ার",
-  "ইউএস-বাংলা এয়ারলাই���স",
+  "ইউএস-বাংলা এয়ারলাইনস",
 ];
 
-const paymentStatuses = [
-  { value: "paid", label: "পরিশোধিত", color: "text-green-600" },
-  { value: "partial", label: "আংশিক পরিশোধিত", color: "text-yellow-600" },
-  { value: "pending", label: "অপেক্ষমাণ", color: "text-red-600" },
+const routes = [
+  "ঢাকা - দুবাই",
+  "ঢাকা - কুয়ালালামপুর",
+  "ঢাকা - সিঙ্গাপুর",
+  "ঢাকা - ব্যাংকক",
+  "ঢাকা - দোহা",
+  "ঢাকা - মুম্বাই",
+  "ঢাকা - দিল্লি",
+  "ঢাকা - কলকাতা",
+  "ঢাকা - চট্টগ্রাম",
+  "ঢাকা - সিলেট",
+  "ঢাকা - যশোর",
+  "ঢাকা - রাজশাহী",
 ];
 
 export default function NewBookingForm({
@@ -65,231 +75,30 @@ export default function NewBookingForm({
 }: NewBookingFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState<Partial<Booking>>(
-    editBooking || {
-      customerName: "",
-      customerPhone: "",
-      customerEmail: "",
-      passportNumber: "",
-      flightDate: "",
-      route: "",
-      airline: "",
-      costPrice: 0,
-      sellingPrice: 0,
-      paymentStatus: "pending",
-      notes: "",
-    },
-  );
+  
+  const [formData, setFormData] = useState({
+    pnrNumber: editBooking?.id || "",
+    airline: editBooking?.airline || "",
+    route: editBooking?.route || "",
+    flightDate: editBooking?.flightDate || "",
+    passengerCount: 1,
+    costPrice: editBooking?.costPrice || 0,
+    sellingPrice: editBooking?.sellingPrice || 0,
+    customerName: editBooking?.customerName || "",
+    customerPhone: editBooking?.customerPhone || "",
+    notes: editBooking?.notes || "",
+  });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [profit, setProfit] = useState(0);
-  const [profitMargin, setProfitMargin] = useState(0);
+  const [netProfit, setNetProfit] = useState(0);
 
-  // Quick templates for common routes
-  const quickTemplates = [
-    {
-      name: "ঢাকা-দুবাই",
-      route: "ঢাকা - দুবাই",
-      airline: "এমিরেটস",
-      costPrice: 45000,
-      sellingPrice: 50000,
-    },
-    {
-      name: "ঢাকা-কুয়ালালামপুর",
-      route: "ঢাকা - কুয়ালালামপুর",
-      airline: "মালয়েশিয়া এয়ারলাইনস",
-      costPrice: 35000,
-      sellingPrice: 40000,
-    },
-    {
-      name: "ঢাকা-চট্টগ্রাম",
-      route: "ঢাকা - চট্টগ্রাম",
-      airline: "বিমান বাংলাদেশ এয়ারলাইনস",
-      costPrice: 6000,
-      sellingPrice: 7500,
-    },
-  ];
-
-  // Calculate profit when prices change
+  // Calculate net profit when prices change
   useEffect(() => {
     const costPrice = Number(formData.costPrice) || 0;
     const sellingPrice = Number(formData.sellingPrice) || 0;
     const calculatedProfit = sellingPrice - costPrice;
-    const calculatedMargin =
-      costPrice > 0 ? (calculatedProfit / costPrice) * 100 : 0;
-
-    setProfit(calculatedProfit);
-    setProfitMargin(calculatedMargin);
+    setNetProfit(calculatedProfit);
   }, [formData.costPrice, formData.sellingPrice]);
-
-  const formSections = [
-    {
-      title: "গ্রাহক তথ্য",
-      icon: User,
-      color: "from-blue-500 to-cyan-500",
-      bgGradient: "from-blue-500/10 to-cyan-500/10",
-      fields: [
-        {
-          key: "customerName",
-          label: "গ্রাহকের পূর্ণ নাম",
-          type: "input",
-          icon: User,
-          required: true,
-          placeholder: "যেমন: আহমেদ রহমান",
-        },
-        {
-          key: "customerPhone",
-          label: "মোবাইল নম্বর",
-          type: "input",
-          icon: Phone,
-          required: true,
-          placeholder: "01XXXXXXXXX",
-        },
-        {
-          key: "customerEmail",
-          label: "ইমেইল ঠিকানা",
-          type: "input",
-          icon: Mail,
-          placeholder: "example@email.com",
-        },
-        {
-          key: "passportNumber",
-          label: "পাসপোর্ট নম্বর",
-          type: "input",
-          icon: FileText,
-          placeholder: "A12345678",
-        },
-      ],
-    },
-    {
-      title: "ফ্লাইট তথ্য",
-      icon: Plane,
-      color: "from-green-500 to-emerald-500",
-      bgGradient: "from-green-500/10 to-emerald-500/10",
-      fields: [
-        {
-          key: "flightDate",
-          label: "ফ্লাইট তারিখ",
-          type: "date",
-          icon: Calendar,
-          required: true,
-        },
-        {
-          key: "route",
-          label: "রুট",
-          type: "input",
-          icon: MapPin,
-          required: true,
-          placeholder: "যেমন: ঢাকা - দুবাই",
-        },
-        {
-          key: "airline",
-          label: "এয়ারলাইন",
-          type: "select",
-          icon: Plane,
-          required: true,
-          options: airlines,
-        },
-      ],
-    },
-    {
-      title: "মূল্য ও পেমেন্ট",
-      icon: DollarSign,
-      color: "from-orange-500 to-amber-500",
-      bgGradient: "from-orange-500/10 to-amber-500/10",
-      fields: [
-        {
-          key: "costPrice",
-          label: "ক্রয়মূল্য (৳)",
-          type: "number",
-          icon: DollarSign,
-          required: true,
-          placeholder: "৫০০০০",
-        },
-        {
-          key: "sellingPrice",
-          label: "বিক্রয়মূল্য (৳)",
-          type: "number",
-          icon: DollarSign,
-          required: true,
-          placeholder: "৫৫০০০",
-        },
-        {
-          key: "paymentStatus",
-          label: "পেমেন্ট স্ট্যাটাস",
-          type: "select",
-          icon: CreditCard,
-          required: true,
-          options: paymentStatuses,
-        },
-      ],
-    },
-  ];
-
-  // Profit calculations are now handled in useEffect above
-
-  const validateStep = (stepIndex: number) => {
-    const section = formSections[stepIndex];
-    const stepErrors: Record<string, string> = {};
-
-    section.fields.forEach((field) => {
-      if (field.required) {
-        const value = formData[field.key as keyof Booking];
-        if (!value || (typeof value === "string" && value.trim() === "")) {
-          stepErrors[field.key] = `${field.label} আবশ্যক`;
-        }
-      }
-
-      // Additional validations
-      if (field.key === "customerPhone" && formData.customerPhone) {
-        if (!/^01[3-9]\d{8}$/.test(formData.customerPhone)) {
-          stepErrors.customerPhone = "সঠিক মোবাইল নম্বর লিখুন";
-        }
-      }
-
-      if (field.key === "customerEmail" && formData.customerEmail) {
-        if (!/\S+@\S+\.\S+/.test(formData.customerEmail)) {
-          stepErrors.customerEmail = "সঠিক ইমেইল ঠিকানা লিখুন";
-        }
-      }
-
-      if (
-        field.key === "costPrice" &&
-        formData.costPrice &&
-        formData.costPrice <= 0
-      ) {
-        stepErrors.costPrice = "ক্রয়মূল্য ০ এর চেয়ে বেশি হতে ���বে";
-      }
-
-      if (
-        field.key === "sellingPrice" &&
-        formData.sellingPrice &&
-        formData.sellingPrice <= 0
-      ) {
-        stepErrors.sellingPrice = "বিক্রয়মূল্য ০ এর চেয়ে বেশি হতে হবে";
-      }
-    });
-
-    setErrors(stepErrors);
-    return Object.keys(stepErrors).length === 0;
-  };
-
-  const handleNext = () => {
-    if (validateStep(currentStep)) {
-      if (currentStep < formSections.length - 1) {
-        setCurrentStep(currentStep + 1);
-      } else {
-        handleSubmit();
-      }
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
 
   const handleInputChange = (key: string, value: any) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
@@ -299,36 +108,73 @@ export default function NewBookingForm({
     }
   };
 
-  const applyQuickTemplate = (template: any) => {
-    setFormData((prev) => ({
-      ...prev,
-      route: template.route,
-      airline: template.airline,
-      costPrice: template.costPrice,
-      sellingPrice: template.sellingPrice,
-    }));
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.pnrNumber.trim()) {
+      newErrors.pnrNumber = "PNR নম্বর আবশ্যক";
+    }
+
+    if (!formData.airline) {
+      newErrors.airline = "এয়ারলাইনস নির্বাচন করুন";
+    }
+
+    if (!formData.route) {
+      newErrors.route = "রুট নির্বাচন করুন";
+    }
+
+    if (!formData.flightDate) {
+      newErrors.flightDate = "ফ্লাইটের তারিখ আবশ্যক";
+    }
+
+    if (!formData.passengerCount || formData.passengerCount <= 0) {
+      newErrors.passengerCount = "যাত্রী সংখ্যা সঠিক নয়";
+    }
+
+    if (!formData.costPrice || formData.costPrice <= 0) {
+      newErrors.costPrice = "ক্রয়মূল্য সঠিক নয়";
+    }
+
+    if (!formData.sellingPrice || formData.sellingPrice <= 0) {
+      newErrors.sellingPrice = "বিক্রয়মূল্য সঠিক নয়";
+    }
+
+    if (!formData.customerName.trim()) {
+      newErrors.customerName = "গ্রাহকের নাম আবশ্যক";
+    }
+
+    if (!formData.customerPhone.trim()) {
+      newErrors.customerPhone = "মোবাইল নম্বর আবশ্যক";
+    } else if (!/^01[3-9]\d{8}$/.test(formData.customerPhone)) {
+      newErrors.customerPhone = "সঠিক মোবাইল নম্বর লিখুন";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async () => {
-    if (!validateStep(currentStep)) return;
+    if (!validateForm()) return;
 
     setIsSubmitting(true);
     try {
       const bookingData: Booking = {
         id: editBooking?.id || Date.now().toString(),
-        customerName: formData.customerName!,
-        customerPhone: formData.customerPhone!,
-        customerEmail: formData.customerEmail || "",
-        passportNumber: formData.passportNumber || "",
-        flightDate: formData.flightDate!,
-        route: formData.route!,
-        airline: formData.airline!,
-        costPrice: formData.costPrice!,
-        sellingPrice: formData.sellingPrice!,
-        paymentStatus: formData.paymentStatus as "paid" | "partial" | "pending",
-        notes: formData.notes || "",
+        customerName: formData.customerName,
+        customerPhone: formData.customerPhone,
+        customerEmail: "", // Optional field
+        passportNumber: "", // Optional field
+        flightDate: formData.flightDate,
+        route: formData.route,
+        airline: formData.airline,
+        costPrice: formData.costPrice,
+        sellingPrice: formData.sellingPrice,
+        paymentStatus: "pending",
+        notes: formData.notes,
         createdAt: editBooking?.createdAt || new Date().toISOString(),
         updatedAt: editBooking ? new Date().toISOString() : undefined,
+        pnrNumber: formData.pnrNumber,
+        passengerCount: formData.passengerCount,
       };
 
       if (editBooking) {
@@ -340,15 +186,15 @@ export default function NewBookingForm({
       toast({
         title: "সফল!",
         description: editBooking
-          ? "বুকিং সফলভাবে আপডেট করা হয়েছে"
-          : "নতুন বুকিং সফলভাবে যোগ করা হয়েছে",
+          ? "টিকেট সফলভাবে আপডেট করা হয়েছে"
+          : "নতুন টিকেট সফলভাবে ক্রয় করা হয়েছে",
       });
 
       onSuccess();
     } catch (error) {
       toast({
         title: "ত্রুটি!",
-        description: "বুকিং যোগ ���রতে সমস্যা হয়েছে",
+        description: editBooking ? "টিকেট আপডেট করতে সমস্যা হয়েছে" : "টিকেট ক্রয় করতে সমস্যা হয়েছে",
         variant: "destructive",
       });
     } finally {
@@ -356,373 +202,325 @@ export default function NewBookingForm({
     }
   };
 
-  const currentSection = formSections[currentStep];
-
   return (
-    <div className="min-h-full bg-gradient-to-br from-slate-50 to-blue-50 dark:from-gray-900 dark:to-slate-800 p-6">
-      {/* Enhanced Header */}
+    <div className="min-h-full bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="mb-8 text-center"
       >
-        <div className="flex items-center justify-center mb-4">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className={cn(
-              "w-16 h-16 rounded-2xl bg-gradient-to-br flex items-center justify-center mr-4",
-              currentSection.color,
-            )}
-          >
-            <currentSection.icon className="w-8 h-8 text-white" />
-          </motion.div>
-          <div>
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
-              নতুন বুকিং
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              পূর্ণ তথ্য দিয়ে বুকিং তৈরি কর���ন
-            </p>
-          </div>
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mb-4">
+          <Ticket className="w-8 h-8 text-white" />
         </div>
-
-        {/* Enhanced Progress Bar */}
-        <div className="flex items-center justify-center space-x-4 mb-6">
-          {formSections.map((section, index) => (
-            <div key={index} className="flex items-center">
-              <motion.div
-                initial={{ scale: 0.8 }}
-                animate={{
-                  scale:
-                    index === currentStep
-                      ? 1.2
-                      : index <= currentStep
-                        ? 1
-                        : 0.8,
-                  backgroundColor: index <= currentStep ? "#10b981" : "#d1d5db",
-                }}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium"
-              >
-                {index + 1}
-              </motion.div>
-              {index < formSections.length - 1 && (
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: index < currentStep ? 1 : 0 }}
-                  className="w-12 h-1 bg-green-500 mx-2 origin-left"
-                />
-              )}
-            </div>
-          ))}
-        </div>
-
-        <motion.h3
-          key={currentStep}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-xl font-semibold text-gray-700 dark:text-gray-200"
-        >
-          {currentSection.title}
-        </motion.h3>
+        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+          {editBooking ? "টিকেট আপডেট" : "নতুন টিকেট ক্রয়"}
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300">
+          সুবিধামতো কোন বাস কিংবা ট্রেন এর বুকিং এর সকল
+        </p>
       </motion.div>
 
-      {/* Enhanced Form Content */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentStep}
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -50 }}
-          transition={{ duration: 0.3 }}
-          className={cn(
-            "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 mb-8",
-            "border border-gray-200/50 dark:border-gray-700/50",
-            "bg-gradient-to-br",
-            currentSection.bgGradient,
-          )}
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-            {currentSection.fields.map((field) => (
-              <motion.div
-                key={field.key}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="space-y-3"
+      {/* Form */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="max-w-4xl mx-auto bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 dark:border-gray-700/50 shadow-xl"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Left Column */}
+          <div className="space-y-6">
+            {/* PNR Number */}
+            <div>
+              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+                <FileText className="w-4 h-4 mr-2" />
+                PNR নম্বর *
+              </Label>
+              <Input
+                placeholder="PNR নম্বর লিখুন"
+                value={formData.pnrNumber}
+                onChange={(e) => handleInputChange("pnrNumber", e.target.value)}
+                className={cn(
+                  "h-12 bg-white/50 dark:bg-gray-700/50",
+                  errors.pnrNumber && "border-red-500"
+                )}
+              />
+              {errors.pnrNumber && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.pnrNumber}
+                </p>
+              )}
+            </div>
+
+            {/* Airlines */}
+            <div>
+              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+                <Plane className="w-4 h-4 mr-2" />
+                এয়ারলাইনস *
+              </Label>
+              <Select
+                value={formData.airline}
+                onValueChange={(value) => handleInputChange("airline", value)}
               >
-                <Label
-                  htmlFor={field.key}
-                  className="flex items-center text-gray-700 dark:text-gray-200 font-medium"
-                >
-                  <field.icon className="w-5 h-5 mr-2 text-gray-500" />
-                  {field.label}
-                  {field.required && (
-                    <span className="text-red-500 ml-1">*</span>
-                  )}
-                </Label>
+                <SelectTrigger className={cn(
+                  "h-12 bg-white/50 dark:bg-gray-700/50",
+                  errors.airline && "border-red-500"
+                )}>
+                  <SelectValue placeholder="এয়ারলাইনস নির্বাচন করুন" />
+                </SelectTrigger>
+                <SelectContent>
+                  {airlines.map((airline) => (
+                    <SelectItem key={airline} value={airline}>
+                      {airline}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.airline && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.airline}
+                </p>
+              )}
+            </div>
 
-                {field.type === "input" && (
-                  <Input
-                    id={field.key}
-                    placeholder={field.placeholder}
-                    value={formData[field.key as keyof Booking] || ""}
-                    onChange={(e) =>
-                      handleInputChange(field.key, e.target.value)
-                    }
-                    className={cn(
-                      "h-12 bg-white/50 dark:bg-gray-700/50",
-                      errors[field.key] && "border-red-500",
-                    )}
-                  />
-                )}
+            {/* Route */}
+            <div>
+              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+                <MapPin className="w-4 h-4 mr-2" />
+                রুট *
+              </Label>
+              <Select
+                value={formData.route}
+                onValueChange={(value) => handleInputChange("route", value)}
+              >
+                <SelectTrigger className={cn(
+                  "h-12 bg-white/50 dark:bg-gray-700/50",
+                  errors.route && "border-red-500"
+                )}>
+                  <SelectValue placeholder="রুট নির্বাচন করুন" />
+                </SelectTrigger>
+                <SelectContent>
+                  {routes.map((route) => (
+                    <SelectItem key={route} value={route}>
+                      {route}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.route && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.route}
+                </p>
+              )}
+            </div>
 
-                {field.type === "date" && (
-                  <Input
-                    id={field.key}
-                    type="date"
-                    value={formData[field.key as keyof Booking] || ""}
-                    onChange={(e) =>
-                      handleInputChange(field.key, e.target.value)
-                    }
-                    className={cn(
-                      "h-12 bg-white/50 dark:bg-gray-700/50",
-                      errors[field.key] && "border-red-500",
-                    )}
-                  />
+            {/* Flight Date */}
+            <div>
+              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+                <Calendar className="w-4 h-4 mr-2" />
+                ফ্লাইটের তারিখ *
+              </Label>
+              <Input
+                type="date"
+                value={formData.flightDate}
+                onChange={(e) => handleInputChange("flightDate", e.target.value)}
+                className={cn(
+                  "h-12 bg-white/50 dark:bg-gray-700/50",
+                  errors.flightDate && "border-red-500"
                 )}
+              />
+              {errors.flightDate && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.flightDate}
+                </p>
+              )}
+            </div>
 
-                {field.type === "number" && (
-                  <Input
-                    id={field.key}
-                    type="number"
-                    placeholder={field.placeholder}
-                    value={formData[field.key as keyof Booking] || ""}
-                    onChange={(e) =>
-                      handleInputChange(
-                        field.key,
-                        parseFloat(e.target.value) || 0,
-                      )
-                    }
-                    className={cn(
-                      "h-12 bg-white/50 dark:bg-gray-700/50",
-                      errors[field.key] && "border-red-500",
-                    )}
-                  />
+            {/* Passenger Count */}
+            <div>
+              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+                <User className="w-4 h-4 mr-2" />
+                যাত্রী সংখ্যা *
+              </Label>
+              <Input
+                type="number"
+                min="1"
+                value={formData.passengerCount}
+                onChange={(e) => handleInputChange("passengerCount", parseInt(e.target.value) || 1)}
+                className={cn(
+                  "h-12 bg-white/50 dark:bg-gray-700/50",
+                  errors.passengerCount && "border-red-500"
                 )}
-
-                {field.type === "select" && field.key === "airline" && (
-                  <Select
-                    value={formData.airline || ""}
-                    onValueChange={(value) =>
-                      handleInputChange("airline", value)
-                    }
-                  >
-                    <SelectTrigger
-                      className={cn(
-                        "h-12 bg-white/50 dark:bg-gray-700/50",
-                        errors[field.key] && "border-red-500",
-                      )}
-                    >
-                      <SelectValue placeholder="এয়ারলাইন নির্বাচন করুন" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {airlines.map((airline) => (
-                        <SelectItem key={airline} value={airline}>
-                          {airline}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-
-                {field.type === "select" && field.key === "paymentStatus" && (
-                  <Select
-                    value={formData.paymentStatus || ""}
-                    onValueChange={(value) =>
-                      handleInputChange("paymentStatus", value)
-                    }
-                  >
-                    <SelectTrigger
-                      className={cn(
-                        "h-12 bg-white/50 dark:bg-gray-700/50",
-                        errors[field.key] && "border-red-500",
-                      )}
-                    >
-                      <SelectValue placeholder="পেমেন্ট স্ট্যাটাস নির্বাচন করুন" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {paymentStatuses.map((status) => (
-                        <SelectItem key={status.value} value={status.value}>
-                          <span className={status.color}>{status.label}</span>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-
-                {errors[field.key] && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="flex items-center text-red-500 text-sm"
-                  >
-                    <AlertCircle className="w-4 h-4 mr-1" />
-                    {errors[field.key]}
-                  </motion.div>
-                )}
-              </motion.div>
-            ))}
+              />
+              {errors.passengerCount && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.passengerCount}
+                </p>
+              )}
+            </div>
           </div>
 
-          {/* Profit Calculator */}
-          {currentStep === 2 && formData.costPrice && formData.sellingPrice && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-8 p-6 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-2xl border border-green-200/50 dark:border-green-700/50"
-            >
-              <div className="flex items-center mb-4">
-                <Calculator className="w-6 h-6 text-green-600 mr-2" />
-                <h4 className="text-lg font-semibold text-gray-800 dark:text-white">
-                  মুনাফা হিসাব
-                </h4>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    মুনাফা
-                  </p>
-                  <p
-                    className={cn(
-                      "text-2xl font-bold",
-                      profit >= 0 ? "text-green-600" : "text-red-600",
-                    )}
-                  >
-                    ৳{profit.toLocaleString()}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    মুনাফার হার
-                  </p>
-                  <p
-                    className={cn(
-                      "text-2xl font-bold",
-                      profit >= 0 ? "text-green-600" : "text-red-600",
-                    )}
-                  >
-                    {profitMargin.toFixed(1)}%
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    মোট বিক্রয়
-                  </p>
-                  <p className="text-2xl font-bold text-blue-600">
-                    ৳{(formData.sellingPrice || 0).toLocaleString()}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Notes field on last step */}
-          {currentStep === formSections.length - 1 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-6 space-y-3"
-            >
-              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium">
-                অতিরিক্ত মন্তব্য (ঐচ্ছিক)
+          {/* Right Column */}
+          <div className="space-y-6">
+            {/* Cost Price */}
+            <div>
+              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+                <DollarSign className="w-4 h-4 mr-2" />
+                ক্রয়মূল্য (টাকা) *
               </Label>
-              <Textarea
-                placeholder="বিশেষ কোনো তথ্য বা মন্তব্য..."
-                value={formData.notes || ""}
-                onChange={(e) => handleInputChange("notes", e.target.value)}
-                className="bg-white/50 dark:bg-gray-700/50"
+              <Input
+                type="number"
+                placeholder="0"
+                value={formData.costPrice || ""}
+                onChange={(e) => handleInputChange("costPrice", parseFloat(e.target.value) || 0)}
+                className={cn(
+                  "h-12 bg-white/50 dark:bg-gray-700/50",
+                  errors.costPrice && "border-red-500"
+                )}
               />
-            </motion.div>
-          )}
+              {errors.costPrice && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.costPrice}
+                </p>
+              )}
+            </div>
 
-          {/* Quick Templates for Flight Info */}
-          {currentStep === 1 && !editBooking && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700"
-            >
-              <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">
-                দ্রুত টেমপ্লেট
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {quickTemplates.map((template, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    onClick={() => applyQuickTemplate(template)}
-                    className="p-3 text-left bg-white dark:bg-gray-700 rounded-lg border border-blue-200 dark:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
-                  >
-                    <div className="font-medium text-sm text-gray-800 dark:text-white">
-                      {template.name}
-                    </div>
-                    <div className="text-xs text-gray-600 dark:text-gray-300">
-                      ৳{template.sellingPrice.toLocaleString()}
-                    </div>
-                  </button>
-                ))}
+            {/* Selling Price */}
+            <div>
+              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+                <CreditCard className="w-4 h-4 mr-2" />
+                বিক্রয় (টাকা) *
+              </Label>
+              <Input
+                type="number"
+                placeholder="0"
+                value={formData.sellingPrice || ""}
+                onChange={(e) => handleInputChange("sellingPrice", parseFloat(e.target.value) || 0)}
+                className={cn(
+                  "h-12 bg-white/50 dark:bg-gray-700/50",
+                  errors.sellingPrice && "border-red-500"
+                )}
+              />
+              {errors.sellingPrice && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.sellingPrice}
+                </p>
+              )}
+            </div>
+
+            {/* Net Profit */}
+            <div>
+              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+                <Calculator className="w-4 h-4 mr-2" />
+                মেট বগড
+              </Label>
+              <div className={cn(
+                "h-12 px-3 py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-md flex items-center",
+                netProfit >= 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
+              )}>
+                <span className="font-semibold">৳{netProfit.toLocaleString()}</span>
               </div>
-            </motion.div>
-          )}
-        </motion.div>
-      </AnimatePresence>
+            </div>
 
-      {/* Enhanced Action Buttons */}
-      <div className="flex items-center justify-between">
-        <Button
-          variant="outline"
-          onClick={currentStep === 0 ? onClose : handlePrevious}
-          className="flex items-center space-x-2 px-6 py-3"
-        >
-          <X className="w-5 h-5" />
-          <span>{currentStep === 0 ? "বাতিল" : "পূর্ববর��তী"}</span>
-        </Button>
+            {/* Customer Name */}
+            <div>
+              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+                <User className="w-4 h-4 mr-2" />
+                গ্রাহকের নাম *
+              </Label>
+              <Input
+                placeholder="গ্রাহকের নাম"
+                value={formData.customerName}
+                onChange={(e) => handleInputChange("customerName", e.target.value)}
+                className={cn(
+                  "h-12 bg-white/50 dark:bg-gray-700/50",
+                  errors.customerName && "border-red-500"
+                )}
+              />
+              {errors.customerName && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.customerName}
+                </p>
+              )}
+            </div>
 
-        <div className="text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            ধাপ {currentStep + 1} / {formSections.length}
-          </p>
+            {/* Customer Mobile */}
+            <div>
+              <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+                <Phone className="w-4 h-4 mr-2" />
+                গ্রাহকের মোবাইলের *
+              </Label>
+              <Input
+                placeholder="মোবাইল/ইমেইল"
+                value={formData.customerPhone}
+                onChange={(e) => handleInputChange("customerPhone", e.target.value)}
+                className={cn(
+                  "h-12 bg-white/50 dark:bg-gray-700/50",
+                  errors.customerPhone && "border-red-500"
+                )}
+              />
+              {errors.customerPhone && (
+                <p className="text-red-500 text-sm mt-1 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-1" />
+                  {errors.customerPhone}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
 
-        <Button
-          onClick={handleNext}
-          disabled={isSubmitting}
-          className={cn(
-            "flex items-center space-x-2 px-6 py-3",
-            "bg-gradient-to-r",
-            currentSection.color,
-            "hover:shadow-lg transition-all duration-300",
-          )}
-        >
-          {currentStep === formSections.length - 1 ? (
-            <>
-              <Save className="w-5 h-5" />
-              <span>{isSubmitting ? "সংরক্ষণ হচ্ছে..." : "সংরক্ষণ করুন"}</span>
-            </>
-          ) : (
-            <>
-              <span>পরবর্তী</span>
-              <motion.div
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                →
-              </motion.div>
-            </>
-          )}
-        </Button>
-      </div>
+        {/* Additional Notes */}
+        <div className="mt-6">
+          <Label className="flex items-center text-gray-700 dark:text-gray-200 font-medium mb-2">
+            <FileText className="w-4 h-4 mr-2" />
+            অতিরিক্ত নোট
+          </Label>
+          <Textarea
+            placeholder="কোনো বিশেষ তথ্য বা নোট..."
+            value={formData.notes}
+            onChange={(e) => handleInputChange("notes", e.target.value)}
+            className="bg-white/50 dark:bg-gray-700/50"
+            rows={3}
+          />
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex items-center justify-end space-x-4 mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <Button
+            variant="outline"
+            onClick={onClose}
+            className="px-8 py-3"
+          >
+            বাতিল
+          </Button>
+          
+          <Button
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            className="px-8 py-3 bg-blue-600 hover:bg-blue-700"
+          >
+            {isSubmitting ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                {editBooking ? "আপডেট করা হচ্ছে..." : "ক্রয় করা হচ্ছে..."}
+              </>
+            ) : (
+              <>
+                <Ticket className="w-4 h-4 mr-2" />
+                {editBooking ? "টিকেট আপডেট করুন" : "টিকেট ক্রয় করুন"}
+              </>
+            )}
+          </Button>
+        </div>
+      </motion.div>
     </div>
   );
 }
