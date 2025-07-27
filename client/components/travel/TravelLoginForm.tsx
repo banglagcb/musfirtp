@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, EyeOff, User, Lock, CheckCircle, XCircle, Loader2, Plane } from "lucide-react";
+import { Eye, EyeOff, User, Lock, CheckCircle, XCircle, Loader2, Plane, Sun, Moon, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 import dataService from "@/services/dataService";
 import { User as UserType } from "@shared/travel-types";
+import { useApp, useTranslation } from "@/contexts/AppContext";
 
 interface TravelLoginFormProps {
   onLoginSuccess: (user: UserType) => void;
