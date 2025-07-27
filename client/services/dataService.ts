@@ -116,7 +116,7 @@ class DataService {
     return bookings.find(booking => booking.id === id) || null;
   }
 
-  addBooking(booking: Omit<Booking, 'id' | 'bookingDate'>): string {
+  addBooking(booking: Omit<Booking, 'id' | 'bookingDate'>): Booking {
     const bookings = this.getBookings();
     const newBooking: Booking = {
       ...booking,
@@ -125,7 +125,7 @@ class DataService {
     };
     bookings.push(newBooking);
     localStorage.setItem(this.BOOKINGS_KEY, JSON.stringify(bookings));
-    return newBooking.id;
+    return newBooking;
   }
 
   updateBooking(id: string, updatedBooking: Partial<Booking>): boolean {
