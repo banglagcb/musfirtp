@@ -164,6 +164,21 @@ export default function TravelAgencyApp() {
     setNextZIndex((prev) => prev + 1);
   };
 
+  const minimizeWindow = (id: string) => {
+    setOpenWindows((prev) =>
+      prev.map((w) =>
+        w.id === id
+          ? {
+              ...w,
+              state: "minimized",
+              zIndex: nextZIndex,
+            }
+          : w,
+      ),
+    );
+    setNextZIndex((prev) => prev + 1);
+  };
+
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
       "new-booking": "নতুন ব��কিং",
