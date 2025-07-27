@@ -132,7 +132,7 @@ export default function TravelAgencyApp() {
       "bookings-list": "বুকিং লিস্ট",
       "search-filter": "সার্চ ও ���িল্টার",
       reports: "রিপোর্ট",
-      "export-data": "ডেট��� এক��সপোর্ট",
+      "export-data": "ডেটা এক��সপোর্ট",
       settings: "সেটিংস",
     };
 
@@ -349,7 +349,7 @@ export default function TravelAgencyApp() {
 
         {/* Breadcrumbs */}
         {breadcrumbs.length > 0 && (
-          <div className="mt-4">
+          <div className="mt-3 lg:mt-4">
             <Breadcrumbs
               items={breadcrumbs}
               onItemClick={handleBreadcrumbClick}
@@ -359,7 +359,7 @@ export default function TravelAgencyApp() {
       </div>
 
       {/* Main Dashboard */}
-      <div className="p-6">
+      <div className="p-4 lg:p-6">
         {user && (
           <TravelDashboard user={user} onCardClick={handleDashboardCardClick} />
         )}
