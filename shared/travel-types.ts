@@ -10,7 +10,7 @@ export interface LegacyBooking {
   airline: string;
   purchasePrice: number;
   salePrice: number;
-  paymentStatus: 'paid' | 'pending' | 'partial';
+  paymentStatus: "paid" | "pending" | "partial";
   paidAmount: number;
   bookingDate: string;
   notes?: string;
@@ -28,7 +28,7 @@ export interface Booking {
   airline: string;
   costPrice: number;
   sellingPrice: number;
-  paymentStatus: 'paid' | 'pending' | 'partial';
+  paymentStatus: "paid" | "pending" | "partial";
   notes?: string;
   createdAt: string;
   updatedAt?: string;
@@ -40,7 +40,7 @@ export interface User {
   id: string;
   username: string;
   password: string;
-  role: 'owner' | 'manager';
+  role: "owner" | "manager";
   name: string;
 }
 
@@ -58,7 +58,7 @@ export interface FilterOptions {
   customerName?: string;
   dateFrom?: string;
   dateTo?: string;
-  paymentStatus?: 'all' | 'paid' | 'pending' | 'partial';
+  paymentStatus?: "all" | "paid" | "pending" | "partial";
   airline?: string;
 }
 
@@ -71,40 +71,40 @@ export interface ReportData {
 }
 
 export const AIRLINES = [
-  'Biman Bangladesh Airlines',
-  'US-Bangla Airlines',
-  'Novoair',
-  'Emirates',
-  'Qatar Airways',
-  'Singapore Airlines',
-  'Thai Airways',
-  'Malaysia Airlines',
-  'Turkish Airlines',
-  'Etihad Airways',
-  'Air Arabia',
-  'Flydubai',
-  'IndiGo',
-  'Air India',
-  'Spicejet'
+  "Biman Bangladesh Airlines",
+  "US-Bangla Airlines",
+  "Novoair",
+  "Emirates",
+  "Qatar Airways",
+  "Singapore Airlines",
+  "Thai Airways",
+  "Malaysia Airlines",
+  "Turkish Airlines",
+  "Etihad Airways",
+  "Air Arabia",
+  "Flydubai",
+  "IndiGo",
+  "Air India",
+  "Spicejet",
 ];
 
 export const ROUTES = [
-  'ঢাকা - কক্সবাজার',
-  'ঢাকা - চট্টগ্রাম',
-  'ঢাকা - সিলেট',
-  'ঢাকা - রাজশাহী',
-  'ঢাকা - যশোর',
-  'ঢাকা - দুবাই',
-  'ঢাকা - দোহা',
-  'ঢাকা - কুয়ালালামপুর',
-  'ঢাকা - ব্যাংকক',
-  'ঢাকা - সিঙ্গাপুর',
-  'ঢাকা - কলকাতা',
-  'ঢাকা - দিল্লি',
-  'ঢাকা - মুম্বাই',
-  'ঢাকা - চেন্নাই',
-  'ঢাকা - ইস্তাম্বুল',
-  'চট্টগ্রাম - দুবাই',
-  'সিলেট - লন্ডন',
-  'সিলেট - মানচেস্টার'
+  "ঢাকা - কক্সবাজার",
+  "ঢাকা - চট্টগ্রাম",
+  "ঢাকা - সিলেট",
+  "ঢাকা - রাজশাহী",
+  "ঢাকা - যশোর",
+  "ঢাকা - দুবাই",
+  "ঢাকা - দোহা",
+  "ঢাকা - কুয়ালালামপুর",
+  "ঢাকা - ব্যাংকক",
+  "ঢাকা - সিঙ্গাপুর",
+  "ঢাকা - কলকাতা",
+  "ঢাকা - দিল্লি",
+  "ঢাকা - মুম্বাই",
+  "ঢাকা - চেন্নাই",
+  "ঢাকা - ইস্তাম্বুল",
+  "চট্টগ্রাম - দুবাই",
+  "সিলেট - লন্ডন",
+  "সিলেট - মানচেস্টার",
 ];

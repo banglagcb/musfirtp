@@ -75,7 +75,7 @@ export default function NewBookingForm({
 }: NewBookingFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     pnrNumber: editBooking?.id || "",
     airline: editBooking?.airline || "",
@@ -194,7 +194,9 @@ export default function NewBookingForm({
     } catch (error) {
       toast({
         title: "ত্রুটি!",
-        description: editBooking ? "টিকেট আপডেট করতে সমস্যা হয়েছে" : "টিকেট ক্রয় করতে সমস্যা হয়েছে",
+        description: editBooking
+          ? "টিকেট আপডেট করতে সমস্যা হয়েছে"
+          : "টিকেট ক্রয় করতে সমস্যা হয়েছে",
         variant: "destructive",
       });
     } finally {
@@ -242,7 +244,7 @@ export default function NewBookingForm({
                 onChange={(e) => handleInputChange("pnrNumber", e.target.value)}
                 className={cn(
                   "h-12 bg-white/50 dark:bg-gray-700/50",
-                  errors.pnrNumber && "border-red-500"
+                  errors.pnrNumber && "border-red-500",
                 )}
               />
               {errors.pnrNumber && (
@@ -263,10 +265,12 @@ export default function NewBookingForm({
                 value={formData.airline}
                 onValueChange={(value) => handleInputChange("airline", value)}
               >
-                <SelectTrigger className={cn(
-                  "h-12 bg-white/50 dark:bg-gray-700/50",
-                  errors.airline && "border-red-500"
-                )}>
+                <SelectTrigger
+                  className={cn(
+                    "h-12 bg-white/50 dark:bg-gray-700/50",
+                    errors.airline && "border-red-500",
+                  )}
+                >
                   <SelectValue placeholder="এয়ারলাইনস নির্বাচন করুন" />
                 </SelectTrigger>
                 <SelectContent>
@@ -295,10 +299,12 @@ export default function NewBookingForm({
                 value={formData.route}
                 onValueChange={(value) => handleInputChange("route", value)}
               >
-                <SelectTrigger className={cn(
-                  "h-12 bg-white/50 dark:bg-gray-700/50",
-                  errors.route && "border-red-500"
-                )}>
+                <SelectTrigger
+                  className={cn(
+                    "h-12 bg-white/50 dark:bg-gray-700/50",
+                    errors.route && "border-red-500",
+                  )}
+                >
                   <SelectValue placeholder="রুট নির্বাচন করুন" />
                 </SelectTrigger>
                 <SelectContent>
@@ -327,10 +333,12 @@ export default function NewBookingForm({
                 type="date"
                 placeholder="mm/dd/yyyy"
                 value={formData.flightDate}
-                onChange={(e) => handleInputChange("flightDate", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("flightDate", e.target.value)
+                }
                 className={cn(
                   "h-12 bg-white/50 dark:bg-gray-700/50",
-                  errors.flightDate && "border-red-500"
+                  errors.flightDate && "border-red-500",
                 )}
               />
               {errors.flightDate && (
@@ -351,10 +359,15 @@ export default function NewBookingForm({
                 type="number"
                 min="1"
                 value={formData.passengerCount}
-                onChange={(e) => handleInputChange("passengerCount", parseInt(e.target.value) || 1)}
+                onChange={(e) =>
+                  handleInputChange(
+                    "passengerCount",
+                    parseInt(e.target.value) || 1,
+                  )
+                }
                 className={cn(
                   "h-12 bg-white/50 dark:bg-gray-700/50",
-                  errors.passengerCount && "border-red-500"
+                  errors.passengerCount && "border-red-500",
                 )}
               />
               {errors.passengerCount && (
@@ -378,10 +391,15 @@ export default function NewBookingForm({
                 type="number"
                 placeholder="0"
                 value={formData.costPrice || ""}
-                onChange={(e) => handleInputChange("costPrice", parseFloat(e.target.value) || 0)}
+                onChange={(e) =>
+                  handleInputChange(
+                    "costPrice",
+                    parseFloat(e.target.value) || 0,
+                  )
+                }
                 className={cn(
                   "h-12 bg-white/50 dark:bg-gray-700/50",
-                  errors.costPrice && "border-red-500"
+                  errors.costPrice && "border-red-500",
                 )}
               />
               {errors.costPrice && (
@@ -402,10 +420,15 @@ export default function NewBookingForm({
                 type="number"
                 placeholder="0"
                 value={formData.sellingPrice || ""}
-                onChange={(e) => handleInputChange("sellingPrice", parseFloat(e.target.value) || 0)}
+                onChange={(e) =>
+                  handleInputChange(
+                    "sellingPrice",
+                    parseFloat(e.target.value) || 0,
+                  )
+                }
                 className={cn(
                   "h-12 bg-white/50 dark:bg-gray-700/50",
-                  errors.sellingPrice && "border-red-500"
+                  errors.sellingPrice && "border-red-500",
                 )}
               />
               {errors.sellingPrice && (
@@ -422,11 +445,17 @@ export default function NewBookingForm({
                 <Calculator className="w-4 h-4 mr-2" />
                 মেট বগড
               </Label>
-              <div className={cn(
-                "h-12 px-3 py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-md flex items-center",
-                netProfit >= 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
-              )}>
-                <span className="font-semibold">৳{netProfit.toLocaleString()}</span>
+              <div
+                className={cn(
+                  "h-12 px-3 py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-md flex items-center",
+                  netProfit >= 0
+                    ? "text-green-600 dark:text-green-400"
+                    : "text-red-600 dark:text-red-400",
+                )}
+              >
+                <span className="font-semibold">
+                  ৳{netProfit.toLocaleString()}
+                </span>
               </div>
             </div>
 
@@ -439,10 +468,12 @@ export default function NewBookingForm({
               <Input
                 placeholder="গ্রাহকের নাম"
                 value={formData.customerName}
-                onChange={(e) => handleInputChange("customerName", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("customerName", e.target.value)
+                }
                 className={cn(
                   "h-12 bg-white/50 dark:bg-gray-700/50",
-                  errors.customerName && "border-red-500"
+                  errors.customerName && "border-red-500",
                 )}
               />
               {errors.customerName && (
@@ -462,10 +493,12 @@ export default function NewBookingForm({
               <Input
                 placeholder="মোবাইল/ইমেইল"
                 value={formData.customerPhone}
-                onChange={(e) => handleInputChange("customerPhone", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("customerPhone", e.target.value)
+                }
                 className={cn(
                   "h-12 bg-white/50 dark:bg-gray-700/50",
-                  errors.customerPhone && "border-red-500"
+                  errors.customerPhone && "border-red-500",
                 )}
               />
               {errors.customerPhone && (
@@ -495,14 +528,10 @@ export default function NewBookingForm({
 
         {/* Action Buttons */}
         <div className="flex items-center justify-end space-x-4 mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <Button
-            variant="outline"
-            onClick={onClose}
-            className="px-8 py-3"
-          >
+          <Button variant="outline" onClick={onClose} className="px-8 py-3">
             বাতিল
           </Button>
-          
+
           <Button
             onClick={handleSubmit}
             disabled={isSubmitting}
