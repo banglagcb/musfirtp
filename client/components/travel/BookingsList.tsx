@@ -433,10 +433,12 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
       >
         <AnimatePresence>
           {filteredAndSortedBookings.map((booking, index) => {
-            const profit = booking.sellingPrice - booking.costPrice;
+            const sellingPrice = booking.sellingPrice || 0;
+            const costPrice = booking.costPrice || 0;
+            const profit = sellingPrice - costPrice;
             const profitPercentage =
-              booking.costPrice > 0
-                ? ((profit / booking.costPrice) * 100).toFixed(1)
+              costPrice > 0
+                ? ((profit / costPrice) * 100).toFixed(1)
                 : "0";
             const statusConfig = paymentStatusConfig[booking.paymentStatus];
 
