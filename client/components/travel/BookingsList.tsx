@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Search, 
-  Filter, 
-  Edit3, 
-  Trash2, 
+import {
+  Search,
+  Filter,
+  Edit3,
+  Trash2,
   Calendar,
-  User,
+  User as UserIcon,
   Phone,
   Mail,
   Plane,
