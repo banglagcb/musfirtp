@@ -76,7 +76,7 @@ export default function TicketDetails({ booking, onClose }: TicketDetailsProps) 
   return (
     <>
       {/* Print Styles */}
-      <style jsx global>{`
+      <style>{`
         @media print {
           body * {
             visibility: hidden;
