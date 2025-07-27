@@ -344,34 +344,12 @@ export default function TravelAgencyApp() {
         )}
       </div>
 
-      {/* Enhanced Breadcrumbs */}
-      {breadcrumbs.length > 0 && !isMobile && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="fixed top-4 lg:top-6 left-4 lg:left-6 z-40"
-        >
-          <Breadcrumbs
-            items={breadcrumbs}
-            onItemClick={handleBreadcrumbClick}
-          />
-        </motion.div>
-      )}
-
       {/* Main Dashboard */}
-      <motion.div
-        key={refreshTrigger} // Force re-render when data changes
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className={cn(
-          "transition-all duration-500 will-change-transform",
-          hasFullscreenWindow ? "blur-sm scale-95" : "",
-        )}
-      >
+      <div className="p-6">
         {user && (
           <TravelDashboard user={user} onCardClick={handleDashboardCardClick} />
         )}
-      </motion.div>
+      </div>
 
       {/* Enhanced Folder Windows */}
       <AnimatePresence mode="popLayout">
