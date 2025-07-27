@@ -134,11 +134,11 @@ export default function TravelAgencyApp() {
 
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
-      "new-booking": "নতুন ব��কিং",
+      "new-booking": "নতুন বুকিং",
       "bookings-list": "বুকিং লিস্ট",
-      "search-filter": "সার্চ ও ���িল্টার",
+      "search-filter": "সার্চ ও ফিল্টার",
       reports: "রিপোর্ট",
-      "export-data": "ডেটা এক��সপোর্ট",
+      "export-data": "ডেটা এক্সপোর্ট",
       settings: "সেটিংস",
     };
 
@@ -162,15 +162,18 @@ export default function TravelAgencyApp() {
           <BookingsList
             onClose={() => closeWindow(cardId)}
             onEdit={(booking: Booking) => {
-              // Open edit form (could be implemented similarly to new booking)
+              // Open edit form with booking data
               closeWindow(cardId);
               openWindow(
                 "edit-booking",
-                "বুকিং এডিট করুন",
-                <PlaceholderPage
-                  title="বুকিং এডিট করুন"
-                  description="এই ফিচারটি শীঘ্রই আস�����ে!"
-                  onBack={() => closeWindow("edit-booking")}
+                `${booking.customerName} - বুকিং এডিট`,
+                <NewBookingForm
+                  onClose={() => closeWindow("edit-booking")}
+                  onSuccess={() => {
+                    closeWindow("edit-booking");
+                    refreshData();
+                  }}
+                  editBooking={booking}
                 />,
               );
             }}
@@ -183,6 +186,18 @@ export default function TravelAgencyApp() {
             onClose={() => closeWindow(cardId)}
             onEdit={(booking: Booking) => {
               closeWindow(cardId);
+              openWindow(
+                "edit-booking",
+                `${booking.customerName} - বুকিং এডিট`,
+                <NewBookingForm
+                  onClose={() => closeWindow("edit-booking")}
+                  onSuccess={() => {
+                    closeWindow("edit-booking");
+                    refreshData();
+                  }}
+                  editBooking={booking}
+                />,
+              );
             }}
           />
         );
@@ -221,7 +236,7 @@ export default function TravelAgencyApp() {
 
     // Update breadcrumbs
     setBreadcrumbs([
-      { label: "ড্যাশ���োর্ড", path: "/dashboard" },
+      { label: "ড্যাশবোর্ড", path: "/dashboard" },
       { label: title, path: `/${cardId}`, isActive: true },
     ]);
   };
@@ -297,7 +312,7 @@ export default function TravelAgencyApp() {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      {/* Simple Header */}
+      {/* Responsive Header */}
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 lg:px-6 py-3 lg:py-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
@@ -346,9 +361,10 @@ export default function TravelAgencyApp() {
             {/* Logout Button */}
             <button
               onClick={handleLogout}
-              className="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded"
+              className="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded transition-colors"
+              title="লগআউট"
             >
-              <LogOut className="w-5 h-5" />
+              <LogOut className="w-4 h-4 lg:w-5 lg:h-5" />
             </button>
           </div>
         </div>
