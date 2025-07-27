@@ -348,43 +348,20 @@ function TravelAgencyAppInner() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Enhanced Header Controls */}
-      <div className="fixed top-4 lg:top-6 right-4 lg:right-6 flex items-center space-x-2 lg:space-x-4 z-50">
-        {/* Refresh Button */}
-        <motion.button
-          whileHover={{ scale: 1.1, rotate: 180 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={refreshData}
-          className="p-2 lg:p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors shadow-lg"
-        >
-          <RefreshCw className="w-5 h-5 lg:w-6 lg:h-6" />
-        </motion.button>
-
-        {/* Dark Mode Toggle */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={toggleDarkMode}
-          className="p-2 lg:p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors shadow-lg"
-        >
-          {isDarkMode ? (
-            <Sun className="w-5 h-5 lg:w-6 lg:h-6" />
-          ) : (
-            <Moon className="w-5 h-5 lg:w-6 lg:h-6" />
-          )}
-        </motion.button>
-
-        {/* Logout Button */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={handleLogout}
-          className="p-2 lg:p-3 bg-red-500/20 backdrop-blur-md rounded-full border border-red-400/50 text-red-200 hover:bg-red-500/30 transition-colors shadow-lg"
-        >
-          <LogOut className="w-5 h-5 lg:w-6 lg:h-6" />
-        </motion.button>
-      </div>
+    <div className={cn(
+      "min-h-screen relative overflow-hidden transition-colors duration-300",
+      theme === 'dark'
+        ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+        : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+    )}>
+      {/* App Header */}
+      <AppHeader
+        user={user!}
+        onLogout={handleLogout}
+        onRefresh={refreshData}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onToggleMobileMenu={toggleMobileMenu}
+      />
 
       {/* Enhanced Breadcrumbs */}
       {breadcrumbs.length > 0 && !isMobile && (
