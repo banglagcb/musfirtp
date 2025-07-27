@@ -15,6 +15,7 @@ import BookingsList from "@/components/travel/BookingsList";
 import ReportsSection from "@/components/travel/ReportsSection";
 import DataExport from "@/components/travel/DataExport";
 import EditBookingForm from "@/components/travel/EditBookingForm";
+import SettingsPage from "@/components/travel/SettingsPage";
 import PlaceholderPage from "@/components/PlaceholderPage";
 import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
@@ -236,6 +237,14 @@ export default function TravelAgencyApp() {
         break;
       case "export-data":
         component = <DataExport onClose={() => closeWindow(cardId)} />;
+        break;
+      case "settings":
+        component = (
+          <SettingsPage
+            user={user!}
+            onClose={() => closeWindow(cardId)}
+          />
+        );
         break;
       default:
         component = (
