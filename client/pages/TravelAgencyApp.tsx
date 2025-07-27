@@ -161,15 +161,17 @@ export default function TravelAgencyApp() {
           <BookingsList
             onClose={() => closeWindow(cardId)}
             onEdit={(booking: Booking) => {
-              // Open edit form (could be implemented similarly to new booking)
               closeWindow(cardId);
               openWindow(
                 "edit-booking",
                 "বুকিং এডিট করুন",
-                <PlaceholderPage
-                  title="বুকিং এডিট করুন"
-                  description="এই ফিচারটি শীঘ্রই আসছে!"
-                  onBack={() => closeWindow("edit-booking")}
+                <EditBookingForm
+                  booking={booking}
+                  onClose={() => closeWindow("edit-booking")}
+                  onSuccess={() => {
+                    closeWindow("edit-booking");
+                    refreshData();
+                  }}
                 />,
               );
             }}
