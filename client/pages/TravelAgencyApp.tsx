@@ -11,6 +11,8 @@ import ReportsSection from "@/components/travel/ReportsSection";
 import DataExport from "@/components/travel/DataExport";
 import EditBookingForm from "@/components/travel/EditBookingForm";
 import SettingsPage from "@/components/travel/SettingsPage";
+import BulkTicketPurchaseForm from "@/components/travel/BulkTicketPurchaseForm";
+import TicketInventoryDashboard from "@/components/travel/TicketInventoryDashboard";
 import PlaceholderPage from "@/components/PlaceholderPage";
 import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
@@ -221,6 +223,40 @@ export default function TravelAgencyApp() {
         break;
       case "export-data":
         component = <DataExport onClose={() => closeModal(cardId)} />;
+        break;
+      case "ticket-inventory":
+        component = (
+          <TicketInventoryDashboard
+            user={user!}
+            onClose={() => closeModal(cardId)}
+            onOpenPurchaseForm={() => {
+              closeModal(cardId);
+              openModal(
+                "bulk-purchase",
+                "বাল্ক টিকেট ক্রয়",
+                <BulkTicketPurchaseForm
+                  onClose={() => closeModal("bulk-purchase")}
+                  onSuccess={() => {
+                    closeModal("bulk-purchase");
+                    refreshData();
+                  }}
+                />,
+                "xl"
+              );
+            }}
+          />
+        );
+        break;
+      case "bulk-purchase":
+        component = (
+          <BulkTicketPurchaseForm
+            onClose={() => closeModal(cardId)}
+            onSuccess={() => {
+              closeModal(cardId);
+              refreshData();
+            }}
+          />
+        );
         break;
       case "settings":
         component = (
