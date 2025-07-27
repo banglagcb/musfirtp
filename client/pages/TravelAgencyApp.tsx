@@ -108,79 +108,49 @@ export default function TravelAgencyApp() {
     setRefreshTrigger((prev) => prev + 1);
   };
 
-  const openWindow = (
+  const openModal = (
     id: string,
     title: string,
     component: React.ReactNode,
+    size: "sm" | "md" | "lg" | "xl" | "full" = "lg"
   ) => {
-    const existingWindow = openWindows.find((w) => w.id === id);
+    const existingModal = openModals.find((m) => m.id === id);
 
-    if (existingWindow) {
-      // Bring existing window to front and restore if minimized
-      setOpenWindows((prev) =>
-        prev.map((w) =>
-          w.id === id
-            ? { ...w, isOpen: true, state: "popup", zIndex: nextZIndex }
-            : w,
+    if (existingModal) {
+      // Bring existing modal to front
+      setOpenModals((prev) =>
+        prev.map((m) =>
+          m.id === id
+            ? { ...m, isOpen: true }
+            : m,
         ),
       );
-      setNextZIndex((prev) => prev + 1);
     } else {
-      // Create new window
-      setOpenWindows((prev) => [
+      // Create new modal
+      setOpenModals((prev) => [
         ...prev,
         {
           id,
           title,
           component,
           isOpen: true,
-          state: "popup",
-          zIndex: nextZIndex,
+          size,
         },
       ]);
-      setNextZIndex((prev) => prev + 1);
     }
   };
 
-  const closeWindow = (id: string) => {
-    setOpenWindows((prev) => prev.filter((w) => w.id !== id));
-    // Refresh dashboard data when closing windows
+  const closeModal = (id: string) => {
+    setOpenModals((prev) => prev.filter((m) => m.id !== id));
+    // Refresh dashboard data when closing modals
     refreshData();
   };
 
-  const maximizeWindow = (id: string) => {
-    setOpenWindows((prev) =>
-      prev.map((w) =>
-        w.id === id
-          ? {
-              ...w,
-              state: w.state === "fullscreen" ? "popup" : "fullscreen",
-              zIndex: nextZIndex,
-            }
-          : w,
-      ),
-    );
-    setNextZIndex((prev) => prev + 1);
-  };
 
-  const minimizeWindow = (id: string) => {
-    setOpenWindows((prev) =>
-      prev.map((w) =>
-        w.id === id
-          ? {
-              ...w,
-              state: "minimized",
-              zIndex: nextZIndex,
-            }
-          : w,
-      ),
-    );
-    setNextZIndex((prev) => prev + 1);
-  };
 
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
-      "new-booking": "নতুন ব����কিং",
+      "new-booking": "নতুন ব��কিং",
       "bookings-list": "বুকিং লিস্ট",
       "search-filter": "সার্চ ও ফিল্টার",
       reports: "রিপোর্ট",
