@@ -1,364 +1,433 @@
 import { motion } from "framer-motion";
-import { 
-  Plane, 
-  Users, 
-  CreditCard, 
-  TrendingUp, 
+import {
+  Plus,
+  Users,
+  Search,
+  BarChart3,
+  Download,
+  Settings,
+  Plane,
   Calendar,
-  FileText,
   DollarSign,
-  Clock,
-  CheckCircle,
+  TrendingUp,
   AlertCircle,
-  PlusCircle,
-  Search
+  CheckCircle,
+  Clock,
+  CreditCard,
+  Package,
+  Target,
+  Globe,
+  Award,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { User, Booking } from "@shared/travel-types";
 import { useEffect, useState } from "react";
 import dataService from "@/services/dataService";
-import { DashboardStats, User } from "@shared/travel-types";
+import { cn } from "@/lib/utils";
 
 interface TravelDashboardProps {
   user: User;
   onCardClick: (cardId: string) => void;
 }
 
-interface DashboardCard {
-  id: string;
-  title: string;
-  description: string;
-  icon: React.ComponentType<{ className?: string }>;
-  color: string;
-  gradient: string;
+interface DashboardStats {
+  totalBookings: number;
+  totalRevenue: number;
+  totalProfit: number;
+  dailyBookings: number;
+  dailyRevenue: number;
+  dailyProfit: number;
+  pendingPayments: number;
+  completedBookings: number;
+  thisMonthBookings: number;
+  thisMonthProfit: number;
 }
-
-const dashboardCards: DashboardCard[] = [
-  {
-    id: "new-booking",
-    title: "নতুন বুকিং",
-    description: "নতুন ফ্লাইট বুকিং যোগ করুন",
-    icon: PlusCircle,
-    color: "from-neon-green to-neon-blue",
-    gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
-  },
-  {
-    id: "bookings-list",
-    title: "বুকিং লিস্ট",
-    description: "সব বুকিং দেখুন ও ম্যানেজ করুন",
-    icon: FileText,
-    color: "from-neon-blue to-neon-purple",
-    gradient: "bg-gradient-to-br from-blue-500/20 to-purple-500/20",
-  },
-  {
-    id: "search-filter",
-    title: "সার্চ ও ফিল্টার",
-    description: "বুকিং খুঁজুন ও ফিল্টার করুন",
-    icon: Search,
-    color: "from-neon-purple to-neon-pink",
-    gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20",
-  },
-  {
-    id: "reports",
-    title: "রিপোর্ট",
-    description: "বিক্রয় ও মুনাফার রিপোর্ট দেখুন",
-    icon: TrendingUp,
-    color: "from-orange-500 to-red-500",
-    gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
-  },
-  {
-    id: "export-data",
-    title: "ডেটা এক্সপোর্ট",
-    description: "CSV/Excel ফাইলে ডাউনলোড করুন",
-    icon: DollarSign,
-    color: "from-green-500 to-teal-500",
-    gradient: "bg-gradient-to-br from-green-500/20 to-teal-500/20",
-  },
-  {
-    id: "settings",
-    title: "সেটিংস",
-    description: "সিস্টেম সেটিংস ও কনফিগারেশন",
-    icon: Calendar,
-    color: "from-red-500 to-pink-500",
-    gradient: "bg-gradient-to-br from-red-500/20 to-pink-500/20",
-  }
-];
 
 export default function TravelDashboard({ user, onCardClick }: TravelDashboardProps) {
   const [stats, setStats] = useState<DashboardStats>({
     totalBookings: 0,
-    todayBookings: 0,
     totalRevenue: 0,
     totalProfit: 0,
+    dailyBookings: 0,
+    dailyRevenue: 0,
+    dailyProfit: 0,
     pendingPayments: 0,
-    paidBookings: 0,
-    partialPayments: 0
+    completedBookings: 0,
+    thisMonthBookings: 0,
+    thisMonthProfit: 0,
   });
 
   useEffect(() => {
-    const dashboardStats = dataService.getDashboardStats();
-    setStats(dashboardStats);
+    const calculateStats = () => {
+      const bookings = dataService.getBookings();
+      const today = new Date().toDateString();
+      const thisMonth = new Date().getMonth();
+      const thisYear = new Date().getFullYear();
+
+      const todayBookings = bookings.filter(
+        (booking) => new Date(booking.flightDate).toDateString() === today
+      );
+
+      const thisMonthBookings = bookings.filter((booking) => {
+        const bookingDate = new Date(booking.flightDate);
+        return (
+          bookingDate.getMonth() === thisMonth &&
+          bookingDate.getFullYear() === thisYear
+        );
+      });
+
+      const totalRevenue = bookings.reduce((sum, booking) => sum + booking.sellingPrice, 0);
+      const totalProfit = bookings.reduce(
+        (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
+        0
+      );
+
+      const dailyRevenue = todayBookings.reduce((sum, booking) => sum + booking.sellingPrice, 0);
+      const dailyProfit = todayBookings.reduce(
+        (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
+        0
+      );
+
+      const thisMonthProfit = thisMonthBookings.reduce(
+        (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
+        0
+      );
+
+      const pendingPayments = bookings.filter(
+        (booking) => booking.paymentStatus === "pending"
+      ).length;
+
+      const completedBookings = bookings.filter(
+        (booking) => booking.paymentStatus === "paid"
+      ).length;
+
+      setStats({
+        totalBookings: bookings.length,
+        totalRevenue,
+        totalProfit,
+        dailyBookings: todayBookings.length,
+        dailyRevenue,
+        dailyProfit,
+        pendingPayments,
+        completedBookings,
+        thisMonthBookings: thisMonthBookings.length,
+        thisMonthProfit,
+      });
+    };
+
+    calculateStats();
   }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 50,
-      scale: 0.8
+  const dashboardCards = [
+    {
+      id: "new-booking",
+      title: "নতুন বুকিং",
+      description: "নতুন বুকিং যোগ করুন",
+      icon: Plus,
+      gradient: "from-emerald-500 to-teal-600",
+      iconColor: "text-emerald-100",
+      bgGradient: "from-emerald-500/10 to-teal-600/10",
+      stats: null,
     },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 25
-      }
-    }
-  };
+    {
+      id: "bookings-list",
+      title: "বুকিং লিস্ট",
+      description: `মোট ${stats.totalBookings}টি বুকিং`,
+      icon: Package,
+      gradient: "from-blue-500 to-indigo-600",
+      iconColor: "text-blue-100",
+      bgGradient: "from-blue-500/10 to-indigo-600/10",
+      stats: stats.totalBookings,
+    },
+    {
+      id: "search-filter",
+      title: "সার্চ ও ফিল্টার",
+      description: "নির্দিষ্ট বুকিং খুঁজুন",
+      icon: Search,
+      gradient: "from-violet-500 to-purple-600",
+      iconColor: "text-violet-100",
+      bgGradient: "from-violet-500/10 to-purple-600/10",
+      stats: null,
+    },
+    {
+      id: "reports",
+      title: "রিপোর্ট ও বিশ্লেষণ",
+      description: `আজকের মুনাফা ৳${stats.dailyProfit.toLocaleString()}`,
+      icon: TrendingUp,
+      gradient: "from-rose-500 to-pink-600",
+      iconColor: "text-rose-100",
+      bgGradient: "from-rose-500/10 to-pink-600/10",
+      stats: stats.dailyProfit,
+    },
+    {
+      id: "export-data",
+      title: "ডেটা এক্সপোর্ট",
+      description: "CSV/Excel এ ডাউনলোড করুন",
+      icon: Download,
+      gradient: "from-amber-500 to-orange-600",
+      iconColor: "text-amber-100",
+      bgGradient: "from-amber-500/10 to-orange-600/10",
+      stats: null,
+    },
+    {
+      id: "settings",
+      title: "সেটিংস",
+      description: "সিস্টেম কনফিগারেশন",
+      icon: Settings,
+      gradient: "from-slate-500 to-gray-600",
+      iconColor: "text-slate-100",
+      bgGradient: "from-slate-500/10 to-gray-600/10",
+      stats: null,
+    },
+  ];
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('bn-BD', {
-      style: 'currency',
-      currency: 'BDT'
-    }).format(amount);
-  };
+  const statCards = [
+    {
+      title: "আজকের বুকিং",
+      value: stats.dailyBookings,
+      suffix: "টি",
+      icon: Calendar,
+      color: "text-blue-400",
+      bgColor: "bg-blue-500/10",
+    },
+    {
+      title: "আজকের আয়",
+      value: stats.dailyRevenue,
+      prefix: "৳",
+      icon: DollarSign,
+      color: "text-green-400",
+      bgColor: "bg-green-500/10",
+    },
+    {
+      title: "পেন্ডিং পেমেন্ট",
+      value: stats.pendingPayments,
+      suffix: "টি",
+      icon: Clock,
+      color: "text-orange-400",
+      bgColor: "bg-orange-500/10",
+    },
+    {
+      title: "সম্পূ��্ণ বুকিং",
+      value: stats.completedBookings,
+      suffix: "টি",
+      icon: CheckCircle,
+      color: "text-emerald-400",
+      bgColor: "bg-emerald-500/10",
+    },
+    {
+      title: "মোট রেভিনিউ",
+      value: stats.totalRevenue,
+      prefix: "৳",
+      icon: Target,
+      color: "text-purple-400",
+      bgColor: "bg-purple-500/10",
+    },
+    {
+      title: "মোট মুনাফা",
+      value: stats.totalProfit,
+      prefix: "৳",
+      icon: Award,
+      color: "text-pink-400",
+      bgColor: "bg-pink-500/10",
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-      {/* Header */}
+    <div className="min-h-screen p-4 lg:p-8">
+      {/* Enhanced Header */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="mb-8"
+        className="text-center mb-8 lg:mb-12"
       >
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold text-white mb-2">ড্যাশবোর্ড</h1>
-            <p className="text-white/70">স্বাগতম, {user.name} - {user.role === 'owner' ? 'মালিক' : 'ম্যানেজার'}</p>
-          </div>
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="w-16 h-16 bg-gradient-to-r from-folder-primary to-folder-secondary rounded-full flex items-center justify-center"
-          >
-            <Plane className="w-8 h-8 text-white" />
-          </motion.div>
-        </div>
+        <motion.h1
+          className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent mb-4"
+          animate={{
+            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{
+            backgroundSize: "200% 200%",
+          }}
+        >
+          ট্রাভেল এজেন্সি ম্যানেজমেন্ট
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="text-lg lg:text-xl text-white/70 mb-2"
+        >
+          স্বাগতম, {user.name}! ({user.role === "owner" ? "মালিক" : "ম্যানেজার"})
+        </motion.p>
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"
+        />
       </motion.div>
 
-      {/* Stats Overview */}
+      {/* Enhanced Statistics Cards */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+        transition={{ delay: 0.2, duration: 0.6 }}
+        className="grid grid-cols-2 lg:grid-cols-6 gap-4 lg:gap-6 mb-8 lg:mb-12"
       >
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white/70 text-sm">মোট বুকিং</p>
-              <p className="text-2xl font-bold text-white">{stats.totalBookings}</p>
-            </div>
-            <Users className="w-8 h-8 text-neon-blue" />
-          </div>
-        </div>
-        
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white/70 text-sm">আজকের বুকিং</p>
-              <p className="text-2xl font-bold text-white">{stats.todayBookings}</p>
-            </div>
-            <Calendar className="w-8 h-8 text-neon-green" />
-          </div>
-        </div>
-
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white/70 text-sm">মোট আয়</p>
-              <p className="text-xl font-bold text-white">{formatCurrency(stats.totalRevenue)}</p>
-            </div>
-            <DollarSign className="w-8 h-8 text-neon-purple" />
-          </div>
-        </div>
-
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white/70 text-sm">মোট মুনাফা</p>
-              <p className="text-xl font-bold text-white">{formatCurrency(stats.totalProfit)}</p>
-            </div>
-            <TrendingUp className="w-8 h-8 text-neon-pink" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Payment Status Summary */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
-      >
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <div className="flex items-center space-x-3">
-            <CheckCircle className="w-8 h-8 text-neon-green" />
-            <div>
-              <p className="text-white/70 text-sm">পেইড বুকিং</p>
-              <p className="text-2xl font-bold text-white">{stats.paidBookings}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <div className="flex items-center space-x-3">
-            <Clock className="w-8 h-8 text-yellow-400" />
-            <div>
-              <p className="text-white/70 text-sm">আংশিক পেমেন্ট</p>
-              <p className="text-2xl font-bold text-white">{stats.partialPayments}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-          <div className="flex items-center space-x-3">
-            <AlertCircle className="w-8 h-8 text-red-400" />
-            <div>
-              <p className="text-white/70 text-sm">পেন্ডিং পেমেন্ট</p>
-              <p className="text-2xl font-bold text-white">{stats.pendingPayments}</p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Dashboard Cards Grid */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-      >
-        {dashboardCards.map((card) => (
+        {statCards.map((stat, index) => (
           <motion.div
-            key={card.id}
-            variants={cardVariants}
-            whileHover={{ 
-              scale: 1.05,
-              y: -10,
-              transition: { type: "spring", stiffness: 400, damping: 25 }
-            }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => onCardClick(card.id)}
+            key={stat.title}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+            whileHover={{ scale: 1.05, y: -5 }}
             className={cn(
-              "relative group cursor-pointer rounded-2xl p-6 border border-white/20",
-              "bg-white/10 backdrop-blur-md hover:bg-white/15",
-              "transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25",
-              "overflow-hidden"
+              "p-4 lg:p-6 rounded-2xl border border-white/10 backdrop-blur-md",
+              stat.bgColor,
+              "hover:border-white/20 transition-all duration-300"
             )}
           >
-            {/* Background Gradient */}
-            <div className={cn(
-              "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-              card.gradient
-            )} />
-
-            {/* Content */}
-            <div className="relative z-10">
-              {/* Icon */}
+            <div className="flex items-center justify-between mb-3">
+              <stat.icon className={cn("w-6 h-6 lg:w-8 lg:h-8", stat.color)} />
               <motion.div
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
-                className={cn(
-                  "w-12 h-12 rounded-xl mb-4 flex items-center justify-center",
-                  `bg-gradient-to-r ${card.color}`
-                )}
-              >
-                <card.icon className="w-6 h-6 text-white" />
-              </motion.div>
-
-              {/* Title & Description */}
-              <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-white transition-colors">
-                {card.title}
-              </h3>
-              <p className="text-white/70 text-sm mb-4 group-hover:text-white/90 transition-colors">
-                {card.description}
-              </p>
-
-              {/* Hover Effect Indicator */}
-              <motion.div
-                className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"
               />
             </div>
-
-            {/* Glow Effect */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="text-2xl lg:text-3xl font-bold text-white mb-1">
+              {stat.prefix}
+              {typeof stat.value === "number" ? stat.value.toLocaleString() : stat.value}
+              {stat.suffix}
+            </div>
+            <div className="text-sm lg:text-base text-white/60">{stat.title}</div>
           </motion.div>
         ))}
       </motion.div>
 
-      {/* Quick Actions */}
+      {/* Enhanced Main Dashboard Cards */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
-        className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
+        transition={{ delay: 0.4, duration: 0.6 }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
       >
-        <h2 className="text-2xl font-semibold text-white mb-4">দ্রুত অ্যাকশন</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
+        {dashboardCards.map((card, index) => (
+          <motion.div
+            key={card.id}
+            initial={{ opacity: 0, scale: 0.9, rotateY: -15 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{
+              delay: 0.5 + index * 0.1,
+              duration: 0.6,
+              type: "spring",
+              stiffness: 100,
+            }}
+            whileHover={{
+              scale: 1.05,
+              y: -10,
+              rotateX: 5,
+              rotateY: 5,
+            }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => onCardClick("new-booking")}
-            className="p-4 bg-gradient-to-r from-neon-green to-neon-blue rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
+            onClick={() => onCardClick(card.id)}
+            className={cn(
+              "group relative p-6 lg:p-8 rounded-3xl cursor-pointer overflow-hidden",
+              "bg-gradient-to-br from-white/5 to-white/10",
+              "border border-white/10 hover:border-white/20",
+              "backdrop-blur-md transition-all duration-500",
+              "shadow-lg hover:shadow-2xl",
+              card.bgGradient
+            )}
+            style={{
+              transformStyle: "preserve-3d",
+            }}
           >
-            <PlusCircle className="w-5 h-5" />
-            <span>নতুন বুকিং</span>
-          </motion.button>
+            {/* Enhanced Background Gradient */}
+            <motion.div
+              className={cn(
+                "absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+                card.gradient
+              )}
+              style={{ mixBlendMode: "overlay" }}
+            />
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => onCardClick("bookings-list")}
-            className="p-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
-          >
-            <FileText className="w-5 h-5" />
-            <span>সব বুকিং</span>
-          </motion.button>
+            {/* Enhanced Floating Icon */}
+            <motion.div
+              animate={{
+                y: [0, -10, 0],
+                rotate: [0, 5, -5, 0],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className={cn(
+                "relative z-10 w-16 h-16 lg:w-20 lg:h-20 rounded-2xl mb-6",
+                `bg-gradient-to-br ${card.gradient}`,
+                "flex items-center justify-center",
+                "shadow-lg group-hover:shadow-xl transition-all duration-500"
+              )}
+            >
+              <card.icon className={cn("w-8 h-8 lg:w-10 lg:h-10", card.iconColor)} />
+            </motion.div>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => onCardClick("search-filter")}
-            className="p-4 bg-gradient-to-r from-neon-purple to-neon-pink rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
-          >
-            <Search className="w-5 h-5" />
-            <span>সার্চ করুন</span>
-          </motion.button>
+            {/* Enhanced Content */}
+            <div className="relative z-10">
+              <h3 className="text-xl lg:text-2xl font-bold text-white mb-3 group-hover:text-white transition-colors">
+                {card.title}
+              </h3>
+              <p className="text-white/70 group-hover:text-white/90 transition-colors text-sm lg:text-base">
+                {card.description}
+              </p>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => onCardClick("reports")}
-            className="p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
-          >
-            <TrendingUp className="w-5 h-5" />
-            <span>রিপোর্ট</span>
-          </motion.button>
+              {/* Stats Badge */}
+              {card.stats !== null && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.8 + index * 0.1 }}
+                  className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-medium text-white"
+                >
+                  {typeof card.stats === "number" ? card.stats.toLocaleString() : card.stats}
+                </motion.div>
+              )}
+            </div>
+
+            {/* Enhanced Hover Effect */}
+            <motion.div
+              className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+              initial={{ scaleX: 0 }}
+              whileHover={{ scaleX: 1 }}
+              transition={{ duration: 0.3 }}
+            />
+
+            {/* Enhanced Corner Decoration */}
+            <motion.div
+              className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-white/10 to-transparent rounded-bl-full"
+              initial={{ scale: 0, rotate: -45 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ delay: 1 + index * 0.1, duration: 0.6 }}
+            />
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* Enhanced Footer */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
+        className="text-center mt-12 lg:mt-16"
+      >
+        <div className="text-white/50 text-sm lg:text-base">
+          © 2024 ট্রাভেল এজেন্সি ম্যানেজমেন্ট সিস্টেম - সকল অধিকার সংরক্ষিত
         </div>
       </motion.div>
     </div>
