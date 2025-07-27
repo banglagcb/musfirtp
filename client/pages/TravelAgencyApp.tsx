@@ -292,7 +292,7 @@ export default function TravelAgencyApp() {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       {/* Simple Header */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 lg:px-6 py-3 lg:py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
