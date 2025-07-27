@@ -291,42 +291,57 @@ export default function TravelAgencyApp() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Enhanced Header Controls */}
-      <div className="fixed top-4 lg:top-6 right-4 lg:right-6 flex items-center space-x-2 lg:space-x-4 z-50">
-        {/* Refresh Button */}
-        <motion.button
-          whileHover={{ scale: 1.1, rotate: 180 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={refreshData}
-          className="p-2 lg:p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors shadow-lg"
-        >
-          <RefreshCw className="w-5 h-5 lg:w-6 lg:h-6" />
-        </motion.button>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+      {/* Simple Header */}
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+              ট্রাভেল এজেন্সি ম্যানেজমেন্ট
+            </h1>
+            {user && (
+              <span className="text-sm text-gray-600 dark:text-gray-300">
+                স্বাগতম, {user.name}
+              </span>
+            )}
+          </div>
 
-        {/* Dark Mode Toggle */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={toggleDarkMode}
-          className="p-2 lg:p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors shadow-lg"
-        >
-          {isDarkMode ? (
-            <Sun className="w-5 h-5 lg:w-6 lg:h-6" />
-          ) : (
-            <Moon className="w-5 h-5 lg:w-6 lg:h-6" />
-          )}
-        </motion.button>
+          <div className="flex items-center space-x-3">
+            {/* Refresh Button */}
+            <button
+              onClick={refreshData}
+              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            >
+              <RefreshCw className="w-5 h-5" />
+            </button>
 
-        {/* Logout Button */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={handleLogout}
-          className="p-2 lg:p-3 bg-red-500/20 backdrop-blur-md rounded-full border border-red-400/50 text-red-200 hover:bg-red-500/30 transition-colors shadow-lg"
-        >
-          <LogOut className="w-5 h-5 lg:w-6 lg:h-6" />
-        </motion.button>
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+            >
+              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded"
+            >
+              <LogOut className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Breadcrumbs */}
+        {breadcrumbs.length > 0 && (
+          <div className="mt-4">
+            <Breadcrumbs
+              items={breadcrumbs}
+              onItemClick={handleBreadcrumbClick}
+            />
+          </div>
+        )}
       </div>
 
       {/* Enhanced Breadcrumbs */}
