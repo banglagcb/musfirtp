@@ -60,17 +60,17 @@ export default function Window({
         }
       >
         {/* Window Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 rounded-t-lg">
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
+        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 rounded-t-lg">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-white truncate pr-4">
             {title}
           </h3>
 
-          <div className="flex items-center space-x-2">
-            {/* Maximize Button */}
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            {/* Maximize Button - Hidden on mobile */}
             <button
               onClick={handleMaximize}
-              className="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-600 rounded"
-              title={isMaximized ? "Restore" : "Maximize"}
+              className="hidden sm:flex p-1.5 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors"
+              title={isMaximized ? "পুনরুদ্ধার" : "বড় করুন"}
             >
               {isMaximized ? (
                 <Minimize2 className="w-4 h-4 text-gray-600 dark:text-gray-300" />
@@ -79,13 +79,13 @@ export default function Window({
               )}
             </button>
 
-            {/* Close Button */}
+            {/* Close Button - Larger touch target on mobile */}
             <button
               onClick={onClose}
-              className="p-1.5 hover:bg-red-100 dark:hover:bg-red-900 rounded"
-              title="Close"
+              className="p-2 sm:p-1.5 hover:bg-red-100 dark:hover:bg-red-900 rounded transition-colors touch-manipulation"
+              title="বন্ধ করুন"
             >
-              <X className="w-4 h-4 text-gray-600 dark:text-gray-300 hover:text-red-600" />
+              <X className="w-5 h-5 sm:w-4 sm:h-4 text-gray-600 dark:text-gray-300 hover:text-red-600" />
             </button>
           </div>
         </div>
