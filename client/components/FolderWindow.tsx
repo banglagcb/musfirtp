@@ -462,7 +462,7 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
                   backgroundSize: "400% 400%",
                 }}
                 animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  opacity: [0.8, 1, 0.8],
                 }}
                 transition={{
                   duration: 8,
