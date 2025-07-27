@@ -98,11 +98,12 @@ function TravelAgencyAppInner() {
     setBreadcrumbs([]);
   }, []);
 
-  const refreshData = () => {
+  // Memoized refresh handler
+  const refreshData = useCallback(() => {
     setIsLoading(true);
     setRefreshTrigger((prev) => prev + 1);
     setTimeout(() => setIsLoading(false), 500);
-  };
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
