@@ -169,7 +169,7 @@ export default function TravelDashboard({
     {
       id: "ticket-inventory",
       title: t("inventory"),
-      description: language === 'bn' ? "টিকেট স্���ক দেখুন ও ম্যানেজ করুন" : "View and manage ticket inventory",
+      description: language === 'bn' ? "টিকেট স্টক দেখুন ও ম্যানেজ করুন" : "View and manage ticket inventory",
       icon: Package,
       color: "from-indigo-500 to-purple-500",
       gradient: "bg-gradient-to-br from-indigo-500/20 to-purple-500/20",
