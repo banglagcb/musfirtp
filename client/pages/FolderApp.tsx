@@ -226,16 +226,15 @@ export default function FolderApp() {
       {/* Folder Windows */}
       <AnimatePresence>
         {openWindows.map((window) => (
-          <FolderWindow
+          <Modal
             key={window.id}
             title={window.title}
             isOpen={window.isOpen}
             onClose={() => closeWindow(window.id)}
-            initialState={window.state}
-            zIndex={window.zIndex}
+            size="lg"
           >
             {window.component}
-          </FolderWindow>
+          </Modal>
         ))}
       </AnimatePresence>
 
