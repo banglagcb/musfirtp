@@ -11,6 +11,9 @@ interface TravelLoginFormProps {
 }
 
 export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps) {
+  const { theme, toggleTheme, language, toggleLanguage, isMobile } = useApp();
+  const { t } = useTranslation();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -160,7 +163,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="ইউজারনেম"
+            placeholder="ইউজারন���ম"
             className={cn(
               "w-full pl-10 pr-12 py-4 bg-white/10 backdrop-blur-md border rounded-xl",
               "text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-all duration-300",
