@@ -13,16 +13,18 @@ import {
   MapPin,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AIRLINES, ROUTES } from "@shared/travel-types";
+import { AIRLINES, ROUTES, User } from "@shared/travel-types";
 import dataService from "@/services/dataService";
 import ticketInventoryService from "@/services/ticketInventoryService";
 
 interface NewBookingFormProps {
+  user: User;
   onClose: () => void;
   onSuccess: () => void;
 }
 
 export default function NewBookingForm({
+  user,
   onClose,
   onSuccess,
 }: NewBookingFormProps) {
@@ -120,7 +122,7 @@ export default function NewBookingForm({
     try {
       // Check if we have inventory for this route first
       const availableInventory =
-        ticketInventoryService.getAvailableTicketsForBooking("owner"); // Use 'owner' to see all
+        ticketInventoryService.getAvailableTicketsForBooking(user.role);
       const matchingInventory = availableInventory.find(
         (inv) =>
           inv.route === formData.route &&
@@ -130,7 +132,7 @@ export default function NewBookingForm({
 
       // Prevent booking if no inventory available
       if (!matchingInventory) {
-        alert(`${formData.route} রুটের ${formData.airline} এয়ারলাইনের টিকেট স্টকে ন���ই! প্রথমে টিকেট ক্রয় করুন।`);
+        alert(`${formData.route} রুটের ${formData.airline} এয়ারলা��নের টিকেট স্টকে ন���ই! প্রথমে টিকেট ক্রয় করুন।`);
         setIsSubmitting(false);
         return;
       }
