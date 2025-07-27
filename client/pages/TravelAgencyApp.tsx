@@ -132,7 +132,7 @@ export default function TravelAgencyApp() {
       "bookings-list": "বুকিং লিস্ট",
       "search-filter": "সার্চ ও ���িল্টার",
       reports: "রিপোর্ট",
-      "export-data": "ডেটা এক��সপোর্ট",
+      "export-data": "ডেট��� এক��সপোর্ট",
       settings: "সেটিংস",
     };
 
@@ -293,14 +293,14 @@ export default function TravelAgencyApp() {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       {/* Simple Header */}
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 lg:px-6 py-3 lg:py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 dark:text-white">
               এয়ার মুসাফির টিকেট ম্যানেজমেন্ট সিস্টেম
             </h1>
             {user && (
-              <span className="text-sm text-gray-600 dark:text-gray-300">
-                স্ব�����তম, {user.name}
+              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                স্বাগতম, {user.name}
               </span>
             )}
           </div>
