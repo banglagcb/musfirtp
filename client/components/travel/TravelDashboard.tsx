@@ -49,7 +49,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "new-booking",
     title: "নতুন বুকিং",
-    description: "নতুন ফ্লাইট বুকিং যোগ করুন",
+    description: "নতুন ফ্লাইট বুকিং যোগ কর��ন",
     icon: PlusCircle,
     color: "from-neon-green to-neon-blue",
     gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
@@ -105,7 +105,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "settings",
     title: "সেটিংস",
-    description: "সিস্টেম সেটিংস ও ক���ফিগারেশন",
+    description: "সিস্টেম সেটিংস ও কনফিগারেশন",
     icon: Calendar,
     color: "from-red-500 to-pink-500",
     gradient: "bg-gradient-to-br from-red-500/20 to-pink-500/20",
@@ -385,7 +385,7 @@ export default function TravelDashboard({
                 "text-sm transition-colors",
                 theme === 'dark' ? "text-white/70" : "text-gray-600"
               )}>
-                {language === 'bn' ? 'পেইড বুকিং' : 'Paid Bookings'}
+                {language === 'bn' ? 'পেইড ���ুকিং' : 'Paid Bookings'}
               </p>
               <p className={cn(
                 "text-2xl font-bold transition-colors",
@@ -463,16 +463,8 @@ export default function TravelDashboard({
             <motion.div
               key={card.id}
               variants={cardVariants}
-              whileHover={{
-                scale: 1.08,
-                y: -10,
-                transition: {
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 25,
-                },
-              }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={cardHover}
+              whileTap={cardTap}
               onClick={() => handleCardClick(card.id)}
               className={cn(
                 "relative group cursor-pointer rounded-2xl p-6 border transition-all duration-300 overflow-hidden",
