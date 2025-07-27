@@ -97,7 +97,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           transition={{ delay: 0.6 }}
           className="text-white/70"
         >
-          ড্যাশবোর্ডে নিয়ে যাওয়া ���চ্ছে...
+          ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...
         </motion.p>
       </motion.div>
     );
