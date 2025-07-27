@@ -12,6 +12,8 @@ import {
   AlertCircle,
   PlusCircle,
   Search,
+  Package,
+  ShoppingCart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -52,14 +54,14 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "search-filter",
     title: "সার্চ ও ফিল্টার",
-    description: "বুকিং খুঁজুন ও ফিল্টার করুন",
+    description: "���ুকিং খুঁজুন ও ফিল্টার করুন",
     icon: Search,
     color: "from-neon-purple to-neon-pink",
     gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20",
   },
   {
     id: "reports",
-    title: "রিপো��্ট",
+    title: "রিপোর্ট",
     description: "বিক্রয় ও মুনাফার রিপোর্ট দেখুন",
     icon: TrendingUp,
     color: "from-orange-500 to-red-500",
@@ -72,6 +74,22 @@ const dashboardCards: DashboardCard[] = [
     icon: DollarSign,
     color: "from-green-500 to-teal-500",
     gradient: "bg-gradient-to-br from-green-500/20 to-teal-500/20",
+  },
+  {
+    id: "ticket-inventory",
+    title: "টিকেট ইনভেন্টরি",
+    description: "টিকেট স্টক দেখুন ও ম্যানেজ করুন",
+    icon: Package,
+    color: "from-indigo-500 to-purple-500",
+    gradient: "bg-gradient-to-br from-indigo-500/20 to-purple-500/20",
+  },
+  {
+    id: "bulk-purchase",
+    title: "বাল্ক টিকেট ক্রয়",
+    description: "অগ্রিম টিকেট ক্রয় করুন",
+    icon: ShoppingCart,
+    color: "from-emerald-500 to-teal-500",
+    gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
   },
   {
     id: "settings",
