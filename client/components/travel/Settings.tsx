@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Settings as SettingsIcon,
@@ -13,6 +13,25 @@ import {
   CheckCircle,
   X,
   RefreshCw,
+  Eye,
+  EyeOff,
+  Key,
+  Lock,
+  Palette,
+  Globe,
+  Clock,
+  Mail,
+  Phone,
+  MapPin,
+  Building,
+  CreditCard,
+  FileText,
+  Printer,
+  Bell,
+  Archive,
+  HardDrive,
+  Calendar,
+  Languages,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +44,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import dataService from "@/services/dataService";
 import { cn } from "@/lib/utils";
@@ -37,24 +57,71 @@ export default function Settings({ onClose }: SettingsProps) {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("general");
   const [settings, setSettings] = useState({
+    // General Settings
+    currency: "BDT",
+    dateFormat: "DD/MM/YYYY",
+    timeFormat: "12",
+    language: "bn",
+    notifications: true,
+    autoBackup: false,
+    darkMode: true,
+    soundEffects: true,
+    autoSave: true,
+
+    // Company Information
     companyName: "এয়ার মুসাফির টিকেট ম্যানেজমেন্ট সিস্টেম",
     companyAddress: "ঢাকা, বাংলাদেশ",
     companyPhone: "01XXXXXXXXX",
     companyEmail: "info@airmusafir.com",
-    currency: "BDT",
-    dateFormat: "DD/MM/YYYY",
-    notifications: true,
-    autoBackup: false,
-    darkMode: true,
+    companyWebsite: "www.airmusafir.com",
+    companyLogo: "",
+    tradeLicense: "",
+    taxNumber: "",
+
+    // Security Settings
+    sessionTimeout: "30",
+    passwordExpiry: "90",
+    twoFactorAuth: false,
+    loginAttempts: "5",
+
+    // Printing & Export
+    defaultPrintFormat: "A4",
+    includeCompanyLogo: true,
+    watermark: false,
+
+    // System Settings
+    dataRetention: "365",
+    backupFrequency: "weekly",
+    emailNotifications: true,
+    smsNotifications: false,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const tabs = [
     { id: "general", label: "সাধারণ", icon: SettingsIcon },
-    { id: "company", label: "কোম্পানি তথ্য", icon: User },
+    { id: "company", label: "কোম্পানি তথ্য", icon: Building },
     { id: "security", label: "নিরাপত্তা", icon: Shield },
+    { id: "printing", label: "প্রিন্টিং ও এক্সপোর্ট", icon: Printer },
+    { id: "notifications", label: "নোটিফিকেশন", icon: Bell },
     { id: "data", label: "ডেটা ম্যানেজমেন্ট", icon: Database },
   ];
+
+  // Load settings from localStorage on component mount
+  useEffect(() => {
+    const savedSettings = localStorage.getItem("app_settings");
+    if (savedSettings) {
+      try {
+        const parsed = JSON.parse(savedSettings);
+        setSettings((prev) => ({ ...prev, ...parsed }));
+      } catch (error) {
+        console.error("Failed to load settings:", error);
+      }
+    }
+  }, []);
 
   const handleSettingChange = (key: string, value: any) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
@@ -65,6 +132,13 @@ export default function Settings({ onClose }: SettingsProps) {
     try {
       // Save settings to localStorage
       localStorage.setItem("app_settings", JSON.stringify(settings));
+
+      // Apply dark mode setting immediately
+      if (settings.darkMode) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
 
       toast({
         title: "সফল!",
@@ -78,6 +152,52 @@ export default function Settings({ onClose }: SettingsProps) {
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handlePasswordChange = async () => {
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: "ত্রুটি!",
+        description: "নতুন পাসওয়ার্ড ও নিশ্চিতকরণ পাসওয়ার্ড মিলছে না",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      toast({
+        title: "ত্রুটি!",
+        description: "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // In a real app, this would be an API call
+      localStorage.setItem("user_password", newPassword);
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+
+      toast({
+        title: "সফল!",
+        description: "পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে",
+      });
+    } catch (error) {
+      toast({
+        title: "ত্রুটি!",
+        description: "পাসওয়ার্ড পরিবর্তনে সমস্যা হয়েছে",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleResetSettings = () => {
+    if (confirm("আপন��� কি নিশ্চিত যে সব সেটিংস রিসেট করতে চান?")) {
+      localStorage.removeItem("app_settings");
+      window.location.reload();
     }
   };
 
