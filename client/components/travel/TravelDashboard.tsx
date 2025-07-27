@@ -160,7 +160,7 @@ export default function TravelDashboard({
     },
     {
       id: "export-data",
-      title: language === 'bn' ? "ডেটা এক্সপো���্ট" : "Data Export",
+      title: language === 'bn' ? "ডেটা এক্সপোর্ট" : "Data Export",
       description: language === 'bn' ? "CSV/Excel ফাইলে ডাউনলোড করুন" : "Download as CSV/Excel files",
       icon: DollarSign,
       color: "from-green-500 to-teal-500",
@@ -169,7 +169,7 @@ export default function TravelDashboard({
     {
       id: "ticket-inventory",
       title: t("inventory"),
-      description: language === 'bn' ? "টিকেট স্টক দেখুন ও ম্যানেজ করুন" : "View and manage ticket inventory",
+      description: language === 'bn' ? "টিকেট স্���ক দেখুন ও ম্যানেজ করুন" : "View and manage ticket inventory",
       icon: Package,
       color: "from-indigo-500 to-purple-500",
       gradient: "bg-gradient-to-br from-indigo-500/20 to-purple-500/20",
@@ -230,8 +230,9 @@ export default function TravelDashboard({
   return (
     <div className={cn(
       "min-h-screen p-6 transition-colors duration-300",
-      "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 dark:from-slate-900 dark:via-purple-900 dark:to-slate-900",
-      "light:from-blue-50 light:via-indigo-50 light:to-purple-50"
+      theme === 'dark'
+        ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+        : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
     )}>
       {/* Header */}
       <motion.div
