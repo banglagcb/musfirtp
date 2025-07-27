@@ -8,6 +8,7 @@ import {
   RefreshCw,
   Menu,
   X,
+  Activity,
 } from 'lucide-react';
 import { useApp, useTranslation } from '@/contexts/AppContext';
 import { User } from '@shared/travel-types';
