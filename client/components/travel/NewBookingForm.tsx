@@ -48,7 +48,7 @@ const airlines = [
   "���াই এয়ারওয়েজ",
   "তুর্কিশ এয়ারলাইনস",
   "এয়ার এশিয়া",
-  "নোভ��� এয়ার",
+  "নোভো এয়ার",
   "ইউএস-বাংলা এয়ারলাই���স",
 ];
 
@@ -61,6 +61,7 @@ const paymentStatuses = [
 export default function NewBookingForm({
   onClose,
   onSuccess,
+  editBooking,
 }: NewBookingFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
