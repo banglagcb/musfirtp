@@ -67,7 +67,7 @@ export default function Settings({ onClose }: SettingsProps) {
     darkMode: true,
     soundEffects: true,
     autoSave: true,
-    
+
     // Company Information
     companyName: "এয়ার মুসাফির টিকেট ম্যানেজমেন্ট সিস্টেম",
     companyAddress: "ঢাকা, বাংলাদেশ",
@@ -77,18 +77,18 @@ export default function Settings({ onClose }: SettingsProps) {
     companyLogo: "",
     tradeLicense: "",
     taxNumber: "",
-    
+
     // Security Settings
     sessionTimeout: "30",
     passwordExpiry: "90",
     twoFactorAuth: false,
     loginAttempts: "5",
-    
+
     // Printing & Export
     defaultPrintFormat: "A4",
     includeCompanyLogo: true,
     watermark: false,
-    
+
     // System Settings
     dataRetention: "365",
     backupFrequency: "weekly",
@@ -132,12 +132,12 @@ export default function Settings({ onClose }: SettingsProps) {
     try {
       // Save settings to localStorage
       localStorage.setItem("app_settings", JSON.stringify(settings));
-      
+
       // Apply dark mode setting immediately
       if (settings.darkMode) {
-        document.documentElement.classList.add('dark');
+        document.documentElement.classList.add("dark");
       } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.remove("dark");
       }
 
       toast({
@@ -164,7 +164,7 @@ export default function Settings({ onClose }: SettingsProps) {
       });
       return;
     }
-    
+
     if (newPassword.length < 6) {
       toast({
         title: "ত্রুটি!",
@@ -180,7 +180,7 @@ export default function Settings({ onClose }: SettingsProps) {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      
+
       toast({
         title: "সফল!",
         description: "পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে",
@@ -384,7 +384,7 @@ export default function Settings({ onClose }: SettingsProps) {
                   <Palette className="w-4 h-4" />
                   <span>ইন্টারফেস সেটিংস</span>
                 </h4>
-                
+
                 <div className="flex items-center justify-between">
                   <Label>ডার্ক মোড</Label>
                   <Switch
@@ -563,7 +563,7 @@ export default function Settings({ onClose }: SettingsProps) {
                       </Button>
                     </div>
                   </div>
-                  
+
                   <div>
                     <Label>নতুন পাসওয়ার্ড</Label>
                     <Input
@@ -572,7 +572,7 @@ export default function Settings({ onClose }: SettingsProps) {
                       onChange={(e) => setNewPassword(e.target.value)}
                     />
                   </div>
-                  
+
                   <div>
                     <Label>নিশ্চিতকরণ পাসওয়ার্ড</Label>
                     <Input
@@ -581,7 +581,7 @@ export default function Settings({ onClose }: SettingsProps) {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                   </div>
-                  
+
                   <Button onClick={handlePasswordChange} className="w-full">
                     <Lock className="w-4 h-4 mr-2" />
                     পাসওয়ার্ড পরিবর্তন করুন
@@ -656,7 +656,7 @@ export default function Settings({ onClose }: SettingsProps) {
                 <Printer className="w-4 h-4" />
                 <span>প্রিন্টিং সেটিংস</span>
               </h4>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label>ডিফল্ট প্রিন্ট ফরম্যাট</Label>
@@ -712,12 +712,14 @@ export default function Settings({ onClose }: SettingsProps) {
                 <Bell className="w-4 h-4" />
                 <span>নোটিফিকেশন সেটিংস</span>
               </h4>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <Label>সিস্টেম নোটিফিকেশন</Label>
-                    <p className="text-sm text-gray-500">সাধারণ সিস্টেম আপডেট ও সতর্কতা</p>
+                    <p className="text-sm text-gray-500">
+                      সাধারণ সিস্টেম আপডেট ও সতর্কতা
+                    </p>
                   </div>
                   <Switch
                     checked={settings.notifications}
@@ -730,7 +732,9 @@ export default function Settings({ onClose }: SettingsProps) {
                 <div className="flex items-center justify-between">
                   <div>
                     <Label>ইমেইল নোটিফিকেশন</Label>
-                    <p className="text-sm text-gray-500">গুরুত্বপূর্ণ আপডেটের জন্য ইমেইল</p>
+                    <p className="text-sm text-gray-500">
+                      গুরুত্বপূর্ণ আপডেটের জন্য ইমেইল
+                    </p>
                   </div>
                   <Switch
                     checked={settings.emailNotifications}
@@ -743,7 +747,9 @@ export default function Settings({ onClose }: SettingsProps) {
                 <div className="flex items-center justify-between">
                   <div>
                     <Label>SMS নোটিফিকেশন</Label>
-                    <p className="text-sm text-gray-500">জরুরি সতর্কতার জন্য SMS</p>
+                    <p className="text-sm text-gray-500">
+                      জরুরি সতর্কতার জন্য SMS
+                    </p>
                   </div>
                   <Switch
                     checked={settings.smsNotifications}
@@ -756,7 +762,9 @@ export default function Settings({ onClose }: SettingsProps) {
                 <div className="flex items-center justify-between">
                   <div>
                     <Label>অটো ব্যাকআপ</Label>
-                    <p className="text-sm text-gray-500">স্বয়ংক্রিয় ডেটা ব্যাকআপ</p>
+                    <p className="text-sm text-gray-500">
+                      স্বয়ংক্রিয় ডেটা ব্যাকআপ
+                    </p>
                   </div>
                   <Switch
                     checked={settings.autoBackup}
@@ -876,7 +884,7 @@ export default function Settings({ onClose }: SettingsProps) {
                     <Trash2 className="w-4 h-4 mr-2" />
                     সব ডেটা মুছে ফেলুন
                   </Button>
-                  
+
                   <Button
                     variant="outline"
                     onClick={handleResetSettings}
