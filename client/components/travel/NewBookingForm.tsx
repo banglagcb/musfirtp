@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  User,
+  User as UserIcon,
   Phone,
   Mail,
   CreditCard,
@@ -105,7 +105,7 @@ export default function NewBookingForm({
         newErrors.paidAmount = "পেইড পরিম���ণ আবশ্যিক";
       } else if (paidAmount <= 0 || paidAmount >= salePrice) {
         newErrors.paidAmount =
-          "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে";
+          "পেইড পরিমাণ ০ এর ���েয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে";
       }
     }
 
