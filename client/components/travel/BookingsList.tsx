@@ -18,15 +18,16 @@ import {
   Eye
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Booking, FilterOptions, AIRLINES } from "@shared/travel-types";
+import { Booking, FilterOptions, AIRLINES, User } from "@shared/travel-types";
 import dataService from "@/services/dataService";
 
 interface BookingsListProps {
+  user: User;
   onClose: () => void;
   onEdit: (booking: Booking) => void;
 }
 
-export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
+export default function BookingsList({ user, onClose, onEdit }: BookingsListProps) {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [filteredBookings, setFilteredBookings] = useState<Booking[]>([]);
   const [showFilters, setShowFilters] = useState(false);
@@ -73,6 +74,11 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
   };
 
   const handleDelete = async (id: string) => {
+    // Only owners can delete bookings
+    if (user.role !== "owner") {
+      alert("কেবল মালিক বুকিং মুছতে পারেন");
+      return;
+    }
     if (window.confirm("আপনি কি এই বুকিংটি মুছে ফেলতে চান?")) {
       const success = dataService.deleteBooking(id);
       if (success) {
@@ -289,22 +295,27 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
                   >
                     <Eye className="w-4 h-4" />
                   </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => onEdit(booking)}
-                    className="p-2 bg-yellow-500/20 border border-yellow-400/50 rounded-lg text-yellow-200 hover:bg-yellow-500/30 transition-colors"
-                  >
-                    <Edit3 className="w-4 h-4" />
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => handleDelete(booking.id)}
-                    className="p-2 bg-red-500/20 border border-red-400/50 rounded-lg text-red-200 hover:bg-red-500/30 transition-colors"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </motion.button>
+                  {/* Only show edit/delete for owners OR if booking is not fully paid */}
+                  {(user.role === "owner" || booking.paymentStatus !== "paid") && (
+                    <>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => onEdit(booking)}
+                        className="p-2 bg-yellow-500/20 border border-yellow-400/50 rounded-lg text-yellow-200 hover:bg-yellow-500/30 transition-colors"
+                      >
+                        <Edit3 className="w-4 h-4" />
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => handleDelete(booking.id)}
+                        className="p-2 bg-red-500/20 border border-red-400/50 rounded-lg text-red-200 hover:bg-red-500/30 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </motion.button>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -372,7 +383,7 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
             className="text-center py-12"
           >
             <p className="text-white/70 text-lg">কোনো বুকিং পাওয়া যায়নি</p>
-            <p className="text-white/50 text-sm mt-2">ফিল��টার পরিবর্তন করে আবার চেষ্টা করুন</p>
+            <p className="text-white/50 text-sm mt-2">ফিল����টার পরিবর্তন করে আবার চেষ্টা করুন</p>
           </motion.div>
         )}
 
@@ -419,7 +430,7 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
 
                   {/* Flight Details */}
                   <div>
-                    <h3 className="text-lg font-semibold text-white mb-3">ফ্লাইট তথ্য</h3>
+                    <h3 className="text-lg font-semibold text-white mb-3">ফ্লাইট ��থ্য</h3>
                     <div className="space-y-2">
                       <p className="text-white/70"><span className="text-white">রুট:</span> {selectedBooking.route}</p>
                       <p className="text-white/70"><span className="text-white">এয়ারলাইন:</span> {selectedBooking.airline}</p>
