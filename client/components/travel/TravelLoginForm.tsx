@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, EyeOff, User, Lock, CheckCircle, XCircle, Loader2, Plane } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  User,
+  Lock,
+  CheckCircle,
+  XCircle,
+  Loader2,
+  Plane,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import dataService from "@/services/dataService";
 import { User as UserType } from "@shared/travel-types";
@@ -9,7 +18,9 @@ interface TravelLoginFormProps {
   onLoginSuccess: (user: UserType) => void;
 }
 
-export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps) {
+export default function TravelLoginForm({
+  onLoginSuccess,
+}: TravelLoginFormProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -43,16 +54,16 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
 
     setIsLoading(true);
     setError("");
-    
+
     // Simulate login API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     const user = dataService.validateUser(username, password);
-    
+
     if (user) {
       setIsLoading(false);
       setIsSuccess(true);
-      
+
       // Trigger success animation then transition to dashboard
       setTimeout(() => {
         onLoginSuccess(user);
@@ -116,7 +127,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         >
           <Plane className="w-10 h-10 text-white" />
         </motion.div>
-        
+
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -163,9 +174,11 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             className={cn(
               "w-full pl-10 pr-12 py-4 bg-white/10 backdrop-blur-md border rounded-xl",
               "text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-all duration-300",
-              usernameValid === null && "border-white/20 focus:ring-folder-primary/50",
-              usernameValid === true && "border-neon-green focus:ring-neon-green/50",
-              usernameValid === false && "border-red-400 focus:ring-red-400/50"
+              usernameValid === null &&
+                "border-white/20 focus:ring-folder-primary/50",
+              usernameValid === true &&
+                "border-neon-green focus:ring-neon-green/50",
+              usernameValid === false && "border-red-400 focus:ring-red-400/50",
             )}
           />
           <AnimatePresence>
@@ -199,9 +212,11 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             className={cn(
               "w-full pl-10 pr-20 py-4 bg-white/10 backdrop-blur-md border rounded-xl",
               "text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-all duration-300",
-              passwordValid === null && "border-white/20 focus:ring-folder-primary/50",
-              passwordValid === true && "border-neon-green focus:ring-neon-green/50",
-              passwordValid === false && "border-red-400 focus:ring-red-400/50"
+              passwordValid === null &&
+                "border-white/20 focus:ring-folder-primary/50",
+              passwordValid === true &&
+                "border-neon-green focus:ring-neon-green/50",
+              passwordValid === false && "border-red-400 focus:ring-red-400/50",
             )}
           />
           <div className="absolute inset-y-0 right-0 pr-3 flex items-center space-x-2">
@@ -263,7 +278,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
             usernameValid && passwordValid
               ? "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg"
-              : "bg-gray-400 cursor-not-allowed"
+              : "bg-gray-400 cursor-not-allowed",
           )}
         >
           {isLoading ? (
@@ -287,10 +302,14 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         <p className="text-sm text-white/60 mb-2">ডেমো লগইন তথ্য:</p>
         <div className="grid grid-cols-1 gap-2">
           <div>
-            <p className="text-sm text-white/80"><strong>মালিক:</strong> admin / admin123</p>
+            <p className="text-sm text-white/80">
+              <strong>মালিক:</strong> admin / admin123
+            </p>
           </div>
           <div>
-            <p className="text-sm text-white/80"><strong>ম্যানেজার:</strong> manager / manager123</p>
+            <p className="text-sm text-white/80">
+              <strong>ম্যানেজার:</strong> manager / manager123
+            </p>
           </div>
         </div>
       </motion.div>

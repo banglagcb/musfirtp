@@ -17,7 +17,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import dataService from "@/services/dataService";
@@ -51,7 +57,7 @@ export default function Settings({ onClose }: SettingsProps) {
   ];
 
   const handleSettingChange = (key: string, value: any) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
+    setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSave = async () => {
@@ -59,7 +65,7 @@ export default function Settings({ onClose }: SettingsProps) {
     try {
       // Save settings to localStorage
       localStorage.setItem("app_settings", JSON.stringify(settings));
-      
+
       toast({
         title: "সফল!",
         description: "সেটিংস সফলভাবে সংরক্ষিত হয়েছে",
@@ -84,7 +90,7 @@ export default function Settings({ onClose }: SettingsProps) {
       const url = URL.createObjectURL(dataBlob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `air_musafir_backup_${new Date().toISOString().split('T')[0]}.json`;
+      link.download = `air_musafir_backup_${new Date().toISOString().split("T")[0]}.json`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -114,10 +120,10 @@ export default function Settings({ onClose }: SettingsProps) {
         if (Array.isArray(importedData)) {
           // Clear existing data and import new data
           localStorage.removeItem("travel_bookings");
-          importedData.forEach(booking => {
+          importedData.forEach((booking) => {
             dataService.addBooking(booking);
           });
-          
+
           toast({
             title: "সফল!",
             description: `${importedData.length}টি বুকিং সফলভাবে ইমপোর্ট করা হয়েছে`,
@@ -137,7 +143,11 @@ export default function Settings({ onClose }: SettingsProps) {
   };
 
   const handleClearData = () => {
-    if (confirm("আপনি কি নিশ্চিত যে সব ডেটা মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।")) {
+    if (
+      confirm(
+        "আপনি কি নিশ্চিত যে সব ডেটা মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।",
+      )
+    ) {
       try {
         localStorage.removeItem("travel_bookings");
         toast({
@@ -162,7 +172,12 @@ export default function Settings({ onClose }: SettingsProps) {
             <div className="space-y-4">
               <div>
                 <Label>মুদ্রা</Label>
-                <Select value={settings.currency} onValueChange={(value) => handleSettingChange("currency", value)}>
+                <Select
+                  value={settings.currency}
+                  onValueChange={(value) =>
+                    handleSettingChange("currency", value)
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -176,7 +191,12 @@ export default function Settings({ onClose }: SettingsProps) {
 
               <div>
                 <Label>তারিখ ফরম্যাট</Label>
-                <Select value={settings.dateFormat} onValueChange={(value) => handleSettingChange("dateFormat", value)}>
+                <Select
+                  value={settings.dateFormat}
+                  onValueChange={(value) =>
+                    handleSettingChange("dateFormat", value)
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -192,7 +212,9 @@ export default function Settings({ onClose }: SettingsProps) {
                 <Label>নোটিফিকেশন</Label>
                 <Switch
                   checked={settings.notifications}
-                  onCheckedChange={(checked) => handleSettingChange("notifications", checked)}
+                  onCheckedChange={(checked) =>
+                    handleSettingChange("notifications", checked)
+                  }
                 />
               </div>
 
@@ -200,7 +222,9 @@ export default function Settings({ onClose }: SettingsProps) {
                 <Label>অটো ব্যাকআপ</Label>
                 <Switch
                   checked={settings.autoBackup}
-                  onCheckedChange={(checked) => handleSettingChange("autoBackup", checked)}
+                  onCheckedChange={(checked) =>
+                    handleSettingChange("autoBackup", checked)
+                  }
                 />
               </div>
 
@@ -208,7 +232,9 @@ export default function Settings({ onClose }: SettingsProps) {
                 <Label>ডার্ক মোড</Label>
                 <Switch
                   checked={settings.darkMode}
-                  onCheckedChange={(checked) => handleSettingChange("darkMode", checked)}
+                  onCheckedChange={(checked) =>
+                    handleSettingChange("darkMode", checked)
+                  }
                 />
               </div>
             </div>
@@ -222,7 +248,9 @@ export default function Settings({ onClose }: SettingsProps) {
               <Label>কোম্পানির নাম</Label>
               <Input
                 value={settings.companyName}
-                onChange={(e) => handleSettingChange("companyName", e.target.value)}
+                onChange={(e) =>
+                  handleSettingChange("companyName", e.target.value)
+                }
               />
             </div>
 
@@ -230,7 +258,9 @@ export default function Settings({ onClose }: SettingsProps) {
               <Label>ঠিকানা</Label>
               <Input
                 value={settings.companyAddress}
-                onChange={(e) => handleSettingChange("companyAddress", e.target.value)}
+                onChange={(e) =>
+                  handleSettingChange("companyAddress", e.target.value)
+                }
               />
             </div>
 
@@ -238,7 +268,9 @@ export default function Settings({ onClose }: SettingsProps) {
               <Label>ফ���ন নম্বর</Label>
               <Input
                 value={settings.companyPhone}
-                onChange={(e) => handleSettingChange("companyPhone", e.target.value)}
+                onChange={(e) =>
+                  handleSettingChange("companyPhone", e.target.value)
+                }
               />
             </div>
 
@@ -247,7 +279,9 @@ export default function Settings({ onClose }: SettingsProps) {
               <Input
                 type="email"
                 value={settings.companyEmail}
-                onChange={(e) => handleSettingChange("companyEmail", e.target.value)}
+                onChange={(e) =>
+                  handleSettingChange("companyEmail", e.target.value)
+                }
               />
             </div>
           </div>
@@ -259,10 +293,13 @@ export default function Settings({ onClose }: SettingsProps) {
             <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
               <div className="flex items-center space-x-2">
                 <AlertTriangle className="w-5 h-5 text-yellow-600" />
-                <h4 className="font-medium text-yellow-800 dark:text-yellow-200">নিরাপত্তা সতর্কতা</h4>
+                <h4 className="font-medium text-yellow-800 dark:text-yellow-200">
+                  নিরাপত্তা সতর্কতা
+                </h4>
               </div>
               <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-2">
-                আপনার ডেটার নিরাপত্তার জন্য নিয়মিত ব্যাকআপ নিন এবং শক্তিশালী পাসওয়ার্ড ব্যবহার করুন।
+                আপনার ডেটার নিরাপত্তার জন্য নিয়মিত ব্যাকআপ নিন এবং শক্তিশালী
+                পাসওয়ার্ড ব্যবহার করুন।
               </p>
             </div>
 
@@ -286,7 +323,10 @@ export default function Settings({ onClose }: SettingsProps) {
             <div className="space-y-4">
               <div>
                 <h4 className="font-medium mb-2">ডেটা ব্যাকআপ</h4>
-                <Button onClick={handleExportData} className="w-full justify-start">
+                <Button
+                  onClick={handleExportData}
+                  className="w-full justify-start"
+                >
                   <Download className="w-4 h-4 mr-2" />
                   সব ডেটা এক্সপোর্ট করুন
                 </Button>
@@ -303,7 +343,9 @@ export default function Settings({ onClose }: SettingsProps) {
                 />
                 <Button
                   variant="outline"
-                  onClick={() => document.getElementById('import-file')?.click()}
+                  onClick={() =>
+                    document.getElementById("import-file")?.click()
+                  }
                   className="w-full justify-start"
                 >
                   <Upload className="w-4 h-4 mr-2" />
@@ -340,7 +382,9 @@ export default function Settings({ onClose }: SettingsProps) {
             <SettingsIcon className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">সেটিংস</h2>
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+              সেটিংস
+            </h2>
             <p className="text-gray-600 dark:text-gray-300">
               সিস্টেম কনফিগারেশন ও পছন্দসমূহ
             </p>
@@ -366,7 +410,7 @@ export default function Settings({ onClose }: SettingsProps) {
                     "w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors",
                     activeTab === tab.id
                       ? "bg-blue-500 text-white"
-                      : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
                   )}
                 >
                   <tab.icon className="w-5 h-5" />
