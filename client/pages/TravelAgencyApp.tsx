@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, LogOut, RefreshCw } from "lucide-react";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
 import Modal from "@/components/Modal";
@@ -14,6 +13,8 @@ import SettingsPage from "@/components/travel/SettingsPage";
 import BulkTicketPurchaseForm from "@/components/travel/BulkTicketPurchaseForm";
 import TicketInventoryDashboard from "@/components/travel/TicketInventoryDashboard";
 import PlaceholderPage from "@/components/PlaceholderPage";
+import AppHeader from "@/components/layout/AppHeader";
+import { AppProvider, useApp, useTranslation } from "@/contexts/AppContext";
 import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
 import dataService from "@/services/dataService";
@@ -52,7 +53,7 @@ export default function TravelAgencyApp() {
           setUser(validUser);
           setAppState("dashboard");
           setBreadcrumbs([
-            { label: "ড্যাশ��োর্ড", path: "/dashboard", isActive: true },
+            { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
           ]);
         } else {
           localStorage.removeItem("air_musafir_user");
