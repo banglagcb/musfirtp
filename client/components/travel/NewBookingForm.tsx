@@ -42,7 +42,7 @@ const airlines = [
   "এমিরেটস",
   "সিঙ্���াপুর এয়ারলাইনস",
   "কাতার এয়ারওয়েজ",
-  "ফ্লাইদুবাই",
+  "ফ্ল���ইদুবাই",
   "ইন্ডিগো",
   "মালয়েশিয়া এয়ারলাইনস",
   "���াই এয়ারওয়েজ",
@@ -297,6 +297,16 @@ export default function NewBookingForm({
     if (errors[key]) {
       setErrors((prev) => ({ ...prev, [key]: "" }));
     }
+  };
+
+  const applyQuickTemplate = (template: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      route: template.route,
+      airline: template.airline,
+      costPrice: template.costPrice,
+      sellingPrice: template.sellingPrice,
+    }));
   };
 
   const handleSubmit = async () => {
@@ -592,7 +602,7 @@ export default function NewBookingForm({
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    মুনাফার হার
+                    মুনাফার হা���
                   </p>
                   <p
                     className={cn(
@@ -626,7 +636,7 @@ export default function NewBookingForm({
                 অতিরিক্ত মন্তব্য (ঐচ্ছিক)
               </Label>
               <Textarea
-                placeholder="বিশেষ কোনো তথ্য বা মন্তব্য..."
+                placeholder="বিশেষ ক��নো তথ্য বা মন্তব্য..."
                 value={formData.notes || ""}
                 onChange={(e) => handleInputChange("notes", e.target.value)}
                 className="bg-white/50 dark:bg-gray-700/50"
