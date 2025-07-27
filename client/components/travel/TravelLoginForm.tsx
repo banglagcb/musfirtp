@@ -63,7 +63,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
       }, 1000);
     } else {
       setIsLoading(false);
-      setError("ভুল ইউজারনেম বা ���াসওয়ার্ড");
+      setError("ভুল ইউজারনেম বা পাসওয়ার্ড");
     }
   };
 
@@ -174,7 +174,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             theme === 'dark' ? "text-white/90" : "text-gray-700"
           )}
         >
-          {language === 'bn' ? 'ট্রাভেল ম্যানেজমেন্ট সিস্টেম' : 'Travel Management System'}
+          {language === 'bn' ? 'ট্রাভেল ম্যানেজমে��্ট সিস্টেম' : 'Travel Management System'}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
@@ -278,7 +278,10 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="text-white/50 hover:text-white transition-colors"
+              className={cn(
+                "transition-colors",
+                theme === 'dark' ? "text-white/50 hover:text-white" : "text-gray-500 hover:text-gray-700"
+              )}
             >
               {showPassword ? (
                 <EyeOff className="h-5 w-5" />
