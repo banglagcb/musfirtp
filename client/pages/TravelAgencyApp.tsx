@@ -242,15 +242,26 @@ export default function TravelAgencyApp() {
         );
         break;
       case "bulk-purchase":
-        component = (
-          <BulkTicketPurchaseForm
-            onClose={() => closeModal(cardId)}
-            onSuccess={() => {
-              closeModal(cardId);
-              refreshData();
-            }}
-          />
-        );
+        // Only allow admin/owner to access bulk purchase
+        if (user?.role === "owner") {
+          component = (
+            <BulkTicketPurchaseForm
+              onClose={() => closeModal(cardId)}
+              onSuccess={() => {
+                closeModal(cardId);
+                refreshData();
+              }}
+            />
+          );
+        } else {
+          component = (
+            <PlaceholderPage
+              title="অ্যাক্সেস নিষিদ্ধ"
+              description="কেবল মালিক বাল্ক ট���কেট ক্রয় করতে পারেন"
+              onBack={() => closeModal(cardId)}
+            />
+          );
+        }
         break;
       case "settings":
         component = (
