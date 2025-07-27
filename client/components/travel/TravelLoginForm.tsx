@@ -59,7 +59,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
       }, 1000);
     } else {
       setIsLoading(false);
-      setError("ভুল ���উজারনেম বা পাসওয়ার্ড");
+      setError("ভুল ইউজারনেম বা পাসওয়ার্ড");
     }
   };
 
@@ -123,7 +123,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           transition={{ delay: 0.2 }}
           className="text-4xl font-bold text-white mb-2"
         >
-          ট্রাভেল এজেন্সি
+          Air-Musafir
         </motion.h1>
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
@@ -131,7 +131,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           transition={{ delay: 0.3 }}
           className="text-2xl font-semibold text-white/90 mb-2"
         >
-          ম্যানেজমেন্ট সিস্টেম
+          ট্রাভেল ম্যানেজমেন্ট সিস্টেম
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
