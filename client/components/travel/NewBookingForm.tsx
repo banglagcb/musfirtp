@@ -61,7 +61,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
     if (!formData.email.trim()) {
       newErrors.email = "ইমেইল আবশ্যিক";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "সঠিক ইমেইল ঠিকানা লিখুন";
+      newErrors.email = "সঠিক ই���েইল ঠিকানা লিখুন";
     }
 
     if (!formData.flightDate) {
@@ -94,7 +94,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
     if (formData.paymentStatus === 'partial') {
       const paidAmount = Number(formData.paidAmount);
       if (!formData.paidAmount || isNaN(paidAmount)) {
-        newErrors.paidAmount = "পেইড পরিমাণ আবশ্যিক";
+        newErrors.paidAmount = "পেইড পরিম���ণ আবশ্যিক";
       } else if (paidAmount <= 0 || paidAmount >= salePrice) {
         newErrors.paidAmount = "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে";
       }
@@ -117,11 +117,24 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      const paidAmount = formData.paymentStatus === 'paid' 
+      const paidAmount = formData.paymentStatus === 'paid'
         ? Number(formData.salePrice)
         : formData.paymentStatus === 'partial'
         ? Number(formData.paidAmount)
         : 0;
+
+      // Check if we have inventory for this route and deduct ticket
+      const availableInventory = ticketInventoryService.getAvailableTicketsForBooking('owner'); // Use 'owner' to see all
+      const matchingInventory = availableInventory.find(inv =>
+        inv.route === formData.route &&
+        inv.airline === formData.airline &&
+        inv.availableTickets > 0
+      );
+
+      // Deduct from inventory if available
+      if (matchingInventory) {
+        ticketInventoryService.sellTickets(matchingInventory.id, 1);
+      }
 
       dataService.addBooking({
         customerName: formData.customerName,
