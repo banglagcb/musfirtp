@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { 
-  ShoppingCart, 
-  Plane, 
-  MapPin, 
+import {
+  ShoppingCart,
+  Plane,
+  MapPin,
   DollarSign,
-  Calendar, 
+  Calendar,
   User,
   Package,
   Save,
-  X
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { BulkTicketPurchase, COUNTRIES, FLIGHT_CLASSES, SUPPLIERS } from "@shared/ticket-types";
+import {
+  BulkTicketPurchase,
+  COUNTRIES,
+  FLIGHT_CLASSES,
+  SUPPLIERS,
+} from "@shared/ticket-types";
 import { ROUTES } from "@shared/travel-types";
 import ticketInventoryService from "@/services/ticketInventoryService";
 
@@ -21,7 +26,10 @@ interface BulkTicketPurchaseFormProps {
   onSuccess: () => void;
 }
 
-export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicketPurchaseFormProps) {
+export default function BulkTicketPurchaseForm({
+  onClose,
+  onSuccess,
+}: BulkTicketPurchaseFormProps) {
   const [formData, setFormData] = useState<BulkTicketPurchase>({
     route: "",
     airline: "",
@@ -33,7 +41,7 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
     supplier: "",
     validFrom: "",
     validTo: "",
-    notes: ""
+    notes: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -67,7 +75,8 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
     }
 
     if (formData.suggestedSalePrice <= formData.purchasePrice) {
-      newErrors.suggestedSalePrice = "বিক্রয় মূল্য ক্রয় মূল্যের চেয়ে বেশি হতে হবে";
+      newErrors.suggestedSalePrice =
+        "বিক্রয় মূল্য ক্রয় মূল্যের চেয়ে বেশি হতে হবে";
     }
 
     if (!formData.supplier) {
@@ -82,7 +91,11 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
       newErrors.validTo = "বৈধতার শেষ তারিখ আবশ্যিক";
     }
 
-    if (formData.validFrom && formData.validTo && formData.validFrom >= formData.validTo) {
+    if (
+      formData.validFrom &&
+      formData.validTo &&
+      formData.validFrom >= formData.validTo
+    ) {
       newErrors.validTo = "শেষ তারিখ শুরুর তারিখের চেয়ে পরে হতে হবে";
     }
 
@@ -91,10 +104,10 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const newErrors = validateForm();
     setErrors(newErrors);
-    
+
     if (Object.keys(newErrors).length > 0) {
       return;
     }
@@ -103,10 +116,10 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
 
     try {
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       const inventoryId = ticketInventoryService.addBulkPurchase(formData);
-      
+
       if (inventoryId) {
         onSuccess();
       } else {
@@ -119,12 +132,15 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
     }
   };
 
-  const handleInputChange = (field: keyof BulkTicketPurchase, value: string | number) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    
+  const handleInputChange = (
+    field: keyof BulkTicketPurchase,
+    value: string | number,
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+
     // Clear error when user starts typing
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: "" }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
 
@@ -145,8 +161,12 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
             <ShoppingCart className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">বাল্ক টিকেট ক্রয়</h1>
-            <p className="text-gray-600 dark:text-gray-400">অগ্রিম টিকেট ক্রয় করুন</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              বাল্ক টিকেট ক্রয়
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400">
+              অগ্রিম টিকেট ক্রয় করুন
+            </p>
           </div>
         </div>
         <button
@@ -180,11 +200,13 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <select
                   value={formData.route}
-                  onChange={(e) => handleInputChange('route', e.target.value)}
+                  onChange={(e) => handleInputChange("route", e.target.value)}
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border rounded-xl text-gray-900 dark:text-white",
                     "focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all",
-                    errors.route ? "border-red-400" : "border-gray-300 dark:border-gray-600"
+                    errors.route
+                      ? "border-red-400"
+                      : "border-gray-300 dark:border-gray-600",
                   )}
                 >
                   <option value="">রুট নির্বাচন করুন</option>
@@ -207,11 +229,13 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
               </label>
               <select
                 value={formData.country}
-                onChange={(e) => handleInputChange('country', e.target.value)}
+                onChange={(e) => handleInputChange("country", e.target.value)}
                 className={cn(
                   "w-full px-4 py-3 bg-white dark:bg-gray-900 border rounded-xl text-gray-900 dark:text-white",
                   "focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all",
-                  errors.country ? "border-red-400" : "border-gray-300 dark:border-gray-600"
+                  errors.country
+                    ? "border-red-400"
+                    : "border-gray-300 dark:border-gray-600",
                 )}
               >
                 <option value="">দেশ নির্বাচন করুন</option>
@@ -233,11 +257,13 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
               </label>
               <select
                 value={formData.airline}
-                onChange={(e) => handleInputChange('airline', e.target.value)}
+                onChange={(e) => handleInputChange("airline", e.target.value)}
                 className={cn(
                   "w-full px-4 py-3 bg-white dark:bg-gray-900 border rounded-xl text-gray-900 dark:text-white",
                   "focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all",
-                  errors.airline ? "border-red-400" : "border-gray-300 dark:border-gray-600"
+                  errors.airline
+                    ? "border-red-400"
+                    : "border-gray-300 dark:border-gray-600",
                 )}
               >
                 <option value="">এয়ারলাইন নির্বাচন করুন</option>
@@ -259,7 +285,12 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
               </label>
               <select
                 value={formData.flightClass}
-                onChange={(e) => handleInputChange('flightClass', e.target.value as 'Economy' | 'Business' | 'First')}
+                onChange={(e) =>
+                  handleInputChange(
+                    "flightClass",
+                    e.target.value as "Economy" | "Business" | "First",
+                  )
+                }
                 className="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               >
                 {FLIGHT_CLASSES.map((cls) => (
@@ -293,12 +324,16 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
               <input
                 type="number"
                 value={formData.quantity}
-                onChange={(e) => handleInputChange('quantity', parseInt(e.target.value) || 0)}
+                onChange={(e) =>
+                  handleInputChange("quantity", parseInt(e.target.value) || 0)
+                }
                 min="1"
                 className={cn(
                   "w-full px-4 py-3 bg-white dark:bg-gray-900 border rounded-xl text-gray-900 dark:text-white",
                   "focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all",
-                  errors.quantity ? "border-red-400" : "border-gray-300 dark:border-gray-600"
+                  errors.quantity
+                    ? "border-red-400"
+                    : "border-gray-300 dark:border-gray-600",
                 )}
                 placeholder="১০"
               />
@@ -316,11 +351,15 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <select
                   value={formData.supplier}
-                  onChange={(e) => handleInputChange('supplier', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("supplier", e.target.value)
+                  }
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border rounded-xl text-gray-900 dark:text-white",
                     "focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all",
-                    errors.supplier ? "border-red-400" : "border-gray-300 dark:border-gray-600"
+                    errors.supplier
+                      ? "border-red-400"
+                      : "border-gray-300 dark:border-gray-600",
                   )}
                 >
                   <option value="">সাপ্লায়ার নির্বাচন করুন</option>
@@ -346,18 +385,27 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
                 <input
                   type="number"
                   value={formData.purchasePrice}
-                  onChange={(e) => handleInputChange('purchasePrice', parseFloat(e.target.value) || 0)}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "purchasePrice",
+                      parseFloat(e.target.value) || 0,
+                    )
+                  }
                   min="0"
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border rounded-xl text-gray-900 dark:text-white",
                     "focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all",
-                    errors.purchasePrice ? "border-red-400" : "border-gray-300 dark:border-gray-600"
+                    errors.purchasePrice
+                      ? "border-red-400"
+                      : "border-gray-300 dark:border-gray-600",
                   )}
                   placeholder="৪২০০০"
                 />
               </div>
               {errors.purchasePrice && (
-                <p className="mt-1 text-sm text-red-600">{errors.purchasePrice}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.purchasePrice}
+                </p>
               )}
             </div>
 
@@ -371,18 +419,27 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
                 <input
                   type="number"
                   value={formData.suggestedSalePrice}
-                  onChange={(e) => handleInputChange('suggestedSalePrice', parseFloat(e.target.value) || 0)}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "suggestedSalePrice",
+                      parseFloat(e.target.value) || 0,
+                    )
+                  }
                   min="0"
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border rounded-xl text-gray-900 dark:text-white",
                     "focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all",
-                    errors.suggestedSalePrice ? "border-red-400" : "border-gray-300 dark:border-gray-600"
+                    errors.suggestedSalePrice
+                      ? "border-red-400"
+                      : "border-gray-300 dark:border-gray-600",
                   )}
                   placeholder="৫০০০০"
                 />
               </div>
               {errors.suggestedSalePrice && (
-                <p className="mt-1 text-sm text-red-600">{errors.suggestedSalePrice}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.suggestedSalePrice}
+                </p>
               )}
             </div>
 
@@ -396,11 +453,15 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
                 <input
                   type="date"
                   value={formData.validFrom}
-                  onChange={(e) => handleInputChange('validFrom', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("validFrom", e.target.value)
+                  }
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border rounded-xl text-gray-900 dark:text-white",
                     "focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all",
-                    errors.validFrom ? "border-red-400" : "border-gray-300 dark:border-gray-600"
+                    errors.validFrom
+                      ? "border-red-400"
+                      : "border-gray-300 dark:border-gray-600",
                   )}
                 />
               </div>
@@ -419,11 +480,13 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
                 <input
                   type="date"
                   value={formData.validTo}
-                  onChange={(e) => handleInputChange('validTo', e.target.value)}
+                  onChange={(e) => handleInputChange("validTo", e.target.value)}
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white dark:bg-gray-900 border rounded-xl text-gray-900 dark:text-white",
                     "focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all",
-                    errors.validTo ? "border-red-400" : "border-gray-300 dark:border-gray-600"
+                    errors.validTo
+                      ? "border-red-400"
+                      : "border-gray-300 dark:border-gray-600",
                   )}
                 />
               </div>
@@ -435,30 +498,46 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
         </motion.div>
 
         {/* Financial Summary */}
-        {(formData.quantity > 0 && formData.purchasePrice > 0 && formData.suggestedSalePrice > 0) && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6 border border-blue-200 dark:border-blue-700"
-          >
-            <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-4">আর্থিক সারসংক্ষেপ</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">৳{totalCost.toLocaleString()}</p>
-                <p className="text-sm text-blue-700 dark:text-blue-300">মোট বিনিয়োগ</p>
+        {formData.quantity > 0 &&
+          formData.purchasePrice > 0 &&
+          formData.suggestedSalePrice > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6 border border-blue-200 dark:border-blue-700"
+            >
+              <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-4">
+                আর্থিক সারসংক্ষেপ
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                    ৳{totalCost.toLocaleString()}
+                  </p>
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    মোট বিনিয়োগ
+                  </p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                    ৳{potentialRevenue.toLocaleString()}
+                  </p>
+                  <p className="text-sm text-green-700 dark:text-green-300">
+                    সম্ভাব্য আয়
+                  </p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                    ৳{potentialProfit.toLocaleString()}
+                  </p>
+                  <p className="text-sm text-purple-700 dark:text-purple-300">
+                    সম্ভাব্য মুনাফা
+                  </p>
+                </div>
               </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-green-600 dark:text-green-400">৳{potentialRevenue.toLocaleString()}</p>
-                <p className="text-sm text-green-700 dark:text-green-300">সম্ভাব্য আয়</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">৳{potentialProfit.toLocaleString()}</p>
-                <p className="text-sm text-purple-700 dark:text-purple-300">সম্ভাব্য মুনাফা</p>
-              </div>
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
 
         {/* Notes */}
         <motion.div
@@ -472,7 +551,7 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
           </label>
           <textarea
             value={formData.notes}
-            onChange={(e) => handleInputChange('notes', e.target.value)}
+            onChange={(e) => handleInputChange("notes", e.target.value)}
             rows={3}
             className="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
             placeholder="অতিরিক্ত তথ্য বা মন্তব্য..."
@@ -486,7 +565,9 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
             animate={{ opacity: 1, y: 0 }}
             className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg"
           >
-            <p className="text-red-700 dark:text-red-400 text-sm text-center">{errors.submit}</p>
+            <p className="text-red-700 dark:text-red-400 text-sm text-center">
+              {errors.submit}
+            </p>
           </motion.div>
         )}
 
@@ -511,7 +592,7 @@ export default function BulkTicketPurchaseForm({ onClose, onSuccess }: BulkTicke
               "px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-xl font-medium",
               "hover:from-green-600 hover:to-blue-600 transition-all shadow-lg",
               "flex items-center space-x-2",
-              isSubmitting && "opacity-70 cursor-not-allowed"
+              isSubmitting && "opacity-70 cursor-not-allowed",
             )}
           >
             {isSubmitting ? (

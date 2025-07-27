@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { 
-  User, 
-  Phone, 
-  Mail, 
-  CreditCard, 
-  Calendar, 
-  Plane, 
+import {
+  User,
+  Phone,
+  Mail,
+  CreditCard,
+  Calendar,
+  Plane,
   DollarSign,
   Save,
   X,
-  MapPin
+  MapPin,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AIRLINES, ROUTES } from "@shared/travel-types";
@@ -22,7 +22,10 @@ interface NewBookingFormProps {
   onSuccess: () => void;
 }
 
-export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormProps) {
+export default function NewBookingForm({
+  onClose,
+  onSuccess,
+}: NewBookingFormProps) {
   const [formData, setFormData] = useState({
     customerName: "",
     mobile: "",
@@ -33,9 +36,9 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
     airline: "",
     purchasePrice: "",
     salePrice: "",
-    paymentStatus: "pending" as 'paid' | 'pending' | 'partial',
+    paymentStatus: "pending" as "paid" | "pending" | "partial",
     paidAmount: "",
-    notes: ""
+    notes: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -86,17 +89,18 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
 
     const purchasePrice = Number(formData.purchasePrice);
     const salePrice = Number(formData.salePrice);
-    
+
     if (salePrice <= purchasePrice) {
       newErrors.salePrice = "বিক্���য়মূল্য ক্রয়মূল্যের চেয়ে বেশি হতে হবে";
     }
 
-    if (formData.paymentStatus === 'partial') {
+    if (formData.paymentStatus === "partial") {
       const paidAmount = Number(formData.paidAmount);
       if (!formData.paidAmount || isNaN(paidAmount)) {
         newErrors.paidAmount = "পেইড পরিম���ণ আবশ্যিক";
       } else if (paidAmount <= 0 || paidAmount >= salePrice) {
-        newErrors.paidAmount = "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে";
+        newErrors.paidAmount =
+          "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে";
       }
     }
 
@@ -106,7 +110,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -115,20 +119,23 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
 
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const paidAmount = formData.paymentStatus === 'paid'
-        ? Number(formData.salePrice)
-        : formData.paymentStatus === 'partial'
-        ? Number(formData.paidAmount)
-        : 0;
+      const paidAmount =
+        formData.paymentStatus === "paid"
+          ? Number(formData.salePrice)
+          : formData.paymentStatus === "partial"
+            ? Number(formData.paidAmount)
+            : 0;
 
       // Check if we have inventory for this route and deduct ticket
-      const availableInventory = ticketInventoryService.getAvailableTicketsForBooking('owner'); // Use 'owner' to see all
-      const matchingInventory = availableInventory.find(inv =>
-        inv.route === formData.route &&
-        inv.airline === formData.airline &&
-        inv.availableTickets > 0
+      const availableInventory =
+        ticketInventoryService.getAvailableTicketsForBooking("owner"); // Use 'owner' to see all
+      const matchingInventory = availableInventory.find(
+        (inv) =>
+          inv.route === formData.route &&
+          inv.airline === formData.airline &&
+          inv.availableTickets > 0,
       );
 
       // Deduct from inventory if available
@@ -148,21 +155,21 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
         salePrice: Number(formData.salePrice),
         paymentStatus: formData.paymentStatus,
         paidAmount,
-        notes: formData.notes
+        notes: formData.notes,
       });
 
       onSuccess();
     } catch (error) {
-      console.error('Error adding booking:', error);
+      console.error("Error adding booking:", error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: "" }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
 
@@ -176,8 +183,12 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">নতুন বুকিং যোগ করুন</h1>
-            <p className="text-white/70">নতুন ফ্লাইট বুকি��� এর তথ্য পূরণ করুন</p>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              নতুন বুকিং যোগ করুন
+            </h1>
+            <p className="text-white/70">
+              নতুন ফ্লাইট বুকি��� এর তথ্য পূরণ করুন
+            </p>
           </div>
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -206,36 +217,50 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
               <div className="space-y-4">
                 {/* Customer Name */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">গ্রা���কের নাম *</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    গ্রা���কের নাম *
+                  </label>
                   <input
                     type="text"
                     value={formData.customerName}
-                    onChange={(e) => handleInputChange('customerName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("customerName", e.target.value)
+                    }
                     className={cn(
                       "w-full p-3 bg-white/10 backdrop-blur-md border rounded-xl text-white placeholder-white/50",
                       "focus:outline-none focus:ring-2 transition-all duration-300",
-                      errors.customerName ? "border-red-400 focus:ring-red-400/50" : "border-white/20 focus:ring-folder-primary/50"
+                      errors.customerName
+                        ? "border-red-400 focus:ring-red-400/50"
+                        : "border-white/20 focus:ring-folder-primary/50",
                     )}
                     placeholder="যেমন: মোহাম্মদ রহিম"
                   />
                   {errors.customerName && (
-                    <p className="text-red-400 text-sm mt-1">{errors.customerName}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.customerName}
+                    </p>
                   )}
                 </div>
 
                 {/* Mobile */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">মোবাইল নম্বর *</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    মোবাইল নম্বর *
+                  </label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <input
                       type="tel"
                       value={formData.mobile}
-                      onChange={(e) => handleInputChange('mobile', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("mobile", e.target.value)
+                      }
                       className={cn(
                         "w-full pl-10 pr-4 p-3 bg-white/10 backdrop-blur-md border rounded-xl text-white placeholder-white/50",
                         "focus:outline-none focus:ring-2 transition-all duration-300",
-                        errors.mobile ? "border-red-400 focus:ring-red-400/50" : "border-white/20 focus:ring-folder-primary/50"
+                        errors.mobile
+                          ? "border-red-400 focus:ring-red-400/50"
+                          : "border-white/20 focus:ring-folder-primary/50",
                       )}
                       placeholder="01XXXXXXXXX"
                     />
@@ -247,39 +272,53 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
 
                 {/* Passport */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">পাসপোর্ট নম্বর *</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    পাসপোর্ট নম্বর *
+                  </label>
                   <div className="relative">
                     <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <input
                       type="text"
                       value={formData.passport}
-                      onChange={(e) => handleInputChange('passport', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("passport", e.target.value)
+                      }
                       className={cn(
                         "w-full pl-10 pr-4 p-3 bg-white/10 backdrop-blur-md border rounded-xl text-white placeholder-white/50",
                         "focus:outline-none focus:ring-2 transition-all duration-300",
-                        errors.passport ? "border-red-400 focus:ring-red-400/50" : "border-white/20 focus:ring-folder-primary/50"
+                        errors.passport
+                          ? "border-red-400 focus:ring-red-400/50"
+                          : "border-white/20 focus:ring-folder-primary/50",
                       )}
                       placeholder="যেমন: BE1234567"
                     />
                   </div>
                   {errors.passport && (
-                    <p className="text-red-400 text-sm mt-1">{errors.passport}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.passport}
+                    </p>
                   )}
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">ইমেইল ঠিকানা *</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    ইমেইল ঠিকানা *
+                  </label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <input
                       type="email"
                       value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("email", e.target.value)
+                      }
                       className={cn(
                         "w-full pl-10 pr-4 p-3 bg-white/10 backdrop-blur-md border rounded-xl text-white placeholder-white/50",
                         "focus:outline-none focus:ring-2 transition-all duration-300",
-                        errors.email ? "border-red-400 focus:ring-red-400/50" : "border-white/20 focus:ring-folder-primary/50"
+                        errors.email
+                          ? "border-red-400 focus:ring-red-400/50"
+                          : "border-white/20 focus:ring-folder-primary/50",
                       )}
                       placeholder="example@email.com"
                     />
@@ -306,42 +345,60 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
               <div className="space-y-4">
                 {/* Flight Date */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">ফ্লাইট তারিখ *</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    ফ্লাইট তারিখ *
+                  </label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <input
                       type="date"
                       value={formData.flightDate}
-                      onChange={(e) => handleInputChange('flightDate', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("flightDate", e.target.value)
+                      }
                       className={cn(
                         "w-full pl-10 pr-4 p-3 bg-white/10 backdrop-blur-md border rounded-xl text-white",
                         "focus:outline-none focus:ring-2 transition-all duration-300",
-                        errors.flightDate ? "border-red-400 focus:ring-red-400/50" : "border-white/20 focus:ring-folder-primary/50"
+                        errors.flightDate
+                          ? "border-red-400 focus:ring-red-400/50"
+                          : "border-white/20 focus:ring-folder-primary/50",
                       )}
                     />
                   </div>
                   {errors.flightDate && (
-                    <p className="text-red-400 text-sm mt-1">{errors.flightDate}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.flightDate}
+                    </p>
                   )}
                 </div>
 
                 {/* Route */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">রুট *</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    রুট *
+                  </label>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <select
                       value={formData.route}
-                      onChange={(e) => handleInputChange('route', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("route", e.target.value)
+                      }
                       className={cn(
                         "w-full pl-10 pr-4 p-3 bg-white/10 backdrop-blur-md border rounded-xl text-white",
                         "focus:outline-none focus:ring-2 transition-all duration-300",
-                        errors.route ? "border-red-400 focus:ring-red-400/50" : "border-white/20 focus:ring-folder-primary/50"
+                        errors.route
+                          ? "border-red-400 focus:ring-red-400/50"
+                          : "border-white/20 focus:ring-folder-primary/50",
                       )}
                     >
                       <option value="">রুট নির্বাচন করুন</option>
                       {ROUTES.map((route) => (
-                        <option key={route} value={route} className="bg-slate-800 text-white">
+                        <option
+                          key={route}
+                          value={route}
+                          className="bg-slate-800 text-white"
+                        >
                           {route}
                         </option>
                       ))}
@@ -354,72 +411,100 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
 
                 {/* Airline */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">এয়ারলাইন *</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    এয়ারলাইন *
+                  </label>
                   <div className="relative">
                     <Plane className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <select
                       value={formData.airline}
-                      onChange={(e) => handleInputChange('airline', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("airline", e.target.value)
+                      }
                       className={cn(
                         "w-full pl-10 pr-4 p-3 bg-white/10 backdrop-blur-md border rounded-xl text-white",
                         "focus:outline-none focus:ring-2 transition-all duration-300",
-                        errors.airline ? "border-red-400 focus:ring-red-400/50" : "border-white/20 focus:ring-folder-primary/50"
+                        errors.airline
+                          ? "border-red-400 focus:ring-red-400/50"
+                          : "border-white/20 focus:ring-folder-primary/50",
                       )}
                     >
                       <option value="">এয়ারলাইন ন��র্বাচন করুন</option>
                       {AIRLINES.map((airline) => (
-                        <option key={airline} value={airline} className="bg-slate-800 text-white">
+                        <option
+                          key={airline}
+                          value={airline}
+                          className="bg-slate-800 text-white"
+                        >
                           {airline}
                         </option>
                       ))}
                     </select>
                   </div>
                   {errors.airline && (
-                    <p className="text-red-400 text-sm mt-1">{errors.airline}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.airline}
+                    </p>
                   )}
                 </div>
 
                 {/* Purchase Price */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">ক্রয়মূল��য (টাকা) *</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    ক্রয়মূল��য (টাকা) *
+                  </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <input
                       type="number"
                       value={formData.purchasePrice}
-                      onChange={(e) => handleInputChange('purchasePrice', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("purchasePrice", e.target.value)
+                      }
                       className={cn(
                         "w-full pl-10 pr-4 p-3 bg-white/10 backdrop-blur-md border rounded-xl text-white placeholder-white/50",
                         "focus:outline-none focus:ring-2 transition-all duration-300",
-                        errors.purchasePrice ? "border-red-400 focus:ring-red-400/50" : "border-white/20 focus:ring-folder-primary/50"
+                        errors.purchasePrice
+                          ? "border-red-400 focus:ring-red-400/50"
+                          : "border-white/20 focus:ring-folder-primary/50",
                       )}
                       placeholder="যেমন: 45000"
                     />
                   </div>
                   {errors.purchasePrice && (
-                    <p className="text-red-400 text-sm mt-1">{errors.purchasePrice}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.purchasePrice}
+                    </p>
                   )}
                 </div>
 
                 {/* Sale Price */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">বিক্রয়মূল্য (টাকা) *</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    বিক্রয়মূল্য (টাকা) *
+                  </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <input
                       type="number"
                       value={formData.salePrice}
-                      onChange={(e) => handleInputChange('salePrice', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("salePrice", e.target.value)
+                      }
                       className={cn(
                         "w-full pl-10 pr-4 p-3 bg-white/10 backdrop-blur-md border rounded-xl text-white placeholder-white/50",
                         "focus:outline-none focus:ring-2 transition-all duration-300",
-                        errors.salePrice ? "border-red-400 focus:ring-red-400/50" : "border-white/20 focus:ring-folder-primary/50"
+                        errors.salePrice
+                          ? "border-red-400 focus:ring-red-400/50"
+                          : "border-white/20 focus:ring-folder-primary/50",
                       )}
                       placeholder="যেমন: 50000"
                     />
                   </div>
                   {errors.salePrice && (
-                    <p className="text-red-400 text-sm mt-1">{errors.salePrice}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.salePrice}
+                    </p>
                   )}
                 </div>
               </div>
@@ -441,45 +526,71 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Payment Status */}
               <div>
-                <label className="block text-white/70 text-sm mb-2">পেমেন্ট স্ট্যাটাস *</label>
+                <label className="block text-white/70 text-sm mb-2">
+                  পেমেন্ট স্ট্যাটাস *
+                </label>
                 <select
                   value={formData.paymentStatus}
-                  onChange={(e) => handleInputChange('paymentStatus', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("paymentStatus", e.target.value)
+                  }
                   className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-folder-primary/50"
                 >
-                  <option value="pending" className="bg-slate-800 text-white">পেন্ডিং</option>
-                  <option value="partial" className="bg-slate-800 text-white">আংশিক</option>
-                  <option value="paid" className="bg-slate-800 text-white">পেইড</option>
+                  <option value="pending" className="bg-slate-800 text-white">
+                    পেন্ডিং
+                  </option>
+                  <option value="partial" className="bg-slate-800 text-white">
+                    আংশিক
+                  </option>
+                  <option value="paid" className="bg-slate-800 text-white">
+                    পেইড
+                  </option>
                 </select>
               </div>
 
               {/* Paid Amount - only show for partial payment */}
-              {formData.paymentStatus === 'partial' && (
+              {formData.paymentStatus === "partial" && (
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">পেইড পরিমাণ (টাকা) *</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    পেইড পরিমাণ (টাকা) *
+                  </label>
                   <input
                     type="number"
                     value={formData.paidAmount}
-                    onChange={(e) => handleInputChange('paidAmount', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("paidAmount", e.target.value)
+                    }
                     className={cn(
                       "w-full p-3 bg-white/10 backdrop-blur-md border rounded-xl text-white placeholder-white/50",
                       "focus:outline-none focus:ring-2 transition-all duration-300",
-                      errors.paidAmount ? "border-red-400 focus:ring-red-400/50" : "border-white/20 focus:ring-folder-primary/50"
+                      errors.paidAmount
+                        ? "border-red-400 focus:ring-red-400/50"
+                        : "border-white/20 focus:ring-folder-primary/50",
                     )}
                     placeholder="যেমন: 25000"
                   />
                   {errors.paidAmount && (
-                    <p className="text-red-400 text-sm mt-1">{errors.paidAmount}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.paidAmount}
+                    </p>
                   )}
                 </div>
               )}
 
               {/* Notes */}
-              <div className={formData.paymentStatus === 'partial' ? 'md:col-span-1' : 'md:col-span-2'}>
-                <label className="block text-white/70 text-sm mb-2">নোট (ঐ��্ছিক)</label>
+              <div
+                className={
+                  formData.paymentStatus === "partial"
+                    ? "md:col-span-1"
+                    : "md:col-span-2"
+                }
+              >
+                <label className="block text-white/70 text-sm mb-2">
+                  নোট (ঐ��্ছিক)
+                </label>
                 <textarea
                   value={formData.notes}
-                  onChange={(e) => handleInputChange('notes', e.target.value)}
+                  onChange={(e) => handleInputChange("notes", e.target.value)}
                   rows={3}
                   className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-folder-primary/50 resize-none"
                   placeholder="অতিরিক্ত তথ্য লিখুন..."
@@ -516,7 +627,11 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
                 <>
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                     className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
                   />
                   <span>সেভ হচ্ছে...</span>

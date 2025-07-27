@@ -114,18 +114,14 @@ export default function TravelAgencyApp() {
     id: string,
     title: string,
     component: React.ReactNode,
-    size: "sm" | "md" | "lg" | "xl" | "full" = "lg"
+    size: "sm" | "md" | "lg" | "xl" | "full" = "lg",
   ) => {
     const existingModal = openModals.find((m) => m.id === id);
 
     if (existingModal) {
       // Bring existing modal to front
       setOpenModals((prev) =>
-        prev.map((m) =>
-          m.id === id
-            ? { ...m, isOpen: true }
-            : m,
-        ),
+        prev.map((m) => (m.id === id ? { ...m, isOpen: true } : m)),
       );
     } else {
       // Create new modal
@@ -147,8 +143,6 @@ export default function TravelAgencyApp() {
     // Refresh dashboard data when closing modals
     refreshData();
   };
-
-
 
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
@@ -241,7 +235,7 @@ export default function TravelAgencyApp() {
                     refreshData();
                   }}
                 />,
-                "xl"
+                "xl",
               );
             }}
           />
@@ -273,8 +267,12 @@ export default function TravelAgencyApp() {
         );
     }
 
-    const modalSize = cardId === "new-booking" || cardId === "edit-booking" ? "xl" :
-                     cardId === "settings" ? "full" : "lg";
+    const modalSize =
+      cardId === "new-booking" || cardId === "edit-booking"
+        ? "xl"
+        : cardId === "settings"
+          ? "full"
+          : "lg";
     openModal(cardId, title, component, modalSize);
 
     // Update breadcrumbs
@@ -297,8 +295,6 @@ export default function TravelAgencyApp() {
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
-
-
 
   if (appState === "login") {
     return (

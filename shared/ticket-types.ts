@@ -2,7 +2,7 @@ export interface TicketInventory {
   id: string;
   route: string;
   airline: string;
-  flightClass: 'Economy' | 'Business' | 'First';
+  flightClass: "Economy" | "Business" | "First";
   purchasePrice: number; // এডমিনের কেনা দাম
   suggestedSalePrice: number; // সাজেস্টেড বিক্রয় দাম
   totalTickets: number; // মোট টিকেট সংখ্যা
@@ -21,7 +21,7 @@ export interface TicketInventory {
 export interface BulkTicketPurchase {
   route: string;
   airline: string;
-  flightClass: 'Economy' | 'Business' | 'First';
+  flightClass: "Economy" | "Business" | "First";
   country: string;
   quantity: number;
   purchasePrice: number;
@@ -54,58 +54,58 @@ export interface CountryStats {
 }
 
 export const COUNTRIES = [
-  'বাংলাদেশ',
-  'ভারত', 
-  'পাকিস্তান',
-  'নেপাল',
-  'শ্রীলঙ্কা',
-  'মালদ্বীপ',
-  'থাইল্যান্ড',
-  'মালয়েশিয়া',
-  'সিঙ্গাপুর',
-  'ইন্দোনেশিয়া',
-  'সংযুক্ত আরব আমিরাত',
-  'সৌদি আরব',
-  'কাতার',
-  'কুয়েত',
-  'ওমান',
-  'যুক্তরাজ্য',
-  'যুক্তরাষ্ট্র',
-  'কানাডা',
-  'অস্ট্রেলিয়া',
-  'জার্মানি',
-  'ফ্রান্স',
-  'ইতালি',
-  'তুরস্ক',
-  'চীন',
-  'জাপান',
-  'দক্ষিণ কোরিয়া'
+  "বাংলাদেশ",
+  "ভারত",
+  "পাকিস্তান",
+  "নেপাল",
+  "শ্রীলঙ্কা",
+  "মালদ্বীপ",
+  "থাইল্যান্ড",
+  "মালয়েশিয়া",
+  "সিঙ্গাপুর",
+  "ইন্দোনেশিয়া",
+  "সংযুক্ত আরব আমিরাত",
+  "সৌদি আরব",
+  "কাতার",
+  "কুয়েত",
+  "ওমান",
+  "যুক্তরাজ্য",
+  "যুক্তরাষ্ট্র",
+  "কানাডা",
+  "অস্ট্রেলিয়া",
+  "জার্মানি",
+  "ফ্রান্স",
+  "ইতালি",
+  "তুরস্ক",
+  "চীন",
+  "জাপান",
+  "দক্ষিণ কোরিয়া",
 ];
 
 export const FLIGHT_CLASSES = [
-  { value: 'Economy', label: 'ইকোনমি' },
-  { value: 'Business', label: 'বিজনেস' },
-  { value: 'First', label: 'ফার্স্ট ক্লাস' }
+  { value: "Economy", label: "ইকোনমি" },
+  { value: "Business", label: "বিজনেস" },
+  { value: "First", label: "ফার্স্ট ক্লাস" },
 ];
 
 export const SUPPLIERS = [
-  'Biman Bangladesh Airlines',
-  'US-Bangla Airlines', 
-  'Novoair',
-  'Emirates',
-  'Qatar Airways',
-  'Singapore Airlines',
-  'Thai Airways',
-  'Malaysia Airlines',
-  'Turkish Airlines',
-  'Etihad Airways',
-  'Air Arabia',
-  'Flydubai',
-  'IndiGo',
-  'Air India',
-  'Spicejet',
-  'বড় এজেন্ট - ঢাকা',
-  'বড় এজেন্ট - চট্টগ্রাম',
-  'বড় এজেন্ট - সিলেট',
-  'আন্তর্জাতিক সাপ্লায়ার'
+  "Biman Bangladesh Airlines",
+  "US-Bangla Airlines",
+  "Novoair",
+  "Emirates",
+  "Qatar Airways",
+  "Singapore Airlines",
+  "Thai Airways",
+  "Malaysia Airlines",
+  "Turkish Airlines",
+  "Etihad Airways",
+  "Air Arabia",
+  "Flydubai",
+  "IndiGo",
+  "Air India",
+  "Spicejet",
+  "বড় এজেন্ট - ঢাকা",
+  "বড় এজেন্ট - চট্টগ্রাম",
+  "বড় এজেন্ট - সিলেট",
+  "আন্তর্জাতিক সাপ্লায়ার",
 ];

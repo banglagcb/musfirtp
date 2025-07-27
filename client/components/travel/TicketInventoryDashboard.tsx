@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { 
-  Package, 
-  TrendingUp, 
-  Lock, 
+import {
+  Package,
+  TrendingUp,
+  Lock,
   Unlock,
   ShoppingCart,
   DollarSign,
@@ -14,7 +14,7 @@ import {
   Trash2,
   Plus,
   Download,
-  AlertTriangle
+  AlertTriangle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TicketInventory, TicketInventoryStats } from "@shared/ticket-types";
@@ -27,15 +27,17 @@ interface TicketInventoryDashboardProps {
   onOpenPurchaseForm: () => void;
 }
 
-export default function TicketInventoryDashboard({ 
-  user, 
-  onClose, 
-  onOpenPurchaseForm 
+export default function TicketInventoryDashboard({
+  user,
+  onClose,
+  onOpenPurchaseForm,
 }: TicketInventoryDashboardProps) {
   const [inventory, setInventory] = useState<TicketInventory[]>([]);
   const [stats, setStats] = useState<TicketInventoryStats | null>(null);
-  const [showPurchasePrices, setShowPurchasePrices] = useState(user.role === 'owner');
-  const [selectedCountry, setSelectedCountry] = useState<string>('all');
+  const [showPurchasePrices, setShowPurchasePrices] = useState(
+    user.role === "owner",
+  );
+  const [selectedCountry, setSelectedCountry] = useState<string>("all");
   const [lockingTicket, setLockingTicket] = useState<string | null>(null);
   const [lockQuantity, setLockQuantity] = useState<number>(1);
 
@@ -46,18 +48,19 @@ export default function TicketInventoryDashboard({
   const loadInventoryData = () => {
     const inventoryData = ticketInventoryService.getInventory();
     const statsData = ticketInventoryService.getInventoryStats();
-    
+
     // Filter based on user role
-    const filteredInventory = user.role === 'owner' 
-      ? inventoryData 
-      : inventoryData.filter(item => !item.isLocked);
-    
+    const filteredInventory =
+      user.role === "owner"
+        ? inventoryData
+        : inventoryData.filter((item) => !item.isLocked);
+
     setInventory(filteredInventory);
     setStats(statsData);
   };
 
   const handleLockTickets = async (inventoryId: string, quantity: number) => {
-    if (user.role !== 'owner') return;
+    if (user.role !== "owner") return;
 
     const success = ticketInventoryService.lockTickets(inventoryId, quantity);
     if (success) {
@@ -68,7 +71,7 @@ export default function TicketInventoryDashboard({
   };
 
   const handleUnlockTickets = async (inventoryId: string, quantity: number) => {
-    if (user.role !== 'owner') return;
+    if (user.role !== "owner") return;
 
     const success = ticketInventoryService.unlockTickets(inventoryId, quantity);
     if (success) {
@@ -77,9 +80,9 @@ export default function TicketInventoryDashboard({
   };
 
   const handleDeleteInventory = async (inventoryId: string) => {
-    if (user.role !== 'owner') return;
-    
-    if (window.confirm('আপনি কি নিশ্চিত যে এই ইনভেন্টরিটি মুছে ফেলতে চান?')) {
+    if (user.role !== "owner") return;
+
+    if (window.confirm("আপনি কি নিশ্চিত যে এই ইনভেন্টরিটি মুছে ফেলতে চান?")) {
       const success = ticketInventoryService.deleteInventory(inventoryId);
       if (success) {
         loadInventoryData();
@@ -89,25 +92,26 @@ export default function TicketInventoryDashboard({
 
   const exportInventory = () => {
     const csvContent = ticketInventoryService.exportInventoryToCSV();
-    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const blob = new Blob([csvContent], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
-    link.download = `ticket-inventory-${new Date().toISOString().split('T')[0]}.csv`;
+    link.download = `ticket-inventory-${new Date().toISOString().split("T")[0]}.csv`;
     link.click();
     URL.revokeObjectURL(url);
   };
 
-  const filteredInventory = selectedCountry === 'all' 
-    ? inventory 
-    : inventory.filter(item => item.country === selectedCountry);
+  const filteredInventory =
+    selectedCountry === "all"
+      ? inventory
+      : inventory.filter((item) => item.country === selectedCountry);
 
-  const countries = [...new Set(inventory.map(item => item.country))];
+  const countries = [...new Set(inventory.map((item) => item.country))];
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('bn-BD', {
-      style: 'currency',
-      currency: 'BDT'
+    return new Intl.NumberFormat("bn-BD", {
+      style: "currency",
+      currency: "BDT",
     }).format(amount);
   };
 
@@ -120,17 +124,23 @@ export default function TicketInventoryDashboard({
         className="flex items-center justify-between mb-8"
       >
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">টিকেট ইনভেন্টরি</h1>
-          <p className="text-gray-600 dark:text-gray-400">আপনার টিকেট স্টক ম্যানেজমেন্ট</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            টিকেট ইনভেন্টরি
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            আপনার টিকেট স্টক ম্যানেজমেন্ট
+          </p>
         </div>
-        
+
         <div className="flex items-center space-x-3">
-          {user.role === 'owner' && (
+          {user.role === "owner" && (
             <>
               <button
                 onClick={() => setShowPurchasePrices(!showPurchasePrices)}
                 className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                title={showPurchasePrices ? "ক্রয় মূল্য লুকান" : "ক্রয় মূল্য দেখান"}
+                title={
+                  showPurchasePrices ? "ক্রয় মূল্য লুকান" : "ক্রয় মূল্য দেখান"
+                }
               >
                 {showPurchasePrices ? (
                   <EyeOff className="w-5 h-5 text-gray-600 dark:text-gray-400" />
@@ -138,7 +148,7 @@ export default function TicketInventoryDashboard({
                   <Eye className="w-5 h-5 text-gray-600 dark:text-gray-400" />
                 )}
               </button>
-              
+
               <button
                 onClick={exportInventory}
                 className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
@@ -146,7 +156,7 @@ export default function TicketInventoryDashboard({
               >
                 <Download className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               </button>
-              
+
               <button
                 onClick={onOpenPurchaseForm}
                 className="px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-all flex items-center space-x-2"
@@ -170,40 +180,56 @@ export default function TicketInventoryDashboard({
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">মোট টিকেট</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalPurchasedTickets}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  মোট টিকেট
+                </p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {stats.totalPurchasedTickets}
+                </p>
               </div>
               <Package className="w-8 h-8 text-blue-500" />
             </div>
           </div>
-          
+
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">উপলব্ধ</p>
-                <p className="text-2xl font-bold text-green-600">{stats.totalAvailableTickets}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  উপলব্ধ
+                </p>
+                <p className="text-2xl font-bold text-green-600">
+                  {stats.totalAvailableTickets}
+                </p>
               </div>
               <ShoppingCart className="w-8 h-8 text-green-500" />
             </div>
           </div>
-          
-          {user.role === 'owner' && (
+
+          {user.role === "owner" && (
             <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">মোট বিনিয়োগ</p>
-                  <p className="text-2xl font-bold text-purple-600">{formatCurrency(stats.totalInvestment)}</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    মোট বিনিয়োগ
+                  </p>
+                  <p className="text-2xl font-bold text-purple-600">
+                    {formatCurrency(stats.totalInvestment)}
+                  </p>
                 </div>
                 <DollarSign className="w-8 h-8 text-purple-500" />
               </div>
             </div>
           )}
-          
+
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">বিক্রিত</p>
-                <p className="text-2xl font-bold text-orange-600">{stats.totalSoldTickets}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  বিক্রিত
+                </p>
+                <p className="text-2xl font-bold text-orange-600">
+                  {stats.totalSoldTickets}
+                </p>
               </div>
               <TrendingUp className="w-8 h-8 text-orange-500" />
             </div>
@@ -226,8 +252,10 @@ export default function TicketInventoryDashboard({
             className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="all">সব দেশ</option>
-            {countries.map(country => (
-              <option key={country} value={country}>{country}</option>
+            {countries.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
             ))}
           </select>
         </div>
@@ -244,36 +272,70 @@ export default function TicketInventoryDashboard({
           <table className="w-full">
             <thead className="bg-gray-50 dark:bg-gray-700">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">রুট</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">এয়ারলাইন</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">দেশ</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">ক্লাস</th>
-                {showPurchasePrices && user.role === 'owner' && (
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">ক্রয় মূল্য</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                  রুট
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                  এয়ারলাইন
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                  দেশ
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                  ক্লাস
+                </th>
+                {showPurchasePrices && user.role === "owner" && (
+                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                    ক্রয় মূল্য
+                  </th>
                 )}
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">বিক্রয় মূল্য</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">উপলব্ধ</th>
-                {user.role === 'owner' && (
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">লক</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                  বিক্রয় মূল্য
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                  উপলব্ধ
+                </th>
+                {user.role === "owner" && (
+                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                    লক
+                  </th>
                 )}
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">বিক্রিত</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">স্ট্যাটাস</th>
-                {user.role === 'owner' && (
-                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">অ্যাকশন</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                  বিক্রিত
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                  স্ট্যাটাস
+                </th>
+                {user.role === "owner" && (
+                  <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
+                    অ্যাকশন
+                  </th>
                 )}
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
               {filteredInventory.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                  <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">{item.route}</td>
-                  <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">{item.airline}</td>
-                  <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">{item.country}</td>
+                <tr
+                  key={item.id}
+                  className="hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                >
                   <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
-                    {item.flightClass === 'Economy' ? 'ইকোনমি' : 
-                     item.flightClass === 'Business' ? 'বিজনেস' : 'ফার্স্ট ক্লাস'}
+                    {item.route}
                   </td>
-                  {showPurchasePrices && user.role === 'owner' && (
+                  <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                    {item.airline}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                    {item.country}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
+                    {item.flightClass === "Economy"
+                      ? "ইকোনমি"
+                      : item.flightClass === "Business"
+                        ? "বিজনেস"
+                        : "ফার্স্ট ক্লাস"}
+                  </td>
+                  {showPurchasePrices && user.role === "owner" && (
                     <td className="px-6 py-4 text-sm font-medium text-red-600 dark:text-red-400">
                       ৳{item.purchasePrice.toLocaleString()}
                     </td>
@@ -284,7 +346,7 @@ export default function TicketInventoryDashboard({
                   <td className="px-6 py-4 text-sm font-bold text-blue-600 dark:text-blue-400">
                     {item.availableTickets}
                   </td>
-                  {user.role === 'owner' && (
+                  {user.role === "owner" && (
                     <td className="px-6 py-4 text-sm font-bold text-orange-600 dark:text-orange-400">
                       {item.lockedTickets}
                     </td>
@@ -312,7 +374,7 @@ export default function TicketInventoryDashboard({
                       )}
                     </div>
                   </td>
-                  {user.role === 'owner' && (
+                  {user.role === "owner" && (
                     <td className="px-6 py-4">
                       <div className="flex items-center space-x-2">
                         {/* Lock/Unlock */}
@@ -323,11 +385,15 @@ export default function TicketInventoryDashboard({
                               min="1"
                               max={item.availableTickets}
                               value={lockQuantity}
-                              onChange={(e) => setLockQuantity(parseInt(e.target.value) || 1)}
+                              onChange={(e) =>
+                                setLockQuantity(parseInt(e.target.value) || 1)
+                              }
                               className="w-16 px-2 py-1 text-xs border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
                             />
                             <button
-                              onClick={() => handleLockTickets(item.id, lockQuantity)}
+                              onClick={() =>
+                                handleLockTickets(item.id, lockQuantity)
+                              }
                               className="p-1 bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded hover:bg-orange-200 dark:hover:bg-orange-900/40 transition-colors"
                               title="লক করুন"
                             >
@@ -355,7 +421,9 @@ export default function TicketInventoryDashboard({
                         {/* Unlock */}
                         {item.lockedTickets > 0 && (
                           <button
-                            onClick={() => handleUnlockTickets(item.id, item.lockedTickets)}
+                            onClick={() =>
+                              handleUnlockTickets(item.id, item.lockedTickets)
+                            }
                             className="p-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded hover:bg-green-200 dark:hover:bg-green-900/40 transition-colors"
                             title="সব টিকেট আনলক করুন"
                           >
@@ -383,8 +451,10 @@ export default function TicketInventoryDashboard({
         {filteredInventory.length === 0 && (
           <div className="text-center py-12">
             <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600 dark:text-gray-400 text-lg">কোনো টিকেট ইনভেন্টরি নেই</p>
-            {user.role === 'owner' && (
+            <p className="text-gray-600 dark:text-gray-400 text-lg">
+              কোনো টিকেট ইনভেন্টরি নেই
+            </p>
+            {user.role === "owner" && (
               <button
                 onClick={onOpenPurchaseForm}
                 className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
