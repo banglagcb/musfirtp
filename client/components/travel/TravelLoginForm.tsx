@@ -251,15 +251,19 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         {/* Submit Button */}
         <motion.button
           type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            handleSubmit(e);
+          }}
           disabled={!usernameValid || !passwordValid || isLoading}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={cn(
-            "w-full py-4 rounded-xl font-semibold text-white transition-all duration-300",
-            "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-folder-primary",
+            "w-full py-4 rounded-xl font-semibold text-white transition-all duration-300 cursor-pointer",
+            "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
             usernameValid && passwordValid
-              ? "bg-gradient-to-r from-folder-primary to-folder-secondary hover:from-folder-secondary hover:to-folder-accent shadow-glow"
-              : "bg-white/20 cursor-not-allowed"
+              ? "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg"
+              : "bg-gray-400 cursor-not-allowed"
           )}
         >
           {isLoading ? (
