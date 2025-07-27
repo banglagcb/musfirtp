@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { 
-  User, 
-  Phone, 
-  Mail, 
-  CreditCard, 
-  Calendar, 
-  Plane, 
+import {
+  User as UserIcon,
+  Phone,
+  Mail,
+  CreditCard,
+  Calendar,
+  Plane,
   DollarSign,
   Save,
   X,
@@ -74,7 +74,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     }
 
     if (!formData.route) {
-      newErrors.route = "রুট নির্বাচন করুন";
+      newErrors.route = "রুট নির্বাচন ক���ুন";
     }
 
     if (!formData.airline) {
