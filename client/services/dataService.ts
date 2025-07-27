@@ -130,13 +130,14 @@ class DataService {
     const bookings = this.getBookings();
     const newBooking: Booking = {
       ...booking,
-      id: 'id' in booking ? booking.id : Date.now().toString(),
-      createdAt: 'createdAt' in booking ? booking.createdAt : new Date().toISOString(),
+      id: "id" in booking ? booking.id : Date.now().toString(),
+      createdAt:
+        "createdAt" in booking ? booking.createdAt : new Date().toISOString(),
     };
 
     // Remove existing booking if it has an ID (for updates)
-    if ('id' in booking && booking.id) {
-      const index = bookings.findIndex(b => b.id === booking.id);
+    if ("id" in booking && booking.id) {
+      const index = bookings.findIndex((b) => b.id === booking.id);
       if (index !== -1) {
         bookings[index] = newBooking;
         localStorage.setItem(this.BOOKINGS_KEY, JSON.stringify(bookings));

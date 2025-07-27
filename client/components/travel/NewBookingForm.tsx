@@ -79,7 +79,7 @@ export default function NewBookingForm({
       sellingPrice: 0,
       paymentStatus: "pending",
       notes: "",
-    }
+    },
   );
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -339,7 +339,9 @@ export default function NewBookingForm({
 
       toast({
         title: "সফল!",
-        description: editBooking ? "বুকিং সফলভাবে আপডেট করা হয়েছে" : "নতুন বুকিং সফলভাবে যোগ করা হয়েছে",
+        description: editBooking
+          ? "বুকিং সফলভাবে আপডেট করা হয়েছে"
+          : "নতুন বুকিং সফলভাবে যোগ করা হয়েছে",
       });
 
       onSuccess();

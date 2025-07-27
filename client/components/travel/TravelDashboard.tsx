@@ -82,7 +82,10 @@ export default function TravelDashboard({
         0,
       );
       const totalProfit = bookings.reduce(
-        (sum, booking) => sum + ((Number(booking.sellingPrice) || 0) - (Number(booking.costPrice) || 0)),
+        (sum, booking) =>
+          sum +
+          ((Number(booking.sellingPrice) || 0) -
+            (Number(booking.costPrice) || 0)),
         0,
       );
 
@@ -91,12 +94,18 @@ export default function TravelDashboard({
         0,
       );
       const dailyProfit = todayBookings.reduce(
-        (sum, booking) => sum + ((Number(booking.sellingPrice) || 0) - (Number(booking.costPrice) || 0)),
+        (sum, booking) =>
+          sum +
+          ((Number(booking.sellingPrice) || 0) -
+            (Number(booking.costPrice) || 0)),
         0,
       );
 
       const thisMonthProfit = thisMonthBookings.reduce(
-        (sum, booking) => sum + ((Number(booking.sellingPrice) || 0) - (Number(booking.costPrice) || 0)),
+        (sum, booking) =>
+          sum +
+          ((Number(booking.sellingPrice) || 0) -
+            (Number(booking.costPrice) || 0)),
         0,
       );
 
@@ -402,7 +411,9 @@ export default function TravelDashboard({
               {card.priority === "high" && (
                 <div className="mt-3 flex items-center text-xs text-emerald-600 dark:text-emerald-400">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
-                  {card.id === "new-booking" ? "দ্রুত টিকেট বুক করুন" : "গুরুত্বপূর্ণ"}
+                  {card.id === "new-booking"
+                    ? "দ্রুত টিকেট বুক করুন"
+                    : "গুরুত্বপূর্ণ"}
                 </div>
               )}
 
