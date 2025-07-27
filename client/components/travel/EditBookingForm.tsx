@@ -56,7 +56,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     if (!formData.mobile.trim()) {
       newErrors.mobile = "মোবাইল নম্বর আবশ্যিক";
     } else if (!/^01[3-9]\d{8}$/.test(formData.mobile)) {
-      newErrors.mobile = "���ঠিক মোবাইল নম্বর লিখুন";
+      newErrors.mobile = "সঠিক মোবাইল নম্বর লিখুন";
     }
 
     if (!formData.passport.trim()) {
@@ -407,10 +407,12 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 <select
                   value={formData.airline}
                   onChange={(e) => handleInputChange('airline', e.target.value)}
+                  disabled={isViewOnly}
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white/10 border rounded-xl text-white",
                     "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
-                    errors.airline ? "border-red-400" : "border-white/20"
+                    errors.airline ? "border-red-400" : "border-white/20",
+                    isViewOnly && "opacity-50 cursor-not-allowed"
                   )}
                 >
                   <option value="" className="bg-gray-800">এয়ারলাইন নির্বাচন করুন</option>
