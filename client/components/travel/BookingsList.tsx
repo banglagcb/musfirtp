@@ -322,7 +322,7 @@ export default function BookingsList({ user, onClose, onEdit }: BookingsListProp
               {/* Customer Info */}
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
-                  <User className="w-5 h-5 text-white/50" />
+                  <UserIcon className="w-5 h-5 text-white/50" />
                   <div>
                     <p className="text-white font-medium">{booking.customerName}</p>
                     <p className="text-white/70 text-sm">{booking.passport}</p>
