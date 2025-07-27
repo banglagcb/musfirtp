@@ -78,25 +78,25 @@ export default function TravelDashboard({
       });
 
       const totalRevenue = bookings.reduce(
-        (sum, booking) => sum + booking.sellingPrice,
+        (sum, booking) => sum + (Number(booking.sellingPrice) || 0),
         0,
       );
       const totalProfit = bookings.reduce(
-        (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
+        (sum, booking) => sum + ((Number(booking.sellingPrice) || 0) - (Number(booking.costPrice) || 0)),
         0,
       );
 
       const dailyRevenue = todayBookings.reduce(
-        (sum, booking) => sum + booking.sellingPrice,
+        (sum, booking) => sum + (Number(booking.sellingPrice) || 0),
         0,
       );
       const dailyProfit = todayBookings.reduce(
-        (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
+        (sum, booking) => sum + ((Number(booking.sellingPrice) || 0) - (Number(booking.costPrice) || 0)),
         0,
       );
 
       const thisMonthProfit = thisMonthBookings.reduce(
-        (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
+        (sum, booking) => sum + ((Number(booking.sellingPrice) || 0) - (Number(booking.costPrice) || 0)),
         0,
       );
 
