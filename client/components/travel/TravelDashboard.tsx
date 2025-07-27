@@ -71,7 +71,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "export-data",
     title: "ডেটা এক্সপো��্ট",
-    description: "CSV/Excel ��াইলে ডাউনলোড করুন",
+    description: "CSV/Excel ফাইলে ডাউনলোড করুন",
     icon: DollarSign,
     color: "from-green-500 to-teal-500",
     gradient: "bg-gradient-to-br from-green-500/20 to-teal-500/20",
@@ -376,21 +376,20 @@ export default function TravelDashboard({
       >
         <div className={cn(
           "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          "bg-white/10 dark:bg-white/10 light:bg-white/80",
-          "border-white/20 dark:border-white/20 light:border-gray-200"
+          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
         )}>
           <div className="flex items-center space-x-3">
             <CheckCircle className="w-8 h-8 text-neon-green" />
             <div>
               <p className={cn(
                 "text-sm transition-colors",
-                "text-white/70 dark:text-white/70 light:text-gray-600"
+                theme === 'dark' ? "text-white/70" : "text-gray-600"
               )}>
                 {language === 'bn' ? 'পেইড বুকিং' : 'Paid Bookings'}
               </p>
               <p className={cn(
                 "text-2xl font-bold transition-colors",
-                "text-white dark:text-white light:text-gray-800"
+                theme === 'dark' ? "text-white" : "text-gray-800"
               )}>
                 {stats.paidBookings}
               </p>
@@ -400,21 +399,20 @@ export default function TravelDashboard({
 
         <div className={cn(
           "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          "bg-white/10 dark:bg-white/10 light:bg-white/80",
-          "border-white/20 dark:border-white/20 light:border-gray-200"
+          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
         )}>
           <div className="flex items-center space-x-3">
             <Clock className="w-8 h-8 text-yellow-400" />
             <div>
               <p className={cn(
                 "text-sm transition-colors",
-                "text-white/70 dark:text-white/70 light:text-gray-600"
+                theme === 'dark' ? "text-white/70" : "text-gray-600"
               )}>
                 {language === 'bn' ? 'আংশিক পেমেন্ট' : 'Partial Payments'}
               </p>
               <p className={cn(
                 "text-2xl font-bold transition-colors",
-                "text-white dark:text-white light:text-gray-800"
+                theme === 'dark' ? "text-white" : "text-gray-800"
               )}>
                 {stats.partialPayments}
               </p>
@@ -424,21 +422,20 @@ export default function TravelDashboard({
 
         <div className={cn(
           "backdrop-blur-md rounded-2xl p-6 border transition-colors",
-          "bg-white/10 dark:bg-white/10 light:bg-white/80",
-          "border-white/20 dark:border-white/20 light:border-gray-200"
+          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
         )}>
           <div className="flex items-center space-x-3">
             <AlertCircle className="w-8 h-8 text-red-400" />
             <div>
               <p className={cn(
                 "text-sm transition-colors",
-                "text-white/70 dark:text-white/70 light:text-gray-600"
+                theme === 'dark' ? "text-white/70" : "text-gray-600"
               )}>
                 {language === 'bn' ? 'পেন্ডিং পেমেন্ট' : 'Pending Payments'}
               </p>
               <p className={cn(
                 "text-2xl font-bold transition-colors",
-                "text-white dark:text-white light:text-gray-800"
+                theme === 'dark' ? "text-white" : "text-gray-800"
               )}>
                 {stats.pendingPayments}
               </p>
@@ -567,7 +564,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-purple to-neon-pink rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <Search className="w-5 h-5" />
-            <span>���ার্চ করুন</span>
+            <span>���ার্��� করুন</span>
           </motion.button>
 
           <motion.button
