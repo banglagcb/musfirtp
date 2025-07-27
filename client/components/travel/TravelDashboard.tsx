@@ -87,7 +87,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "bulk-purchase",
     title: "বাল্ক টিকেট ক্রয়",
-    description: "অগ���রিম টিকেট ক্রয় করুন",
+    description: "অগ্রিম টিকেট ক্রয় করুন",
     icon: ShoppingCart,
     color: "from-emerald-500 to-teal-500",
     gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
@@ -153,7 +153,7 @@ export default function TravelDashboard({
     {
       id: "reports",
       title: t("reports"),
-      description: language === 'bn' ? "বিক্রয় ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
+      description: language === 'bn' ? "বিক্রয�� ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
       icon: TrendingUp,
       color: "from-orange-500 to-red-500",
       gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
@@ -273,11 +273,23 @@ export default function TravelDashboard({
         transition={{ duration: 0.6, delay: 0.2 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
       >
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+        <div className={cn(
+          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+          "bg-white/10 dark:bg-white/10 light:bg-white/80",
+          "border-white/20 dark:border-white/20 light:border-gray-200"
+        )}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-white/70 text-sm">মোট বুকিং</p>
-              <p className="text-2xl font-bold text-white">
+              <p className={cn(
+                "text-sm transition-colors",
+                "text-white/70 dark:text-white/70 light:text-gray-600"
+              )}>
+                {t('totalBookings')}
+              </p>
+              <p className={cn(
+                "text-2xl font-bold transition-colors",
+                "text-white dark:text-white light:text-gray-800"
+              )}>
                 {stats.totalBookings}
               </p>
             </div>
@@ -285,11 +297,23 @@ export default function TravelDashboard({
           </div>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+        <div className={cn(
+          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+          "bg-white/10 dark:bg-white/10 light:bg-white/80",
+          "border-white/20 dark:border-white/20 light:border-gray-200"
+        )}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-white/70 text-sm">আজকের বুকিং</p>
-              <p className="text-2xl font-bold text-white">
+              <p className={cn(
+                "text-sm transition-colors",
+                "text-white/70 dark:text-white/70 light:text-gray-600"
+              )}>
+                {t('todayBookings')}
+              </p>
+              <p className={cn(
+                "text-2xl font-bold transition-colors",
+                "text-white dark:text-white light:text-gray-800"
+              )}>
                 {stats.todayBookings}
               </p>
             </div>
@@ -297,11 +321,23 @@ export default function TravelDashboard({
           </div>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+        <div className={cn(
+          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+          "bg-white/10 dark:bg-white/10 light:bg-white/80",
+          "border-white/20 dark:border-white/20 light:border-gray-200"
+        )}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-white/70 text-sm">মোট আয���</p>
-              <p className="text-xl font-bold text-white">
+              <p className={cn(
+                "text-sm transition-colors",
+                "text-white/70 dark:text-white/70 light:text-gray-600"
+              )}>
+                {t('totalRevenue')}
+              </p>
+              <p className={cn(
+                "text-xl font-bold transition-colors",
+                "text-white dark:text-white light:text-gray-800"
+              )}>
                 {formatCurrency(stats.totalRevenue)}
               </p>
             </div>
