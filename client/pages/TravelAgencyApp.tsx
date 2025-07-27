@@ -381,24 +381,18 @@ export default function TravelAgencyApp() {
         )}
       </motion.div>
 
-      {/* Enhanced Folder Windows */}
-      <AnimatePresence mode="popLayout">
-        {openModals.map((window) => (
-          <FolderWindow
-            key={window.id}
-            title={window.title}
-            isOpen={window.isOpen}
-            onClose={() => closeModal(window.id)}
-            initialState={window.state}
-            zIndex={window.zIndex}
-            onMaximize={() => maximizeWindow(window.id)}
-            onMinimize={() => minimizeWindow(window.id)}
-            resizable={true}
-          >
-            {window.component}
-          </FolderWindow>
-        ))}
-      </AnimatePresence>
+      {/* Modals */}
+      {openModals.map((modal) => (
+        <Modal
+          key={modal.id}
+          title={modal.title}
+          isOpen={modal.isOpen}
+          onClose={() => closeModal(modal.id)}
+          size={modal.size}
+        >
+          {modal.component}
+        </Modal>
+      ))}
 
       {/* Enhanced Loading Animation Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
