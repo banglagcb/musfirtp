@@ -165,9 +165,9 @@ export default function TravelAgencyApp() {
       case "new-booking":
         component = (
           <NewBookingForm
-            onClose={() => closeWindow(cardId)}
+            onClose={() => closeModal(cardId)}
             onSuccess={() => {
-              closeWindow(cardId);
+              closeModal(cardId);
               refreshData();
             }}
           />
