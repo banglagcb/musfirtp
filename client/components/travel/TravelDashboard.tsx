@@ -402,7 +402,7 @@ export default function TravelDashboard({
                 "text-sm transition-colors",
                 theme === 'dark' ? "text-white/70" : "text-gray-600"
               )}>
-                {language === 'bn' ? 'পেইড বুকিং' : 'Paid Bookings'}
+                {language === 'bn' ? 'পেইড বুক��ং' : 'Paid Bookings'}
               </p>
               <p className={cn(
                 "text-2xl font-bold transition-colors",
@@ -574,7 +574,7 @@ export default function TravelDashboard({
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => onCardClick("new-booking")}
+            onClick={() => handleCardClick("new-booking")}
             className="p-4 bg-gradient-to-r from-neon-green to-neon-blue rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <PlusCircle className="w-5 h-5" />
@@ -598,7 +598,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-purple to-neon-pink rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <Search className="w-5 h-5" />
-            <span>{language === 'bn' ? 'সার্চ করু��' : 'Search'}</span>
+            <span>{language === 'bn' ? 'সার্চ করুন' : 'Search'}</span>
           </motion.button>
 
           <motion.button
