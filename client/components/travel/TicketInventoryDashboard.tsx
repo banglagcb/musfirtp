@@ -15,6 +15,7 @@ import {
   Plus,
   Download,
   AlertTriangle,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TicketInventory, TicketInventoryStats } from "@shared/ticket-types";
@@ -82,7 +83,7 @@ export default function TicketInventoryDashboard({
   const handleDeleteInventory = async (inventoryId: string) => {
     if (user.role !== "owner") return;
 
-    if (window.confirm("আপনি কি নিশ্চিত যে এই ইনভেন্টরিটি মুছে ফেলতে চান?")) {
+    if (window.confirm("আপনি কি নিশ্��িত যে এই ইনভেন্টরিটি মুছে ফেলতে চান?")) {
       const success = ticketInventoryService.deleteInventory(inventoryId);
       if (success) {
         loadInventoryData();
@@ -181,7 +182,7 @@ export default function TicketInventoryDashboard({
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  মোট টিকেট
+                  মোট টিকে���
                 </p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
                   {stats.totalPurchasedTickets}
@@ -301,7 +302,7 @@ export default function TicketInventoryDashboard({
                   </th>
                 )}
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
-                  বিক্রিত
+                  বিক্���িত
                 </th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-900 dark:text-white">
                   স্ট্যাটাস
