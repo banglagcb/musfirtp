@@ -234,7 +234,7 @@ export default function NewBookingForm({
         formData.costPrice &&
         formData.costPrice <= 0
       ) {
-        stepErrors.costPrice = "ক্রয়মূল্য ০ এর চেয়ে বেশি হতে হবে";
+        stepErrors.costPrice = "ক্রয়মূল্য ০ এর চেয়ে বেশি হতে ���বে";
       }
 
       if (
@@ -279,8 +279,8 @@ export default function NewBookingForm({
 
     setIsSubmitting(true);
     try {
-      const newBooking: Booking = {
-        id: Date.now().toString(),
+      const bookingData: Booking = {
+        id: editBooking?.id || Date.now().toString(),
         customerName: formData.customerName!,
         customerPhone: formData.customerPhone!,
         customerEmail: formData.customerEmail || "",
@@ -292,14 +292,19 @@ export default function NewBookingForm({
         sellingPrice: formData.sellingPrice!,
         paymentStatus: formData.paymentStatus as "paid" | "partial" | "pending",
         notes: formData.notes || "",
-        createdAt: new Date().toISOString(),
+        createdAt: editBooking?.createdAt || new Date().toISOString(),
+        updatedAt: editBooking ? new Date().toISOString() : undefined,
       };
 
-      dataService.addBooking(newBooking);
+      if (editBooking) {
+        dataService.updateBooking(bookingData);
+      } else {
+        dataService.addBooking(bookingData);
+      }
 
       toast({
         title: "সফল!",
-        description: "নতুন বুকিং সফলভাবে যোগ করা হয়েছে",
+        description: editBooking ? "বুকিং সফলভাবে আপডেট করা হয়েছে" : "নতুন বুকিং সফলভাবে যোগ করা হয়েছে",
       });
 
       onSuccess();
@@ -614,7 +619,7 @@ export default function NewBookingForm({
           className="flex items-center space-x-2 px-6 py-3"
         >
           <X className="w-5 h-5" />
-          <span>{currentStep === 0 ? "বাতিল" : "পূর্ববর্তী"}</span>
+          <span>{currentStep === 0 ? "বাতিল" : "পূর্ববর��তী"}</span>
         </Button>
 
         <div className="text-center">
