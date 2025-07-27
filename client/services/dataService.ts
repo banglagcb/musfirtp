@@ -91,7 +91,7 @@ class DataService {
           passportNumber: "BE3456789",
           flightDate: "2024-02-25",
           route: "ঢাকা - চট্টগ্রাম",
-          airline: "ই��এস-বাংলা এয়ারলাইনস",
+          airline: "ইউএস-বাংলা এয়ারলাইনস",
           costPrice: 6000,
           sellingPrice: 7500,
           paymentStatus: "pending",
@@ -231,9 +231,11 @@ class DataService {
     const bookings = this.getBookings();
     const today = new Date().toISOString().split("T")[0];
 
-    const todayBookings = bookings.filter(
-      (booking) => booking.bookingDate === today,
-    );
+    const todayBookings = bookings.filter((booking) => {
+      const bookingDate = booking.createdAt ? new Date(booking.createdAt).toISOString().split("T")[0] : today;
+      return bookingDate === today;
+    });
+
     const paidBookings = bookings.filter(
       (booking) => booking.paymentStatus === "paid",
     );
@@ -244,15 +246,22 @@ class DataService {
       (booking) => booking.paymentStatus === "partial",
     );
 
-    const totalRevenue = bookings.reduce(
-      (sum, booking) => sum + booking.paidAmount,
-      0,
-    );
-    const totalCost = bookings.reduce((sum, booking) => {
-      if (booking.paymentStatus === "paid") return sum + booking.purchasePrice;
+    const totalRevenue = bookings.reduce((sum, booking) => {
+      if (booking.paymentStatus === "paid") {
+        return sum + (booking.sellingPrice || 0);
+      }
       if (booking.paymentStatus === "partial") {
-        const percentage = booking.paidAmount / booking.salePrice;
-        return sum + booking.purchasePrice * percentage;
+        return sum + (booking.sellingPrice || 0) * 0.5; // Assume 50% paid for partial
+      }
+      return sum;
+    }, 0);
+
+    const totalCost = bookings.reduce((sum, booking) => {
+      if (booking.paymentStatus === "paid") {
+        return sum + (booking.costPrice || 0);
+      }
+      if (booking.paymentStatus === "partial") {
+        return sum + (booking.costPrice || 0) * 0.5; // Assume 50% cost for partial
       }
       return sum;
     }, 0);
@@ -350,7 +359,7 @@ class DataService {
             ? "পেইড"
             : booking.paymentStatus === "pending"
               ? "পেন্ডিং"
-              : "আ���শিক",
+              : "আংশিক",
           booking.paidAmount,
           booking.bookingDate,
           booking.notes || "",
