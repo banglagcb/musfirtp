@@ -44,7 +44,7 @@ const airlines = [
   "ফ্লাইদুবাই",
   "ইন্ডিগো",
   "মালয়েশিয়া এয়ারলাইনস",
-  "থাই এয়ারওয়েজ",
+  "���াই এয়ারওয়েজ",
   "তুর্কিশ এয়ারলাইনস",
   "এয়ার এশিয়া",
   "নোভো এয়ার",
@@ -197,10 +197,7 @@ export default function NewBookingForm({
     },
   ];
 
-  const profit = (formData.sellingPrice || 0) - (formData.costPrice || 0);
-  const profitPercentage = formData.costPrice
-    ? ((profit / formData.costPrice) * 100).toFixed(1)
-    : "0";
+  // Profit calculations are now handled in useEffect above
 
   const validateStep = (stepIndex: number) => {
     const section = formSections[stepIndex];
