@@ -90,35 +90,50 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       },
     };
 
-    // Smoother container variants
+    // Flower blooming animation variants from center
     const containerVariants = {
       hidden: {
         opacity: 0,
-        scale: 0.85,
-        y: 40,
-        filter: "blur(8px)",
+        scale: 0.1,
+        rotate: -180,
+        filter: "blur(20px)",
+        borderRadius: "50%",
       },
       visible: {
         opacity: 1,
         scale: 1,
-        y: 0,
+        rotate: 0,
         filter: "blur(0px)",
+        borderRadius: windowState === "fullscreen" ? "0px" : "24px",
         transition: {
           type: "spring",
-          stiffness: 300,
-          damping: 30,
+          stiffness: 200,
+          damping: 25,
           mass: 0.8,
-          duration: 0.5,
+          duration: 0.8,
+          opacity: { duration: 0.6, ease: "easeOut" },
+          scale: {
+            type: "spring",
+            stiffness: 180,
+            damping: 20,
+            duration: 0.9
+          },
+          rotate: { duration: 0.8, ease: "easeInOut" },
+          filter: { duration: 0.6, ease: "easeOut" },
+          borderRadius: { duration: 0.5, ease: "easeInOut" }
         },
       },
       exit: {
         opacity: 0,
-        scale: 0.9,
-        y: -20,
-        filter: "blur(4px)",
+        scale: 0.1,
+        rotate: 180,
+        filter: "blur(15px)",
+        borderRadius: "50%",
         transition: {
-          duration: 0.3,
+          duration: 0.4,
           ease: [0.25, 0.46, 0.45, 0.94],
+          scale: { duration: 0.5, ease: "easeIn" },
+          rotate: { duration: 0.4, ease: "easeInOut" }
         },
       },
     };
