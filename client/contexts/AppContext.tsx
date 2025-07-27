@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
 
 // Theme types
 export type Theme = 'light' | 'dark';
@@ -47,10 +47,10 @@ export const translations = {
     dashboard: 'ড্যাশবোর্ড',
     bookings: 'বুকিং লিস্ট',
     newBooking: 'নতুন বুকিং',
-    inventory: 'টিকেট ইনভেন্টরি',
+    inventory: 'টিকেট ইনভে���্টরি',
     bulkPurchase: 'বাল্ক টিকেট ক্রয়',
     reports: 'রিপোর্ট',
-    settings: 'সেটিংস',
+    settings: '��েটিংস',
     
     // User
     owner: 'মালিক',
