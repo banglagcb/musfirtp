@@ -52,7 +52,7 @@ export default function TravelAgencyApp() {
           setUser(validUser);
           setAppState("dashboard");
           setBreadcrumbs([
-            { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
+            { label: "ড্যাশ��োর্ড", path: "/dashboard", isActive: true },
           ]);
         } else {
           localStorage.removeItem("air_musafir_user");
@@ -161,6 +161,7 @@ export default function TravelAgencyApp() {
       case "new-booking":
         component = (
           <NewBookingForm
+            user={user!}
             onClose={() => closeModal(cardId)}
             onSuccess={() => {
               closeModal(cardId);
