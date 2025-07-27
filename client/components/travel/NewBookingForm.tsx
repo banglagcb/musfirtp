@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Save, X, User, Phone, Mail, Passport, Calendar, MapPin, Plane, DollarSign, CreditCard, AlertCircle, Calculator } from "lucide-react";
+import { Save, X, User, Phone, Mail, FileText, Calendar, MapPin, Plane, DollarSign, CreditCard, AlertCircle, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,7 +19,7 @@ interface NewBookingFormProps {
 const airlines = [
   "বিমান বাংলাদেশ এয়ারলাইনস",
   "এমিরেটস",
-  "সিঙ্গাপুর এয়ারলাইনস",
+  "সিঙ্���াপুর এয়ারলাইনস",
   "কাতার এয়ারওয়েজ",
   "ফ্লাইদুবাই",
   "ইন্ডিগো",
@@ -363,7 +363,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
                       "h-12 bg-white/50 dark:bg-gray-700/50",
                       errors[field.key] && "border-red-500"
                     )}>
-                      <SelectValue placeholder="পেমেন্ট স্ট্যাটাস নির্বাচ��� করুন" />
+                      <SelectValue placeholder="পেমেন্ট স্ট্যাটাস নির্বাচন করুন" />
                     </SelectTrigger>
                     <SelectContent>
                       {paymentStatuses.map((status) => (
