@@ -30,16 +30,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
-    include: [
-      "react",
-      "react-dom",
-      "framer-motion",
-      "lucide-react",
-      "@radix-ui/react-dialog",
-      "@radix-ui/react-popover",
-      "@radix-ui/react-select",
-    ],
-    exclude: ["@react-three/fiber", "@react-three/drei"],
+    include: ["react", "react-dom", "framer-motion", "lucide-react"],
   },
 }));
 
