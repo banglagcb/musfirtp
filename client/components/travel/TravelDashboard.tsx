@@ -160,7 +160,7 @@ export default function TravelDashboard({
     },
     {
       id: "export-data",
-      title: language === 'bn' ? "ডেটা এক্সপোর্ট" : "Data Export",
+      title: language === 'bn' ? "ডেটা এক্সপো���্ট" : "Data Export",
       description: language === 'bn' ? "CSV/Excel ফাইলে ডাউনলোড করুন" : "Download as CSV/Excel files",
       icon: DollarSign,
       color: "from-green-500 to-teal-500",
@@ -345,11 +345,23 @@ export default function TravelDashboard({
           </div>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+        <div className={cn(
+          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+          "bg-white/10 dark:bg-white/10 light:bg-white/80",
+          "border-white/20 dark:border-white/20 light:border-gray-200"
+        )}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-white/70 text-sm">মোট মুনাফা</p>
-              <p className="text-xl font-bold text-white">
+              <p className={cn(
+                "text-sm transition-colors",
+                "text-white/70 dark:text-white/70 light:text-gray-600"
+              )}>
+                {t('totalProfit')}
+              </p>
+              <p className={cn(
+                "text-xl font-bold transition-colors",
+                "text-white dark:text-white light:text-gray-800"
+              )}>
                 {formatCurrency(stats.totalProfit)}
               </p>
             </div>
@@ -365,36 +377,72 @@ export default function TravelDashboard({
         transition={{ duration: 0.6, delay: 0.3 }}
         className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
       >
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+        <div className={cn(
+          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+          "bg-white/10 dark:bg-white/10 light:bg-white/80",
+          "border-white/20 dark:border-white/20 light:border-gray-200"
+        )}>
           <div className="flex items-center space-x-3">
             <CheckCircle className="w-8 h-8 text-neon-green" />
             <div>
-              <p className="text-white/70 text-sm">পেইড বুকিং</p>
-              <p className="text-2xl font-bold text-white">
+              <p className={cn(
+                "text-sm transition-colors",
+                "text-white/70 dark:text-white/70 light:text-gray-600"
+              )}>
+                {language === 'bn' ? 'পেইড বুকিং' : 'Paid Bookings'}
+              </p>
+              <p className={cn(
+                "text-2xl font-bold transition-colors",
+                "text-white dark:text-white light:text-gray-800"
+              )}>
                 {stats.paidBookings}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+        <div className={cn(
+          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+          "bg-white/10 dark:bg-white/10 light:bg-white/80",
+          "border-white/20 dark:border-white/20 light:border-gray-200"
+        )}>
           <div className="flex items-center space-x-3">
             <Clock className="w-8 h-8 text-yellow-400" />
             <div>
-              <p className="text-white/70 text-sm">আংশিক পেমেন্ট</p>
-              <p className="text-2xl font-bold text-white">
+              <p className={cn(
+                "text-sm transition-colors",
+                "text-white/70 dark:text-white/70 light:text-gray-600"
+              )}>
+                {language === 'bn' ? 'আংশিক পেমেন্ট' : 'Partial Payments'}
+              </p>
+              <p className={cn(
+                "text-2xl font-bold transition-colors",
+                "text-white dark:text-white light:text-gray-800"
+              )}>
                 {stats.partialPayments}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+        <div className={cn(
+          "backdrop-blur-md rounded-2xl p-6 border transition-colors",
+          "bg-white/10 dark:bg-white/10 light:bg-white/80",
+          "border-white/20 dark:border-white/20 light:border-gray-200"
+        )}>
           <div className="flex items-center space-x-3">
             <AlertCircle className="w-8 h-8 text-red-400" />
             <div>
-              <p className="text-white/70 text-sm">পেন্ডিং পেমেন্ট</p>
-              <p className="text-2xl font-bold text-white">
+              <p className={cn(
+                "text-sm transition-colors",
+                "text-white/70 dark:text-white/70 light:text-gray-600"
+              )}>
+                {language === 'bn' ? 'পেন্ডিং পেমেন্ট' : 'Pending Payments'}
+              </p>
+              <p className={cn(
+                "text-2xl font-bold transition-colors",
+                "text-white dark:text-white light:text-gray-800"
+              )}>
                 {stats.pendingPayments}
               </p>
             </div>
