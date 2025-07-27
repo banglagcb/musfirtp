@@ -116,12 +116,12 @@ class DataService {
     return bookings.find(booking => booking.id === id) || null;
   }
 
-  addBooking(booking: Omit<Booking, 'id' | 'bookingDate'>): string {
+  addBooking(booking: Omit<Booking, 'id' | 'createdAt'>): string {
     const bookings = this.getBookings();
     const newBooking: Booking = {
       ...booking,
       id: Date.now().toString(),
-      bookingDate: new Date().toISOString().split('T')[0]
+      createdAt: new Date().toISOString()
     };
     bookings.push(newBooking);
     localStorage.setItem(this.BOOKINGS_KEY, JSON.stringify(bookings));
