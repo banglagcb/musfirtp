@@ -105,7 +105,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "settings",
     title: "সেটিংস",
-    description: "সিস্টেম সেটিংস ও কনফিগারেশন",
+    description: "সিস্টেম সেটিংস ও ক���ফিগারেশন",
     icon: Calendar,
     color: "from-red-500 to-pink-500",
     gradient: "bg-gradient-to-br from-red-500/20 to-pink-500/20",
@@ -155,7 +155,7 @@ export default function TravelDashboard({
     {
       id: "search-filter",
       title: language === 'bn' ? "সার্চ ও ফিল্টার" : "Search & Filter",
-      description: language === 'bn' ? "বু��িং খুঁজুন ও ফিল্টার করুন" : "Search and filter bookings",
+      description: language === 'bn' ? "বুকিং খুঁজুন ও ফিল্টার করুন" : "Search and filter bookings",
       icon: Search,
       color: "from-neon-purple to-neon-pink",
       gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20",
@@ -207,34 +207,9 @@ export default function TravelDashboard({
     onCardClick(cardId);
   }, [onCardClick]);
 
-  // Memoized animation variants for better performance
-  const containerVariants = useMemo(() => ({
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  }), []);
-
-  const cardVariants = useMemo(() => ({
-    hidden: {
-      opacity: 0,
-      y: 50,
-      scale: 0.8,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 25,
-      },
-    },
-  }), []);
+  // Optimized animation variants for better performance
+  const containerVariants = useMemo(() => getOptimizedVariants(staggeredContainer), []);
+  const cardVariants = useMemo(() => getOptimizedVariants(scaleIn), []);
 
   // Memoized currency formatter for better performance
   const formatCurrency = useMemo(() => {
