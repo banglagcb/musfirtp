@@ -59,8 +59,6 @@ export default defineConfig(({ mode }) => ({
     react({
       // Enable Fast Refresh for better development experience
       fastRefresh: true,
-      // Optimize bundle size
-      jsxImportSource: '@emotion/react',
     }),
     expressPlugin()
   ],
