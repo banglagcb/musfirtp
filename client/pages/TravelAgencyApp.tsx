@@ -43,6 +43,10 @@ function TravelAgencyAppInner() {
 
   // Initialize user session on component mount
   useEffect(() => {
+    // Performance monitoring for app initialization
+    const monitor = PerformanceMonitor.getInstance();
+    const endTimer = monitor.startTimer('app-initialization');
+
     const savedUser = localStorage.getItem("air_musafir_user");
     if (savedUser) {
       try {
@@ -65,6 +69,13 @@ function TravelAgencyAppInner() {
         localStorage.removeItem("air_musafir_user");
       }
     }
+
+    // Bundle analysis in production
+    if (process.env.NODE_ENV === 'production') {
+      setTimeout(() => analyzeBundleUsage(), 1000);
+    }
+
+    return endTimer;
   }, []);
 
 
