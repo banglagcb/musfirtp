@@ -39,14 +39,14 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "new-booking",
     title: "নতুন বুকিং",
-    description: "নতুন ফ্���াইট বুকিং যোগ করুন",
+    description: "নতুন ফ্লাইট বুকিং যোগ করুন",
     icon: PlusCircle,
     color: "from-neon-green to-neon-blue",
     gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
   },
   {
     id: "bookings-list",
-    title: "বুকিং লিস্ট",
+    title: "ব���কিং লিস্ট",
     description: "সব বুকিং দে���ুন ও ম্যানেজ করুন",
     icon: FileText,
     color: "from-neon-blue to-neon-purple",
@@ -529,7 +529,10 @@ export default function TravelDashboard({
               </div>
 
               {/* Glow Effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className={cn(
+                "absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+                theme === 'dark' ? "via-white/5" : "via-gray-900/5"
+              )} />
             </motion.div>
           ))}
       </motion.div>
