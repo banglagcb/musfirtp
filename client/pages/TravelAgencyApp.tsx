@@ -321,7 +321,7 @@ export default function TravelAgencyApp() {
               className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
               title="সেটিংস"
             >
-              <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
+              <SettingsIcon className="w-4 h-4 lg:w-5 lg:h-5" />
             </button>
 
             {/* Dark Mode Toggle */}
