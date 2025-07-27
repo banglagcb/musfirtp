@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, LogOut, RefreshCw, Settings } from "lucide-react";
+import { Moon, Sun, LogOut, RefreshCw, Settings as SettingsIcon } from "lucide-react";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
 import Window from "@/components/Window";
