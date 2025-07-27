@@ -158,7 +158,10 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-4xl font-bold text-white mb-2"
+          className={cn(
+            "text-4xl font-bold mb-2",
+            theme === 'dark' ? "text-white" : "text-gray-800"
+          )}
         >
           Air-Musafir
         </motion.h1>
@@ -166,17 +169,22 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-2xl font-semibold text-white/90 mb-2"
+          className={cn(
+            "text-2xl font-semibold mb-2",
+            theme === 'dark' ? "text-white/90" : "text-gray-700"
+          )}
         >
-          ট্রাভেল ম্যানেজমেন্ট সিস্টেম
+          {language === 'bn' ? 'ট্রাভেল ম্যানেজমেন্ট সিস্টেম' : 'Travel Management System'}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="text-white/70"
+          className={cn(
+            theme === 'dark' ? "text-white/70" : "text-gray-600"
+          )}
         >
-          আপনার লগইন তথ্য প্রবেশ করান
+          {language === 'bn' ? 'আপনার লগইন তথ্য প্রবেশ করান' : 'Enter your login credentials'}
         </motion.p>
       </div>
 
@@ -317,7 +325,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         transition={{ delay: 1 }}
         className="mt-6 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10"
       >
-        <p className="text-sm text-white/60 mb-2">ডেমো লগইন তথ্য:</p>
+        <p className="text-sm text-white/60 mb-2">ডেমো লগ��ন তথ্য:</p>
         <div className="grid grid-cols-1 gap-2">
           <div>
             <p className="text-sm text-white/80"><strong>মালিক:</strong> admin / admin123</p>
