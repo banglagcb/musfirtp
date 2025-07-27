@@ -306,16 +306,21 @@ function TravelAgencyAppInner() {
 
   if (appState === "login") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 lg:p-6 relative overflow-hidden">
+      <div className={cn(
+        "min-h-screen flex items-center justify-center p-4 lg:p-6 relative overflow-hidden transition-colors duration-300",
+        theme === 'dark'
+          ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+          : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+      )}>
         {/* Enhanced Animated Background */}
         <div className="absolute inset-0">
-          {[...Array(30)].map((_, i) => (
+          {[...Array(isMobile ? 15 : 30)].map((_, i) => (
             <motion.div
               key={i}
               animate={{
                 x: [0, Math.random() * 200 - 100],
                 y: [0, Math.random() * 200 - 100],
-                opacity: [0, 0.15, 0],
+                opacity: [0, theme === 'dark' ? 0.15 : 0.1, 0],
                 scale: [0, 1.5, 0],
               }}
               transition={{
@@ -324,7 +329,10 @@ function TravelAgencyAppInner() {
                 delay: Math.random() * 3,
                 ease: "easeInOut",
               }}
-              className="absolute w-2 h-2 lg:w-3 lg:h-3 bg-white rounded-full"
+              className={cn(
+                "absolute w-2 h-2 lg:w-3 lg:h-3 rounded-full",
+                theme === 'dark' ? "bg-white" : "bg-purple-500"
+              )}
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -332,23 +340,6 @@ function TravelAgencyAppInner() {
             />
           ))}
         </div>
-
-        {/* Dark Mode Toggle */}
-        <motion.button
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={toggleDarkMode}
-          className="absolute top-4 lg:top-6 right-4 lg:right-6 p-3 lg:p-4 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors"
-        >
-          {isDarkMode ? (
-            <Sun className="w-5 h-5 lg:w-6 lg:h-6" />
-          ) : (
-            <Moon className="w-5 h-5 lg:w-6 lg:h-6" />
-          )}
-        </motion.button>
 
         {/* Login Form */}
         <TravelLoginForm onLoginSuccess={handleLoginSuccess} />
