@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, LogOut, RefreshCw } from "lucide-react";
+import { Moon, Sun, LogOut, RefreshCw, Settings } from "lucide-react";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
 import Window from "@/components/Window";
@@ -130,7 +130,7 @@ export default function TravelAgencyApp() {
     const cardTitles: Record<string, string> = {
       "new-booking": "নতুন ব��কিং",
       "bookings-list": "বুকিং লিস্ট",
-      "search-filter": "সার্চ ও ���িল্টার",
+      "search-filter": "��ার্চ ও ���িল্টার",
       reports: "রিপোর্ট",
       "export-data": "ডেটা এক��সপোর্ট",
       settings: "সেটিংস",
