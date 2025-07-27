@@ -18,6 +18,7 @@ import { AppProvider, useApp, useTranslation } from "@/contexts/AppContext";
 import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
 import dataService from "@/services/dataService";
+import { PerformanceMonitor, analyzeBundleUsage } from "@/utils/performance";
 
 type AppState = "login" | "dashboard";
 
@@ -207,7 +208,7 @@ function TravelAgencyAppInner() {
             onExportData={() => {
               openModal(
                 "export-data",
-                "ডেটা এক্সপোর্ট",
+                "ডেটা এক্সপোর্��",
                 <DataExport onClose={() => closeModal("export-data")} />,
               );
             }}
