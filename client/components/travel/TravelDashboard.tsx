@@ -59,7 +59,7 @@ const dashboardCards: DashboardCard[] = [
   },
   {
     id: "reports",
-    title: "রিপোর্ট",
+    title: "রিপো��্ট",
     description: "বিক্রয় ও মুনাফার রিপোর্ট দেখুন",
     icon: TrendingUp,
     color: "from-orange-500 to-red-500",
@@ -277,20 +277,14 @@ export default function TravelDashboard({
             variants={cardVariants}
             whileHover={{
               scale: 1.08,
-              y: -15,
-              rotateX: 5,
+              y: -10,
               transition: {
                 type: "spring",
                 stiffness: 300,
-                damping: 20,
-                duration: 0.4,
+                damping: 25,
               },
             }}
-            whileTap={{
-              scale: 0.98,
-              rotateX: 0,
-              transition: { duration: 0.1 },
-            }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => onCardClick(card.id)}
             className={cn(
               "relative group cursor-pointer rounded-2xl p-6 border border-white/20",
