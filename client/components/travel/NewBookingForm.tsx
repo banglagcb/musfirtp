@@ -67,7 +67,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
         { key: "customerName", label: "গ্রাহকের পূর্ণ নাম", type: "input", icon: User, required: true, placeholder: "যেমন: আহমেদ রহমান" },
         { key: "customerPhone", label: "মোবাইল নম্বর", type: "input", icon: Phone, required: true, placeholder: "01XXXXXXXXX" },
         { key: "customerEmail", label: "ইমেইল ঠিকানা", type: "input", icon: Mail, placeholder: "example@email.com" },
-        { key: "passportNumber", label: "পাসপোর্ট নম্বর", type: "input", icon: Passport, placeholder: "A12345678" },
+        { key: "passportNumber", label: "পাসপোর্ট নম্বর", type: "input", icon: FileText, placeholder: "A12345678" },
       ],
     },
     {
