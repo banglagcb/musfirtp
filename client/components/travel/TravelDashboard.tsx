@@ -67,7 +67,7 @@ const dashboardCards: DashboardCard[] = [
   },
   {
     id: "export-data",
-    title: "ডেটা এক্সপোর্ট",
+    title: "ডেটা এক্সপো��্ট",
     description: "CSV/Excel ফাইলে ডাউনলোড করুন",
     icon: DollarSign,
     color: "from-green-500 to-teal-500",
@@ -255,19 +255,34 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
           <motion.div
             key={card.id}
             variants={cardVariants}
-            whileHover={{ 
-              scale: 1.05,
-              y: -10,
-              transition: { type: "spring", stiffness: 400, damping: 25 }
+            whileHover={{
+              scale: 1.08,
+              y: -15,
+              rotateX: 5,
+              transition: {
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+                duration: 0.4
+              }
             }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{
+              scale: 0.98,
+              rotateX: 0,
+              transition: { duration: 0.1 }
+            }}
             onClick={() => onCardClick(card.id)}
             className={cn(
               "relative group cursor-pointer rounded-2xl p-6 border border-white/20",
-              "bg-white/10 backdrop-blur-md hover:bg-white/15",
-              "transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/25",
-              "overflow-hidden"
+              "bg-white/10 backdrop-blur-md hover:bg-white/20",
+              "transition-all duration-500 hover:shadow-3xl hover:shadow-purple-500/40",
+              "overflow-hidden",
+              "transform-gpu perspective-1000",
+              "hover:border-white/40"
             )}
+            style={{
+              transformStyle: "preserve-3d",
+            }}
           >
             {/* Background Gradient */}
             <div className={cn(
