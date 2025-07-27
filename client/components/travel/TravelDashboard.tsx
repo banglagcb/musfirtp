@@ -155,7 +155,7 @@ export default function TravelDashboard({
     {
       id: "reports",
       title: t("reports"),
-      description: language === 'bn' ? "বিক্রয় ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
+      description: language === 'bn' ? "বিক্রয় ও মুনাফার রিপোর্ট দেখ���ন" : "View sales and profit reports",
       icon: TrendingUp,
       color: "from-orange-500 to-red-500",
       gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
@@ -402,7 +402,7 @@ export default function TravelDashboard({
                 "text-sm transition-colors",
                 theme === 'dark' ? "text-white/70" : "text-gray-600"
               )}>
-                {language === 'bn' ? 'পেইড বুক��ং' : 'Paid Bookings'}
+                {language === 'bn' ? 'পেইড বুকিং' : 'Paid Bookings'}
               </p>
               <p className={cn(
                 "text-2xl font-bold transition-colors",
@@ -584,7 +584,7 @@ export default function TravelDashboard({
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => onCardClick("bookings-list")}
+            onClick={() => handleCardClick("bookings-list")}
             className="p-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <FileText className="w-5 h-5" />
