@@ -14,7 +14,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AIRLINES, ROUTES, User } from "@shared/travel-types";
+import { AIRLINES, ROUTES, User, Booking } from "@shared/travel-types";
 import dataService from "@/services/dataService";
 import ticketInventoryService from "@/services/ticketInventoryService";
 import TicketDetails from "./TicketDetails";
@@ -381,7 +381,7 @@ export default function NewBookingForm({
             >
               <h2 className="text-xl font-semibold text-white mb-4 flex items-center space-x-2">
                 <Plane className="w-6 h-6" />
-                <span>��্লাইট তথ্য</span>
+                <span>��্��াইট তথ্য</span>
               </h2>
 
               <div className="space-y-4">
