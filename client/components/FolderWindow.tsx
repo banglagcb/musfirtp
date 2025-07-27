@@ -194,7 +194,7 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       <AnimatePresence mode="wait">
         {isOpen && (
           <>
-            {/* Enhanced Backdrop - only show for popup mode */}
+            {/* Enhanced Backdrop with flower blooming effect - only show for popup mode */}
             {windowState === "popup" && (
               <motion.div
                 variants={backdropVariants}
@@ -204,7 +204,36 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
                 className="fixed inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/30"
                 style={{ zIndex: zIndex - 1 }}
                 onClick={onClose}
-              />
+              >
+                {/* Flower petal effects radiating from center */}
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-32 h-32 rounded-full"
+                    style={{
+                      background: `conic-gradient(from ${i * 45}deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.05), transparent)`,
+                      left: "50%",
+                      top: "50%",
+                      transform: "translate(-50%, -50%)",
+                    }}
+                    initial={{
+                      scale: 0,
+                      rotate: i * 45,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      scale: [0, 2, 1.5],
+                      rotate: i * 45 + 360,
+                      opacity: [0, 0.6, 0.2],
+                    }}
+                    transition={{
+                      duration: 1.2,
+                      delay: i * 0.1,
+                      ease: "easeOut",
+                    }}
+                  />
+                ))}
+              </motion.div>
             )}
 
             {/* Main Window with enhanced animations */}
