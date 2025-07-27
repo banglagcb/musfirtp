@@ -196,6 +196,7 @@ export default function TravelAgencyApp() {
       case "search-filter":
         component = (
           <BookingsList
+            user={user!}
             onClose={() => closeModal(cardId)}
             onEdit={(booking: Booking) => {
               closeModal(cardId);
