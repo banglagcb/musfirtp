@@ -302,9 +302,7 @@ function TravelAgencyAppInner() {
     }
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+
 
   if (appState === "login") {
     return (
