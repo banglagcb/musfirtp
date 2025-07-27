@@ -172,6 +172,7 @@ export default function TravelAgencyApp() {
       case "bookings-list":
         component = (
           <BookingsList
+            user={user!}
             onClose={() => closeModal(cardId)}
             onEdit={(booking: Booking) => {
               closeModal(cardId);
@@ -228,7 +229,7 @@ export default function TravelAgencyApp() {
               closeModal(cardId);
               openModal(
                 "bulk-purchase",
-                "বাল্ক ট��কেট ক্রয়",
+                "বাল্ক টিকেট ক্রয়",
                 <BulkTicketPurchaseForm
                   onClose={() => closeModal("bulk-purchase")}
                   onSuccess={() => {
