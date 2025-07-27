@@ -170,20 +170,35 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
             borderRadius: "0px",
             transform: "none",
           };
-        default: // popup
-          const safeWidth = Math.min(900, viewportSize.width * 0.85);
-          const safeHeight = Math.min(700, viewportSize.height * 0.8);
+        default: // popup - takes 2/4 (half) of screen like normal computer folder
+          // Take exactly half (2/4) of the screen space
+          const folderWidth = Math.min(viewportSize.width * 0.5, 800);
+          const folderHeight = Math.min(viewportSize.height * 0.5, 600);
+
+          // Mobile responsiveness - use more space on small screens
+          let finalWidth = folderWidth;
+          let finalHeight = folderHeight;
+
+          if (viewportSize.width < 768) {
+            finalWidth = Math.min(viewportSize.width * 0.9, 600);
+            finalHeight = Math.min(viewportSize.height * 0.7, 500);
+          } else if (viewportSize.width < 1024) {
+            finalWidth = Math.min(viewportSize.width * 0.65, 700);
+            finalHeight = Math.min(viewportSize.height * 0.6, 550);
+          }
 
           return {
             ...baseStyles,
             top: "50%",
             left: "50%",
-            width: `${safeWidth}px`,
-            height: `${safeHeight}px`,
-            borderRadius: "24px",
+            width: `${finalWidth}px`,
+            height: `${finalHeight}px`,
+            borderRadius: "16px",
             transform: "translate(-50%, -50%)",
             maxWidth: `${viewportSize.width - 60}px`,
             maxHeight: `${viewportSize.height - 60}px`,
+            minWidth: "400px",
+            minHeight: "300px",
           };
       }
     };
