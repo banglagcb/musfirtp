@@ -57,7 +57,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "search-filter",
     title: "সার্চ ও ফ���ল্টার",
-    description: "���ুকিং খ��ঁ���ুন ও ফিল্টার করুন",
+    description: "���ুকিং খ��ঁজুন ও ফিল্টার করুন",
     icon: Search,
     color: "from-neon-purple to-neon-pink",
     gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20",
@@ -72,7 +72,7 @@ const dashboardCards: DashboardCard[] = [
   },
   {
     id: "export-data",
-    title: "ডেটা এক্সপো��্ট",
+    title: "��েটা এক্সপো��্ট",
     description: "CSV/Excel ফাইলে ডাউনলোড করুন",
     icon: DollarSign,
     color: "from-green-500 to-teal-500",
@@ -89,7 +89,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "bulk-purchase",
     title: "বাল্ক টিকেট ক্রয়",
-    description: "অগ্রিম টিকেট ক্��য় করুন",
+    description: "অগ্রিম টিকেট ক্রয় করুন",
     icon: ShoppingCart,
     color: "from-emerald-500 to-teal-500",
     gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
@@ -223,12 +223,21 @@ export default function TravelDashboard({
     },
   }), []);
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("bn-BD", {
+  // Memoized currency formatter for better performance
+  const formatCurrency = useMemo(() => {
+    const formatter = new Intl.NumberFormat("bn-BD", {
       style: "currency",
       currency: "BDT",
-    }).format(amount);
-  };
+    });
+    return (amount: number) => formatter.format(amount);
+  }, []);
+
+  // Performance monitoring
+  useEffect(() => {
+    const monitor = PerformanceMonitor.getInstance();
+    const endTimer = monitor.startTimer('dashboard-render');
+    return endTimer;
+  }, []);
 
   return (
     <div className={cn(
