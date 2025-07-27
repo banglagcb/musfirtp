@@ -100,7 +100,7 @@ export default function TravelAgencyApp() {
 
     setUser(null);
     setAppState("login");
-    setOpenWindows([]);
+    setOpenModals([]);
     setBreadcrumbs([]);
   };
 
@@ -253,7 +253,7 @@ export default function TravelAgencyApp() {
       setBreadcrumbs([
         { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
       ]);
-      setOpenWindows([]);
+      setOpenModals([]);
       refreshData();
     }
   };
@@ -262,8 +262,7 @@ export default function TravelAgencyApp() {
     setIsDarkMode(!isDarkMode);
   };
 
-  // Check for fullscreen windows
-  const hasFullscreenWindow = openModals.some((w) => w.state === "fullscreen");
+
 
   if (appState === "login") {
     return (
