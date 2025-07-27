@@ -63,7 +63,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "reports",
     title: "রিপোর্ট",
-    description: "বিক্রয় ও মুনাফার ���িপোর্ট দেখুন",
+    description: "বিক্রয় ও মুনাফার রিপোর্ট দেখুন",
     icon: TrendingUp,
     color: "from-orange-500 to-red-500",
     gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
@@ -504,10 +504,16 @@ export default function TravelDashboard({
                 </motion.div>
 
                 {/* Title & Description */}
-                <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-white transition-colors">
+                <h3 className={cn(
+                  "text-xl font-semibold mb-2 transition-colors",
+                  theme === 'dark' ? "text-white group-hover:text-white" : "text-gray-800 group-hover:text-gray-900"
+                )}>
                   {card.title}
                 </h3>
-                <p className="text-white/70 text-sm mb-4 group-hover:text-white/90 transition-colors">
+                <p className={cn(
+                  "text-sm mb-4 transition-colors",
+                  theme === 'dark' ? "text-white/70 group-hover:text-white/90" : "text-gray-600 group-hover:text-gray-700"
+                )}>
                   {card.description}
                 </p>
 
