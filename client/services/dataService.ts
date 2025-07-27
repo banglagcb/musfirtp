@@ -126,16 +126,38 @@ class DataService {
     return bookings.find((booking) => booking.id === id) || null;
   }
 
-  addBooking(booking: Omit<Booking, "id" | "createdAt">): string {
+  addBooking(booking: Booking | Omit<Booking, "id" | "createdAt">): string {
     const bookings = this.getBookings();
     const newBooking: Booking = {
       ...booking,
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString(),
+      id: 'id' in booking ? booking.id : Date.now().toString(),
+      createdAt: 'createdAt' in booking ? booking.createdAt : new Date().toISOString(),
     };
+
+    // Remove existing booking if it has an ID (for updates)
+    if ('id' in booking && booking.id) {
+      const index = bookings.findIndex(b => b.id === booking.id);
+      if (index !== -1) {
+        bookings[index] = newBooking;
+        localStorage.setItem(this.BOOKINGS_KEY, JSON.stringify(bookings));
+        return newBooking.id;
+      }
+    }
+
     bookings.push(newBooking);
     localStorage.setItem(this.BOOKINGS_KEY, JSON.stringify(bookings));
     return newBooking.id;
+  }
+
+  updateBooking(booking: Booking): boolean {
+    const bookings = this.getBookings();
+    const index = bookings.findIndex((b) => b.id === booking.id);
+    if (index !== -1) {
+      bookings[index] = { ...booking, updatedAt: new Date().toISOString() };
+      localStorage.setItem(this.BOOKINGS_KEY, JSON.stringify(bookings));
+      return true;
+    }
+    return false;
   }
 
   updateBooking(id: string, updatedBooking: Partial<Booking>): boolean {
