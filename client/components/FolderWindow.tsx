@@ -225,10 +225,9 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
               )}
               style={{
                 ...getWindowStyles(),
-                minHeight: windowState === "popup" ? "400px" : "100%",
-                maxHeight: windowState === "popup" ? "85vh" : "100%",
-                willChange: "transform, opacity", // Performance optimization
+                willChange: "transform, opacity, scale, rotate", // Performance optimization
                 containIntrinsicSize: "auto auto", // Better layout containment
+                transformOrigin: "center center", // Ensure blooming from center
               }}
               drag={windowState === "popup" && showControls && !isDragging}
               dragMomentum={false}
