@@ -69,7 +69,8 @@ function TravelAgencyAppInner() {
 
 
 
-  const handleLoginSuccess = (loggedInUser: User) => {
+  // Memoized login handler for better performance
+  const handleLoginSuccess = useCallback((loggedInUser: User) => {
     // Save user session to localStorage
     localStorage.setItem(
       "air_musafir_user",
@@ -84,7 +85,7 @@ function TravelAgencyAppInner() {
     setBreadcrumbs([
       { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
     ]);
-  };
+  }, []);
 
   const handleLogout = () => {
     // Remove user session from localStorage
@@ -257,7 +258,7 @@ function TravelAgencyAppInner() {
           component = (
             <PlaceholderPage
               title="অ্যাক্সেস নিষিদ্ধ"
-              description="কেবল মালিক বাল্ক ট���কেট ক্রয় করতে পারেন"
+              description="কেবল মালিক বাল্ক ট���কেট ক্রয় করতে পারে��"
               onBack={() => closeModal(cardId)}
             />
           );
