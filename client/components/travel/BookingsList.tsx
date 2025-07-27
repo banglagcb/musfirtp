@@ -437,9 +437,7 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
             const costPrice = booking.costPrice || 0;
             const profit = sellingPrice - costPrice;
             const profitPercentage =
-              costPrice > 0
-                ? ((profit / costPrice) * 100).toFixed(1)
-                : "0";
+              costPrice > 0 ? ((profit / costPrice) * 100).toFixed(1) : "0";
             const statusConfig = paymentStatusConfig[booking.paymentStatus];
 
             return (
@@ -694,7 +692,8 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
                     <p>
                       <span className="font-medium">মুনাফা:</span> ৳
                       {(
-                        (selectedBooking.sellingPrice || 0) - (selectedBooking.costPrice || 0)
+                        (selectedBooking.sellingPrice || 0) -
+                        (selectedBooking.costPrice || 0)
                       ).toLocaleString()}
                     </p>
                   </div>
