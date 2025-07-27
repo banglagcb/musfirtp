@@ -189,7 +189,7 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             theme === 'dark' ? "text-white/70" : "text-gray-600"
           )}
         >
-          {language === 'bn' ? 'আপনা�� লগইন তথ্য প্রবেশ করান' : 'Enter your login credentials'}
+          {language === 'bn' ? 'আপনার লগইন তথ্য প্রবেশ করান' : 'Enter your login credentials'}
         </motion.p>
       </div>
 
@@ -341,15 +341,29 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="mt-6 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10"
+        className={cn(
+          "mt-6 p-4 backdrop-blur-sm rounded-lg border",
+          theme === 'dark'
+            ? "bg-white/5 border-white/10"
+            : "bg-white/80 border-gray-200"
+        )}
       >
-        <p className="text-sm text-white/60 mb-2">ডেমো লগইন তথ্য:</p>
+        <p className={cn(
+          "text-sm mb-2",
+          theme === 'dark' ? "text-white/60" : "text-gray-600"
+        )}>ডেমো লগইন তথ্য:</p>
         <div className="grid grid-cols-1 gap-2">
           <div>
-            <p className="text-sm text-white/80"><strong>মালিক:</strong> admin / admin123</p>
+            <p className={cn(
+              "text-sm",
+              theme === 'dark' ? "text-white/80" : "text-gray-700"
+            )}><strong>মালিক:</strong> admin / admin123</p>
           </div>
           <div>
-            <p className="text-sm text-white/80"><strong>ম্যানেজার:</strong> manager / manager123</p>
+            <p className={cn(
+              "text-sm",
+              theme === 'dark' ? "text-white/80" : "text-gray-700"
+            )}><strong>ম্যানেজার:</strong> manager / manager123</p>
           </div>
         </div>
       </motion.div>
