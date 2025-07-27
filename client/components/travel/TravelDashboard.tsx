@@ -106,6 +106,9 @@ export default function TravelDashboard({
   user,
   onCardClick,
 }: TravelDashboardProps) {
+  const { isMobile, isTablet } = useApp();
+  const { t } = useTranslation();
+
   const [stats, setStats] = useState<DashboardStats>({
     totalBookings: 0,
     todayBookings: 0,
@@ -120,6 +123,74 @@ export default function TravelDashboard({
     const dashboardStats = dataService.getDashboardStats();
     setStats(dashboardStats);
   }, []);
+
+  // Memoized dashboard cards with translations
+  const dashboardCards = useMemo(() => [
+    {
+      id: "new-booking",
+      title: t("newBooking"),
+      description: language === 'bn' ? "নতুন ফ্লাইট বুকিং যোগ করুন" : "Add new flight booking",
+      icon: PlusCircle,
+      color: "from-neon-green to-neon-blue",
+      gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
+    },
+    {
+      id: "bookings-list",
+      title: t("bookings"),
+      description: language === 'bn' ? "সব বুকিং দেখুন ও ম্যানেজ করুন" : "View and manage all bookings",
+      icon: FileText,
+      color: "from-neon-blue to-neon-purple",
+      gradient: "bg-gradient-to-br from-blue-500/20 to-purple-500/20",
+    },
+    {
+      id: "search-filter",
+      title: language === 'bn' ? "সার্চ ও ফিল্টার" : "Search & Filter",
+      description: language === 'bn' ? "বুকিং খুঁজুন ও ফিল্টার করুন" : "Search and filter bookings",
+      icon: Search,
+      color: "from-neon-purple to-neon-pink",
+      gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20",
+    },
+    {
+      id: "reports",
+      title: t("reports"),
+      description: language === 'bn' ? "বিক্রয় ও মুনাফার রিপোর্ট দে��ুন" : "View sales and profit reports",
+      icon: TrendingUp,
+      color: "from-orange-500 to-red-500",
+      gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
+    },
+    {
+      id: "export-data",
+      title: language === 'bn' ? "ডেটা এক্সপোর্ট" : "Data Export",
+      description: language === 'bn' ? "CSV/Excel ফাইলে ডাউনলোড করুন" : "Download as CSV/Excel files",
+      icon: DollarSign,
+      color: "from-green-500 to-teal-500",
+      gradient: "bg-gradient-to-br from-green-500/20 to-teal-500/20",
+    },
+    {
+      id: "ticket-inventory",
+      title: t("inventory"),
+      description: language === 'bn' ? "টিকেট স্টক দেখুন ও ম্যানেজ করুন" : "View and manage ticket inventory",
+      icon: Package,
+      color: "from-indigo-500 to-purple-500",
+      gradient: "bg-gradient-to-br from-indigo-500/20 to-purple-500/20",
+    },
+    ...(user.role === 'owner' ? [{
+      id: "bulk-purchase",
+      title: t("bulkPurchase"),
+      description: language === 'bn' ? "অগ্রিম টিকেট ক্রয় করুন" : "Purchase tickets in advance",
+      icon: ShoppingCart,
+      color: "from-emerald-500 to-teal-500",
+      gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
+    }] : []),
+    {
+      id: "settings",
+      title: t("settings"),
+      description: language === 'bn' ? "সিস্টেম সেটিংস ও কনফিগারেশন" : "System settings and configuration",
+      icon: Calendar,
+      color: "from-red-500 to-pink-500",
+      gradient: "bg-gradient-to-br from-red-500/20 to-pink-500/20",
+    },
+  ], [user.role, t, language]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
