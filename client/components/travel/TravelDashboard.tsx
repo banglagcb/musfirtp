@@ -41,7 +41,10 @@ interface DashboardStats {
   thisMonthProfit: number;
 }
 
-export default function TravelDashboard({ user, onCardClick }: TravelDashboardProps) {
+export default function TravelDashboard({
+  user,
+  onCardClick,
+}: TravelDashboardProps) {
   const [stats, setStats] = useState<DashboardStats>({
     totalBookings: 0,
     totalRevenue: 0,
@@ -63,7 +66,7 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
       const thisYear = new Date().getFullYear();
 
       const todayBookings = bookings.filter(
-        (booking) => new Date(booking.flightDate).toDateString() === today
+        (booking) => new Date(booking.flightDate).toDateString() === today,
       );
 
       const thisMonthBookings = bookings.filter((booking) => {
@@ -74,29 +77,35 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
         );
       });
 
-      const totalRevenue = bookings.reduce((sum, booking) => sum + booking.sellingPrice, 0);
+      const totalRevenue = bookings.reduce(
+        (sum, booking) => sum + booking.sellingPrice,
+        0,
+      );
       const totalProfit = bookings.reduce(
         (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
-        0
+        0,
       );
 
-      const dailyRevenue = todayBookings.reduce((sum, booking) => sum + booking.sellingPrice, 0);
+      const dailyRevenue = todayBookings.reduce(
+        (sum, booking) => sum + booking.sellingPrice,
+        0,
+      );
       const dailyProfit = todayBookings.reduce(
         (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
-        0
+        0,
       );
 
       const thisMonthProfit = thisMonthBookings.reduce(
         (sum, booking) => sum + (booking.sellingPrice - booking.costPrice),
-        0
+        0,
       );
 
       const pendingPayments = bookings.filter(
-        (booking) => booking.paymentStatus === "pending"
+        (booking) => booking.paymentStatus === "pending",
       ).length;
 
       const completedBookings = bookings.filter(
-        (booking) => booking.paymentStatus === "paid"
+        (booking) => booking.paymentStatus === "paid",
       ).length;
 
       setStats({
@@ -234,7 +243,7 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
             className={cn(
               "p-4 lg:p-6 rounded-lg border bg-white dark:bg-gray-800",
               stat.bgColor,
-              "hover:shadow-lg transition-shadow duration-300"
+              "hover:shadow-lg transition-shadow duration-300",
             )}
           >
             <div className="flex items-center justify-between mb-3">
@@ -242,10 +251,14 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
             </div>
             <div className="text-2xl lg:text-3xl font-bold text-gray-800 dark:text-white mb-1">
               {stat.prefix}
-              {typeof stat.value === "number" ? stat.value.toLocaleString() : stat.value}
+              {typeof stat.value === "number"
+                ? stat.value.toLocaleString()
+                : stat.value}
               {stat.suffix}
             </div>
-            <div className="text-sm lg:text-base text-gray-600 dark:text-gray-300">{stat.title}</div>
+            <div className="text-sm lg:text-base text-gray-600 dark:text-gray-300">
+              {stat.title}
+            </div>
           </div>
         ))}
       </div>
@@ -260,14 +273,16 @@ export default function TravelDashboard({ user, onCardClick }: TravelDashboardPr
               "group p-6 rounded-lg cursor-pointer border bg-white dark:bg-gray-800",
               card.bgColor,
               card.borderColor,
-              "hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              "hover:shadow-lg transition-all duration-300 hover:-translate-y-1",
             )}
           >
             {/* Icon */}
-            <div className={cn(
-              "w-16 h-16 rounded-lg mb-4 flex items-center justify-center",
-              card.bgColor
-            )}>
+            <div
+              className={cn(
+                "w-16 h-16 rounded-lg mb-4 flex items-center justify-center",
+                card.bgColor,
+              )}
+            >
               <card.icon className={cn("w-8 h-8", card.color)} />
             </div>
 

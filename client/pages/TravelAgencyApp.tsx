@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Moon,
-  Sun,
-  LogOut,
-  RefreshCw,
-} from "lucide-react";
+import { Moon, Sun, LogOut, RefreshCw } from "lucide-react";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
 import Window from "@/components/Window";
@@ -320,7 +315,11 @@ export default function TravelAgencyApp() {
               onClick={toggleDarkMode}
               className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
             >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDarkMode ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
             </button>
 
             {/* Logout Button */}

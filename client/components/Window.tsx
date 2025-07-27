@@ -33,10 +33,7 @@ export default function Window({
   return (
     <>
       {/* Simple backdrop */}
-      <div 
-        className="fixed inset-0 bg-black/50 z-40"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
 
       {/* Window */}
       <motion.div
@@ -46,19 +43,21 @@ export default function Window({
         transition={{ duration: 0.2 }}
         className={cn(
           "fixed bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 shadow-xl z-50",
-          isMaximized 
-            ? "inset-0 rounded-none" 
+          isMaximized
+            ? "inset-0 rounded-none"
             : "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-          className
+          className,
         )}
-        style={!isMaximized ? { width: `${width}px`, height: `${height}px` } : {}}
+        style={
+          !isMaximized ? { width: `${width}px`, height: `${height}px` } : {}
+        }
       >
         {/* Window Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 rounded-t-lg">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white truncate">
             {title}
           </h3>
-          
+
           <div className="flex items-center space-x-2">
             {/* Maximize Button */}
             <button
@@ -72,7 +71,7 @@ export default function Window({
                 <Maximize2 className="w-4 h-4 text-gray-600 dark:text-gray-300" />
               )}
             </button>
-            
+
             {/* Close Button */}
             <button
               onClick={onClose}
@@ -86,7 +85,12 @@ export default function Window({
 
         {/* Window Content */}
         <div className="flex-1 overflow-auto h-full">
-          <div className="h-full" style={{ height: isMaximized ? 'calc(100vh - 60px)' : `${height - 60}px` }}>
+          <div
+            className="h-full"
+            style={{
+              height: isMaximized ? "calc(100vh - 60px)" : `${height - 60}px`,
+            }}
+          >
             {children}
           </div>
         </div>
