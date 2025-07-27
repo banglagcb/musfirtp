@@ -132,7 +132,7 @@ export default function NewBookingForm({
 
       // Prevent booking if no inventory available
       if (!matchingInventory) {
-        alert(`${formData.route} রুটের ${formData.airline} এয়ারলা��নের টিকেট স্টকে ন���ই! প্রথমে টিকেট ক্রয় করুন।`);
+        alert(`${formData.route} রুটের ${formData.airline} এয়ারলাইনের টিকেট স্টকে ন���ই! প্রথমে টিকেট ক্রয় করুন।`);
         setIsSubmitting(false);
         return;
       }
@@ -173,10 +173,42 @@ export default function NewBookingForm({
     }
   };
 
+  const checkInventoryAvailability = (route: string, airline: string) => {
+    if (route && airline) {
+      const availableInventory = ticketInventoryService.getAvailableTicketsForBooking(user.role);
+      const matchingInventory = availableInventory.find(
+        (inv) =>
+          inv.route === route &&
+          inv.airline === airline &&
+          inv.availableTickets > 0,
+      );
+
+      if (!matchingInventory) {
+        setErrors((prev) => ({
+          ...prev,
+          inventory: `${route} রুটের ${airline} এয়ারলাইনের টিকেট স্টকে নেই!`
+        }));
+      } else {
+        setErrors((prev) => {
+          const newErrors = { ...prev };
+          delete newErrors.inventory;
+          return newErrors;
+        });
+      }
+    }
+  };
+
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
+
+    // Check inventory when route or airline changes
+    if (field === 'route' || field === 'airline') {
+      const route = field === 'route' ? value : formData.route;
+      const airline = field === 'airline' ? value : formData.airline;
+      checkInventoryAvailability(route, airline);
     }
   };
 
