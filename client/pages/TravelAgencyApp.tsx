@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Moon, Sun, LogOut, RefreshCw } from "lucide-react";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
-import FolderWindow from "@/components/FolderWindow";
+import Modal from "@/components/Modal";
 import Breadcrumbs, { BreadcrumbItem } from "@/components/Breadcrumbs";
 import NewBookingForm from "@/components/travel/NewBookingForm";
 import BookingsList from "@/components/travel/BookingsList";
