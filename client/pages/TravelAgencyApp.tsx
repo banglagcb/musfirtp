@@ -142,7 +142,7 @@ function TravelAgencyAppInner() {
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
       "new-booking": "নতুন ব��কিং",
-      "bookings-list": "বুকিং লিস্ট",
+      "bookings-list": "বুকিং ���িস্ট",
       "search-filter": "সার্চ ও ফিল্টার",
       reports: "রিপোর্ট",
       "export-data": "ডেটা এক��সপোর্ট",
@@ -378,16 +378,18 @@ function TravelAgencyAppInner() {
       )}
 
       {/* Main Dashboard */}
-      <motion.div
-        key={refreshTrigger} // Force re-render when data changes
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="transition-all duration-500 will-change-transform"
-      >
-        {user && (
-          <TravelDashboard user={user} onCardClick={handleDashboardCardClick} />
-        )}
-      </motion.div>
+      <main className="pt-16"> {/* Account for fixed header */}
+        <motion.div
+          key={refreshTrigger} // Force re-render when data changes
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="transition-all duration-500 will-change-transform"
+        >
+          {user && (
+            <TravelDashboard user={user} onCardClick={handleDashboardCardClick} />
+          )}
+        </motion.div>
+      </main>
 
       {/* Modals */}
       {openModals.map((modal) => (
