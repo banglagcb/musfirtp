@@ -171,20 +171,20 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
             transform: "none",
           };
         default: // popup - takes 2/4 (half) of screen like normal computer folder
-          // Take exactly half (2/4) of the screen space
-          const folderWidth = Math.min(viewportSize.width * 0.5, 800);
-          const folderHeight = Math.min(viewportSize.height * 0.5, 600);
+          // Take exactly half (2/4) of the screen space but start smaller for better animation
+          const baseWidth = Math.min(viewportSize.width * 0.45, 720);
+          const baseHeight = Math.min(viewportSize.height * 0.45, 540);
 
           // Mobile responsiveness - use more space on small screens
-          let finalWidth = folderWidth;
-          let finalHeight = folderHeight;
+          let finalWidth = baseWidth;
+          let finalHeight = baseHeight;
 
           if (viewportSize.width < 768) {
-            finalWidth = Math.min(viewportSize.width * 0.9, 600);
-            finalHeight = Math.min(viewportSize.height * 0.7, 500);
+            finalWidth = Math.min(viewportSize.width * 0.85, 520);
+            finalHeight = Math.min(viewportSize.height * 0.65, 420);
           } else if (viewportSize.width < 1024) {
-            finalWidth = Math.min(viewportSize.width * 0.65, 700);
-            finalHeight = Math.min(viewportSize.height * 0.6, 550);
+            finalWidth = Math.min(viewportSize.width * 0.55, 600);
+            finalHeight = Math.min(viewportSize.height * 0.55, 480);
           }
 
           return {
