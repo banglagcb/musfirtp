@@ -123,6 +123,11 @@ export default function TravelDashboard({
     };
 
     calculateStats();
+
+    // Set up interval for real-time updates
+    const interval = setInterval(calculateStats, 30000); // Update every 30 seconds
+
+    return () => clearInterval(interval);
   }, []);
 
   const dashboardCards = [
