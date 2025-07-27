@@ -374,10 +374,7 @@ export default function TravelAgencyApp() {
         key={refreshTrigger} // Force re-render when data changes
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className={cn(
-          "transition-all duration-500 will-change-transform",
-          hasFullscreenWindow ? "blur-sm scale-95" : "",
-        )}
+        className="transition-all duration-500 will-change-transform"
       >
         {user && (
           <TravelDashboard user={user} onCardClick={handleDashboardCardClick} />
