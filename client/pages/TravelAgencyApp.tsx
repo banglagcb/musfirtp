@@ -167,7 +167,7 @@ export default function TravelAgencyApp() {
                 "বুকিং এডিট করুন",
                 <PlaceholderPage
                   title="বুকিং এডিট করুন"
-                  description="এই ফিচারটি শীঘ্রই আসছে!"
+                  description="এই ফিচারটি শীঘ্রই আস���ে!"
                   onBack={() => closeWindow("edit-booking")}
                 />,
               );
@@ -351,79 +351,21 @@ export default function TravelAgencyApp() {
         )}
       </div>
 
-      {/* Enhanced Folder Windows */}
-      <AnimatePresence mode="popLayout">
+      {/* Simple Windows */}
+      <AnimatePresence>
         {openWindows.map((window) => (
-          <FolderWindow
+          <Window
             key={window.id}
             title={window.title}
             isOpen={window.isOpen}
             onClose={() => closeWindow(window.id)}
-            initialState={window.state}
-            zIndex={window.zIndex}
-            onMaximize={() => maximizeWindow(window.id)}
+            width={900}
+            height={700}
           >
             {window.component}
-          </FolderWindow>
+          </Window>
         ))}
       </AnimatePresence>
-
-
-
-      {/* Enhanced Loading Animation Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            animate={{
-              x: [0, Math.random() * 300 - 150],
-              y: [0, Math.random() * 300 - 150],
-              opacity: [0, 0.08, 0],
-              scale: [0, 1.2, 0],
-            }}
-            transition={{
-              duration: 6 + Math.random() * 4,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut",
-            }}
-            className="absolute w-3 h-3 lg:w-4 lg:h-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Enhanced User Info Display */}
-      {user && !isMobile && (
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="fixed bottom-4 lg:bottom-6 left-4 lg:left-6 bg-white/10 backdrop-blur-md rounded-lg px-3 lg:px-4 py-2 lg:py-3 border border-white/20 z-40 shadow-lg"
-        >
-          <p className="text-white/70 text-sm lg:text-base">
-            <span className="text-white font-medium">{user.name}</span> -{" "}
-            {user.role === "owner" ? "মালিক" : "ম্যানেজার"}
-          </p>
-        </motion.div>
-      )}
-
-      {/* Mobile breadcrumbs at bottom */}
-      {breadcrumbs.length > 0 && isMobile && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="fixed bottom-20 left-4 right-4 z-40"
-        >
-          <Breadcrumbs
-            items={breadcrumbs}
-            onItemClick={handleBreadcrumbClick}
-            className="text-sm"
-          />
-        </motion.div>
-      )}
     </div>
   );
 }
