@@ -47,7 +47,7 @@ export const translations = {
     dashboard: 'ড্যাশবোর্ড',
     bookings: 'বুকিং লিস্ট',
     newBooking: 'নতুন বুকিং',
-    inventory: 'টিকেট ইনভে���্টরি',
+    inventory: 'টিকেট ইনভেন্টরি',
     bulkPurchase: 'বাল্ক টিকেট ক্রয়',
     reports: 'রিপোর্ট',
     settings: '��েটিংস',
@@ -55,7 +55,7 @@ export const translations = {
     // User
     owner: 'মালিক',
     manager: 'ম্যানেজার',
-    welcome: 'স্বাগতম',
+    welcome: 'স্���াগতম',
     logout: 'লগআউট',
     
     // Forms
@@ -179,26 +179,26 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isTablet, setIsTablet] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
   
-  // Theme management
-  const setTheme = (newTheme: Theme) => {
+  // Memoized theme management functions
+  const setTheme = useCallback((newTheme: Theme) => {
     setThemeState(newTheme);
     localStorage.setItem('air_musafir_theme', newTheme);
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
-  };
-  
-  const toggleTheme = () => {
+  }, []);
+
+  const toggleTheme = useCallback(() => {
     setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-  
-  // Language management
-  const setLanguage = (newLanguage: Language) => {
+  }, [theme, setTheme]);
+
+  // Memoized language management functions
+  const setLanguage = useCallback((newLanguage: Language) => {
     setLanguageState(newLanguage);
     localStorage.setItem('air_musafir_language', newLanguage);
-  };
-  
-  const toggleLanguage = () => {
+  }, []);
+
+  const toggleLanguage = useCallback(() => {
     setLanguage(language === 'bn' ? 'en' : 'bn');
-  };
+  }, [language, setLanguage]);
   
   // Responsive detection
   useEffect(() => {
