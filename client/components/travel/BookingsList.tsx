@@ -92,7 +92,7 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
   };
 
   const paymentStatusConfig = {
-    paid: { label: "পরিশোধিত", color: "bg-green-500", icon: CheckCircle },
+    paid: { label: "পরিশোধি���", color: "bg-green-500", icon: CheckCircle },
     partial: { label: "আংশিক", color: "bg-yellow-500", icon: Clock },
     pending: { label: "অপেক্ষমাণ", color: "bg-red-500", icon: AlertCircle },
   };
@@ -683,16 +683,16 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
                   <div className="space-y-2 text-sm">
                     <p>
                       <span className="font-medium">ক্রয়মূল্য:</span> ৳
-                      {selectedBooking.costPrice.toLocaleString()}
+                      {(selectedBooking.costPrice || 0).toLocaleString()}
                     </p>
                     <p>
                       <span className="font-medium">বিক্রয়মূল্য:</span> ৳
-                      {selectedBooking.sellingPrice.toLocaleString()}
+                      {(selectedBooking.sellingPrice || 0).toLocaleString()}
                     </p>
                     <p>
                       <span className="font-medium">মুনাফা:</span> ৳
                       {(
-                        selectedBooking.sellingPrice - selectedBooking.costPrice
+                        (selectedBooking.sellingPrice || 0) - (selectedBooking.costPrice || 0)
                       ).toLocaleString()}
                     </p>
                   </div>
