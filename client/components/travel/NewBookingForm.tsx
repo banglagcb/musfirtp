@@ -46,7 +46,7 @@ const airlines = [
   "মালয়েশিয়া এয়ারলাইনস",
   "���াই এয়ারওয়েজ",
   "তুর্কিশ এয়ারলাইনস",
-  "এয়ার এশিয়া",
+  "এয়ার এ��িয়া",
   "নোভো এয়ার",
   "ইউএস-বাংলা এয়ারলাইনস",
 ];
@@ -125,7 +125,7 @@ export default function NewBookingForm({
         },
         {
           key: "passportNumber",
-          label: "পাসপোর্ট নম্বর",
+          label: "পাসপোর্�� নম্বর",
           type: "input",
           icon: FileText,
           placeholder: "A12345678",
@@ -395,7 +395,7 @@ export default function NewBookingForm({
             currentSection.bgGradient,
           )}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             {currentSection.fields.map((field) => (
               <motion.div
                 key={field.key}
@@ -570,7 +570,7 @@ export default function NewBookingForm({
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    মোট বিক্রয়
+                    মোট ���িক্রয়
                   </p>
                   <p className="text-2xl font-bold text-blue-600">
                     ৳{(formData.sellingPrice || 0).toLocaleString()}
