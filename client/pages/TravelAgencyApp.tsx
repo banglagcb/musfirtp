@@ -30,13 +30,15 @@ interface OpenModal {
 }
 
 function TravelAgencyAppInner() {
+  const { isMobile, isTablet, theme, setIsLoading } = useApp();
+  const { t } = useTranslation();
+
   const [appState, setAppState] = useState<AppState>("login");
   const [user, setUser] = useState<User | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(true);
   const [openModals, setOpenModals] = useState<OpenModal[]>([]);
   const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([]);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Initialize user session on component mount
   useEffect(() => {
@@ -180,7 +182,7 @@ function TravelAgencyAppInner() {
               closeModal(cardId);
               openModal(
                 "edit-booking",
-                "বুকিং ��ডিট করুন",
+                "বু���িং ��ডিট করুন",
                 <EditBookingForm
                   booking={booking}
                   user={user!}
@@ -262,7 +264,7 @@ function TravelAgencyAppInner() {
           component = (
             <PlaceholderPage
               title="অ্যাক্সেস নিষিদ্ধ"
-              description="কেবল মালিক বাল্ক ট���কেট ক্রয় করতে পারেন"
+              description="কেবল মালিক বাল্ক ট���কেট ক্��য় করতে পারেন"
               onBack={() => closeModal(cardId)}
             />
           );
