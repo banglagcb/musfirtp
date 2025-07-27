@@ -66,21 +66,7 @@ function TravelAgencyAppInner() {
     }
   }, []);
 
-  // Check mobile screen size
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Initialize dark mode
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDarkMode);
-  }, [isDarkMode]);
 
   const handleLoginSuccess = (loggedInUser: User) => {
     // Save user session to localStorage
@@ -182,7 +168,7 @@ function TravelAgencyAppInner() {
               closeModal(cardId);
               openModal(
                 "edit-booking",
-                "বু���িং ��ডিট করুন",
+                "বুকিং ��ডিট করুন",
                 <EditBookingForm
                   booking={booking}
                   user={user!}
@@ -215,7 +201,7 @@ function TravelAgencyAppInner() {
             onExportData={() => {
               openModal(
                 "export-data",
-                "ডেটা এক্সপোর্ট",
+                "ডেটা এক্���পোর্ট",
                 <DataExport onClose={() => closeModal("export-data")} />,
               );
             }}
@@ -264,7 +250,7 @@ function TravelAgencyAppInner() {
           component = (
             <PlaceholderPage
               title="অ্যাক্সেস নিষিদ্ধ"
-              description="কেবল মালিক বাল্ক ট���কেট ক্��য় করতে পারেন"
+              description="কেবল মালিক বাল্ক ট���কেট ক্রয় করতে পারেন"
               onBack={() => closeModal(cardId)}
             />
           );
