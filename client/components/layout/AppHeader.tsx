@@ -93,6 +93,19 @@ export default function AppHeader({
               )}
             </motion.button>
 
+            {/* Performance Monitor Button (only in development) */}
+            {process.env.NODE_ENV === 'development' && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={showMonitor}
+                className="p-2 bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-lg border border-white/20 dark:border-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-gray-700/50 transition-colors"
+                title="Performance Monitor"
+              >
+                <Activity className="w-5 h-5" />
+              </motion.button>
+            )}
+
             {/* Refresh Button */}
             <motion.button
               whileHover={{ scale: 1.05, rotate: 180 }}
