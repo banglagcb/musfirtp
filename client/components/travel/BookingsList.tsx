@@ -501,7 +501,7 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
                           বিক্রয়মূল্য:
                         </span>
                         <span className="font-semibold text-green-600">
-                          ৳{booking.sellingPrice.toLocaleString()}
+                          ৳{sellingPrice.toLocaleString()}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
@@ -663,7 +663,7 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
                       {selectedBooking.airline}
                     </p>
                     <p>
-                      <span className="font-medium">রুট:</span>{" "}
+                      <span className="font-medium">রু���:</span>{" "}
                       {selectedBooking.route}
                     </p>
                     <p>
