@@ -153,7 +153,7 @@ export default function TravelDashboard({
     {
       id: "reports",
       title: t("reports"),
-      description: language === 'bn' ? "বিক্রয�� ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
+      description: language === 'bn' ? "বিক্রয় ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
       icon: TrendingUp,
       color: "from-orange-500 to-red-500",
       gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
