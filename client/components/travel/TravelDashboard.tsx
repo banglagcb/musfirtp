@@ -16,9 +16,10 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import dataService from "@/services/dataService";
 import { DashboardStats, User } from "@shared/travel-types";
+import { useApp, useTranslation } from "@/contexts/AppContext";
 
 interface TravelDashboardProps {
   user: User;
