@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Moon, Sun, Folder, Minimize2 } from "lucide-react";
 import LoginForm from "@/components/LoginForm";
 import Dashboard from "@/components/Dashboard";
-import FolderWindow from "@/components/FolderWindow";
+import Modal from "@/components/Modal";
 import Breadcrumbs, { BreadcrumbItem } from "@/components/Breadcrumbs";
 import ReportsPage from "@/components/pages/ReportsPage";
 import PlaceholderPage from "@/components/PlaceholderPage";
