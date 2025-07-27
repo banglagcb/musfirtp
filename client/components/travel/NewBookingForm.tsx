@@ -11,6 +11,7 @@ import {
   Save,
   X,
   MapPin,
+  AlertTriangle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AIRLINES, ROUTES, User } from "@shared/travel-types";
@@ -66,7 +67,7 @@ export default function NewBookingForm({
     if (!formData.email.trim()) {
       newErrors.email = "ইমেইল আবশ্যিক";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "সঠিক ই�����ইল ঠিকানা লিখুন";
+      newErrors.email = "সঠিক ই���েইল ঠিকানা লিখুন";
     }
 
     if (!formData.flightDate) {
@@ -99,7 +100,7 @@ export default function NewBookingForm({
     if (formData.paymentStatus === "partial") {
       const paidAmount = Number(formData.paidAmount);
       if (!formData.paidAmount || isNaN(paidAmount)) {
-        newErrors.paidAmount = "পেইড পরিম�����ণ আবশ্যিক";
+        newErrors.paidAmount = "পেইড পরিম���ণ আবশ্যিক";
       } else if (paidAmount <= 0 || paidAmount >= salePrice) {
         newErrors.paidAmount =
           "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে";
@@ -451,7 +452,7 @@ export default function NewBookingForm({
                 {/* Airline */}
                 <div>
                   <label className="block text-white/70 text-sm mb-2">
-                    এয়ারলাই��� *
+                    এয়ারলাইন *
                   </label>
                   <div className="relative">
                     <Plane className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
