@@ -17,7 +17,7 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import dataService from "@/services/dataService";
 import { DashboardStats, User } from "@shared/travel-types";
 import { useApp, useTranslation } from "@/contexts/AppContext";
@@ -155,7 +155,7 @@ export default function TravelDashboard({
     {
       id: "reports",
       title: t("reports"),
-      description: language === 'bn' ? "বিক্রয় ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
+      description: language === 'bn' ? "বিক���রয় ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
       icon: TrendingUp,
       color: "from-orange-500 to-red-500",
       gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
