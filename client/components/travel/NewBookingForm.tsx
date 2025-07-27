@@ -46,9 +46,9 @@ const airlines = [
   "মালয়েশিয়া এয়ারলাইনস",
   "���াই এয়ারওয়েজ",
   "তুর্কিশ এয়ারলাইনস",
-  "এয়ার এ��িয়া",
+  "এয়ার এশিয়া",
   "নোভো এয়ার",
-  "ইউএস-বাংলা এয়ারলাইনস",
+  "ইউএস-বাংলা এয়ারলাই���স",
 ];
 
 const paymentStatuses = [
@@ -125,7 +125,7 @@ export default function NewBookingForm({
         },
         {
           key: "passportNumber",
-          label: "পাসপোর্�� নম্বর",
+          label: "পাসপোর্ট নম্বর",
           type: "input",
           icon: FileText,
           placeholder: "A12345678",
@@ -301,7 +301,7 @@ export default function NewBookingForm({
     } catch (error) {
       toast({
         title: "ত্রুটি!",
-        description: "বুকিং যোগ করতে সমস্যা হয়েছে",
+        description: "বুকিং যোগ ���রতে সমস্যা হয়েছে",
         variant: "destructive",
       });
     } finally {
@@ -335,7 +335,7 @@ export default function NewBookingForm({
               নতুন বুকিং
             </h2>
             <p className="text-gray-600 dark:text-gray-300">
-              পূর্ণ তথ্য দিয়ে বুকিং তৈরি করুন
+              পূর্ণ তথ্য দিয়ে বুকিং তৈরি কর���ন
             </p>
           </div>
         </div>
@@ -541,7 +541,7 @@ export default function NewBookingForm({
                   মুনাফা হিসাব
                 </h4>
               </div>
-              <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
                     মুনাফা
@@ -570,7 +570,7 @@ export default function NewBookingForm({
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    মোট ���িক্রয়
+                    মোট বিক্রয়
                   </p>
                   <p className="text-2xl font-bold text-blue-600">
                     ৳{(formData.sellingPrice || 0).toLocaleString()}
