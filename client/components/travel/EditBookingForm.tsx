@@ -74,7 +74,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     }
 
     if (!formData.route) {
-      newErrors.route = "রুট নির্বাচন ক���ুন";
+      newErrors.route = "রুট ��ির্বাচন করুন";
     }
 
     if (!formData.airline) {
@@ -101,7 +101,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
       if (!formData.paidAmount || isNaN(paidAmount)) {
         newErrors.paidAmount = "পেইড পরিমাণ আবশ্যিক";
       } else if (paidAmount <= 0 || paidAmount >= salePrice) {
-        newErrors.paidAmount = "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে";
+        newErrors.paidAmount = "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে ��ম হতে হবে";
       }
     }
 
@@ -223,7 +223,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
           className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
         >
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center space-x-2">
-            <User className="w-5 h-5" />
+            <UserIcon className="w-5 h-5" />
             <span>গ্রাহকের তথ্য</span>
           </h2>
 
