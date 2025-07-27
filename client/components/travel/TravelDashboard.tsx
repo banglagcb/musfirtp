@@ -531,10 +531,16 @@ export default function TravelDashboard({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.6 }}
-        className="mt-8 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
+        className={cn(
+          "mt-8 backdrop-blur-md rounded-2xl p-6 border transition-colors",
+          theme === 'dark' ? "bg-white/10 border-white/20" : "bg-white/80 border-gray-200"
+        )}
       >
-        <h2 className="text-2xl font-semibold text-white mb-4">
-          দ্রুত অ্যাকশন
+        <h2 className={cn(
+          "text-2xl font-semibold mb-4 transition-colors",
+          theme === 'dark' ? "text-white" : "text-gray-800"
+        )}>
+          {language === 'bn' ? 'দ্রুত অ্যাকশন' : 'Quick Actions'}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <motion.button
