@@ -207,6 +207,9 @@ export default function AppHeader({
           </motion.div>
         )}
       </div>
+
+      {/* Performance Monitor */}
+      <PerformanceDashboard />
     </motion.header>
   );
 }
