@@ -572,28 +572,30 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
           >
             বাতিল
           </button>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={cn(
-              "px-6 py-3 bg-gradient-to-r from-folder-primary to-folder-secondary text-white rounded-xl font-medium",
-              "hover:from-folder-secondary hover:to-folder-accent transition-all shadow-glow",
-              "flex items-center space-x-2",
-              isSubmitting && "opacity-70 cursor-not-allowed"
-            )}
-          >
-            {isSubmitting ? (
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              >
+          {!isViewOnly && (
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={cn(
+                "px-6 py-3 bg-gradient-to-r from-folder-primary to-folder-secondary text-white rounded-xl font-medium",
+                "hover:from-folder-secondary hover:to-folder-accent transition-all shadow-glow",
+                "flex items-center space-x-2",
+                isSubmitting && "opacity-70 cursor-not-allowed"
+              )}
+            >
+              {isSubmitting ? (
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                >
+                  <Save className="w-5 h-5" />
+                </motion.div>
+              ) : (
                 <Save className="w-5 h-5" />
-              </motion.div>
-            ) : (
-              <Save className="w-5 h-5" />
-            )}
-            <span>{isSubmitting ? "আপডেট হচ্ছে..." : "আপডেট করুন"}</span>
-          </button>
+              )}
+              <span>{isSubmitting ? "আপডেট হচ্ছে..." : "আপডেট করুন"}</span>
+            </button>
+          )}
         </motion.div>
       </form>
     </div>
