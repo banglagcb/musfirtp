@@ -15,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { AIRLINES, ROUTES } from "@shared/travel-types";
 import dataService from "@/services/dataService";
+import ticketInventoryService from "@/services/ticketInventoryService";
 
 interface NewBookingFormProps {
   onClose: () => void;
@@ -87,7 +88,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
     const salePrice = Number(formData.salePrice);
     
     if (salePrice <= purchasePrice) {
-      newErrors.salePrice = "বিক্রয়মূল্য ক্রয়মূল্যের চেয়ে বেশি হতে হবে";
+      newErrors.salePrice = "বিক্���য়মূল্য ক্রয়মূল্যের চেয়ে বেশি হতে হবে";
     }
 
     if (formData.paymentStatus === 'partial') {
@@ -163,7 +164,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">নতুন বুকিং যোগ করুন</h1>
-            <p className="text-white/70">নতুন ফ্লাইট বুকিং এর তথ্য পূরণ করুন</p>
+            <p className="text-white/70">নতুন ফ্লাইট বুকি��� এর তথ্য পূরণ করুন</p>
           </div>
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -192,7 +193,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
               <div className="space-y-4">
                 {/* Customer Name */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">গ্রাহকের নাম *</label>
+                  <label className="block text-white/70 text-sm mb-2">গ্রা���কের নাম *</label>
                   <input
                     type="text"
                     value={formData.customerName}
@@ -286,7 +287,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
             >
               <h2 className="text-xl font-semibold text-white mb-4 flex items-center space-x-2">
                 <Plane className="w-6 h-6" />
-                <span>ফ্লাইট তথ্য</span>
+                <span>��্লাইট তথ্য</span>
               </h2>
 
               <div className="space-y-4">
@@ -367,7 +368,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
 
                 {/* Purchase Price */}
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">ক্রয়মূল্য (টাকা) *</label>
+                  <label className="block text-white/70 text-sm mb-2">ক্রয়মূল��য (টাকা) *</label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <input
@@ -462,7 +463,7 @@ export default function NewBookingForm({ onClose, onSuccess }: NewBookingFormPro
 
               {/* Notes */}
               <div className={formData.paymentStatus === 'partial' ? 'md:col-span-1' : 'md:col-span-2'}>
-                <label className="block text-white/70 text-sm mb-2">নোট (ঐচ্ছিক)</label>
+                <label className="block text-white/70 text-sm mb-2">নোট (ঐ��্ছিক)</label>
                 <textarea
                   value={formData.notes}
                   onChange={(e) => handleInputChange('notes', e.target.value)}
