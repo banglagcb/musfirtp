@@ -452,10 +452,12 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 type="number"
                 value={formData.purchasePrice}
                 onChange={(e) => handleInputChange('purchasePrice', e.target.value)}
+                disabled={isViewOnly}
                 className={cn(
                   "w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                   "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
-                  errors.purchasePrice ? "border-red-400" : "border-white/20"
+                  errors.purchasePrice ? "border-red-400" : "border-white/20",
+                  isViewOnly && "opacity-50 cursor-not-allowed"
                 )}
                 placeholder="45000"
               />
