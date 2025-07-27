@@ -130,7 +130,7 @@ export default function TravelAgencyApp() {
     const cardTitles: Record<string, string> = {
       "new-booking": "নতুন ব��কিং",
       "bookings-list": "বুকিং লিস্ট",
-      "search-filter": "��ার্চ ও ���িল্টার",
+      "search-filter": "সার্চ ও ���িল্টার",
       reports: "রিপোর্ট",
       "export-data": "ডেটা এক��সপোর্ট",
       settings: "সেটিংস",
@@ -305,24 +305,35 @@ export default function TravelAgencyApp() {
             )}
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 lg:space-x-3">
             {/* Refresh Button */}
             <button
               onClick={refreshData}
-              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+              title="রিফ্রেশ"
             >
-              <RefreshCw className="w-5 h-5" />
+              <RefreshCw className="w-4 h-4 lg:w-5 lg:h-5" />
+            </button>
+
+            {/* Settings Button - Direct Access */}
+            <button
+              onClick={() => handleDashboardCardClick("settings")}
+              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+              title="সেটিংস"
+            >
+              <Settings className="w-4 h-4 lg:w-5 lg:h-5" />
             </button>
 
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+              title={isDarkMode ? "লাইট মোড" : "ডার্ক মোড"}
             >
               {isDarkMode ? (
-                <Sun className="w-5 h-5" />
+                <Sun className="w-4 h-4 lg:w-5 lg:h-5" />
               ) : (
-                <Moon className="w-5 h-5" />
+                <Moon className="w-4 h-4 lg:w-5 lg:h-5" />
               )}
             </button>
 
