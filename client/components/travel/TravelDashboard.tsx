@@ -39,7 +39,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "new-booking",
     title: "নতুন বুকিং",
-    description: "নতুন ফ্লাইট বুকিং যোগ করুন",
+    description: "নতুন ফ্���াইট বুকিং যোগ করুন",
     icon: PlusCircle,
     color: "from-neon-green to-neon-blue",
     gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
@@ -519,7 +519,10 @@ export default function TravelDashboard({
 
                 {/* Hover Effect Indicator */}
                 <motion.div
-                  className="absolute top-4 right-4 w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  className={cn(
+                    "absolute top-4 right-4 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity",
+                    theme === 'dark' ? "bg-white" : "bg-gray-800"
+                  )}
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
