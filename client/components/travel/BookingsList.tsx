@@ -383,7 +383,7 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
               <SelectValue placeholder="এয়ারলাইন" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">সব এয়ারলাইন</SelectItem>
+              <SelectItem value="all">সব এয়া���লাইন</SelectItem>
               {airlines.map((airline) => (
                 <SelectItem key={airline} value={airline}>
                   {airline}
@@ -511,12 +511,12 @@ export default function BookingsList({ onClose, onEdit }: BookingsListProps) {
                           ক্রয়মূল্য:
                         </span>
                         <span className="font-medium text-gray-800 dark:text-white">
-                          ৳{booking.costPrice.toLocaleString()}
+                          ৳{costPrice.toLocaleString()}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-gray-600 dark:text-gray-300">
-                          মুনাফা:
+                          ���ুনাফা:
                         </span>
                         <span
                           className={cn(
