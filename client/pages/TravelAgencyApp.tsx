@@ -9,6 +9,7 @@ import NewBookingForm from "@/components/travel/NewBookingForm";
 import BookingsList from "@/components/travel/BookingsList";
 import ReportsSection from "@/components/travel/ReportsSection";
 import DataExport from "@/components/travel/DataExport";
+import Settings from "@/components/travel/Settings";
 import PlaceholderPage from "@/components/PlaceholderPage";
 import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
@@ -296,7 +297,7 @@ export default function TravelAgencyApp() {
             </h1>
             {user && (
               <span className="text-sm text-gray-600 dark:text-gray-300">
-                স্বাগতম, {user.name}
+                স্ব�����তম, {user.name}
               </span>
             )}
           </div>
