@@ -96,7 +96,13 @@ function TravelAgencyAppInner() {
   };
 
   const refreshData = () => {
+    setIsLoading(true);
     setRefreshTrigger((prev) => prev + 1);
+    setTimeout(() => setIsLoading(false), 500);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const openModal = (
@@ -201,7 +207,7 @@ function TravelAgencyAppInner() {
             onExportData={() => {
               openModal(
                 "export-data",
-                "ডেটা এক্���পোর্ট",
+                "ডেটা এক্সপোর্ট",
                 <DataExport onClose={() => closeModal("export-data")} />,
               );
             }}
