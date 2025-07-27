@@ -45,7 +45,7 @@ export default function Window({
           "fixed bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 shadow-xl z-50",
           isMaximized
             ? "inset-0 rounded-none"
-            : "top-20 left-1/4 -translate-x-1/2",
+            : "top-4 sm:top-20 left-1/2 sm:left-1/4 -translate-x-1/2 mx-2 sm:mx-0",
           className,
         )}
         style={
