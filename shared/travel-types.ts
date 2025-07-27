@@ -1,4 +1,5 @@
-export interface Booking {
+// Legacy Booking interface for backward compatibility
+export interface LegacyBooking {
   id: string;
   customerName: string;
   mobile: string;
@@ -13,6 +14,26 @@ export interface Booking {
   paidAmount: number;
   bookingDate: string;
   notes?: string;
+}
+
+// Modern Booking interface
+export interface Booking {
+  id: string;
+  customerName: string;
+  customerPhone: string;
+  customerEmail?: string;
+  passportNumber?: string;
+  flightDate: string;
+  route: string;
+  airline: string;
+  costPrice: number;
+  sellingPrice: number;
+  paymentStatus: 'paid' | 'pending' | 'partial';
+  notes?: string;
+  createdAt: string;
+  updatedAt?: string;
+  pnrNumber?: string;
+  passengerCount?: number;
 }
 
 export interface User {
