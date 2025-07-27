@@ -35,8 +35,8 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
     const [windowState, setWindowState] = useState<WindowState>(initialState);
     const [isDragging, setIsDragging] = useState(false);
     const [viewportSize, setViewportSize] = useState({
-      width: typeof window !== 'undefined' ? window.innerWidth : 1024,
-      height: typeof window !== 'undefined' ? window.innerHeight : 768
+      width: typeof window !== "undefined" ? window.innerWidth : 1024,
+      height: typeof window !== "undefined" ? window.innerHeight : 768,
     });
 
     useEffect(() => {
@@ -48,13 +48,13 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
       const handleResize = () => {
         setViewportSize({
           width: window.innerWidth,
-          height: window.innerHeight
+          height: window.innerHeight,
         });
       };
 
-      if (typeof window !== 'undefined') {
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+      if (typeof window !== "undefined") {
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
       }
     }, []);
 
@@ -116,11 +116,11 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
             type: "spring",
             stiffness: 180,
             damping: 20,
-            duration: 0.9
+            duration: 0.9,
           },
           rotate: { duration: 0.8, ease: "easeInOut" },
           filter: { duration: 0.6, ease: "easeOut" },
-          borderRadius: { duration: 0.5, ease: "easeInOut" }
+          borderRadius: { duration: 0.5, ease: "easeInOut" },
         },
       },
       exit: {
@@ -133,7 +133,7 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
           duration: 0.4,
           ease: [0.25, 0.46, 0.45, 0.94],
           scale: { duration: 0.5, ease: "easeIn" },
-          rotate: { duration: 0.4, ease: "easeInOut" }
+          rotate: { duration: 0.4, ease: "easeInOut" },
         },
       },
     };
@@ -277,10 +277,18 @@ const FolderWindow = forwardRef<HTMLDivElement, FolderWindowProps>(
               dragMomentum={false}
               dragElastic={0.02}
               dragConstraints={{
-                left: -(viewportSize.width / 2) + Math.min(300, viewportSize.width * 0.3),
-                right: (viewportSize.width / 2) - Math.min(300, viewportSize.width * 0.3),
-                top: -(viewportSize.height / 2) + Math.min(200, viewportSize.height * 0.25),
-                bottom: (viewportSize.height / 2) - Math.min(200, viewportSize.height * 0.25),
+                left:
+                  -(viewportSize.width / 2) +
+                  Math.min(300, viewportSize.width * 0.3),
+                right:
+                  viewportSize.width / 2 -
+                  Math.min(300, viewportSize.width * 0.3),
+                top:
+                  -(viewportSize.height / 2) +
+                  Math.min(200, viewportSize.height * 0.25),
+                bottom:
+                  viewportSize.height / 2 -
+                  Math.min(200, viewportSize.height * 0.25),
               }}
               onDragStart={() => setIsDragging(true)}
               onDragEnd={() => setIsDragging(false)}
