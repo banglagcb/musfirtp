@@ -42,10 +42,10 @@ const airlines = [
   "এমিরেটস",
   "সিঙ্���াপুর এয়ারলাইনস",
   "কাতার এয়ারওয়েজ",
-  "ফ্ল���ইদুবাই",
+  "ফ্লাইদুবাই",
   "ইন্ডিগো",
   "মালয়েশিয়া এয়ারলাইনস",
-  "���াই এয়ারওয়েজ",
+  "�����াই এয়ারওয়েজ",
   "তুর্কিশ এয়ারলাইনস",
   "এয়ার এশিয়া",
   "নোভো এয়ার",
@@ -602,7 +602,7 @@ export default function NewBookingForm({
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    মুনাফার হা���
+                    মুনাফার হার
                   </p>
                   <p
                     className={cn(
@@ -636,11 +636,41 @@ export default function NewBookingForm({
                 অতিরিক্ত মন্তব্য (ঐচ্ছিক)
               </Label>
               <Textarea
-                placeholder="বিশেষ ক��নো তথ্য বা মন্তব্য..."
+                placeholder="বিশেষ কোনো তথ্য বা মন্তব্য..."
                 value={formData.notes || ""}
                 onChange={(e) => handleInputChange("notes", e.target.value)}
                 className="bg-white/50 dark:bg-gray-700/50"
               />
+            </motion.div>
+          )}
+
+          {/* Quick Templates for Flight Info */}
+          {currentStep === 1 && !editBooking && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700"
+            >
+              <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">
+                দ্রুত টেমপ্লেট
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {quickTemplates.map((template, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => applyQuickTemplate(template)}
+                    className="p-3 text-left bg-white dark:bg-gray-700 rounded-lg border border-blue-200 dark:border-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
+                  >
+                    <div className="font-medium text-sm text-gray-800 dark:text-white">
+                      {template.name}
+                    </div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300">
+                      ৳{template.sellingPrice.toLocaleString()}
+                    </div>
+                  </button>
+                ))}
+              </div>
             </motion.div>
           )}
         </motion.div>
