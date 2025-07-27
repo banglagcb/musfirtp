@@ -78,7 +78,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     }
 
     if (!formData.airline) {
-      newErrors.airline = "এয়ারলাইন নির্বাচন ��রুন";
+      newErrors.airline = "এয়ারলাইন নির্বাচন করুন";
     }
 
     if (!formData.purchasePrice || isNaN(Number(formData.purchasePrice))) {
@@ -158,7 +158,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
       if (success) {
         onSuccess();
       } else {
-        setErrors({ submit: "বুকিং আপডেট করতে সমস্যা হয়েছে" });
+        setErrors({ submit: "বুকিং আপডেট করতে সম���্যা হয়েছে" });
       }
     } catch (error) {
       setErrors({ submit: "একটি ত্রুটি ঘটেছে" });
@@ -262,10 +262,12 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                   type="tel"
                   value={formData.mobile}
                   onChange={(e) => handleInputChange('mobile', e.target.value)}
+                  disabled={isViewOnly}
                   className={cn(
                     "w-full pl-10 pr-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                     "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
-                    errors.mobile ? "border-red-400" : "border-white/20"
+                    errors.mobile ? "border-red-400" : "border-white/20",
+                    isViewOnly && "opacity-50 cursor-not-allowed"
                   )}
                   placeholder="01XXXXXXXXX"
                 />
