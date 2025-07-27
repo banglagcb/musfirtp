@@ -475,10 +475,12 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
                 type="number"
                 value={formData.salePrice}
                 onChange={(e) => handleInputChange('salePrice', e.target.value)}
+                disabled={isViewOnly}
                 className={cn(
                   "w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-white/50",
                   "focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all",
-                  errors.salePrice ? "border-red-400" : "border-white/20"
+                  errors.salePrice ? "border-red-400" : "border-white/20",
+                  isViewOnly && "opacity-50 cursor-not-allowed"
                 )}
                 placeholder="50000"
               />
@@ -548,7 +550,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
           className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
         >
           <label className="block text-sm font-medium text-white/70 mb-2">
-            নোট (ঐচ���ছিক)
+            নোট (ঐচ����ছিক)
           </label>
           <textarea
             value={formData.notes}
