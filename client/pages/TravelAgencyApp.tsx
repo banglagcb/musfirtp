@@ -53,7 +53,7 @@ export default function TravelAgencyApp() {
           setUser(validUser);
           setAppState("dashboard");
           setBreadcrumbs([
-            { label: "ড���যাশবোর্ড", path: "/dashboard", isActive: true },
+            { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
           ]);
         } else {
           localStorage.removeItem('air_musafir_user');
@@ -81,6 +81,12 @@ export default function TravelAgencyApp() {
   }, [isDarkMode]);
 
   const handleLoginSuccess = (loggedInUser: User) => {
+    // Save user session to localStorage
+    localStorage.setItem('air_musafir_user', JSON.stringify({
+      username: loggedInUser.username,
+      password: loggedInUser.password
+    }));
+
     setUser(loggedInUser);
     setAppState("dashboard");
     setBreadcrumbs([
@@ -89,6 +95,9 @@ export default function TravelAgencyApp() {
   };
 
   const handleLogout = () => {
+    // Remove user session from localStorage
+    localStorage.removeItem('air_musafir_user');
+
     setUser(null);
     setAppState("login");
     setOpenWindows([]);
@@ -187,7 +196,7 @@ export default function TravelAgencyApp() {
               closeWindow(cardId);
               openWindow(
                 "edit-booking",
-                "বুকিং এডিট করুন",
+                "বুকিং ��ডিট করুন",
                 <EditBookingForm
                   booking={booking}
                   onClose={() => closeWindow("edit-booking")}
