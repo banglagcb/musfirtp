@@ -56,7 +56,7 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
     if (!formData.mobile.trim()) {
       newErrors.mobile = "মোবাইল নম্বর আবশ্যিক";
     } else if (!/^01[3-9]\d{8}$/.test(formData.mobile)) {
-      newErrors.mobile = "সঠিক মোবাইল নম্বর লিখুন";
+      newErrors.mobile = "���ঠিক মোবাইল নম্বর লিখুন";
     }
 
     if (!formData.passport.trim()) {
@@ -559,8 +559,12 @@ export default function EditBookingForm({ booking, user, onClose, onSuccess }: E
           <textarea
             value={formData.notes}
             onChange={(e) => handleInputChange('notes', e.target.value)}
+            disabled={isViewOnly}
             rows={3}
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all resize-none"
+            className={cn(
+              "w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-folder-primary/50 transition-all resize-none",
+              isViewOnly && "opacity-50 cursor-not-allowed"
+            )}
             placeholder="অতিরিক্ত তথ্য বা মন্তব্য..."
           />
         </motion.div>
