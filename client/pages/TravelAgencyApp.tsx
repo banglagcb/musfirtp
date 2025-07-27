@@ -368,7 +368,7 @@ function TravelAgencyAppInner() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed top-4 lg:top-6 left-4 lg:left-6 z-40"
+          className="fixed top-20 left-4 lg:left-6 z-40"
         >
           <Breadcrumbs
             items={breadcrumbs}
