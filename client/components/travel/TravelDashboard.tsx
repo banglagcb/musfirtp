@@ -55,7 +55,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "search-filter",
     title: "সার্চ ও ফ���ল্টার",
-    description: "���ুকিং খুঁজুন ও ফিল্টার করুন",
+    description: "���ুকিং খ��ঁজুন ও ফিল্টার করুন",
     icon: Search,
     color: "from-neon-purple to-neon-pink",
     gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20",
@@ -153,7 +153,7 @@ export default function TravelDashboard({
     {
       id: "reports",
       title: t("reports"),
-      description: language === 'bn' ? "বিক্রয�� ও ম���নাফার রিপোর্ট দেখুন" : "View sales and profit reports",
+      description: language === 'bn' ? "বিক্রয�� ও মুনাফার রিপোর্ট দেখুন" : "View sales and profit reports",
       icon: TrendingUp,
       color: "from-orange-500 to-red-500",
       gradient: "bg-gradient-to-br from-orange-500/20 to-red-500/20",
@@ -580,7 +580,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <TrendingUp className="w-5 h-5" />
-            <span>রিপোর্ট</span>
+            <span>{t('reports')}</span>
           </motion.button>
         </div>
       </motion.div>
