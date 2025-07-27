@@ -14,16 +14,17 @@ import {
   Edit3
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AIRLINES, ROUTES, Booking } from "@shared/travel-types";
+import { AIRLINES, ROUTES, Booking, User } from "@shared/travel-types";
 import dataService from "@/services/dataService";
 
 interface EditBookingFormProps {
   booking: Booking;
+  user: User;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export default function EditBookingForm({ booking, onClose, onSuccess }: EditBookingFormProps) {
+export default function EditBookingForm({ booking, user, onClose, onSuccess }: EditBookingFormProps) {
   const [formData, setFormData] = useState({
     customerName: booking.customerName,
     mobile: booking.mobile,
@@ -42,11 +43,14 @@ export default function EditBookingForm({ booking, onClose, onSuccess }: EditBoo
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Check if this booking should be view-only for managers
+  const isViewOnly = user.role === "manager" && booking.paymentStatus === "paid";
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.customerName.trim()) {
-      newErrors.customerName = "গ্রাহকের নাম আবশ্যিক";
+      newErrors.customerName = "গ্রাহকের ��াম আবশ্যিক";
     }
 
     if (!formData.mobile.trim()) {
@@ -517,7 +521,7 @@ export default function EditBookingForm({ booking, onClose, onSuccess }: EditBoo
           className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
         >
           <label className="block text-sm font-medium text-white/70 mb-2">
-            নোট (ঐচ্ছিক)
+            নোট (ঐচ���ছিক)
           </label>
           <textarea
             value={formData.notes}
