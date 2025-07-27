@@ -18,22 +18,20 @@ import dataService from "@/services/dataService";
 
 type AppState = "login" | "dashboard";
 
-interface OpenWindow {
+interface OpenModal {
   id: string;
   title: string;
   component: React.ReactNode;
   isOpen: boolean;
-  state: "popup" | "fullscreen" | "minimized";
-  zIndex: number;
+  size?: "sm" | "md" | "lg" | "xl" | "full";
 }
 
 export default function TravelAgencyApp() {
   const [appState, setAppState] = useState<AppState>("login");
   const [user, setUser] = useState<User | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [openWindows, setOpenWindows] = useState<OpenWindow[]>([]);
+  const [openModals, setOpenModals] = useState<OpenModal[]>([]);
   const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([]);
-  const [nextZIndex, setNextZIndex] = useState(100);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -182,7 +180,7 @@ export default function TravelAgencyApp() {
 
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
-      "new-booking": "নতুন ব��কিং",
+      "new-booking": "নতুন ব����কিং",
       "bookings-list": "বুকিং লিস্ট",
       "search-filter": "সার্চ ও ফিল্টার",
       reports: "রিপোর্ট",
