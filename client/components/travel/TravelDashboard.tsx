@@ -179,7 +179,7 @@ export default function TravelDashboard({
     ...(user.role === 'owner' ? [{
       id: "bulk-purchase",
       title: t("bulkPurchase"),
-      description: language === 'bn' ? "অগ্রিম টি��ে��� ক্রয় করুন" : "Purchase tickets in advance",
+      description: language === 'bn' ? "অগ্রিম টি��েট ক্রয় করুন" : "Purchase tickets in advance",
       icon: ShoppingCart,
       color: "from-emerald-500 to-teal-500",
       gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
@@ -490,7 +490,7 @@ export default function TravelDashboard({
                 },
               }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => onCardClick(card.id)}
+              onClick={() => handleCardClick(card.id)}
               className={cn(
                 "relative group cursor-pointer rounded-2xl p-6 border transition-all duration-300 overflow-hidden",
                 theme === 'dark'
@@ -598,7 +598,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-purple to-neon-pink rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <Search className="w-5 h-5" />
-            <span>{language === 'bn' ? 'সার্চ করুন' : 'Search'}</span>
+            <span>{language === 'bn' ? 'সার্চ করু��' : 'Search'}</span>
           </motion.button>
 
           <motion.button
