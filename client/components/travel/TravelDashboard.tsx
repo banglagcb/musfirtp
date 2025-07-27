@@ -57,7 +57,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "search-filter",
     title: "সার্চ ও ফ���ল্টার",
-    description: "���ুকিং খ��ঁজুন ও ফিল্টার করুন",
+    description: "���ুকিং খ��ঁ���ুন ও ফিল্টার করুন",
     icon: Search,
     color: "from-neon-purple to-neon-pink",
     gradient: "bg-gradient-to-br from-purple-500/20 to-pink-500/20",
@@ -89,7 +89,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "bulk-purchase",
     title: "বাল্ক টিকেট ক্রয়",
-    description: "অগ্রিম টিকেট ক্রয় করুন",
+    description: "অগ্রিম টিকেট ক্��য় করুন",
     icon: ShoppingCart,
     color: "from-emerald-500 to-teal-500",
     gradient: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
@@ -194,7 +194,8 @@ export default function TravelDashboard({
     },
   ], [user.role, t, language]);
 
-  const containerVariants = {
+  // Memoized animation variants for better performance
+  const containerVariants = useMemo(() => ({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -202,9 +203,9 @@ export default function TravelDashboard({
         staggerChildren: 0.1,
       },
     },
-  };
+  }), []);
 
-  const cardVariants = {
+  const cardVariants = useMemo(() => ({
     hidden: {
       opacity: 0,
       y: 50,
@@ -220,7 +221,7 @@ export default function TravelDashboard({
         damping: 25,
       },
     },
-  };
+  }), []);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("bn-BD", {
