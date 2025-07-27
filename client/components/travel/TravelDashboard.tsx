@@ -129,7 +129,7 @@ export default function TravelDashboard({
     {
       id: "new-booking",
       title: t("newBooking"),
-      description: language === 'bn' ? "��তুন ফ্লাইট বুকিং যোগ করুন" : "Add new flight booking",
+      description: language === 'bn' ? "নতুন ফ্লাইট বুকিং যোগ করুন" : "Add new flight booking",
       icon: PlusCircle,
       color: "from-neon-green to-neon-blue",
       gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
@@ -245,13 +245,13 @@ export default function TravelDashboard({
           <div>
             <h1 className={cn(
               "text-4xl font-bold mb-2 transition-colors",
-              "text-white dark:text-white light:text-gray-800"
+              theme === 'dark' ? "text-white" : "text-gray-800"
             )}>
               {t('dashboard')}
             </h1>
             <p className={cn(
               "transition-colors",
-              "text-white/70 dark:text-white/70 light:text-gray-600"
+              theme === 'dark' ? "text-white/70" : "text-gray-600"
             )}>
               {t('welcome')}, {user.name} -{" "}
               {user.role === "owner" ? t('owner') : t('manager')}
