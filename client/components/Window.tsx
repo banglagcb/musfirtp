@@ -89,11 +89,13 @@ export default function Window({
         </div>
 
         {/* Window Content */}
-        <div className="flex-1 overflow-auto h-full">
+        <div className="flex-1 overflow-auto">
           <div
-            className="h-full"
+            className="min-h-0"
             style={{
-              height: isMaximized ? "calc(100vh - 60px)" : `${height - 60}px`,
+              height: isMaximized
+                ? "calc(100vh - 60px)"
+                : `min(${height - 60}px, calc(100vh - 8rem - 60px))`,
             }}
           >
             {children}
