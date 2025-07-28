@@ -33,6 +33,7 @@ export default function BookingsList({
   onClose,
   onEdit,
 }: BookingsListProps) {
+  const { t, language } = useTranslation();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [filteredBookings, setFilteredBookings] = useState<Booking[]>([]);
   const [showFilters, setShowFilters] = useState(false);
@@ -142,7 +143,7 @@ export default function BookingsList({
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">বুকিং লিস্ট</h1>
             <p className="text-white/70">
-              মোট {filteredBookings.length} টি বুকিং পাওয়া গেছে
+              মোট {filteredBookings.length} টি বুকিং প���ওয়া গেছে
             </p>
           </div>
           <motion.button
@@ -259,7 +260,7 @@ export default function BookingsList({
                       সব
                     </option>
                     <option value="paid" className="bg-slate-800">
-                      পেইড
+                      প���ইড
                     </option>
                     <option value="partial" className="bg-slate-800">
                       আংশিক
