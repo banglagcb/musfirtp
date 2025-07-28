@@ -371,6 +371,9 @@ class DataService {
   resetToFreshState(): void {
     this.clearAllData();
 
+    // Mark as fresh start to prevent sample data
+    localStorage.setItem("air_musafir_fresh_start", "true");
+
     // Force page reload to ensure clean state
     window.location.reload();
   }
