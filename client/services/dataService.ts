@@ -52,7 +52,7 @@ class DataService {
       const sampleBookings: Booking[] = [
         {
           id: "1",
-          customerName: "মোহাম্মদ রহি��",
+          customerName: "মোহাম্মদ রহিম",
           mobile: "01712345678",
           passport: "BE1234567",
           email: "rahim@email.com",
@@ -355,8 +355,8 @@ class DataService {
     }
     keysToRemove.forEach(key => localStorage.removeItem(key));
 
-    // Reinitialize with fresh default data
-    this.initializeDefaultData();
+    // Reinitialize with clean data (no samples)
+    this.initializeDefaultData(false);
   }
 
   // Reset everything to completely fresh state
