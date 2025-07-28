@@ -450,6 +450,9 @@ function TravelAgencyAppInner() {
         </Modal>
       ))}
 
+      {/* Ticket Inventory Notification - Only show when user is logged in */}
+      {user && <TicketInventoryNotification />}
+
       {/* Enhanced Loading Animation Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {[...Array(20)].map((_, i) => (
