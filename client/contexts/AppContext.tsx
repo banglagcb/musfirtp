@@ -129,7 +129,7 @@ export const translations = {
     addNewBooking: "নতুন বুকিং যোগ করুন",
     systemConfig: "সিস্টেম কনফিগারেশন",
     reportsAnalysis: "রিপোর্ট ও বিশ্লেষণ",
-    salesProfitReports: "বিক্রয় ও মুনাফার রিপোর্ট",
+    salesProfitReports: "বিক্রয় ও মুনাফার র���পোর্ট",
     downloadBookingData: "বুকিং ডেটা ডাউনলোড",
     csvExcelDownload: "CSV/Excel ফাইলে ডাউনলোড করুন",
     customerInfo: "গ্রাহকের তথ্য",
@@ -148,7 +148,7 @@ export const translations = {
     exporting: "এক্সপোর্ট হচ্ছে...",
     exportInfo: "এক্সপোর্ট সম্পর্কে তথ্য",
     exportNote:
-      "এক্সপোর্ট করা ফাইল CSV ফরম্যাটে হবে যা Microsoft Excel, Google Sheets এবং অন্যান্য স্প্রেডশিট অ্যাপ্লিকেশনে খোলা যাবে।",
+      "এক্সপোর��ট করা ফাইল CSV ফরম্যাটে হবে যা Microsoft Excel, Google Sheets এবং অন্যান্য স্প্রেডশিট অ্যাপ্লিকেশনে খোলা যাবে।",
     systemManagement: "সিস্টেম কনফিগারেশন ও ম্যানেজমেন্ট",
     totalBookingsStats: "মোট বুকিং",
     completeData: "সম্পূর্ণ ডেটা",
@@ -291,7 +291,7 @@ export const translations = {
 };
 
 // Create context
-const AppContext = createContext<AppContextType | undefined>(undefined);
+export const AppContext = createContext<AppContextType | undefined>(undefined);
 
 // Provider component
 interface AppProviderProps {
