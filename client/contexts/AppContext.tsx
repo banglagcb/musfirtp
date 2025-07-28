@@ -88,7 +88,7 @@ export const translations = {
     pending: "পেন্ডিং",
     partial: "আংশিক",
     paidBookings: "পেইড বুকিং",
-    partialPayments: "আংশিক পেমেন্ট",
+    partialPayments: "আংশিক পেমেন্��",
     pendingPayments: "��েন্ডিং পেমেন্ট",
 
     // Stats
@@ -132,6 +132,8 @@ export const translations = {
     quickActions: "Quick Actions",
     allBookings: "All Bookings",
     searchAction: "Search",
+    searchAndFilter: "Search & Filter",
+    dataExport: "Data Export",
 
     // User
     owner: "Owner",
