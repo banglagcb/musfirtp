@@ -17,10 +17,7 @@ export default defineConfig(({ mode }) => ({
     outDir: "dist/spa",
   },
   plugins: [
-    react({
-      // Enable Fast Refresh for better development experience
-      fastRefresh: true,
-    }),
+    react(),
     expressPlugin(),
   ],
   resolve: {
