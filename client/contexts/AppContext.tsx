@@ -54,7 +54,7 @@ export const translations = {
     // Navigation
     dashboard: "ড্যাশবোর্ড",
     bookings: "বুকিং লিস্ট",
-    newBooking: "নতুন বুকিং",
+    newBooking: "নতুন ���ুকিং",
     inventory: "টিকেট ইনভেন্টরি",
     bulkPurchase: "বাল্ক টিকেট ক্রয়",
     reports: "রিপোর্ট",
@@ -145,6 +145,9 @@ export const translations = {
     paid: "Paid",
     pending: "Pending",
     partial: "Partial",
+    paidBookings: "Paid Bookings",
+    partialPayments: "Partial Payments",
+    pendingPayments: "Pending Payments",
 
     // Stats
     totalBookings: "Total Bookings",
