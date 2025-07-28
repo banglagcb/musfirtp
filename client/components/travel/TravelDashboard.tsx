@@ -164,7 +164,7 @@ export default function TravelDashboard({
         title: t("searchAndFilter"),
         description:
           language === "bn"
-            ? "ব��কিং খুঁজ��ন ও ফিল্টার করুন"
+            ? "বুকিং খুঁজ��ন ও ফিল্টার করুন"
             : "Search and filter bookings",
         icon: Search,
         color: "from-neon-purple to-neon-pink",
@@ -183,7 +183,7 @@ export default function TravelDashboard({
       },
       {
         id: "export-data",
-        title: language === "bn" ? "ডেটা এক্সপোর্ট" : "Data Export",
+        title: t("dataExport"),
         description:
           language === "bn"
             ? "CSV/Excel ফাইলে ডাউনলোড করুন"
