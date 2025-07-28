@@ -49,7 +49,7 @@ export default function DataExport({ onClose }: DataExportProps) {
 
   const handleExportFiltered = async () => {
     if (!dateRange.from || !dateRange.to) {
-      alert('তারিখের রেঞ্জ নি���্বাচন করুন');
+      alert(t('selectDateRange'));
       return;
     }
 
@@ -79,7 +79,7 @@ export default function DataExport({ onClose }: DataExportProps) {
         'এয়ারলাইন',
         'ক্রয়মূল্য',
         'বিক্রয়মূল্য',
-        'পেমেন্ট স্ট্যাটাস',
+        'পেমেন্ট স্ট্যাট��স',
         'পেইড পরিমাণ',
         'বুকিং তারিখ',
         'নোট'
@@ -340,7 +340,7 @@ export default function DataExport({ onClose }: DataExportProps) {
               <ul className="space-y-2 text-white/70">
                 <li>• ক্রয়মূল্য</li>
                 <li>• বিক্রয়মূল্য</li>
-                <li>• পেমেন্ট স্ট্যাটাস</li>
+                <li>�� পেমেন্ট স্ট্যাটাস</li>
                 <li>• পেইড পরিমাণ</li>
                 <li>• বুকিং তারিখ</li>
                 <li>• অতিরিক্ত নোট</li>
