@@ -49,7 +49,7 @@ const dashboardCards: DashboardCard[] = [
   {
     id: "new-booking",
     title: "নতুন বুকিং",
-    description: "নতুন ফ্লাইট বুকিং যোগ কর����ন",
+    description: "নতুন ��্লাইট বুকিং যোগ কর����ন",
     icon: PlusCircle,
     color: "from-neon-green to-neon-blue",
     gradient: "bg-gradient-to-br from-green-500/20 to-blue-500/20",
@@ -466,7 +466,7 @@ export default function TravelDashboard({
                   theme === "dark" ? "text-white/70" : "text-gray-600",
                 )}
               >
-                {language === "bn" ? "পেই��� ���ুকিং" : "Paid Bookings"}
+                {t('paidBookings')}
               </p>
               <p
                 className={cn(
