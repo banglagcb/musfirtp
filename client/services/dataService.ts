@@ -12,8 +12,13 @@ class DataService {
   private readonly USERS_KEY = "travel_users";
 
   private constructor() {
-    // Initialize with sample data for demo (first time only)
-    this.initializeDefaultData(true);
+    // Check if this is first time or fresh start
+    const hasExistingData = localStorage.getItem(this.BOOKINGS_KEY) || localStorage.getItem(this.USERS_KEY);
+
+    // Only include sample data if no data exists AND user hasn't done a fresh reset
+    const isFirstTimeUser = !hasExistingData && !localStorage.getItem("air_musafir_fresh_start");
+
+    this.initializeDefaultData(isFirstTimeUser);
   }
 
   static getInstance(): DataService {
