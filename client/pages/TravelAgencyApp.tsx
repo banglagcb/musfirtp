@@ -41,7 +41,7 @@ function TravelAgencyAppInner() {
   }
 
   const { isMobile, isTablet, theme, setIsLoading } = appContext;
-  const { t } = translationContext;
+  const { t, language } = translationContext;
 
   const [appState, setAppState] = useState<AppState>("login");
   const [user, setUser] = useState<User | null>(null);
