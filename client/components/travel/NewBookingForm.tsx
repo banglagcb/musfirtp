@@ -18,6 +18,7 @@ import { AIRLINES, ROUTES, User, Booking } from "@shared/travel-types";
 import dataService from "@/services/dataService";
 import ticketInventoryService from "@/services/ticketInventoryService";
 import TicketDetails from "./TicketDetails";
+import { useTranslation } from "@/contexts/AppContext";
 
 interface NewBookingFormProps {
   user: User;
@@ -81,7 +82,7 @@ export default function NewBookingForm({
     }
 
     if (!formData.airline) {
-      newErrors.airline = "এয়ারলাইন নির্বাচন ক���ুন";
+      newErrors.airline = "এয়ারলা��ন নির্বাচন ক���ুন";
     }
 
     if (!formData.purchasePrice || isNaN(Number(formData.purchasePrice))) {
