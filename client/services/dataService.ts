@@ -12,7 +12,8 @@ class DataService {
   private readonly USERS_KEY = "travel_users";
 
   private constructor() {
-    this.initializeDefaultData();
+    // Initialize with sample data for demo (first time only)
+    this.initializeDefaultData(true);
   }
 
   static getInstance(): DataService {
@@ -51,7 +52,7 @@ class DataService {
       const sampleBookings: Booking[] = [
         {
           id: "1",
-          customerName: "মোহাম্মদ রহিম",
+          customerName: "মোহাম্মদ রহি��",
           mobile: "01712345678",
           passport: "BE1234567",
           email: "rahim@email.com",
@@ -298,7 +299,7 @@ class DataService {
       "রুট",
       "এয়ারলাইন",
       "ক্রয়মূল্য",
-      "বিক্রয়���ূল্য",
+      "বিক্রয়মূল্য",
       "পেমেন��ট স্ট্যাটাস",
       "পেইড পরিমাণ",
       "বুকিং তারিখ",
