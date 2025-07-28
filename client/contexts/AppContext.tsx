@@ -249,6 +249,18 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);
 
+  // Initialize font based on language
+  useEffect(() => {
+    const body = document.body;
+    if (language === "bn") {
+      body.classList.add("font-bengali");
+      body.classList.remove("font-english");
+    } else {
+      body.classList.add("font-english");
+      body.classList.remove("font-bengali");
+    }
+  }, [language]);
+
   // Memoize context value to prevent unnecessary re-renders
   const value: AppContextType = useMemo(
     () => ({
