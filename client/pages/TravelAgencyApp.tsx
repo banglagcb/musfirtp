@@ -302,7 +302,7 @@ function TravelAgencyAppInner() {
 
     // Update breadcrumbs
     setBreadcrumbs([
-      { label: "ড্য���শ���োর্ড", path: "/dashboard" },
+      { label: "ড্য���শ����োর্ড", path: "/dashboard" },
       { label: title, path: `/${cardId}`, isActive: true },
     ]);
   };
@@ -484,21 +484,10 @@ function TravelAgencyAppInner() {
   );
 }
 
-// Simple test component to verify context
-function TestComponent() {
-  try {
-    const { theme } = useApp();
-    return <div>Context works: {theme}</div>;
-  } catch (error) {
-    return <div>Context error: {String(error)}</div>;
-  }
-}
-
 // Export component wrapped with providers
 export default function TravelAgencyApp() {
   return (
     <AppProvider>
-      <TestComponent />
       <TravelAgencyAppInner />
     </AppProvider>
   );
