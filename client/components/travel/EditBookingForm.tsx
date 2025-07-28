@@ -16,6 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 import { AIRLINES, ROUTES, Booking, User } from "@shared/travel-types";
 import dataService from "@/services/dataService";
+import { useTranslation } from "@/contexts/AppContext";
 
 interface EditBookingFormProps {
   booking: Booking;
@@ -260,7 +261,7 @@ export default function EditBookingForm({
                   errors.customerName ? "border-red-400" : "border-white/20",
                   isViewOnly && "opacity-50 cursor-not-allowed",
                 )}
-                placeholder="গ্রাহকের সম্পূর্ণ নাম"
+                placeholder="গ্রাহকের সম্পূর��ণ নাম"
               />
               {errors.customerName && (
                 <p className="mt-1 text-sm text-red-400">
@@ -321,7 +322,7 @@ export default function EditBookingForm({
             {/* Email */}
             <div>
               <label className="block text-sm font-medium text-white/70 mb-2">
-                ইমেইল ঠিকানা *
+                ��মেইল ঠিকানা *
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
@@ -438,7 +439,7 @@ export default function EditBookingForm({
                   )}
                 >
                   <option value="" className="bg-gray-800">
-                    এয়ারলাইন নির্বাচন করুন
+                    এয়া���লাইন নির্বাচন করুন
                   </option>
                   {AIRLINES.map((airline) => (
                     <option
@@ -664,7 +665,7 @@ export default function EditBookingForm({
               ) : (
                 <Save className="w-5 h-5" />
               )}
-              <span>{isSubmitting ? "আপডেট হচ্ছে..." : "আপডেট করুন"}</span>
+              <span>{isSubmitting ? "আপডেট হচ্ছে..." : "আপডে�� করুন"}</span>
             </button>
           )}
         </motion.div>
