@@ -44,7 +44,7 @@ export const translations = {
     delete: "ডিলিট",
     edit: "এডিট",
     view: "দেখুন",
-    print: "প্রিন্ট করু���",
+    print: "প্র��ন্ট করু���",
     export: "এক্���প��র্ট",
     search: "সার্চ করুন",
     filter: "ফিল্টার",
@@ -55,8 +55,8 @@ export const translations = {
     // Navigation
     dashboard: "ড্যাশবোর্ড",
     bookings: "বুকিং লিস্ট",
-    newBooking: "��ত��ন ���ুকিং",
-    inventory: "টিকেট ইনভেন্টরি",
+    newBooking: "নত��ন ���ুকিং",
+    inventory: "��িকেট ইনভেন্টরি",
     bulkPurchase: "বাল্ক টিকেট ক্রয়",
     reports: "রিপোর্ট",
     settings: "সেটিংস",
@@ -75,7 +75,7 @@ export const translations = {
     // Forms
     customerName: "গ্রাহকের নাম",
     mobile: "মোবাইল নম্বর",
-    email: "ইমেইল ঠিকানা",
+    email: "ইমেইল ঠিকা��া",
     passport: "পাস��োর্ট নম্ব��",
     flightDate: "ফ্লাইট তারিখ",
     route: "রুট",
@@ -106,7 +106,7 @@ export const translations = {
     bengali: "বাংলা",
     switchToEnglish: "Switch to English",
     switchToBengali: "বাংলায় পরিবর্তন করুন",
-    invalidCredentials: "ভুল ইউজারনেম বা পাসওয়ার্ড",
+    invalidCredentials: "ভুল ইউজারনেম ��া পাসওয়ার্ড",
 
     // Additional interface text
     accessDenied: "অ্যাক্সেস নিষিদ্ধ",
@@ -115,7 +115,7 @@ export const translations = {
     viewBooking: "বুকিং দেখুন",
     bookingDate: "বুকিং তারিখ",
     bookingID: "বুকিং আইডি",
-    viewOnly: "কেব��� দেখার জন্য",
+    viewOnly: "কেবল দেখার জন্য",
     accessDeniedMsg: "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন",
     redirectingToDashboard: "ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...",
     updateBookingError: "বুকিং আপডেট করতে সমস্যা হয়েছে",
@@ -140,7 +140,7 @@ export const translations = {
     paidAmount: "পেইড পরিমাণ",
     filterAndRetry: "ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন",
     successfulLogin: "সফলভাবে লগইন হয়েছে!",
-    fillFlightInfo: "নতুন ফ্লাইট বুকিং এর তথ্য পূরণ করুন",
+    fillFlightInfo: "নতুন ফ্লাইট ��ুকিং এর তথ্য পূরণ করুন",
     saving: "সেভ হচ্ছে...",
     exportSuccessful: "সফলভ��বে এক্সপোর্ট হয়েছে!",
     exportError: "এক্সপোর্ট করতে সমস্যা হয়েছে!",
@@ -161,7 +161,7 @@ export const translations = {
     selectDateRange: "তারিখের রেঞ্জ নির্বাচন করুন",
     noBookingsInRange: "নির্বাচিত সময়ের মধ্যে কোনো বুকিং পাওয়া যায়নি",
     username: "ইউজারনেম",
-    password: "পাসওয়ার��ড",
+    password: "পাসওয়ার্ড",
     demoLoginInfo: "ডেমো লগইন তথ্য:",
     ownerAccount: "মালিক:",
     managerAccount: "ম্যানেজার:",
@@ -189,6 +189,18 @@ export const translations = {
     endDate: "শেষ তারিখ",
     includedFields: "অন্তর্ভুক্ত ফিল্ড সমূহ:",
     financialInfo: "আর্থিক তথ্য:",
+
+    // Form validation errors
+    customerNameRequired: "গ্রাহকের নাম আবশ্যিক",
+    mobileRequired: "মোবাইল নম্বর আবশ্যিক",
+    emailRequired: "ইমেইল আবশ্যিক",
+    emailInvalid: "সঠিক ইমেইল ঠিকানা লিখুন",
+    routeRequired: "রুট নির্বাচন করুন",
+    airlineRequired: "এয়ারলাইন নির্বাচন করুন",
+    purchasePriceRequired: "ক্রয়মূল্য আবশ্যিক",
+    salePriceRequired: "বিক্রয়মূল্য আবশ্যিক",
+    salePriceError: "বিক্রয়মূল্য ক্রয়মূল্যের চেয়ে বেশি হতে হবে",
+    paidAmountError: "পেইড পরিমাণ বিক্রয়মূল্যের চেয়ে বেশি হতে পারে না",
   },
   en: {
     // Common
@@ -343,6 +355,18 @@ export const translations = {
     endDate: "End Date",
     includedFields: "Included Fields:",
     financialInfo: "Financial Information:",
+
+    // Form validation errors
+    customerNameRequired: "Customer name is required",
+    mobileRequired: "Mobile number is required",
+    emailRequired: "Email is required",
+    emailInvalid: "Please enter a valid email address",
+    routeRequired: "Please select a route",
+    airlineRequired: "Please select an airline",
+    purchasePriceRequired: "Purchase price is required",
+    salePriceRequired: "Sale price is required",
+    salePriceError: "Sale price must be higher than purchase price",
+    paidAmountError: "Paid amount cannot exceed sale price",
   },
 };
 
