@@ -178,7 +178,7 @@ export default function AppHeader({
                 >
                   <Globe className="w-5 h-5" />
                   <span className="text-sm">
-                    {language === "bn" ? "English" : "বাংলা"}
+                    {language === "bn" ? t('english') : t('bengali')}
                   </span>
                 </motion.button>
 
