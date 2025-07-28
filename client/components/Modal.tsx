@@ -23,9 +23,13 @@ export default function Modal({
   size = "lg",
   showControls = true,
 }: ModalProps) {
+  const { language } = useApp();
   const [isMaximized, setIsMaximized] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // Get font class based on language
+  const fontClass = language === 'bn' ? 'font-bengali' : 'font-english';
 
   // Close on escape key
   useEffect(() => {
