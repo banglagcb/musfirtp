@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Maximize2, Minimize2, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ReactNode, useState, useEffect, useRef } from "react";
+import { useApp } from "@/contexts/AppContext";
 
 interface ModalProps {
   children: ReactNode;
