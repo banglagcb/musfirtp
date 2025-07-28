@@ -435,9 +435,9 @@ export default function BookingsList({
             animate={{ opacity: 1 }}
             className="text-center py-12"
           >
-            <p className="text-white/70 text-lg">কোনো বুকিং পাওয়া যায়নি</p>
+            <p className="text-white/70 text-lg">{t("noBookingsFound")}</p>
             <p className="text-white/50 text-sm mt-2">
-              ফিল����টার পরিবর্তন করে আবার চ���ষ্টা করুন
+              {t("filterAndRetry")}
             </p>
           </motion.div>
         )}
@@ -461,7 +461,7 @@ export default function BookingsList({
               >
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-2xl font-bold text-white">
-                    বুকিং বিস্তারিত
+                    {t("bookingDetails")}
                   </h2>
                   <motion.button
                     whileHover={{ scale: 1.1 }}
@@ -477,7 +477,7 @@ export default function BookingsList({
                   {/* Customer Details */}
                   <div>
                     <h3 className="text-lg font-semibold text-white mb-3">
-                      গ্রাহকের তথ্য
+                      {t("customerInfo")}
                     </h3>
                     <div className="space-y-2">
                       <p className="text-white/70">
@@ -514,11 +514,11 @@ export default function BookingsList({
                         {selectedBooking.airline}
                       </p>
                       <p className="text-white/70">
-                        <span className="text-white">ফ্লাইট তারিখ:</span>{" "}
+                        <span className="text-white">{t("flightDate")}:</span>{" "}
                         {formatDate(selectedBooking.flightDate)}
                       </p>
                       <p className="text-white/70">
-                        <span className="text-white">বুকিং তারিখ:</span>{" "}
+                        <span className="text-white">{t("bookingDate")}:</span>{" "}
                         {formatDate(selectedBooking.bookingDate)}
                       </p>
                     </div>
@@ -527,23 +527,23 @@ export default function BookingsList({
                   {/* Payment Details */}
                   <div>
                     <h3 className="text-lg font-semibold text-white mb-3">
-                      পেমেন্ট তথ্য
+                      {t("paymentInfo")}
                     </h3>
                     <div className="space-y-2">
                       <p className="text-white/70">
-                        <span className="text-white">ক্রয়মূল্য:</span>{" "}
+                        <span className="text-white">{t("purchasePrice")}:</span>{" "}
                         {formatCurrency(selectedBooking.purchasePrice)}
                       </p>
                       <p className="text-white/70">
-                        <span className="text-white">বিক্রয়মূল্য:</span>{" "}
+                        <span className="text-white">{t("salePrice")}:</span>{" "}
                         {formatCurrency(selectedBooking.salePrice)}
                       </p>
                       <p className="text-white/70">
-                        <span className="text-white">পেইড:</span>{" "}
+                        <span className="text-white">{t("paidAmount")}:</span>{" "}
                         {formatCurrency(selectedBooking.paidAmount)}
                       </p>
                       <div className="flex items-center space-x-2">
-                        <span className="text-white">স্ট্যাটাস:</span>
+                        <span className="text-white">{t("status")}:</span>
                         {getPaymentStatusIcon(selectedBooking.paymentStatus)}
                         <span className="text-white/70">
                           {getPaymentStatusText(selectedBooking.paymentStatus)}
@@ -555,11 +555,11 @@ export default function BookingsList({
                   {/* Profit Calculation */}
                   <div>
                     <h3 className="text-lg font-semibold text-white mb-3">
-                      মুনাফা হিসাব
+                      {t("profitCalculation")}
                     </h3>
                     <div className="space-y-2">
                       <p className="text-white/70">
-                        <span className="text-white">মোট মুনাফা:</span>{" "}
+                        <span className="text-white">{t("totalProfit")}:</span>{" "}
                         {formatCurrency(
                           selectedBooking.salePrice -
                             selectedBooking.purchasePrice,
