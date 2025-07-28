@@ -33,13 +33,16 @@ interface OpenModal {
 }
 
 function TravelAgencyAppInner() {
-  // Ensure we have context before proceeding
-  const appContext = useApp();
-  const translationContext = useTranslation();
+  // Safely check context availability
+  const appContext = useContext(AppContext);
 
-  if (!appContext || !translationContext) {
+  if (!appContext) {
     return <div>Loading context...</div>;
   }
+
+  // Now we can safely use the hooks
+  const { isMobile, isTablet, theme, setIsLoading } = appContext;
+  const { t, language } = useTranslation();
 
   const { isMobile, isTablet, theme, setIsLoading } = appContext;
   const { t, language } = translationContext;
@@ -281,7 +284,7 @@ function TravelAgencyAppInner() {
         } else {
           component = (
             <PlaceholderPage
-              title={language === "bn" ? "���্যাক্সেস নিষিদ্ধ" : "Access Denied"}
+              title={language === "bn" ? "অ্যাক্সেস নিষিদ্ধ" : "Access Denied"}
               description={
                 language === "bn"
                   ? "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন"
