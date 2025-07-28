@@ -13,6 +13,17 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        bengali: ["Noto Serif Bengali", "serif"],
+        english: [
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -83,10 +94,12 @@ export default {
         xs: "2px",
       },
       boxShadow: {
-        "folder": "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)",
-        "popup": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-        "glow": "0 0 20px rgba(139, 92, 246, 0.3)",
-        "neon": "0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor",
+        folder:
+          "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05)",
+        popup:
+          "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+        glow: "0 0 20px rgba(139, 92, 246, 0.3)",
+        neon: "0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor",
       },
       keyframes: {
         "accordion-down": {
@@ -161,7 +174,7 @@ export default {
             opacity: "1",
           },
         },
-        "float": {
+        float: {
           "0%, 100%": {
             transform: "translateY(0px)",
           },
@@ -190,10 +203,12 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "folder-open": "folder-open 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
-        "folder-close": "folder-close 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        "expand-fullscreen": "expand-fullscreen 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "folder-close":
+          "folder-close 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        "expand-fullscreen":
+          "expand-fullscreen 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)",
         "popup-enter": "popup-enter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
-        "float": "float 3s ease-in-out infinite",
+        float: "float 3s ease-in-out infinite",
         "gradient-x": "gradient-x 3s ease infinite",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
       },

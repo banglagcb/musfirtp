@@ -1,143 +1,185 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, memo, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Moon,
-  Sun,
-  LogOut,
-  RefreshCw,
-} from "lucide-react";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
-import FolderWindow from "@/components/FolderWindow";
+import Modal from "@/components/Modal";
 import Breadcrumbs, { BreadcrumbItem } from "@/components/Breadcrumbs";
 import NewBookingForm from "@/components/travel/NewBookingForm";
 import BookingsList from "@/components/travel/BookingsList";
 import ReportsSection from "@/components/travel/ReportsSection";
 import DataExport from "@/components/travel/DataExport";
+import EditBookingForm from "@/components/travel/EditBookingForm";
+import SettingsPage from "@/components/travel/SettingsPage";
+import BulkTicketPurchaseForm from "@/components/travel/BulkTicketPurchaseForm";
+import TicketInventoryDashboard from "@/components/travel/TicketInventoryDashboard";
+import TicketInventoryNotification from "@/components/travel/TicketInventoryNotification";
 import PlaceholderPage from "@/components/PlaceholderPage";
+import AppHeader from "@/components/layout/AppHeader";
+import {
+  AppProvider,
+  useApp,
+  useTranslation,
+  AppContext,
+} from "@/contexts/AppContext";
 import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
 import dataService from "@/services/dataService";
+import { PerformanceMonitor, analyzeBundleUsage } from "@/utils/performance";
+import { registerServiceWorker } from "@/utils/serviceWorker";
+import "@/utils/resetData"; // Enable console reset commands
+import "@/utils/completeReset"; // Enable complete reset utilities
 
 type AppState = "login" | "dashboard";
 
-interface OpenWindow {
+interface OpenModal {
   id: string;
   title: string;
   component: React.ReactNode;
   isOpen: boolean;
-  state: "popup" | "fullscreen" | "minimized";
-  zIndex: number;
+  size?: "sm" | "md" | "lg" | "xl" | "full";
 }
 
-export default function TravelAgencyApp() {
+function TravelAgencyAppInner() {
+  // Safely check context availability
+  const appContext = useContext(AppContext);
+  const { t, language } = useTranslation();
+
+  if (!appContext) {
+    return <div>Loading context...</div>;
+  }
+
+  // Now we can safely use the context
+  const { isMobile, isTablet, theme, setIsLoading } = appContext;
+
   const [appState, setAppState] = useState<AppState>("login");
   const [user, setUser] = useState<User | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(true);
-  const [openWindows, setOpenWindows] = useState<OpenWindow[]>([]);
+  const [openModals, setOpenModals] = useState<OpenModal[]>([]);
   const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([]);
-  const [nextZIndex, setNextZIndex] = useState(100);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Check mobile screen size
+  // Initialize user session on component mount
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    // Performance monitoring for app initialization
+    const monitor = PerformanceMonitor.getInstance();
+    const endTimer = monitor.startTimer("app-initialization");
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const savedUser = localStorage.getItem("air_musafir_user");
+    if (savedUser) {
+      try {
+        const userData = JSON.parse(savedUser);
+        // Validate user still exists in system
+        const validUser = dataService.validateUser(
+          userData.username,
+          userData.password,
+        );
+        if (validUser) {
+          setUser(validUser);
+          setAppState("dashboard");
+          setBreadcrumbs([
+            { label: t("dashboard"), path: "/dashboard", isActive: true },
+          ]);
+        } else {
+          localStorage.removeItem("air_musafir_user");
+        }
+      } catch (error) {
+        localStorage.removeItem("air_musafir_user");
+      }
+    }
+
+    // Bundle analysis and service worker registration in production
+    if (process.env.NODE_ENV === "production") {
+      setTimeout(() => analyzeBundleUsage(), 1000);
+      registerServiceWorker();
+    }
+
+    return endTimer;
   }, []);
 
-  // Initialize dark mode
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDarkMode);
-  }, [isDarkMode]);
+  // Memoized login handler for better performance
+  const handleLoginSuccess = useCallback((loggedInUser: User) => {
+    // Save user session to localStorage
+    localStorage.setItem(
+      "air_musafir_user",
+      JSON.stringify({
+        username: loggedInUser.username,
+        password: loggedInUser.password,
+      }),
+    );
 
-  const handleLoginSuccess = (loggedInUser: User) => {
     setUser(loggedInUser);
     setAppState("dashboard");
     setBreadcrumbs([
-      { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
+      { label: t("dashboard"), path: "/dashboard", isActive: true },
     ]);
-  };
+  }, []);
 
-  const handleLogout = () => {
+  // Memoized logout handler
+  const handleLogout = useCallback(() => {
+    // Remove user session from localStorage
+    localStorage.removeItem("air_musafir_user");
+
     setUser(null);
     setAppState("login");
-    setOpenWindows([]);
+    setOpenModals([]);
     setBreadcrumbs([]);
-  };
+  }, []);
 
-  const refreshData = () => {
+  // Memoized refresh handler
+  const refreshData = useCallback(() => {
+    setIsLoading(true);
     setRefreshTrigger((prev) => prev + 1);
+    setTimeout(() => setIsLoading(false), 500);
+  }, []);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const openWindow = (
+  const openModal = (
     id: string,
     title: string,
     component: React.ReactNode,
+    size: "sm" | "md" | "lg" | "xl" | "full" = "lg",
   ) => {
-    const existingWindow = openWindows.find((w) => w.id === id);
+    const existingModal = openModals.find((m) => m.id === id);
 
-    if (existingWindow) {
-      // Bring existing window to front and restore if minimized
-      setOpenWindows((prev) =>
-        prev.map((w) =>
-          w.id === id
-            ? { ...w, isOpen: true, state: "popup", zIndex: nextZIndex }
-            : w,
-        ),
+    if (existingModal) {
+      // Bring existing modal to front
+      setOpenModals((prev) =>
+        prev.map((m) => (m.id === id ? { ...m, isOpen: true } : m)),
       );
-      setNextZIndex((prev) => prev + 1);
     } else {
-      // Create new window
-      setOpenWindows((prev) => [
+      // Create new modal
+      setOpenModals((prev) => [
         ...prev,
         {
           id,
           title,
           component,
           isOpen: true,
-          state: "popup",
-          zIndex: nextZIndex,
+          size,
         },
       ]);
-      setNextZIndex((prev) => prev + 1);
     }
   };
 
-  const closeWindow = (id: string) => {
-    setOpenWindows((prev) => prev.filter((w) => w.id !== id));
-    // Refresh dashboard data when closing windows
+  const closeModal = (id: string) => {
+    setOpenModals((prev) => prev.filter((m) => m.id !== id));
+    // Refresh dashboard data when closing modals
     refreshData();
-  };
-
-  const maximizeWindow = (id: string) => {
-    setOpenWindows((prev) =>
-      prev.map((w) =>
-        w.id === id
-          ? {
-              ...w,
-              state: w.state === "fullscreen" ? "popup" : "fullscreen",
-              zIndex: nextZIndex,
-            }
-          : w,
-      ),
-    );
-    setNextZIndex((prev) => prev + 1);
   };
 
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
-      "new-booking": "নতুন ব��কিং",
-      "bookings-list": "বুকিং লিস্ট",
-      "search-filter": "সার্চ ও ফিল্টার",
-      reports: "রিপোর্ট",
-      "export-data": "ডেটা এক��সপোর্ট",
-      settings: "সেটিংস",
+      "new-booking": t("newBooking"),
+      "bookings-list": t("bookings"),
+      "search-filter": t("searchAndFilter"),
+      reports: t("reports"),
+      "export-data": t("dataExport"),
+      settings: t("settings"),
+      "ticket-inventory": t("inventory"),
+      "bulk-purchase": t("bulkPurchase"),
     };
 
     const title = cardTitles[cardId] || cardId;
@@ -147,9 +189,10 @@ export default function TravelAgencyApp() {
       case "new-booking":
         component = (
           <NewBookingForm
-            onClose={() => closeWindow(cardId)}
+            user={user!}
+            onClose={() => closeModal(cardId)}
             onSuccess={() => {
-              closeWindow(cardId);
+              closeModal(cardId);
               refreshData();
             }}
           />
@@ -158,17 +201,21 @@ export default function TravelAgencyApp() {
       case "bookings-list":
         component = (
           <BookingsList
-            onClose={() => closeWindow(cardId)}
+            user={user!}
+            onClose={() => closeModal(cardId)}
             onEdit={(booking: Booking) => {
-              // Open edit form (could be implemented similarly to new booking)
-              closeWindow(cardId);
-              openWindow(
+              closeModal(cardId);
+              openModal(
                 "edit-booking",
-                "বুকিং এডিট করুন",
-                <PlaceholderPage
-                  title="বুকিং এডিট করুন"
-                  description="এই ফিচারটি শীঘ্রই আসছে!"
-                  onBack={() => closeWindow("edit-booking")}
+                language === "bn" ? "বুকিং এডিট করুন" : "Edit Booking",
+                <EditBookingForm
+                  booking={booking}
+                  user={user!}
+                  onClose={() => closeModal("edit-booking")}
+                  onSuccess={() => {
+                    closeModal("edit-booking");
+                    refreshData();
+                  }}
                 />,
               );
             }}
@@ -178,9 +225,10 @@ export default function TravelAgencyApp() {
       case "search-filter":
         component = (
           <BookingsList
-            onClose={() => closeWindow(cardId)}
+            user={user!}
+            onClose={() => closeModal(cardId)}
             onEdit={(booking: Booking) => {
-              closeWindow(cardId);
+              closeModal(cardId);
             }}
           />
         );
@@ -188,35 +236,99 @@ export default function TravelAgencyApp() {
       case "reports":
         component = (
           <ReportsSection
-            onClose={() => closeWindow(cardId)}
+            onClose={() => closeModal(cardId)}
             onExportData={() => {
-              openWindow(
+              openModal(
                 "export-data",
-                "ডেটা এক্সপোর্ট",
-                <DataExport onClose={() => closeWindow("export-data")} />,
+                t("dataExport"),
+                <DataExport onClose={() => closeModal("export-data")} />,
               );
             }}
           />
         );
         break;
       case "export-data":
-        component = <DataExport onClose={() => closeWindow(cardId)} />;
+        component = <DataExport onClose={() => closeModal(cardId)} />;
+        break;
+      case "ticket-inventory":
+        component = (
+          <TicketInventoryDashboard
+            user={user!}
+            onClose={() => closeModal(cardId)}
+            onOpenPurchaseForm={() => {
+              closeModal(cardId);
+              openModal(
+                "bulk-purchase",
+                t("bulkPurchase"),
+                <BulkTicketPurchaseForm
+                  onClose={() => closeModal("bulk-purchase")}
+                  onSuccess={() => {
+                    closeModal("bulk-purchase");
+                    refreshData();
+                  }}
+                />,
+                "xl",
+              );
+            }}
+          />
+        );
+        break;
+      case "bulk-purchase":
+        // Only allow admin/owner to access bulk purchase
+        if (user?.role === "owner") {
+          component = (
+            <BulkTicketPurchaseForm
+              onClose={() => closeModal(cardId)}
+              onSuccess={() => {
+                closeModal(cardId);
+                refreshData();
+              }}
+            />
+          );
+        } else {
+          component = (
+            <PlaceholderPage
+              title={language === "bn" ? "অ্যাক্সেস নিষিদ্ধ" : "Access Denied"}
+              description={
+                language === "bn"
+                  ? "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন"
+                  : "Only owner can purchase bulk tickets"
+              }
+              onBack={() => closeModal(cardId)}
+            />
+          );
+        }
+        break;
+      case "settings":
+        component = (
+          <SettingsPage user={user!} onClose={() => closeModal(cardId)} />
+        );
         break;
       default:
         component = (
           <PlaceholderPage
             title={title}
-            description="এই সেকশনটি শীঘ্রই আসছে!"
-            onBack={() => closeWindow(cardId)}
+            description={
+              language === "bn"
+                ? "এই সেকশনটি শীঘ্রই আসছে!"
+                : "This section is coming soon!"
+            }
+            onBack={() => closeModal(cardId)}
           />
         );
     }
 
-    openWindow(cardId, title, component);
+    const modalSize =
+      cardId === "new-booking" || cardId === "edit-booking"
+        ? "xl"
+        : cardId === "settings"
+          ? "full"
+          : "lg";
+    openModal(cardId, title, component, modalSize);
 
     // Update breadcrumbs
     setBreadcrumbs([
-      { label: "ড্যাশ���োর্ড", path: "/dashboard" },
+      { label: t("dashboard"), path: "/dashboard" },
       { label: title, path: `/${cardId}`, isActive: true },
     ]);
   };
@@ -224,32 +336,32 @@ export default function TravelAgencyApp() {
   const handleBreadcrumbClick = (path: string) => {
     if (path === "/" || path === "/dashboard") {
       setBreadcrumbs([
-        { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
+        { label: t("dashboard"), path: "/dashboard", isActive: true },
       ]);
-      setOpenWindows([]);
+      setOpenModals([]);
       refreshData();
     }
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
-  // Check for fullscreen windows
-  const hasFullscreenWindow = openWindows.some((w) => w.state === "fullscreen");
-
   if (appState === "login") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4 lg:p-6 relative overflow-hidden">
+      <div
+        className={cn(
+          "min-h-screen flex items-center justify-center p-4 lg:p-6 relative overflow-hidden transition-colors duration-300",
+          theme === "dark"
+            ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+            : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50",
+        )}
+      >
         {/* Enhanced Animated Background */}
         <div className="absolute inset-0">
-          {[...Array(30)].map((_, i) => (
+          {[...Array(isMobile ? 15 : 30)].map((_, i) => (
             <motion.div
               key={i}
               animate={{
                 x: [0, Math.random() * 200 - 100],
                 y: [0, Math.random() * 200 - 100],
-                opacity: [0, 0.15, 0],
+                opacity: [0, theme === "dark" ? 0.15 : 0.1, 0],
                 scale: [0, 1.5, 0],
               }}
               transition={{
@@ -258,7 +370,10 @@ export default function TravelAgencyApp() {
                 delay: Math.random() * 3,
                 ease: "easeInOut",
               }}
-              className="absolute w-2 h-2 lg:w-3 lg:h-3 bg-white rounded-full"
+              className={cn(
+                "absolute w-2 h-2 lg:w-3 lg:h-3 rounded-full",
+                theme === "dark" ? "bg-white" : "bg-purple-500",
+              )}
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -267,23 +382,6 @@ export default function TravelAgencyApp() {
           ))}
         </div>
 
-        {/* Dark Mode Toggle */}
-        <motion.button
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={toggleDarkMode}
-          className="absolute top-4 lg:top-6 right-4 lg:right-6 p-3 lg:p-4 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors"
-        >
-          {isDarkMode ? (
-            <Sun className="w-5 h-5 lg:w-6 lg:h-6" />
-          ) : (
-            <Moon className="w-5 h-5 lg:w-6 lg:h-6" />
-          )}
-        </motion.button>
-
         {/* Login Form */}
         <TravelLoginForm onLoginSuccess={handleLoginSuccess} />
       </div>
@@ -291,50 +389,29 @@ export default function TravelAgencyApp() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Enhanced Header Controls */}
-      <div className="fixed top-4 lg:top-6 right-4 lg:right-6 flex items-center space-x-2 lg:space-x-4 z-50">
-        {/* Refresh Button */}
-        <motion.button
-          whileHover={{ scale: 1.1, rotate: 180 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={refreshData}
-          className="p-2 lg:p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors shadow-lg"
-        >
-          <RefreshCw className="w-5 h-5 lg:w-6 lg:h-6" />
-        </motion.button>
-
-        {/* Dark Mode Toggle */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={toggleDarkMode}
-          className="p-2 lg:p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white hover:bg-white/20 transition-colors shadow-lg"
-        >
-          {isDarkMode ? (
-            <Sun className="w-5 h-5 lg:w-6 lg:h-6" />
-          ) : (
-            <Moon className="w-5 h-5 lg:w-6 lg:h-6" />
-          )}
-        </motion.button>
-
-        {/* Logout Button */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={handleLogout}
-          className="p-2 lg:p-3 bg-red-500/20 backdrop-blur-md rounded-full border border-red-400/50 text-red-200 hover:bg-red-500/30 transition-colors shadow-lg"
-        >
-          <LogOut className="w-5 h-5 lg:w-6 lg:h-6" />
-        </motion.button>
-      </div>
+    <div
+      className={cn(
+        "min-h-screen relative overflow-hidden transition-colors duration-300",
+        theme === "dark"
+          ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+          : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50",
+      )}
+    >
+      {/* App Header */}
+      <AppHeader
+        user={user!}
+        onLogout={handleLogout}
+        onRefresh={refreshData}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onToggleMobileMenu={toggleMobileMenu}
+      />
 
       {/* Enhanced Breadcrumbs */}
       {breadcrumbs.length > 0 && !isMobile && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed top-4 lg:top-6 left-4 lg:left-6 z-40"
+          className="fixed top-20 left-4 lg:left-6 z-40"
         >
           <Breadcrumbs
             items={breadcrumbs}
@@ -344,38 +421,39 @@ export default function TravelAgencyApp() {
       )}
 
       {/* Main Dashboard */}
-      <motion.div
-        key={refreshTrigger} // Force re-render when data changes
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className={cn(
-          "transition-all duration-500 will-change-transform",
-          hasFullscreenWindow ? "blur-sm scale-95" : "",
-        )}
-      >
-        {user && (
-          <TravelDashboard user={user} onCardClick={handleDashboardCardClick} />
-        )}
-      </motion.div>
+      <main className="pt-16">
+        {" "}
+        {/* Account for fixed header */}
+        <motion.div
+          key={refreshTrigger} // Force re-render when data changes
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="transition-all duration-500 will-change-transform"
+        >
+          {user && (
+            <TravelDashboard
+              user={user}
+              onCardClick={handleDashboardCardClick}
+            />
+          )}
+        </motion.div>
+      </main>
 
-      {/* Enhanced Folder Windows */}
-      <AnimatePresence mode="popLayout">
-        {openWindows.map((window) => (
-          <FolderWindow
-            key={window.id}
-            title={window.title}
-            isOpen={window.isOpen}
-            onClose={() => closeWindow(window.id)}
-            initialState={window.state}
-            zIndex={window.zIndex}
-            onMaximize={() => maximizeWindow(window.id)}
-          >
-            {window.component}
-          </FolderWindow>
-        ))}
-      </AnimatePresence>
+      {/* Modals */}
+      {openModals.map((modal) => (
+        <Modal
+          key={modal.id}
+          title={modal.title}
+          isOpen={modal.isOpen}
+          onClose={() => closeModal(modal.id)}
+          size={modal.size}
+        >
+          {modal.component}
+        </Modal>
+      ))}
 
-
+      {/* Ticket Inventory Notification - Only show when user is logged in */}
+      {user && <TicketInventoryNotification />}
 
       {/* Enhanced Loading Animation Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
@@ -412,7 +490,7 @@ export default function TravelAgencyApp() {
         >
           <p className="text-white/70 text-sm lg:text-base">
             <span className="text-white font-medium">{user.name}</span> -{" "}
-            {user.role === "owner" ? "মালিক" : "ম্যানেজার"}
+            {user.role === "owner" ? t("owner") : t("manager")}
           </p>
         </motion.div>
       )}
@@ -432,5 +510,14 @@ export default function TravelAgencyApp() {
         </motion.div>
       )}
     </div>
+  );
+}
+
+// Export component wrapped with providers
+export default function TravelAgencyApp() {
+  return (
+    <AppProvider>
+      <TravelAgencyAppInner />
+    </AppProvider>
   );
 }

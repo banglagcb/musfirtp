@@ -1,15 +1,36 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, EyeOff, User, Lock, CheckCircle, XCircle, Loader2, Plane } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  User,
+  Lock,
+  CheckCircle,
+  XCircle,
+  Loader2,
+  Plane,
+  Sun,
+  Moon,
+  Globe,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import dataService from "@/services/dataService";
 import { User as UserType } from "@shared/travel-types";
+import { useApp, useTranslation } from "@/contexts/AppContext";
 
 interface TravelLoginFormProps {
   onLoginSuccess: (user: UserType) => void;
 }
 
-export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps) {
+export default function TravelLoginForm({
+  onLoginSuccess,
+}: TravelLoginFormProps) {
+  const { theme, toggleTheme, language, toggleLanguage, isMobile } = useApp();
+  const { t } = useTranslation();
+
+  // Get font class based on language
+  const fontClass = language === "bn" ? "font-bengali" : "font-english";
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -43,23 +64,23 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
 
     setIsLoading(true);
     setError("");
-    
+
     // Simulate login API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     const user = dataService.validateUser(username, password);
-    
+
     if (user) {
       setIsLoading(false);
       setIsSuccess(true);
-      
+
       // Trigger success animation then transition to dashboard
       setTimeout(() => {
         onLoginSuccess(user);
       }, 1000);
     } else {
       setIsLoading(false);
-      setError("ভুল ���উজারনেম বা পাসওয়ার্ড");
+      setError(t("invalidCredentials"));
     }
   };
 
@@ -83,17 +104,20 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-2xl font-bold text-white"
+          className={cn(
+            "text-2xl font-bold",
+            theme === "dark" ? "text-white" : "text-gray-800",
+          )}
         >
-          সফলভাবে লগইন হয়েছে!
+          {t("successfulLogin")}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-white/70"
+          className={cn(theme === "dark" ? "text-white/70" : "text-gray-600")}
         >
-          ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...
+          {t("redirectingToDashboard")}
         </motion.p>
       </motion.div>
     );
@@ -104,8 +128,47 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full max-w-md mx-auto"
+      className={cn("w-full max-w-md mx-auto relative", fontClass)}
     >
+      {/* Theme and Language Controls */}
+      <div className="absolute -top-4 right-0 flex items-center space-x-2">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={toggleLanguage}
+          className={cn(
+            "p-2 backdrop-blur-md rounded-full border transition-colors",
+            theme === "dark"
+              ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
+              : "bg-white/20 border-gray-300/50 text-gray-700 hover:bg-white/40",
+          )}
+          title={
+            language === "bn" ? t("switchToEnglish") : t("switchToBengali")
+          }
+        >
+          <Globe className="w-4 h-4" />
+        </motion.button>
+
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={toggleTheme}
+          className={cn(
+            "p-2 backdrop-blur-md rounded-full border transition-colors",
+            theme === "dark"
+              ? "bg-white/10 border-white/20 text-white hover:bg-white/20"
+              : "bg-white/20 border-gray-300/50 text-gray-700 hover:bg-white/40",
+          )}
+          title={theme === "dark" ? t("lightMode") : t("darkMode")}
+        >
+          {theme === "dark" ? (
+            <Sun className="w-4 h-4" />
+          ) : (
+            <Moon className="w-4 h-4" />
+          )}
+        </motion.button>
+      </div>
+
       {/* Header with travel theme */}
       <div className="text-center mb-8">
         <motion.div
@@ -116,30 +179,40 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         >
           <Plane className="w-10 h-10 text-white" />
         </motion.div>
-        
+
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-4xl font-bold text-white mb-2"
+          className={cn(
+            "text-4xl font-bold mb-2",
+            theme === "dark" ? "text-white" : "text-gray-800",
+          )}
         >
-          ট্রাভেল এজেন্সি
+          Air-Musafir
         </motion.h1>
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-2xl font-semibold text-white/90 mb-2"
+          className={cn(
+            "text-2xl font-semibold mb-2",
+            theme === "dark" ? "text-white/90" : "text-gray-700",
+          )}
         >
-          ম্যানেজমেন্ট সিস্টেম
+          {language === "bn"
+            ? "ট্রাভেল ম্যানেজমেন্ট সিস্টেম"
+            : "Travel Management System"}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="text-white/70"
+          className={cn(theme === "dark" ? "text-white/70" : "text-gray-600")}
         >
-          আপনার লগইন তথ্য প্রবেশ করান
+          {language === "bn"
+            ? "আপনার লগইন তথ্য প্রবেশ করান"
+            : "Enter your login credentials"}
         </motion.p>
       </div>
 
@@ -153,19 +226,30 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         {/* Username Field */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <User className="h-5 w-5 text-white/50" />
+            <User
+              className={cn(
+                "h-5 w-5",
+                theme === "dark" ? "text-white/50" : "text-gray-500",
+              )}
+            />
           </div>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="ইউজারনেম"
+            placeholder={t("username")}
             className={cn(
-              "w-full pl-10 pr-12 py-4 bg-white/10 backdrop-blur-md border rounded-xl",
-              "text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-all duration-300",
-              usernameValid === null && "border-white/20 focus:ring-folder-primary/50",
-              usernameValid === true && "border-neon-green focus:ring-neon-green/50",
-              usernameValid === false && "border-red-400 focus:ring-red-400/50"
+              "w-full pl-10 pr-12 py-4 backdrop-blur-md border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300",
+              theme === "dark"
+                ? "bg-white/10 text-white placeholder-white/50"
+                : "bg-white/80 text-gray-800 placeholder-gray-500",
+              usernameValid === null &&
+                (theme === "dark"
+                  ? "border-white/20 focus:ring-folder-primary/50"
+                  : "border-gray-300 focus:ring-blue-500/50"),
+              usernameValid === true &&
+                "border-neon-green focus:ring-neon-green/50",
+              usernameValid === false && "border-red-400 focus:ring-red-400/50",
             )}
           />
           <AnimatePresence>
@@ -189,19 +273,30 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         {/* Password Field */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Lock className="h-5 w-5 text-white/50" />
+            <Lock
+              className={cn(
+                "h-5 w-5",
+                theme === "dark" ? "text-white/50" : "text-gray-500",
+              )}
+            />
           </div>
           <input
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="পাসওয়ার্ড"
+            placeholder={t("password")}
             className={cn(
-              "w-full pl-10 pr-20 py-4 bg-white/10 backdrop-blur-md border rounded-xl",
-              "text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-all duration-300",
-              passwordValid === null && "border-white/20 focus:ring-folder-primary/50",
-              passwordValid === true && "border-neon-green focus:ring-neon-green/50",
-              passwordValid === false && "border-red-400 focus:ring-red-400/50"
+              "w-full pl-10 pr-20 py-4 backdrop-blur-md border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300",
+              theme === "dark"
+                ? "bg-white/10 text-white placeholder-white/50"
+                : "bg-white/80 text-gray-800 placeholder-gray-500",
+              passwordValid === null &&
+                (theme === "dark"
+                  ? "border-white/20 focus:ring-folder-primary/50"
+                  : "border-gray-300 focus:ring-blue-500/50"),
+              passwordValid === true &&
+                "border-neon-green focus:ring-neon-green/50",
+              passwordValid === false && "border-red-400 focus:ring-red-400/50",
             )}
           />
           <div className="absolute inset-y-0 right-0 pr-3 flex items-center space-x-2">
@@ -223,7 +318,12 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="text-white/50 hover:text-white transition-colors"
+              className={cn(
+                "transition-colors",
+                theme === "dark"
+                  ? "text-white/50 hover:text-white"
+                  : "text-gray-500 hover:text-gray-700",
+              )}
             >
               {showPassword ? (
                 <EyeOff className="h-5 w-5" />
@@ -259,13 +359,13 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
             "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-folder-primary",
             usernameValid && passwordValid
               ? "bg-gradient-to-r from-folder-primary to-folder-secondary hover:from-folder-secondary hover:to-folder-accent shadow-glow"
-              : "bg-white/20 cursor-not-allowed"
+              : "bg-white/20 cursor-not-allowed",
           )}
         >
           {isLoading ? (
             <div className="flex items-center justify-center space-x-2">
               <Loader2 className="w-5 h-5 animate-spin" />
-              <span>লগইন হচ্ছে...</span>
+              <span>লগ���ন হচ্ছে...</span>
             </div>
           ) : (
             "লগইন করুন"
@@ -278,15 +378,41 @@ export default function TravelLoginForm({ onLoginSuccess }: TravelLoginFormProps
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="mt-6 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10"
+        className={cn(
+          "mt-6 p-4 backdrop-blur-sm rounded-lg border",
+          theme === "dark"
+            ? "bg-white/5 border-white/10"
+            : "bg-white/80 border-gray-200",
+        )}
       >
-        <p className="text-sm text-white/60 mb-2">ডেমো লগইন তথ্য:</p>
+        <p
+          className={cn(
+            "text-sm mb-2",
+            theme === "dark" ? "text-white/60" : "text-gray-600",
+          )}
+        >
+          {t("demoLoginInfo")}
+        </p>
         <div className="grid grid-cols-1 gap-2">
           <div>
-            <p className="text-sm text-white/80"><strong>মালিক:</strong> admin / admin123</p>
+            <p
+              className={cn(
+                "text-sm",
+                theme === "dark" ? "text-white/80" : "text-gray-700",
+              )}
+            >
+              <strong>{t("ownerAccount")}</strong> admin / admin123
+            </p>
           </div>
           <div>
-            <p className="text-sm text-white/80"><strong>ম্যানেজার:</strong> manager / manager123</p>
+            <p
+              className={cn(
+                "text-sm",
+                theme === "dark" ? "text-white/80" : "text-gray-700",
+              )}
+            >
+              <strong>{t("managerAccount")}</strong> manager / manager123
+            </p>
           </div>
         </div>
       </motion.div>

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -128,6 +130,93 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Bengali font styling - Applied to all elements when Bengali language is active */
+  .font-bengali,
+  .font-bengali *,
+  .font-bengali h1,
+  .font-bengali h2,
+  .font-bengali h3,
+  .font-bengali h4,
+  .font-bengali h5,
+  .font-bengali h6,
+  .font-bengali p,
+  .font-bengali span,
+  .font-bengali div,
+  .font-bengali button,
+  .font-bengali input,
+  .font-bengali textarea,
+  .font-bengali select,
+  .font-bengali label,
+  .font-bengali nav,
+  .font-bengali header,
+  .font-bengali footer,
+  .font-bengali article,
+  .font-bengali section,
+  .font-bengali aside,
+  .font-bengali main,
+  .font-bengali .card,
+  .font-bengali .menu,
+  .font-bengali .title,
+  .font-bengali .subtitle {
+    font-family: "Noto Serif Bengali", serif !important;
+    font-feature-settings:
+      "kern" 1,
+      "liga" 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Default font for English and fallback */
+  .font-english {
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
+  }
+
+  /* Ensure Bengali font works with form elements */
+  .font-bengali input[type="text"],
+  .font-bengali input[type="email"],
+  .font-bengali input[type="password"],
+  .font-bengali textarea,
+  .font-bengali select {
+    font-family: "Noto Serif Bengali", serif !important;
+  }
+
+  /* Better line height for Bengali text */
+  .font-bengali {
+    line-height: 1.6;
+  }
+
+  /* Apply Bengali font to all text elements when Bengali is selected */
+  .font-bengali h1,
+  .font-bengali h2,
+  .font-bengali h3,
+  .font-bengali h4,
+  .font-bengali h5,
+  .font-bengali h6 {
+    font-family: "Noto Serif Bengali", serif !important;
+    font-weight: 600;
+  }
+
+  /* Better spacing for Bengali text in UI components */
+  .font-bengali .card-title,
+  .font-bengali .menu-item,
+  .font-bengali .button-text,
+  .font-bengali .nav-link {
+    letter-spacing: 0.02em;
+  }
+
+  /* Improve readability for Bengali text */
+  .font-bengali {
+    font-variant-ligatures: common-ligatures;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Performance optimizations */
