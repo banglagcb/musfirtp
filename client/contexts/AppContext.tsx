@@ -80,8 +80,11 @@ export const translations = {
 
     // Status
     paid: "পেইড",
-    pending: "প���ন্ডিং",
+    pending: "পেন্ডিং",
     partial: "আংশিক",
+    paidBookings: "পেইড বুকিং",
+    partialPayments: "আংশিক পেমেন্ট",
+    pendingPayments: "পেন্ডিং পেমেন্ট",
 
     // Stats
     totalBookings: "মোট বুকিং",
