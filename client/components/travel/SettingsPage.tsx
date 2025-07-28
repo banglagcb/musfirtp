@@ -80,7 +80,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
     if (confirmed) {
       const doubleConfirm = window.confirm(
         'শেষ নিশ্চিতকরণ: আপনি কি সত্যিই সব কিছু রিসেট করতে চান?\n\n' +
-        'এটি সম্পূর্ণ নতুন অবস্থায় ফিরিয়ে নিয়ে যাবে।'
+        'এটি সম্পূর্ণ নতুন অবস্থায় ফিরিয়ে নিয়ে ��াবে।'
       );
 
       if (doubleConfirm) {
@@ -236,7 +236,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
               <div>
                 <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2">
                   <Plane className="w-5 h-5" />
-                  <span>এয়ারলাইন ম্যানেজমেন্ট</span>
+                  <span>এয়ারলাইন ম্যানে���মেন্ট</span>
                 </h3>
 
                 <div className="space-y-6">
@@ -287,7 +287,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
               <div>
                 <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2">
                   <MapPin className="w-5 h-5" />
-                  <span>রুট ম্যা���েজমেন্ট</span>
+                  <span>রুট ম্যানেজমেন্ট</span>
                 </h3>
 
                 <div className="space-y-6">
@@ -378,17 +378,32 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
 
                     {user.role === 'owner' && (
                       <div className="bg-red-500/10 rounded-lg p-4 border border-red-400/30">
-                        <h4 className="text-lg font-medium text-red-200 mb-3">বিপজ্জনক অপারেশন</h4>
-                        <p className="text-red-200/70 text-sm mb-4">
-                          সতর্কতা: এই অপারেশনটি সব ডেটা মুছে ফেলবে এবং পূর্বাবস্থায় ফেরানো যাবে না।
-                        </p>
+                        <h4 className="text-lg font-medium text-red-200 mb-3">🔄 সম্পূর্ণ রিসেট</h4>
+                        <div className="space-y-3 mb-4">
+                          <p className="text-red-200/90 text-sm font-medium">
+                            ⚠️ সতর্কতা: এই অপারেশনটি সব কিছু মুছে ফেলবে
+                          </p>
+                          <div className="text-red-200/70 text-xs space-y-1">
+                            <div>• সব বুকিং ও কাস্টমার তথ্য</div>
+                            <div>• সব ব্যালেন্স, প্রফিট ও রেভিনিউ ডেটা</div>
+                            <div>• সব হিস্টরি ও রেকর্ড</div>
+                            <div>• সব সেটিংস ও কনফিগারেশন</div>
+                            <div>• টিকেট ইনভেন্টরি ও নোটিফিকেশন</div>
+                          </div>
+                          <p className="text-red-200/80 text-sm font-semibold">
+                            🚨 এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না!
+                          </p>
+                        </div>
                         <button
                           onClick={handleDataClear}
-                          className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-medium hover:from-red-600 hover:to-red-700 transition-all"
+                          className="w-full flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-medium hover:from-red-600 hover:to-red-700 transition-all border-2 border-red-400/50 hover:border-red-300"
                         >
                           <Trash2 className="w-5 h-5" />
-                          <span>সব ডেটা মুছে ফেলুন</span>
+                          <span>সম্পূর্ণ রিসেট করুন (নতুন শুরু)</span>
                         </button>
+                        <p className="text-red-200/60 text-xs mt-2 text-center">
+                          নতুনভাবে শুরু করার জন্য এই বাটন ব্যবহার করুন
+                        </p>
                       </div>
                     )}
                   </div>
