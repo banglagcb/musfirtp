@@ -31,6 +31,7 @@ export default function EditBookingForm({
   onClose,
   onSuccess,
 }: EditBookingFormProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     customerName: booking.customerName,
     mobile: booking.mobile,
@@ -85,7 +86,7 @@ export default function EditBookingForm({
     }
 
     if (!formData.airline) {
-      newErrors.airline = "এয়ারলাইন নির্বাচন করুন";
+      newErrors.airline = "এ���়ারলাইন নির্বাচন করুন";
     }
 
     if (!formData.purchasePrice || isNaN(Number(formData.purchasePrice))) {
