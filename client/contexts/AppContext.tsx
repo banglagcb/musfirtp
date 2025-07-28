@@ -60,6 +60,8 @@ export const translations = {
     reports: "রিপোর্ট",
     settings: "সেটিংস",
     quickActions: "দ্রুত অ্যাকশন",
+    allBookings: "সব বুকিং",
+    searchAction: "সার্চ করুন",
 
     // User
     owner: "মালিক",
