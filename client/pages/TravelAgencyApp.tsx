@@ -14,7 +14,8 @@ import BulkTicketPurchaseForm from "@/components/travel/BulkTicketPurchaseForm";
 import TicketInventoryDashboard from "@/components/travel/TicketInventoryDashboard";
 import PlaceholderPage from "@/components/PlaceholderPage";
 import AppHeader from "@/components/layout/AppHeader";
-import { AppProvider, useApp, useTranslation } from "@/contexts/AppContext";
+import { AppProvider, useApp, useTranslation, AppContext } from "@/contexts/AppContext";
+import { useContext } from "react";
 import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
 import dataService from "@/services/dataService";
@@ -280,7 +281,7 @@ function TravelAgencyAppInner() {
         } else {
           component = (
             <PlaceholderPage
-              title={language === "bn" ? "অ্যাক্সেস নিষিদ্ধ" : "Access Denied"}
+              title={language === "bn" ? "���্যাক্সেস নিষিদ্ধ" : "Access Denied"}
               description={
                 language === "bn"
                   ? "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন"
