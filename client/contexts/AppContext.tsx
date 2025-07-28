@@ -126,6 +126,8 @@ export const translations = {
     reports: "Reports",
     settings: "Settings",
     quickActions: "Quick Actions",
+    allBookings: "All Bookings",
+    searchAction: "Search",
 
     // User
     owner: "Owner",
