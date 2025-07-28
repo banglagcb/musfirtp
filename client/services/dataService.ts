@@ -5,6 +5,7 @@ import {
   FilterOptions,
   ReportData,
 } from "@shared/travel-types";
+import ticketNotificationService from "./ticketNotificationService";
 
 class DataService {
   private static instance: DataService;
