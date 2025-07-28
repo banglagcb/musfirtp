@@ -123,6 +123,7 @@ export const translations = {
     bulkPurchase: "Bulk Purchase",
     reports: "Reports",
     settings: "Settings",
+    quickActions: "Quick Actions",
 
     // User
     owner: "Owner",
