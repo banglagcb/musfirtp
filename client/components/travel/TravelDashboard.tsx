@@ -676,7 +676,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <FileText className="w-5 h-5" />
-            <span>{language === "bn" ? "সব বুকিং" : "All Bookings"}</span>
+            <span>{t('allBookings')}</span>
           </motion.button>
 
           <motion.button
