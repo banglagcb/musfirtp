@@ -54,7 +54,7 @@ export const translations = {
     // Navigation
     dashboard: "ড্যাশবোর্ড",
     bookings: "বুকিং লিস্ট",
-    newBooking: "নতুন ���ুকিং",
+    newBooking: "নত��ন ���ুকিং",
     inventory: "টিকেট ইনভেন্টরি",
     bulkPurchase: "বাল্ক টিকেট ক্রয়",
     reports: "রিপোর্ট",
@@ -85,7 +85,7 @@ export const translations = {
 
     // Status
     paid: "পেইড",
-    pending: "পেন্ডিং",
+    pending: "পেন্���িং",
     partial: "আংশিক",
     paidBookings: "পেইড বুকিং",
     partialPayments: "আংশিক পেমেন্��",
@@ -176,6 +176,7 @@ export const translations = {
     bengali: "���াংলা",
     switchToEnglish: "Switch to English",
     switchToBengali: "বাংলায় পরিবর্তন করুন",
+    invalidCredentials: "Invalid username or password",
   },
 };
 
