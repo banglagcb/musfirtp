@@ -132,6 +132,17 @@
     @apply bg-background text-foreground;
   }
 
+  /* Bengali font styling */
+  .font-bengali,
+  .font-bengali * {
+    font-family: 'Noto Serif Bengali', serif !important;
+  }
+
+  /* Default font for English and fallback */
+  .font-english {
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
   /* Performance optimizations */
   * {
     box-sizing: border-box;
