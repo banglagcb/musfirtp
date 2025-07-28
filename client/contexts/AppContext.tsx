@@ -44,7 +44,7 @@ export const translations = {
     delete: "ডিলিট",
     edit: "এডিট",
     view: "দেখুন",
-    print: "প্রিন্ট করুন",
+    print: "প্রিন্ট করু���",
     export: "এক্সপ��র্ট",
     search: "সার্চ করুন",
     filter: "ফিল্টার",
@@ -76,7 +76,7 @@ export const translations = {
     customerName: "গ্রাহকের নাম",
     mobile: "মোবাইল নম্বর",
     email: "ইমেইল ঠিকানা",
-    passport: "পাসপোর্ট নম্বর",
+    passport: "পাস��োর্ট নম্বর",
     flightDate: "ফ্লাইট তারিখ",
     route: "রুট",
     airline: "এয়ারলাইন",
@@ -147,7 +147,7 @@ export const translations = {
     exportError: "এক্সপোর্ট করতে সমস্যা হয়েছে!",
     exporting: "এক্সপোর্ট হচ্ছে...",
     exportInfo: "এক্সপোর্ট সম্পর্কে তথ্য",
-    exportNote: "এক্সপোর্ট করা ফাইল CSV ফরম্যাটে হবে যা Microsoft Excel, Google Sheets এবং অন্যান্য স্প্রেডশিট অ্যাপ্লিকেশনে খ���লা যাবে।",
+    exportNote: "এক্সপোর্ট করা ফাইল CSV ফরম্যাটে হবে যা Microsoft Excel, Google Sheets এবং অন্যান্য স্প্রেডশিট অ্যাপ্লিকেশনে খোলা যাবে।",
     systemManagement: "সিস্টেম কনফিগারেশন ও ম্যানেজমেন্ট",
     totalBookingsStats: "মোট বুকিং",
     completeData: "সম্পূর্ণ ডেটা",
@@ -158,6 +158,8 @@ export const translations = {
     reportType: "রিপোর্ট ধরন",
     dailyReport: "এর দৈনিক রিপোর্ট",
     monthlyReport: "এর মাসিক রিপোর্ট",
+    selectDateRange: "তারিখের রেঞ্জ নির্বাচন করুন",
+    noBookingsInRange: "নির্বাচিত সময়ের মধ্যে কোনো বুকিং পাওয়া যায়নি",
   },
   en: {
     // Common
@@ -281,6 +283,8 @@ export const translations = {
     reportType: "Report Type",
     dailyReport: "Daily Report",
     monthlyReport: "Monthly Report",
+    selectDateRange: "Select date range",
+    noBookingsInRange: "No bookings found in selected time period",
   },
 };
 
