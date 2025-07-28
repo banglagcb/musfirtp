@@ -70,7 +70,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
     if (window.confirm('আপনি কি নিশ্চিত যে সব ডেটা মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।')) {
       try {
         dataService.clearAllData();
-        showMessage('সব ডেটা সফলভাবে মুছে ফেলা হয���েছে', 'success');
+        showMessage('সব ডেটা সফলভাবে মুছে ফেলা হয়েছে', 'success');
       } catch (error) {
         showMessage('ডেটা মুছতে সমস্যা হয়েছে', 'error');
       }
@@ -183,7 +183,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                             <div>
                               <p className="text-white font-medium">{u.name}</p>
                               <p className="text-white/70 text-sm">
-                                {u.role === 'owner' ? 'মালিক' : 'ম্যানেজার'} | {u.username}
+                                {u.role === 'owner' ? t('owner') : t('manager')} | {u.username}
                               </p>
                             </div>
                           </div>
@@ -202,7 +202,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                   <div className="bg-yellow-500/20 border border-yellow-400/50 rounded-lg p-4">
                     <p className="text-yellow-200">
                       <Shield className="w-4 h-4 inline mr-2" />
-                      শুধুমাত্র মালিক ইউজার ম্যানেজমেন্ট করতে পারেন।
+                      {t('onlyOwnerUserManagement')}
                     </p>
                   </div>
                 )}
