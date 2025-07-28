@@ -140,7 +140,7 @@ export default function TravelLoginForm({
               : "bg-white/20 border-gray-300/50 text-gray-700 hover:bg-white/40",
           )}
           title={
-            language === "bn" ? "Switch to English" : "বাংলায় পরিবর্তন করুন"
+            language === "bn" ? t('switchToEnglish') : t('switchToBengali')
           }
         >
           <Globe className="w-4 h-4" />
