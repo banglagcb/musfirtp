@@ -349,11 +349,14 @@ class DataService {
     const keysToRemove = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && (key.startsWith("travel_") || key.startsWith("air_musafir_"))) {
+      if (
+        key &&
+        (key.startsWith("travel_") || key.startsWith("air_musafir_"))
+      ) {
         keysToRemove.push(key);
       }
     }
-    keysToRemove.forEach(key => localStorage.removeItem(key));
+    keysToRemove.forEach((key) => localStorage.removeItem(key));
 
     // Reinitialize with clean data (no samples)
     this.initializeDefaultData(false);

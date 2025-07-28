@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { 
+import {
   Settings,
   User,
   Plane,
@@ -13,7 +13,7 @@ import {
   Save,
   Shield,
   Database,
-  Users
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { User as UserType, AIRLINES, ROUTES } from "@shared/travel-types";
@@ -27,13 +27,18 @@ interface SettingsPageProps {
 
 export default function SettingsPage({ user, onClose }: SettingsPageProps) {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState<'users' | 'airlines' | 'routes' | 'data'>('users');
+  const [activeTab, setActiveTab] = useState<
+    "users" | "airlines" | "routes" | "data"
+  >("users");
   const [newAirline, setNewAirline] = useState("");
   const [newRoute, setNewRoute] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<{text: string, type: 'success' | 'error'} | null>(null);
+  const [message, setMessage] = useState<{
+    text: string;
+    type: "success" | "error";
+  } | null>(null);
 
-  const showMessage = (text: string, type: 'success' | 'error') => {
+  const showMessage = (text: string, type: "success" | "error") => {
     setMessage({ text, type });
     setTimeout(() => setMessage(null), 3000);
   };
@@ -42,68 +47,67 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
     try {
       const bookings = dataService.getBookings();
       const users = dataService.getUsers();
-      
+
       const backupData = {
         bookings,
-        users: users.map(u => ({ ...u, password: '***' })), // Don't backup passwords
+        users: users.map((u) => ({ ...u, password: "***" })), // Don't backup passwords
         timestamp: new Date().toISOString(),
-        version: '1.0'
+        version: "1.0",
       };
-      
+
       const dataStr = JSON.stringify(backupData, null, 2);
-      const dataBlob = new Blob([dataStr], { type: 'application/json' });
-      
+      const dataBlob = new Blob([dataStr], { type: "application/json" });
+
       const url = URL.createObjectURL(dataBlob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.download = `air-musafir-backup-${new Date().toISOString().split('T')[0]}.json`;
+      link.download = `air-musafir-backup-${new Date().toISOString().split("T")[0]}.json`;
       link.click();
-      
+
       URL.revokeObjectURL(url);
-      showMessage('ডেটা সফলভাবে ব্যাকআপ হয়েছে', 'success');
+      showMessage("ডেটা সফলভাবে ব্যাকআপ হয়েছে", "success");
     } catch (error) {
-      showMessage('ব্যাকআপ তৈরিতে সমস্যা হয়েছে', 'error');
+      showMessage("ব্যাকআপ তৈরিতে সমস্যা হয়েছে", "error");
     }
   };
 
   const handleDataClear = () => {
     const confirmed = window.confirm(
-      'আপনি কি নিশ্চিত যে সমস্ত ডেটা মুছে ফেলতে চান?\n\n' +
-      'এটি মুছে ফেলবে:\n' +
-      '• সব বুকিং ও কাস্টমার তথ্য\n' +
-      '• সব ব্যালেন্স, প্রফিট ও রেভিনিউ\n' +
-      '• সব হিস্টরি ও রেকর্ড\n' +
-      '• সব সেটিংস ও কনফিগারেশন\n\n' +
-      'এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না!'
+      "আপনি কি নিশ্চিত যে সমস্ত ডেটা মুছে ফেলতে চান?\n\n" +
+        "এটি মুছে ফেলবে:\n" +
+        "• সব বুকিং ও কাস্টমার তথ্য\n" +
+        "• সব ব্যালেন্স, প্রফিট ও রেভিনিউ\n" +
+        "• সব হিস্টরি ও রেকর্ড\n" +
+        "• সব সেটিংস ও কনফিগারেশন\n\n" +
+        "এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না!",
     );
 
     if (confirmed) {
       const doubleConfirm = window.confirm(
-        'শেষ নিশ্চিতকরণ: আপনি কি সত্যিই সব কিছু রিসেট করতে চান?\n\n' +
-        'এটি সম্পূর্ণ নতুন অবস্থায় ফিরিয়ে নিয়ে ��াবে।'
+        "শেষ নিশ্চিতকরণ: আপনি কি সত্যিই সব কিছু রিসেট করতে চান?\n\n" +
+          "এটি সম্পূর্ণ নতুন অবস্থায় ফিরিয়ে নিয়ে ��াবে।",
       );
 
       if (doubleConfirm) {
         try {
-          showMessage('সব ডেটা মুছে ফেলা হচ্ছে...', 'success');
+          showMessage("সব ডেটা মুছে ফেলা হচ্ছে...", "success");
 
           // Use the enhanced reset function
           setTimeout(() => {
             dataService.resetToFreshState();
           }, 1000);
-
         } catch (error) {
-          showMessage('ডেটা মুছতে সমস্যা হয়েছে', 'error');
+          showMessage("ডেটা মুছতে সমস্যা হয়েছে", "error");
         }
       }
     }
   };
 
   const tabs = [
-    { id: 'users' as const, label: 'ইউজার ম্যানেজমেন্ট', icon: Users },
-    { id: 'airlines' as const, label: 'এয়ারলাইন', icon: Plane },
-    { id: 'routes' as const, label: 'রুট', icon: MapPin },
-    { id: 'data' as const, label: 'ডেটা ম্যানেজমেন্ট', icon: Database }
+    { id: "users" as const, label: "ইউজার ম্যানেজমেন্ট", icon: Users },
+    { id: "airlines" as const, label: "এয়ারলাইন", icon: Plane },
+    { id: "routes" as const, label: "রুট", icon: MapPin },
+    { id: "data" as const, label: "ডেটা ম্যানেজমেন্ট", icon: Database },
   ];
 
   return (
@@ -139,9 +143,9 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
           exit={{ opacity: 0, y: -20 }}
           className={cn(
             "mb-6 p-4 rounded-lg border",
-            message.type === 'success' 
+            message.type === "success"
               ? "bg-green-500/20 border-green-400/50 text-green-200"
-              : "bg-red-500/20 border-red-400/50 text-red-200"
+              : "bg-red-500/20 border-red-400/50 text-red-200",
           )}
         >
           {message.text}
@@ -166,7 +170,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                     "w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all",
                     activeTab === tab.id
                       ? "bg-gradient-to-r from-folder-primary to-folder-secondary text-white"
-                      : "text-white/70 hover:bg-white/10 hover:text-white"
+                      : "text-white/70 hover:bg-white/10 hover:text-white",
                   )}
                 >
                   <tab.icon className="w-5 h-5" />
@@ -184,20 +188,22 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
           className="lg:col-span-3"
         >
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-            
             {/* User Management Tab */}
-            {activeTab === 'users' && (
+            {activeTab === "users" && (
               <div>
                 <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2">
                   <Users className="w-5 h-5" />
                   <span>ইউজার ম্যানেজমেন্ট</span>
                 </h3>
 
-                {user.role === 'owner' ? (
+                {user.role === "owner" ? (
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {dataService.getUsers().map((u) => (
-                        <div key={u.id} className="bg-white/5 rounded-lg p-4 border border-white/10">
+                        <div
+                          key={u.id}
+                          className="bg-white/5 rounded-lg p-4 border border-white/10"
+                        >
                           <div className="flex items-center space-x-3">
                             <div className="w-10 h-10 bg-gradient-to-r from-folder-primary to-folder-secondary rounded-full flex items-center justify-center">
                               <User className="w-5 h-5 text-white" />
@@ -205,7 +211,8 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                             <div>
                               <p className="text-white font-medium">{u.name}</p>
                               <p className="text-white/70 text-sm">
-                                {u.role === 'owner' ? t('owner') : t('manager')} | {u.username}
+                                {u.role === "owner" ? t("owner") : t("manager")}{" "}
+                                | {u.username}
                               </p>
                             </div>
                           </div>
@@ -224,7 +231,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                   <div className="bg-yellow-500/20 border border-yellow-400/50 rounded-lg p-4">
                     <p className="text-yellow-200">
                       <Shield className="w-4 h-4 inline mr-2" />
-                      {t('onlyOwnerUserManagement')}
+                      {t("onlyOwnerUserManagement")}
                     </p>
                   </div>
                 )}
@@ -232,7 +239,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
             )}
 
             {/* Airlines Tab */}
-            {activeTab === 'airlines' && (
+            {activeTab === "airlines" && (
               <div>
                 <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2">
                   <Plane className="w-5 h-5" />
@@ -242,7 +249,9 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                 <div className="space-y-6">
                   {/* Add New Airline */}
                   <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                    <h4 className="text-lg font-medium text-white mb-3">নতুন এয়ারলাইন যোগ করুন</h4>
+                    <h4 className="text-lg font-medium text-white mb-3">
+                      নতুন এয়ারলাইন যোগ করুন
+                    </h4>
                     <div className="flex space-x-3">
                       <input
                         type="text"
@@ -254,7 +263,10 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                       <button
                         onClick={() => {
                           if (newAirline.trim()) {
-                            showMessage('নতুন এয়ারলাইন যোগ করার জন্য ভবিষ্যতে আপডেট আসবে', 'success');
+                            showMessage(
+                              "নতুন এয়ারলাইন যোগ করার জন্য ভবিষ্যতে আপডেট আসবে",
+                              "success",
+                            );
                             setNewAirline("");
                           }
                         }}
@@ -269,10 +281,15 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
 
                   {/* Current Airlines */}
                   <div>
-                    <h4 className="text-lg font-medium text-white mb-3">বর্তমান এয়ারলাইনসমূহ</h4>
+                    <h4 className="text-lg font-medium text-white mb-3">
+                      বর্তমান এয়ারলাইনসমূহ
+                    </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                       {AIRLINES.map((airline, index) => (
-                        <div key={index} className="bg-white/5 rounded-lg p-3 border border-white/10 flex items-center justify-between">
+                        <div
+                          key={index}
+                          className="bg-white/5 rounded-lg p-3 border border-white/10 flex items-center justify-between"
+                        >
                           <span className="text-white text-sm">{airline}</span>
                         </div>
                       ))}
@@ -283,7 +300,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
             )}
 
             {/* Routes Tab */}
-            {activeTab === 'routes' && (
+            {activeTab === "routes" && (
               <div>
                 <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2">
                   <MapPin className="w-5 h-5" />
@@ -293,7 +310,9 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                 <div className="space-y-6">
                   {/* Add New Route */}
                   <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                    <h4 className="text-lg font-medium text-white mb-3">নতুন রুট যোগ করুন</h4>
+                    <h4 className="text-lg font-medium text-white mb-3">
+                      নতুন রুট যোগ করুন
+                    </h4>
                     <div className="flex space-x-3">
                       <input
                         type="text"
@@ -305,7 +324,10 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                       <button
                         onClick={() => {
                           if (newRoute.trim()) {
-                            showMessage('নতুন রুট যোগ করার জন্য ভবিষ্যতে আপডেট আসবে', 'success');
+                            showMessage(
+                              "নতুন রুট যোগ করার জন্য ভবিষ্যতে আপডেট আসবে",
+                              "success",
+                            );
                             setNewRoute("");
                           }
                         }}
@@ -320,10 +342,15 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
 
                   {/* Current Routes */}
                   <div>
-                    <h4 className="text-lg font-medium text-white mb-3">বর্তমান রুটসমূহ</h4>
+                    <h4 className="text-lg font-medium text-white mb-3">
+                      বর্তমান রুটসমূহ
+                    </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {ROUTES.map((route, index) => (
-                        <div key={index} className="bg-white/5 rounded-lg p-3 border border-white/10 flex items-center justify-between">
+                        <div
+                          key={index}
+                          className="bg-white/5 rounded-lg p-3 border border-white/10 flex items-center justify-between"
+                        >
                           <span className="text-white text-sm">{route}</span>
                         </div>
                       ))}
@@ -334,7 +361,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
             )}
 
             {/* Data Management Tab */}
-            {activeTab === 'data' && (
+            {activeTab === "data" && (
               <div>
                 <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2">
                   <Database className="w-5 h-5" />
@@ -345,16 +372,24 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                   {/* Data Statistics */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-white/5 rounded-lg p-4 border border-white/10 text-center">
-                      <div className="text-2xl font-bold text-white">{dataService.getBookings().length}</div>
+                      <div className="text-2xl font-bold text-white">
+                        {dataService.getBookings().length}
+                      </div>
                       <div className="text-white/70 text-sm">মোট বুকিং</div>
                     </div>
                     <div className="bg-white/5 rounded-lg p-4 border border-white/10 text-center">
-                      <div className="text-2xl font-bold text-white">{dataService.getUsers().length}</div>
+                      <div className="text-2xl font-bold text-white">
+                        {dataService.getUsers().length}
+                      </div>
                       <div className="text-white/70 text-sm">মোট ইউজার</div>
                     </div>
                     <div className="bg-white/5 rounded-lg p-4 border border-white/10 text-center">
                       <div className="text-2xl font-bold text-white">
-                        {(JSON.stringify(dataService.getBookings()).length / 1024).toFixed(2)} KB
+                        {(
+                          JSON.stringify(dataService.getBookings()).length /
+                          1024
+                        ).toFixed(2)}{" "}
+                        KB
                       </div>
                       <div className="text-white/70 text-sm">ডেটা সাইজ</div>
                     </div>
@@ -363,9 +398,12 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                   {/* Data Actions */}
                   <div className="space-y-4">
                     <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                      <h4 className="text-lg font-medium text-white mb-3">ডেটা ব্যাকআপ</h4>
+                      <h4 className="text-lg font-medium text-white mb-3">
+                        ডেটা ব্যাকআপ
+                      </h4>
                       <p className="text-white/70 text-sm mb-4">
-                        আপনার সমস্ত বুকিং ডেটা ব্যাকআপ করুন। এটি একটি JSON ফাইল ডাউনলোড করবে।
+                        আপনার সমস্ত বুকিং ডেটা ব্যাকআপ করুন। এটি একটি JSON ফাইল
+                        ডাউনলোড করবে।
                       </p>
                       <button
                         onClick={handleDataBackup}
@@ -376,9 +414,11 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                       </button>
                     </div>
 
-                    {user.role === 'owner' && (
+                    {user.role === "owner" && (
                       <div className="bg-red-500/10 rounded-lg p-4 border border-red-400/30">
-                        <h4 className="text-lg font-medium text-red-200 mb-3">🔄 সম্পূর্ণ রিসেট</h4>
+                        <h4 className="text-lg font-medium text-red-200 mb-3">
+                          🔄 সম্পূর্ণ রিসেট
+                        </h4>
                         <div className="space-y-3 mb-4">
                           <p className="text-red-200/90 text-sm font-medium">
                             ⚠️ সতর্কতা: এই অপারেশনটি সব কিছু মুছে ফেলবে
@@ -410,7 +450,6 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
                 </div>
               </div>
             )}
-
           </div>
         </motion.div>
       </div>
