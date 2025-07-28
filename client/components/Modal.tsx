@@ -158,6 +158,7 @@ export default function Modal({
                 "flex flex-col relative",
                 getSizeClasses(),
                 className,
+                fontClass
               )}
               onClick={(e) => e.stopPropagation()}
             >
