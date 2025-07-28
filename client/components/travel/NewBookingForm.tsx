@@ -65,7 +65,7 @@ export default function NewBookingForm({
     }
 
     if (!formData.passport.trim()) {
-      newErrors.passport = "পাসপোর্ট নম্বর আবশ্যিক";
+      newErrors.passport = "পাসপো���্ট নম্বর আবশ্যিক";
     }
 
     if (!formData.email.trim()) {
@@ -232,10 +232,10 @@ export default function NewBookingForm({
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">
-              নতুন বুকিং যোগ করুন
+              {t("addNewBooking")}
             </h1>
             <p className="text-white/70">
-              নতুন ফ্লাইট বুকি��� এর তথ্য পূরণ করুন
+              {t("fillFlightInfo")}
             </p>
           </div>
           <motion.button
@@ -692,12 +692,12 @@ export default function NewBookingForm({
                     }}
                     className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
                   />
-                  <span>সেভ হচ্ছে...</span>
+                  <span>{t("saving")}</span>
                 </>
               ) : (
                 <>
                   <Save className="w-5 h-5" />
-                  <span>বুকিং সেভ করুন</span>
+                  <span>{t("saveBooking")}</span>
                 </>
               )}
             </motion.button>
