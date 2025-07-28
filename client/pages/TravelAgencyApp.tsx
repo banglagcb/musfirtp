@@ -26,6 +26,7 @@ import { User, Booking } from "@shared/travel-types";
 import dataService from "@/services/dataService";
 import { PerformanceMonitor, analyzeBundleUsage } from "@/utils/performance";
 import { registerServiceWorker } from "@/utils/serviceWorker";
+import "@/utils/resetData"; // Enable console reset commands
 
 type AppState = "login" | "dashboard";
 
