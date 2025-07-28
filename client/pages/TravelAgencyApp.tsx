@@ -44,9 +44,6 @@ function TravelAgencyAppInner() {
   const { isMobile, isTablet, theme, setIsLoading } = appContext;
   const { t, language } = useTranslation();
 
-  const { isMobile, isTablet, theme, setIsLoading } = appContext;
-  const { t, language } = translationContext;
-
   const [appState, setAppState] = useState<AppState>("login");
   const [user, setUser] = useState<User | null>(null);
   const [openModals, setOpenModals] = useState<OpenModal[]>([]);
@@ -284,7 +281,7 @@ function TravelAgencyAppInner() {
         } else {
           component = (
             <PlaceholderPage
-              title={language === "bn" ? "অ্যাক্সেস নিষিদ্ধ" : "Access Denied"}
+              title={language === "bn" ? "অ্যাক্সেস নিষ��দ্ধ" : "Access Denied"}
               description={
                 language === "bn"
                   ? "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন"
