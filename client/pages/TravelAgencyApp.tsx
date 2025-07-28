@@ -32,8 +32,16 @@ interface OpenModal {
 }
 
 function TravelAgencyAppInner() {
-  const { isMobile, isTablet, theme, setIsLoading } = useApp();
-  const { t } = useTranslation();
+  // Ensure we have context before proceeding
+  const appContext = useApp();
+  const translationContext = useTranslation();
+
+  if (!appContext || !translationContext) {
+    return <div>Loading context...</div>;
+  }
+
+  const { isMobile, isTablet, theme, setIsLoading } = appContext;
+  const { t } = translationContext;
 
   const [appState, setAppState] = useState<AppState>("login");
   const [user, setUser] = useState<User | null>(null);
@@ -302,7 +310,7 @@ function TravelAgencyAppInner() {
 
     // Update breadcrumbs
     setBreadcrumbs([
-      { label: "ড্য���শ����োর্ড", path: "/dashboard" },
+      { label: "ড্য���শ���োর্ড", path: "/dashboard" },
       { label: title, path: `/${cardId}`, isActive: true },
     ]);
   };
