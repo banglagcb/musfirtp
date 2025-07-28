@@ -55,7 +55,7 @@ export function withLazyLoading<P extends object>(
   return function LazyWrapper(props: P) {
     return (
       <Suspense fallback={fallback || <LoadingSpinner />}>
-        <LazyComponent {...props} />
+        <LazyComponent {...(props as any)} />
       </Suspense>
     );
   };
