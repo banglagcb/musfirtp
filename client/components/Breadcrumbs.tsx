@@ -51,7 +51,8 @@ export default function Breadcrumbs({ items, onItemClick, className }: Breadcrum
       animate="visible"
       className={cn(
         "flex items-center space-x-2 p-4 bg-white/10 backdrop-blur-md rounded-xl border border-white/20",
-        className
+        className,
+        fontClass
       )}
     >
       {/* Home Icon */}
