@@ -79,7 +79,7 @@ export default function DataExport({ onClose }: DataExportProps) {
         'এয়ারলাইন',
         'ক্রয়মূল্য',
         'বিক্রয়মূল্য',
-        'পেমেন্ট স্ট্যাটাস',
+        '���েমেন্ট স্ট্যাটাস',
         'পেইড পরিমাণ',
         'বুকিং তারিখ',
         'নোট'
@@ -107,10 +107,10 @@ export default function DataExport({ onClose }: DataExportProps) {
 
       const filename = `travel_bookings_${dateRange.from}_to_${dateRange.to}.csv`;
       downloadCSV(csvContent, filename);
-      
-      alert('সফলভাবে এক্সপোর্ট হয়েছে!');
+
+      alert(t('exportSuccessful'));
     } catch (error) {
-      alert('এক্সপোর্ট করতে সমস্যা হয়েছে!');
+      alert(t('exportError'));
     } finally {
       setIsExporting(false);
     }
