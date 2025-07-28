@@ -15,7 +15,6 @@ import TicketInventoryDashboard from "@/components/travel/TicketInventoryDashboa
 import PlaceholderPage from "@/components/PlaceholderPage";
 import AppHeader from "@/components/layout/AppHeader";
 import { AppProvider, useApp, useTranslation, AppContext } from "@/contexts/AppContext";
-import { useContext } from "react";
 import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
 import dataService from "@/services/dataService";
@@ -200,7 +199,7 @@ function TravelAgencyAppInner() {
               closeModal(cardId);
               openModal(
                 "edit-booking",
-                language === "bn" ? "বুকিং ��ডিট করুন" : "Edit Booking",
+                language === "bn" ? "বুকিং এডিট করুন" : "Edit Booking",
                 <EditBookingForm
                   booking={booking}
                   user={user!}
