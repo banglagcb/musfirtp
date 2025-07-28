@@ -40,14 +40,14 @@ interface OpenModal {
 function TravelAgencyAppInner() {
   // Safely check context availability
   const appContext = useContext(AppContext);
+  const { t, language } = useTranslation();
 
   if (!appContext) {
     return <div>Loading context...</div>;
   }
 
-  // Now we can safely use the hooks
+  // Now we can safely use the context
   const { isMobile, isTablet, theme, setIsLoading } = appContext;
-  const { t, language } = useTranslation();
 
   const [appState, setAppState] = useState<AppState>("login");
   const [user, setUser] = useState<User | null>(null);
