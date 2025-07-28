@@ -54,7 +54,7 @@ export const translations = {
     // Navigation
     dashboard: "ড্যাশবোর্ড",
     bookings: "বুকিং লিস্ট",
-    newBooking: "নতুন �����ুকিং",
+    newBooking: "নতুন ���ুকিং",
     inventory: "টিকেট ইনভেন্টরি",
     bulkPurchase: "বাল্ক টিকেট ক্রয়",
     reports: "রিপোর্ট",
@@ -62,6 +62,8 @@ export const translations = {
     quickActions: "দ্রুত অ্যাকশন",
     allBookings: "সব বুকিং",
     searchAction: "সার্চ করুন",
+    searchAndFilter: "সার্চ ও ফিল্টার",
+    dataExport: "ডেটা এক্সপোর্ট",
 
     // User
     owner: "মালিক",
@@ -86,7 +88,7 @@ export const translations = {
     pending: "পেন্ডিং",
     partial: "আংশিক",
     paidBookings: "পেইড বুকিং",
-    partialPayments: "আংশিক ���েমেন্ট",
+    partialPayments: "আংশিক পেমেন্ট",
     pendingPayments: "��েন্ডিং পেমেন্ট",
 
     // Stats
