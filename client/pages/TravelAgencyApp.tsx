@@ -32,29 +32,8 @@ interface OpenModal {
 }
 
 function TravelAgencyAppInner() {
-  // Get app context and translation with error handling
-  let appContext, translationContext;
-
-  try {
-    appContext = useApp();
-    translationContext = useTranslation();
-  } catch (error) {
-    console.error('Context error:', error);
-    // Fallback values
-    appContext = {
-      isMobile: false,
-      isTablet: false,
-      theme: 'dark' as const,
-      setIsLoading: () => {}
-    };
-    translationContext = {
-      t: (key: string) => key,
-      language: 'bn' as const
-    };
-  }
-
-  const { isMobile, isTablet, theme, setIsLoading } = appContext;
-  const { t } = translationContext;
+  const { isMobile, isTablet, theme, setIsLoading } = useApp();
+  const { t } = useTranslation();
 
   const [appState, setAppState] = useState<AppState>("login");
   const [user, setUser] = useState<User | null>(null);
