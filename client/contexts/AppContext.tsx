@@ -147,7 +147,8 @@ export const translations = {
     exportError: "এক্সপোর্ট করতে সমস্যা হয়েছে!",
     exporting: "এক্সপোর্ট হচ্ছে...",
     exportInfo: "এক্সপোর্ট সম্পর্কে তথ্য",
-    exportNote: "এক্সপোর্ট করা ফাইল CSV ফরম্যাটে হবে যা Microsoft Excel, Google Sheets এবং অন্যান্য স্প্রেডশিট অ্যাপ্লিকেশনে খোলা যাবে।",
+    exportNote:
+      "এক্সপোর্ট করা ফাইল CSV ফরম্যাটে হবে যা Microsoft Excel, Google Sheets এবং অন্যান্য স্প্রেডশিট অ্যাপ্লিকেশনে খোলা যাবে।",
     systemManagement: "সিস্টেম কনফিগারেশন ও ম্যানেজমেন্ট",
     totalBookingsStats: "মোট বুকিং",
     completeData: "সম্পূর্ণ ডেটা",
@@ -272,7 +273,8 @@ export const translations = {
     exportError: "Error exporting data!",
     exporting: "Exporting...",
     exportInfo: "Export Information",
-    exportNote: "The exported file will be in CSV format which can be opened in Microsoft Excel, Google Sheets and other spreadsheet applications.",
+    exportNote:
+      "The exported file will be in CSV format which can be opened in Microsoft Excel, Google Sheets and other spreadsheet applications.",
     systemManagement: "System configuration & management",
     totalBookingsStats: "Total Bookings",
     completeData: "Complete Data",
@@ -424,6 +426,6 @@ export const useTranslation = () => {
   } catch (error) {
     // Fallback when context is not available
     const t = (key: keyof typeof translations.bn): string => key;
-    return { t, language: 'bn' as Language };
+    return { t, language: "bn" as Language };
   }
 };

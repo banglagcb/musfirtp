@@ -120,7 +120,7 @@ export default function TravelDashboard({
   const { t, language } = useTranslation();
 
   // Get font class based on language
-  const fontClass = language === 'bn' ? 'font-bengali' : 'font-english';
+  const fontClass = language === "bn" ? "font-bengali" : "font-english";
 
   const [stats, setStats] = useState<DashboardStats>({
     totalBookings: 0,
@@ -274,7 +274,7 @@ export default function TravelDashboard({
         theme === "dark"
           ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
           : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50",
-        fontClass
+        fontClass,
       )}
     >
       {/* Header */}

@@ -15,31 +15,35 @@ interface BreadcrumbsProps {
   className?: string;
 }
 
-export default function Breadcrumbs({ items, onItemClick, className }: BreadcrumbsProps) {
+export default function Breadcrumbs({
+  items,
+  onItemClick,
+  className,
+}: BreadcrumbsProps) {
   const { language } = useApp();
-  const fontClass = language === 'bn' ? 'font-bengali' : 'font-english';
+  const fontClass = language === "bn" ? "font-bengali" : "font-english";
   const containerVariants = {
     hidden: { opacity: 0, x: -20 },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scale: 1,
       transition: {
         type: "spring",
         stiffness: 300,
-        damping: 25
-      }
-    }
+        damping: 25,
+      },
+    },
   };
 
   if (items.length === 0) return null;
@@ -52,7 +56,7 @@ export default function Breadcrumbs({ items, onItemClick, className }: Breadcrum
       className={cn(
         "flex items-center space-x-2 p-4 bg-white/10 backdrop-blur-md rounded-xl border border-white/20",
         className,
-        fontClass
+        fontClass,
       )}
     >
       {/* Home Icon */}
@@ -90,7 +94,7 @@ export default function Breadcrumbs({ items, onItemClick, className }: Breadcrum
               "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
               item.isActive
                 ? "bg-gradient-to-r from-folder-primary to-folder-secondary text-white shadow-glow"
-                : "text-white/70 hover:text-white hover:bg-white/10"
+                : "text-white/70 hover:text-white hover:bg-white/10",
             )}
             disabled={item.isActive}
           >

@@ -29,7 +29,7 @@ export default function Modal({
   const contentRef = useRef<HTMLDivElement>(null);
 
   // Get font class based on language
-  const fontClass = language === 'bn' ? 'font-bengali' : 'font-english';
+  const fontClass = language === "bn" ? "font-bengali" : "font-english";
 
   // Close on escape key
   useEffect(() => {
@@ -158,7 +158,7 @@ export default function Modal({
                 "flex flex-col relative",
                 getSizeClasses(),
                 className,
-                fontClass
+                fontClass,
               )}
               onClick={(e) => e.stopPropagation()}
             >

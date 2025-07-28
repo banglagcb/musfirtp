@@ -35,7 +35,7 @@ export default function AppHeader({
   const { showMonitor, PerformanceDashboard } = usePerformanceMonitor();
 
   // Get font class based on language
-  const fontClass = language === 'bn' ? 'font-bengali' : 'font-english';
+  const fontClass = language === "bn" ? "font-bengali" : "font-english";
 
   return (
     <motion.header

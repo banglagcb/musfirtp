@@ -281,7 +281,11 @@ function TravelAgencyAppInner() {
           component = (
             <PlaceholderPage
               title={language === "bn" ? "অ্যাক্সেস নিষিদ্ধ" : "Access Denied"}
-              description={language === "bn" ? "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন" : "Only owner can purchase bulk tickets"}
+              description={
+                language === "bn"
+                  ? "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন"
+                  : "Only owner can purchase bulk tickets"
+              }
               onBack={() => closeModal(cardId)}
             />
           );
@@ -296,7 +300,11 @@ function TravelAgencyAppInner() {
         component = (
           <PlaceholderPage
             title={title}
-            description={language === "bn" ? "এই সেকশনটি শীঘ্রই আসছে!" : "This section is coming soon!"}
+            description={
+              language === "bn"
+                ? "এই সেকশনটি শীঘ্রই আসছে!"
+                : "This section is coming soon!"
+            }
             onBack={() => closeModal(cardId)}
           />
         );

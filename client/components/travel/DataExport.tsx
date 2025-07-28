@@ -11,20 +11,20 @@ interface DataExportProps {
 
 export default function DataExport({ onClose }: DataExportProps) {
   const { t } = useTranslation();
-  const [exportType, setExportType] = useState<'all' | 'filtered'>('all');
+  const [exportType, setExportType] = useState<"all" | "filtered">("all");
   const [dateRange, setDateRange] = useState({
-    from: '',
-    to: ''
+    from: "",
+    to: "",
   });
   const [isExporting, setIsExporting] = useState(false);
 
   const downloadCSV = (csvContent: string, filename: string) => {
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
     const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', filename);
-    link.style.visibility = 'hidden';
+    link.setAttribute("href", url);
+    link.setAttribute("download", filename);
+    link.style.visibility = "hidden";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -33,15 +33,15 @@ export default function DataExport({ onClose }: DataExportProps) {
   const handleExportAll = async () => {
     setIsExporting(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate processing
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate processing
 
       const csvContent = dataService.exportToCSV();
-      const filename = `travel_bookings_all_${new Date().toISOString().split('T')[0]}.csv`;
+      const filename = `travel_bookings_all_${new Date().toISOString().split("T")[0]}.csv`;
       downloadCSV(csvContent, filename);
 
-      alert(t('exportSuccessful'));
+      alert(t("exportSuccessful"));
     } catch (error) {
-      alert(t('exportError'));
+      alert(t("exportError"));
     } finally {
       setIsExporting(false);
     }
@@ -49,77 +49,86 @@ export default function DataExport({ onClose }: DataExportProps) {
 
   const handleExportFiltered = async () => {
     if (!dateRange.from || !dateRange.to) {
-      alert(t('selectDateRange'));
+      alert(t("selectDateRange"));
       return;
     }
 
     setIsExporting(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate processing
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate processing
+
       const filteredBookings = dataService.searchBookings({
         dateFrom: dateRange.from,
-        dateTo: dateRange.to
+        dateTo: dateRange.to,
       });
 
       if (filteredBookings.length === 0) {
-        alert(t('noBookingsInRange'));
+        alert(t("noBookingsInRange"));
         setIsExporting(false);
         return;
       }
 
       // Create CSV content for filtered data
       const headers = [
-        'গ্রাহকের নাম',
-        'মোবাইল',
-        'পাসপোর্ট',
-        'ইমেইল',
-        'ফ্লাইট তারিখ',
-        'রুট',
-        'এয়ারলাইন',
-        'ক্রয়মূল্য',
-        'বিক্রয়মূল্য',
-        '���েমেন্ট স্ট্যাটাস',
-        'পেইড পরিমাণ',
-        'বুকিং তারিখ',
-        'নোট'
+        "গ্রাহকের নাম",
+        "মোবাইল",
+        "পাসপোর্ট",
+        "ইমেইল",
+        "ফ্লাইট তারিখ",
+        "রুট",
+        "এয়ারলাইন",
+        "ক্রয়মূল্য",
+        "বিক্রয়মূল্য",
+        "���েমেন্ট স্ট্যাটাস",
+        "পেইড পরিমাণ",
+        "বুকিং তারিখ",
+        "নোট",
       ];
 
       const csvContent = [
-        headers.join(','),
-        ...filteredBookings.map(booking => [
-          booking.customerName,
-          booking.mobile,
-          booking.passport,
-          booking.email,
-          booking.flightDate,
-          booking.route,
-          booking.airline,
-          booking.purchasePrice,
-          booking.salePrice,
-          booking.paymentStatus === 'paid' ? 'পেইড' : 
-          booking.paymentStatus === 'pending' ? 'পেন্ডিং' : 'আংশিক',
-          booking.paidAmount,
-          booking.bookingDate,
-          booking.notes || ''
-        ].join(','))
-      ].join('\n');
+        headers.join(","),
+        ...filteredBookings.map((booking) =>
+          [
+            booking.customerName,
+            booking.mobile,
+            booking.passport,
+            booking.email,
+            booking.flightDate,
+            booking.route,
+            booking.airline,
+            booking.purchasePrice,
+            booking.salePrice,
+            booking.paymentStatus === "paid"
+              ? "পেইড"
+              : booking.paymentStatus === "pending"
+                ? "পেন্ডিং"
+                : "আংশিক",
+            booking.paidAmount,
+            booking.bookingDate,
+            booking.notes || "",
+          ].join(","),
+        ),
+      ].join("\n");
 
       const filename = `travel_bookings_${dateRange.from}_to_${dateRange.to}.csv`;
       downloadCSV(csvContent, filename);
 
-      alert(t('exportSuccessful'));
+      alert(t("exportSuccessful"));
     } catch (error) {
-      alert(t('exportError'));
+      alert(t("exportError"));
     } finally {
       setIsExporting(false);
     }
   };
 
   const bookingsCount = dataService.getBookings().length;
-  const filteredCount = dateRange.from && dateRange.to 
-    ? dataService.searchBookings({ dateFrom: dateRange.from, dateTo: dateRange.to }).length 
-    : 0;
+  const filteredCount =
+    dateRange.from && dateRange.to
+      ? dataService.searchBookings({
+          dateFrom: dateRange.from,
+          dateTo: dateRange.to,
+        }).length
+      : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-green-900 to-slate-900 p-6">
@@ -131,7 +140,9 @@ export default function DataExport({ onClose }: DataExportProps) {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">ডেটা এক্সপোর্ট</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              ডেটা এক্সপোর্ট
+            </h1>
             <p className="text-white/70">বুকিং ডেটা CSV ফাইলে ডাউনল���ড করুন</p>
           </div>
           <motion.button
@@ -153,29 +164,37 @@ export default function DataExport({ onClose }: DataExportProps) {
             transition={{ delay: 0.1 }}
             className={cn(
               "bg-white/10 backdrop-blur-md rounded-2xl p-6 border-2 cursor-pointer transition-all duration-300",
-              exportType === 'all' 
-                ? "border-neon-green bg-green-500/10" 
-                : "border-white/20 hover:border-white/40"
+              exportType === "all"
+                ? "border-neon-green bg-green-500/10"
+                : "border-white/20 hover:border-white/40",
             )}
-            onClick={() => setExportType('all')}
+            onClick={() => setExportType("all")}
           >
             <div className="flex items-center space-x-4 mb-4">
-              <div className={cn(
-                "w-12 h-12 rounded-xl flex items-center justify-center",
-                "bg-gradient-to-r from-neon-green to-neon-blue"
-              )}>
+              <div
+                className={cn(
+                  "w-12 h-12 rounded-xl flex items-center justify-center",
+                  "bg-gradient-to-r from-neon-green to-neon-blue",
+                )}
+              >
                 <FileText className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-white">সম্পূর্ণ ডেটা</h3>
-                <p className="text-white/70 text-sm">সকল বুকিং ডেটা এক্সপোর্ট করুন</p>
+                <h3 className="text-xl font-semibold text-white">
+                  সম্পূর্ণ ডেটা
+                </h3>
+                <p className="text-white/70 text-sm">
+                  সকল বুকিং ডেটা এক্সপোর্ট করুন
+                </p>
               </div>
             </div>
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-white/70">মোট বুকিং:</span>
-                <span className="text-white font-medium">{bookingsCount} টি</span>
+                <span className="text-white font-medium">
+                  {bookingsCount} টি
+                </span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-white/70">ফাইল ফরম্যাট:</span>
@@ -183,7 +202,9 @@ export default function DataExport({ onClose }: DataExportProps) {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-white/70">আকার:</span>
-                <span className="text-white font-medium">আনুমানিক {Math.ceil(bookingsCount * 0.5)} KB</span>
+                <span className="text-white font-medium">
+                  আনুমানিক {Math.ceil(bookingsCount * 0.5)} KB
+                </span>
               </div>
             </div>
 
@@ -201,7 +222,11 @@ export default function DataExport({ onClose }: DataExportProps) {
                 <>
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                     className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
                   />
                   <span>এক্সপোর্ট হচ্ছ��...</span>
@@ -222,22 +247,28 @@ export default function DataExport({ onClose }: DataExportProps) {
             transition={{ delay: 0.2 }}
             className={cn(
               "bg-white/10 backdrop-blur-md rounded-2xl p-6 border-2 cursor-pointer transition-all duration-300",
-              exportType === 'filtered' 
-                ? "border-neon-purple bg-purple-500/10" 
-                : "border-white/20 hover:border-white/40"
+              exportType === "filtered"
+                ? "border-neon-purple bg-purple-500/10"
+                : "border-white/20 hover:border-white/40",
             )}
-            onClick={() => setExportType('filtered')}
+            onClick={() => setExportType("filtered")}
           >
             <div className="flex items-center space-x-4 mb-4">
-              <div className={cn(
-                "w-12 h-12 rounded-xl flex items-center justify-center",
-                "bg-gradient-to-r from-neon-purple to-neon-pink"
-              )}>
+              <div
+                className={cn(
+                  "w-12 h-12 rounded-xl flex items-center justify-center",
+                  "bg-gradient-to-r from-neon-purple to-neon-pink",
+                )}
+              >
                 <Filter className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-white">ফিল্��ার করা ডেটা</h3>
-                <p className="text-white/70 text-sm">নির্��িষ্ট সময়ের ডেটা এক্সপোর্ট করুন</p>
+                <h3 className="text-xl font-semibold text-white">
+                  ফিল্��ার করা ডেটা
+                </h3>
+                <p className="text-white/70 text-sm">
+                  নির্��িষ্ট সময়ের ডেটা এক্সপোর্ট করুন
+                </p>
               </div>
             </div>
 
@@ -245,26 +276,40 @@ export default function DataExport({ onClose }: DataExportProps) {
               {/* Date Range Selection */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">শুরুর তারিখ</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    শুরুর তারিখ
+                  </label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <input
                       type="date"
                       value={dateRange.from}
-                      onChange={(e) => setDateRange(prev => ({ ...prev, from: e.target.value }))}
+                      onChange={(e) =>
+                        setDateRange((prev) => ({
+                          ...prev,
+                          from: e.target.value,
+                        }))
+                      }
                       className="w-full pl-10 pr-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-folder-primary/50"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-white/70 text-sm mb-2">শেষ তারিখ</label>
+                  <label className="block text-white/70 text-sm mb-2">
+                    শেষ তারিখ
+                  </label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
                     <input
                       type="date"
                       value={dateRange.to}
-                      onChange={(e) => setDateRange(prev => ({ ...prev, to: e.target.value }))}
+                      onChange={(e) =>
+                        setDateRange((prev) => ({
+                          ...prev,
+                          to: e.target.value,
+                        }))
+                      }
                       className="w-full pl-10 pr-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-folder-primary/50"
                     />
                   </div>
@@ -275,7 +320,9 @@ export default function DataExport({ onClose }: DataExportProps) {
               {dateRange.from && dateRange.to && (
                 <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                   <span className="text-white/70">ফিল্টার ক���া বুকিং:</span>
-                  <span className="text-white font-medium">{filteredCount} টি</span>
+                  <span className="text-white font-medium">
+                    {filteredCount} টি
+                  </span>
                 </div>
               )}
             </div>
@@ -294,7 +341,11 @@ export default function DataExport({ onClose }: DataExportProps) {
                 <>
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                     className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
                   />
                   <span>এক্সপোর্ট হচ্ছে...</span>
@@ -323,7 +374,9 @@ export default function DataExport({ onClose }: DataExportProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="text-lg font-medium text-white mb-3">অন্তর্ভুক্ত ফিল্ড সমূহ:</h4>
+              <h4 className="text-lg font-medium text-white mb-3">
+                অন্তর্ভুক্ত ফিল্ড সমূহ:
+              </h4>
               <ul className="space-y-2 text-white/70">
                 <li>• গ্রাহকের নাম</li>
                 <li>• মোবাইল নম্বর</li>
@@ -336,7 +389,9 @@ export default function DataExport({ onClose }: DataExportProps) {
             </div>
 
             <div>
-              <h4 className="text-lg font-medium text-white mb-3">আর্থ���ক তথ্য:</h4>
+              <h4 className="text-lg font-medium text-white mb-3">
+                আর্থ���ক তথ্য:
+              </h4>
               <ul className="space-y-2 text-white/70">
                 <li>• ক্রয়মূল্য</li>
                 <li>• বিক্রয়মূল্য</li>
@@ -350,8 +405,9 @@ export default function DataExport({ onClose }: DataExportProps) {
 
           <div className="mt-6 p-4 bg-blue-500/20 border border-blue-400/50 rounded-lg">
             <p className="text-blue-200 text-sm">
-              <strong>নো��:</strong> এক্সপোর্ট করা ফাইল CSV ফরম্যাটে হবে যা Microsoft Excel, Google Sheets 
-              এবং অন্যান্য স্প্রেডশিট অ্যাপ্লিকেশনে খোলা যাবে।
+              <strong>নো��:</strong> এক্সপোর্ট করা ফাইল CSV ফরম্যাটে হবে যা
+              Microsoft Excel, Google Sheets এবং অন্যান্য স্প্রেডশিট
+              অ্যাপ্লিকেশনে খোলা যাবে।
             </p>
           </div>
         </motion.div>

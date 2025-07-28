@@ -141,7 +141,9 @@ export default function BookingsList({
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">{t("bookings")}</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              {t("bookings")}
+            </h1>
             <p className="text-white/70">
               {t("totalBookingsFound")}: {filteredBookings.length}
             </p>
@@ -436,9 +438,7 @@ export default function BookingsList({
             className="text-center py-12"
           >
             <p className="text-white/70 text-lg">{t("noBookingsFound")}</p>
-            <p className="text-white/50 text-sm mt-2">
-              {t("filterAndRetry")}
-            </p>
+            <p className="text-white/50 text-sm mt-2">{t("filterAndRetry")}</p>
           </motion.div>
         )}
 
@@ -531,7 +531,9 @@ export default function BookingsList({
                     </h3>
                     <div className="space-y-2">
                       <p className="text-white/70">
-                        <span className="text-white">{t("purchasePrice")}:</span>{" "}
+                        <span className="text-white">
+                          {t("purchasePrice")}:
+                        </span>{" "}
                         {formatCurrency(selectedBooking.purchasePrice)}
                       </p>
                       <p className="text-white/70">

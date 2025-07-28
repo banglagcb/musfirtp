@@ -29,7 +29,7 @@ export default function TravelLoginForm({
   const { t } = useTranslation();
 
   // Get font class based on language
-  const fontClass = language === 'bn' ? 'font-bengali' : 'font-english';
+  const fontClass = language === "bn" ? "font-bengali" : "font-english";
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

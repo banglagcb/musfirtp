@@ -234,9 +234,7 @@ export default function NewBookingForm({
             <h1 className="text-3xl font-bold text-white mb-2">
               {t("addNewBooking")}
             </h1>
-            <p className="text-white/70">
-              {t("fillFlightInfo")}
-            </p>
+            <p className="text-white/70">{t("fillFlightInfo")}</p>
           </div>
           <motion.button
             whileHover={{ scale: 1.1 }}
