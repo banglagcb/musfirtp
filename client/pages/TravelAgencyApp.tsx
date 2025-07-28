@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, memo } from "react";
+import { useState, useEffect, useCallback, memo, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import TravelLoginForm from "@/components/travel/TravelLoginForm";
 import TravelDashboard from "@/components/travel/TravelDashboard";
@@ -200,7 +200,7 @@ function TravelAgencyAppInner() {
               closeModal(cardId);
               openModal(
                 "edit-booking",
-                language === "bn" ? "বুকিং এডিট করুন" : "Edit Booking",
+                language === "bn" ? "বুকিং ��ডিট করুন" : "Edit Booking",
                 <EditBookingForm
                   booking={booking}
                   user={user!}
@@ -281,7 +281,7 @@ function TravelAgencyAppInner() {
         } else {
           component = (
             <PlaceholderPage
-              title={language === "bn" ? "অ্যাক্সেস নিষ��দ্ধ" : "Access Denied"}
+              title={language === "bn" ? "অ্যাক্সেস নিষিদ্ধ" : "Access Denied"}
               description={
                 language === "bn"
                   ? "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন"
