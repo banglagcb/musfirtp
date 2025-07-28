@@ -237,7 +237,7 @@ export default function TravelLoginForm({
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="ইউজারনেম"
+            placeholder={t("username")}
             className={cn(
               "w-full pl-10 pr-12 py-4 backdrop-blur-md border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300",
               theme === "dark"
@@ -284,7 +284,7 @@ export default function TravelLoginForm({
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="পাসওয়ার্ড"
+            placeholder={t("password")}
             className={cn(
               "w-full pl-10 pr-20 py-4 backdrop-blur-md border rounded-xl focus:outline-none focus:ring-2 transition-all duration-300",
               theme === "dark"
@@ -391,7 +391,7 @@ export default function TravelLoginForm({
             theme === "dark" ? "text-white/60" : "text-gray-600",
           )}
         >
-          ডেমো লগইন তথ্য:
+          {t("demoLoginInfo")}
         </p>
         <div className="grid grid-cols-1 gap-2">
           <div>
@@ -401,7 +401,7 @@ export default function TravelLoginForm({
                 theme === "dark" ? "text-white/80" : "text-gray-700",
               )}
             >
-              <strong>মালিক:</strong> admin / admin123
+              <strong>{t("ownerAccount")}</strong> admin / admin123
             </p>
           </div>
           <div>
@@ -411,7 +411,7 @@ export default function TravelLoginForm({
                 theme === "dark" ? "text-white/80" : "text-gray-700",
               )}
             >
-              <strong>ম্যানেজার:</strong> manager / manager123
+              <strong>{t("managerAccount")}</strong> manager / manager123
             </p>
           </div>
         </div>
