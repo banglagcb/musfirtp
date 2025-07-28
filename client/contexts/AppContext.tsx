@@ -44,7 +44,7 @@ export const translations = {
     delete: "ডিলিট",
     edit: "এডিট",
     view: "দেখুন",
-    print: "প্র��ন্ট করু���",
+    print: "প্রিন্ট করু���",
     export: "এক্���প��র্ট",
     search: "সার্চ করুন",
     filter: "ফিল্টার",
@@ -75,7 +75,7 @@ export const translations = {
     // Forms
     customerName: "গ্রাহকের নাম",
     mobile: "মোবাইল নম্বর",
-    email: "ইমেইল ঠিকা��া",
+    email: "ইমেইল ঠিকানা",
     passport: "পাস��োর্ট নম্ব��",
     flightDate: "ফ্লাইট তারিখ",
     route: "রুট",
@@ -106,7 +106,7 @@ export const translations = {
     bengali: "বাংলা",
     switchToEnglish: "Switch to English",
     switchToBengali: "বাংলায় পরিবর্তন করুন",
-    invalidCredentials: "ভুল ইউজারনেম ��া পাসওয়ার্ড",
+    invalidCredentials: "ভুল ইউজারনেম বা পাসওয়ার্ড",
 
     // Additional interface text
     accessDenied: "অ্যাক্সেস নিষিদ্ধ",
@@ -121,7 +121,7 @@ export const translations = {
     updateBookingError: "বুকিং আপডেট করতে সমস্যা হয়েছে",
     bookingSuccessful: "বুকিং সফল হয়েছে",
     deleteConfirm: "আপনি কি এই বুকিংটি মুছে ফেলতে চান?",
-    deleteBookingPermission: "কেবল মালিক বুকিং মুছতে পারেন",
+    deleteBookingPermission: "কেবল মালিক বুকিং ���ুছতে পারেন",
     totalBookingsFound: "মোট বুকিং পাওয়া গেছে",
     noBookingsFound: "কোনো বুকিং পাওয়া যায়নি",
     bookingDetails: "বুকিং বিস্তারিত",
@@ -139,7 +139,7 @@ export const translations = {
     unknown: "অজানা",
     paidAmount: "পেইড পরিমাণ",
     filterAndRetry: "ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন",
-    successfulLogin: "সফলভাবে লগইন হয়েছে!",
+    successfulLogin: "সফলভাবে ��গইন হয়েছে!",
     fillFlightInfo: "নতুন ফ্লাইট ��ুকিং এর তথ্য পূরণ করুন",
     saving: "সেভ হচ্ছে...",
     exportSuccessful: "সফলভ��বে এক্সপোর্ট হয়েছে!",
@@ -153,7 +153,7 @@ export const translations = {
     completeData: "সম্পূর্ণ ডেটা",
     exportAllBookings: "সকল বুকিং ডেটা এক্সপোর্ট করুন",
     filteredData: "ফিল্টার করা ডেটা",
-    exportSpecificData: "নির্দিষ্ট সময়ের ডেটা এক্সপোর্ট করুন",
+    exportSpecificData: "নির্দিষ্ট সময়ে�� ডেটা এক্সপোর্ট করুন",
     filteredBookings: "ফিল্টার করা বুকিং",
     reportType: "রিপোর্ট ধরন",
     dailyReport: "এর দৈনিক রিপো��্ট",
@@ -201,6 +201,8 @@ export const translations = {
     salePriceRequired: "বিক্রয়মূল্য আবশ্যিক",
     salePriceError: "বিক্রয়মূল্য ক্রয়মূল্যের চেয়ে বেশি হতে হবে",
     paidAmountError: "পেইড পরিমাণ বিক্রয়মূল্যের চেয়ে বেশি হতে পারে না",
+    paidAmountRequired: "পেইড পরিমাণ আবশ্যিক",
+    paidAmountRange: "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে",
   },
   en: {
     // Common
@@ -367,6 +369,8 @@ export const translations = {
     salePriceRequired: "Sale price is required",
     salePriceError: "Sale price must be higher than purchase price",
     paidAmountError: "Paid amount cannot exceed sale price",
+    paidAmountRequired: "Paid amount is required",
+    paidAmountRange: "Paid amount must be greater than 0 and less than sale price",
   },
 };
 
