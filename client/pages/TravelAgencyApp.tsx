@@ -12,6 +12,7 @@ import EditBookingForm from "@/components/travel/EditBookingForm";
 import SettingsPage from "@/components/travel/SettingsPage";
 import BulkTicketPurchaseForm from "@/components/travel/BulkTicketPurchaseForm";
 import TicketInventoryDashboard from "@/components/travel/TicketInventoryDashboard";
+import TicketInventoryNotification from "@/components/travel/TicketInventoryNotification";
 import PlaceholderPage from "@/components/PlaceholderPage";
 import AppHeader from "@/components/layout/AppHeader";
 import {
