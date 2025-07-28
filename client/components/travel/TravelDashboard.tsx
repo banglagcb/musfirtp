@@ -250,7 +250,7 @@ export default function TravelDashboard({
 
   // Memoized currency formatter for better performance
   const formatCurrency = useMemo(() => {
-    const formatter = new Intl.NumberFormat("bn-BD", {
+    const formatter = new Intl.NumberFormat("en-BD", {
       style: "currency",
       currency: "BDT",
     });
