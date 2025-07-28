@@ -88,7 +88,7 @@ const dashboardCards: DashboardCard[] = [
   },
   {
     id: "ticket-inventory",
-    title: "ট��কেট ইনভেন্টরি",
+    title: "টিকেট ইনভেন্টরি",
     description: "টিকেট স্টক দেখুন ও ম্যানেজ করুন",
     icon: Package,
     color: "from-indigo-500 to-purple-500",
@@ -164,7 +164,7 @@ export default function TravelDashboard({
         title: language === "bn" ? "সার্চ ও ফিল্টার" : "Search & Filter",
         description:
           language === "bn"
-            ? "বুকিং খুঁজুন ��� ফিল্টার করুন"
+            ? "বুকিং খুঁজ��ন ও ফিল্টার করুন"
             : "Search and filter bookings",
         icon: Search,
         color: "from-neon-purple to-neon-pink",
@@ -197,7 +197,7 @@ export default function TravelDashboard({
         title: t("inventory"),
         description:
           language === "bn"
-            ? "টিকেট স্টক দ��খুন ও ম্যানেজ করুন"
+            ? "টিকেট স্টক দেখুন ও ম্যানেজ করুন"
             : "View and manage ticket inventory",
         icon: Package,
         color: "from-indigo-500 to-purple-500",
@@ -528,7 +528,7 @@ export default function TravelDashboard({
                   theme === "dark" ? "text-white/70" : "text-gray-600",
                 )}
               >
-                {language === "bn" ? "পেন্ডিং পেমেন্ট" : "Pending Payments"}
+                {t('pendingPayments')}
               </p>
               <p
                 className={cn(
