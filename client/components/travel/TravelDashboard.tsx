@@ -119,6 +119,9 @@ export default function TravelDashboard({
   const { isMobile, isTablet, theme } = useApp();
   const { t, language } = useTranslation();
 
+  // Get font class based on language
+  const fontClass = language === 'bn' ? 'font-bengali' : 'font-english';
+
   const [stats, setStats] = useState<DashboardStats>({
     totalBookings: 0,
     todayBookings: 0,
