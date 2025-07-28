@@ -20,6 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Booking, FilterOptions, AIRLINES, User } from "@shared/travel-types";
 import dataService from "@/services/dataService";
+import { useTranslation } from "@/contexts/AppContext";
 
 interface BookingsListProps {
   user: User;
@@ -435,7 +436,7 @@ export default function BookingsList({
           >
             <p className="text-white/70 text-lg">কোনো বুকিং পাওয়া যায়নি</p>
             <p className="text-white/50 text-sm mt-2">
-              ফিল����টার পরিবর্তন করে আবার চেষ্টা করুন
+              ফিল����টার পরিবর্তন করে আবার চ���ষ্টা করুন
             </p>
           </motion.div>
         )}
