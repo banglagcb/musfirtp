@@ -50,6 +50,7 @@ export const translations = {
     filter: "ফিল্টার",
     clear: "ক্লিয়ার",
     loading: "লোড হচ্ছে...",
+    refresh: "রিফ্রেশ",
 
     // Navigation
     dashboard: "ড্যাশবোর্ড",
@@ -121,6 +122,7 @@ export const translations = {
     filter: "Filter",
     clear: "Clear",
     loading: "Loading...",
+    refresh: "Refresh",
 
     // Navigation
     dashboard: "Dashboard",
