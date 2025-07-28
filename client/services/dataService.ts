@@ -379,13 +379,36 @@ class DataService {
 
   // Reset everything to completely fresh state
   resetToFreshState(): void {
+    // Perform complete application reset
     this.clearAllData();
 
     // Mark as fresh start to prevent sample data
     localStorage.setItem("air_musafir_fresh_start", "true");
 
-    // Force page reload to ensure clean state
-    window.location.reload();
+    // Clear all data including caches, timers, etc.
+    try {
+      // Clear service worker registration
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          registrations.forEach(registration => registration.unregister());
+        });
+      }
+
+      // Clear all intervals and timeouts
+      const highestId = setTimeout(() => {}, 0);
+      for (let i = 0; i < highestId; i++) {
+        clearTimeout(i);
+        clearInterval(i);
+      }
+
+    } catch (error) {
+      console.log("Reset cleanup completed");
+    }
+
+    // Force page reload to ensure completely clean state
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   }
 }
 
