@@ -93,7 +93,7 @@ export const translations = {
     pendingPayments: "��েন্ডিং পেমেন্ট",
 
     // Stats
-    totalBookings: "মোট বুকি���",
+    totalBookings: "মোট বুকিং",
     todayBookings: "আজকের বুকিং",
     totalRevenue: "মোট আয়",
     totalProfit: "মোট মুনাফা",
@@ -117,8 +117,8 @@ export const translations = {
     bookingID: "বুকিং আইডি",
     viewOnly: "কেবল দেখার জন্য",
     accessDeniedMsg: "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন",
-    redirectingToDashboard: "ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...",
-    updateBookingError: "বু���িং আপডেট করতে সমস্যা হয়েছে",
+    redirectingToDashboard: "ড্যাশবোর্ডে নিয়ে যাওয়া হ��্ছে...",
+    updateBookingError: "বুকিং আপডেট করতে সমস্যা হয়েছে",
     bookingSuccessful: "বুকিং সফল হয়েছে",
     deleteConfirm: "আপনি কি এই বুকিংটি মুছে ফেলতে চান?",
     deleteBookingPermission: "কেবল মালিক বুকিং মুছতে পারেন",
@@ -132,6 +132,15 @@ export const translations = {
     salesProfitReports: "বিক্রয় ও মুনাফার রিপোর্ট",
     downloadBookingData: "বুকিং ডেটা ডাউনলোড",
     csvExcelDownload: "CSV/Excel ফাইলে ডাউনলোড করুন",
+    customerInfo: "গ্রাহকের তথ্য",
+    paymentInfo: "পেমেন��ট তথ্য",
+    profitCalculation: "মুনাফা হিসাব",
+    totalProfit: "মোট মুনাফা",
+    status: "স্ট্যাটাস",
+    unknown: "অজানা",
+    paidAmount: "পেইড পরিমাণ",
+    filterAndRetry: "ফিল্টার পরিবর্তন করে আবার চেষ্টা করুন",
+    successfulLogin: "সফলভাবে লগইন হয়েছে!",
   },
   en: {
     // Common
@@ -229,6 +238,15 @@ export const translations = {
     salesProfitReports: "Sales and profit reports",
     downloadBookingData: "Download Booking Data",
     csvExcelDownload: "Download as CSV/Excel files",
+    customerInfo: "Customer Information",
+    paymentInfo: "Payment Information",
+    profitCalculation: "Profit Calculation",
+    totalProfit: "Total Profit",
+    status: "Status",
+    unknown: "Unknown",
+    paidAmount: "Paid Amount",
+    filterAndRetry: "Change filters and try again",
+    successfulLogin: "Login Successful!",
   },
 };
 
