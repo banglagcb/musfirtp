@@ -31,6 +31,7 @@ export default function NewBookingForm({
   onClose,
   onSuccess,
 }: NewBookingFormProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     customerName: "",
     mobile: "",
