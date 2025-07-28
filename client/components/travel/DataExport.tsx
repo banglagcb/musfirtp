@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Download, FileText, X, Calendar, Users, Filter } from "lucide-react";
 import { cn } from "@/lib/utils";
 import dataService from "@/services/dataService";
+import { useTranslation } from "@/contexts/AppContext";
 
 interface DataExportProps {
   onClose: () => void;
