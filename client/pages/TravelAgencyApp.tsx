@@ -14,7 +14,12 @@ import BulkTicketPurchaseForm from "@/components/travel/BulkTicketPurchaseForm";
 import TicketInventoryDashboard from "@/components/travel/TicketInventoryDashboard";
 import PlaceholderPage from "@/components/PlaceholderPage";
 import AppHeader from "@/components/layout/AppHeader";
-import { AppProvider, useApp, useTranslation, AppContext } from "@/contexts/AppContext";
+import {
+  AppProvider,
+  useApp,
+  useTranslation,
+  AppContext,
+} from "@/contexts/AppContext";
 import { cn } from "@/lib/utils";
 import { User, Booking } from "@shared/travel-types";
 import dataService from "@/services/dataService";
