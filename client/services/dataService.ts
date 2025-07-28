@@ -350,20 +350,22 @@ class DataService {
     localStorage.removeItem("air_musafir_theme");
     localStorage.removeItem("air_musafir_language");
 
-    // Clear any other app-related data
+    // Clear any other app-related data except fresh start marker
     const keysToRemove = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (
         key &&
-        (key.startsWith("travel_") || key.startsWith("air_musafir_"))
+        (key.startsWith("travel_") || key.startsWith("air_musafir_")) &&
+        key !== "air_musafir_fresh_start"
       ) {
         keysToRemove.push(key);
       }
     }
     keysToRemove.forEach((key) => localStorage.removeItem(key));
 
-    // Reinitialize with clean data (no samples)
+    // Mark as fresh start and reinitialize with clean data (no samples)
+    localStorage.setItem("air_musafir_fresh_start", "true");
     this.initializeDefaultData(false);
   }
 
