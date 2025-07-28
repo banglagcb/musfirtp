@@ -156,7 +156,7 @@ export default function TravelDashboard({
         title: t("bookings"),
         description:
           language === "bn"
-            ? "সব বুকিং দেখুন ও ম্যানেজ করুন"
+            ? "সব বুকিং ��েখুন ও ম্যানেজ করুন"
             : "View and manage all bookings",
         icon: FileText,
         color: "from-neon-blue to-neon-purple",
@@ -274,6 +274,7 @@ export default function TravelDashboard({
         theme === "dark"
           ? "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
           : "bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50",
+        fontClass
       )}
     >
       {/* Header */}
