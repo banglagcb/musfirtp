@@ -55,11 +55,11 @@ export default function NewBookingForm({
     const newErrors: Record<string, string> = {};
 
     if (!formData.customerName.trim()) {
-      newErrors.customerName = "গ্রাহকের নাম আবশ্যিক";
+      newErrors.customerName = t("customerNameRequired");
     }
 
     if (!formData.mobile.trim()) {
-      newErrors.mobile = "মোবাইল নম্বর আবশ্যিক";
+      newErrors.mobile = t("mobileRequired");
     } else if (!/^01[3-9]\d{8}$/.test(formData.mobile)) {
       newErrors.mobile = "সঠিক মোবাইল নম্বর লিখুন";
     }
@@ -69,29 +69,29 @@ export default function NewBookingForm({
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "ইমেইল আবশ্যিক";
+      newErrors.email = t("emailRequired");
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "সঠিক ই���েইল ঠিকানা লিখুন";
+      newErrors.email = t("emailInvalid");
     }
 
     if (!formData.flightDate) {
-      newErrors.flightDate = "ফ্লাইট তারিখ আবশ্যিক";
+      newErrors.flightDate = t("flightDateRequired");
     }
 
     if (!formData.route) {
-      newErrors.route = "রুট নির্বাচন করু���";
+      newErrors.route = t("routeRequired");
     }
 
     if (!formData.airline) {
-      newErrors.airline = "এয়ারলা��ন নির্বাচন ক���ুন";
+      newErrors.airline = t("airlineRequired");
     }
 
     if (!formData.purchasePrice || isNaN(Number(formData.purchasePrice))) {
-      newErrors.purchasePrice = "ক্রয়মূল্য আবশ্যিক";
+      newErrors.purchasePrice = t("purchasePriceRequired");
     }
 
     if (!formData.salePrice || isNaN(Number(formData.salePrice))) {
-      newErrors.salePrice = "বিক্রয়মূল্য আবশ্যিক";
+      newErrors.salePrice = t("salePriceRequired");
     }
 
     const purchasePrice = Number(formData.purchasePrice);
@@ -642,7 +642,7 @@ export default function NewBookingForm({
                 }
               >
                 <label className="block text-white/70 text-sm mb-2">
-                  নোট (ঐ��্ছিক)
+                  নোট (�����্ছিক)
                 </label>
                 <textarea
                   value={formData.notes}
