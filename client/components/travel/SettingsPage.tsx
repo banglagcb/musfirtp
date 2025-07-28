@@ -26,6 +26,7 @@ interface SettingsPageProps {
 }
 
 export default function SettingsPage({ user, onClose }: SettingsPageProps) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'users' | 'airlines' | 'routes' | 'data'>('users');
   const [newAirline, setNewAirline] = useState("");
   const [newRoute, setNewRoute] = useState("");
@@ -69,7 +70,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
     if (window.confirm('আপনি কি নিশ্চিত যে সব ডেটা মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।')) {
       try {
         dataService.clearAllData();
-        showMessage('সব ডেটা সফলভাবে মুছে ফেলা হয়েছে', 'success');
+        showMessage('সব ডেটা সফলভাবে মুছে ফেলা হয���েছে', 'success');
       } catch (error) {
         showMessage('ডেটা মুছতে সমস্যা হয়েছে', 'error');
       }
@@ -264,7 +265,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
               <div>
                 <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2">
                   <MapPin className="w-5 h-5" />
-                  <span>রুট ম���যানেজমেন্ট</span>
+                  <span>রুট ম্যানেজমেন্ট</span>
                 </h3>
 
                 <div className="space-y-6">
