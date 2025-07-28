@@ -41,7 +41,7 @@ class TicketNotificationService {
         country: "UAE (Dubai)",
         countryBn: "সংযুক্ত আরব আমিরাত (দুবাই)",
         destination: "Dubai",
-        destinationBn: "দুবাই", 
+        destinationBn: "দুবাই",
         availableTickets: Math.floor(Math.random() * 50) + 10,
         totalTickets: 60,
         lastUpdated: new Date().toISOString(),
@@ -112,7 +112,7 @@ class TicketNotificationService {
       {
         country: "India (Kolkata)",
         countryBn: "ভারত (কলকাতা)",
-        destination: "Kolkata", 
+        destination: "Kolkata",
         destinationBn: "কলকাতা",
         availableTickets: Math.floor(Math.random() * 42) + 13,
         totalTickets: 55,
@@ -126,43 +126,46 @@ class TicketNotificationService {
         availableTickets: Math.floor(Math.random() * 15) + 3,
         totalTickets: 18,
         lastUpdated: new Date().toISOString(),
-      }
+      },
     ];
   }
 
   private updateTicketData() {
     // Simulate real-time ticket updates
-    this.countries.forEach(country => {
+    this.countries.forEach((country) => {
       // Random small changes to simulate booking activity
       const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
-      country.availableTickets = Math.max(0, Math.min(country.totalTickets, country.availableTickets + change));
+      country.availableTickets = Math.max(
+        0,
+        Math.min(country.totalTickets, country.availableTickets + change),
+      );
       country.lastUpdated = new Date().toISOString();
     });
   }
 
   private createNotification(): NotificationData {
     this.updateTicketData();
-    
+
     const country = this.countries[this.currentIndex];
     const notification: NotificationData = {
       id: `notification-${Date.now()}`,
       country,
       timestamp: Date.now(),
-      isVisible: true
+      isVisible: true,
     };
 
     // Move to next country for next notification
     this.currentIndex = (this.currentIndex + 1) % this.countries.length;
-    
+
     return notification;
   }
 
   private showNotification() {
     const notification = this.createNotification();
     this.currentNotification = notification;
-    
+
     // Notify all subscribers
-    this.subscribers.forEach(callback => callback(notification));
+    this.subscribers.forEach((callback) => callback(notification));
 
     // Hide after 4 seconds
     this.hideTimeout = setTimeout(() => {
@@ -173,7 +176,7 @@ class TicketNotificationService {
   private hideNotification() {
     if (this.currentNotification) {
       this.currentNotification.isVisible = false;
-      this.subscribers.forEach(callback => callback(null));
+      this.subscribers.forEach((callback) => callback(null));
       this.currentNotification = null;
     }
 
@@ -211,7 +214,7 @@ class TicketNotificationService {
 
   subscribe(callback: (notification: NotificationData | null) => void) {
     this.subscribers.push(callback);
-    
+
     // Return unsubscribe function
     return () => {
       const index = this.subscribers.indexOf(callback);
@@ -236,7 +239,9 @@ class TicketNotificationService {
     this.updateTicketData();
     if (this.currentNotification) {
       this.currentNotification.country = this.countries[this.currentIndex];
-      this.subscribers.forEach(callback => callback(this.currentNotification));
+      this.subscribers.forEach((callback) =>
+        callback(this.currentNotification),
+      );
     }
   }
 }
