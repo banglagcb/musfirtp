@@ -161,10 +161,10 @@ export default function TravelDashboard({
       },
       {
         id: "search-filter",
-        title: language === "bn" ? "সার্চ ও ফিল্টার" : "Search & Filter",
+        title: t("searchAndFilter"),
         description:
           language === "bn"
-            ? "বুকিং খুঁজ��ন ও ফিল্টার করুন"
+            ? "ব��কিং খুঁজ��ন ও ফিল্টার করুন"
             : "Search and filter bookings",
         icon: Search,
         color: "from-neon-purple to-neon-pink",
@@ -197,7 +197,7 @@ export default function TravelDashboard({
         title: t("inventory"),
         description:
           language === "bn"
-            ? "টিকেট স্টক দেখুন ও ম্যানেজ কর��ন"
+            ? "টিকেট স্টক দেখুন ও ম্যানেজ করুন"
             : "View and manage ticket inventory",
         icon: Package,
         color: "from-indigo-500 to-purple-500",
