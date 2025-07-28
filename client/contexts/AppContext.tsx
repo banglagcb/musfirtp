@@ -50,7 +50,7 @@ export const translations = {
     filter: "ফিল্টার",
     clear: "ক্লিয়ার",
     loading: "লোড হচ্ছে...",
-    refresh: "রিফ্রেশ",
+    refresh: "র���ফ্রেশ",
 
     // Navigation
     dashboard: "ড্যাশবোর্ড",
@@ -81,7 +81,7 @@ export const translations = {
     route: "রুট",
     airline: "এয়ারলাইন",
     purchasePrice: "ক্রয়মূল্য",
-    salePrice: "বিক্রয়মূল্য",
+    salePrice: "ব��ক্রয়মূল্য",
     paymentStatus: "পেমেন্ট স্ট্যাটাস",
 
     // Status
@@ -380,6 +380,13 @@ export const translations = {
     paidAmountRequired: "Paid amount is required",
     paidAmountRange:
       "Paid amount must be greater than 0 and less than sale price",
+
+    // Ticket Notifications
+    ticketStockUpdate: "Ticket Stock Update",
+    availableTickets: "Available Tickets",
+    lowStockWarning: "Low Stock! Book Quickly",
+    updated: "Updated: ",
+    dhakaTo: "Dhaka to ",
   },
 };
 
