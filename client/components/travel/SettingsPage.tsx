@@ -67,12 +67,34 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
   };
 
   const handleDataClear = () => {
-    if (window.confirm('আপনি কি নিশ্চিত যে সব ডেটা মুছে ফেলতে চান? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।')) {
-      try {
-        dataService.clearAllData();
-        showMessage('সব ডেটা সফলভাবে মুছে ফেলা হয়েছে', 'success');
-      } catch (error) {
-        showMessage('ডেটা মুছতে সমস্যা হয়েছে', 'error');
+    const confirmed = window.confirm(
+      'আপনি কি নিশ্চিত যে সমস্ত ডেটা মুছে ফেলতে চান?\n\n' +
+      'এটি মুছে ফেলবে:\n' +
+      '• সব বুকিং ও কাস্টমার তথ্য\n' +
+      '• সব ব্যালেন্স, প্রফিট ও রেভিনিউ\n' +
+      '• সব হিস্টরি ও রেকর্ড\n' +
+      '• সব সেটিংস ও কনফিগারেশন\n\n' +
+      'এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না!'
+    );
+
+    if (confirmed) {
+      const doubleConfirm = window.confirm(
+        'শেষ নিশ্চিতকরণ: আপনি কি সত্যিই সব কিছু রিসেট করতে চান?\n\n' +
+        'এটি সম্পূর্ণ নতুন অবস্থায় ফিরিয়ে নিয়ে যাবে।'
+      );
+
+      if (doubleConfirm) {
+        try {
+          showMessage('সব ডেটা মুছে ফেলা হচ্ছে...', 'success');
+
+          // Use the enhanced reset function
+          setTimeout(() => {
+            dataService.resetToFreshState();
+          }, 1000);
+
+        } catch (error) {
+          showMessage('ডেটা মুছতে সমস্যা হয়েছে', 'error');
+        }
       }
     }
   };
@@ -265,7 +287,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
               <div>
                 <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2">
                   <MapPin className="w-5 h-5" />
-                  <span>রুট ম্যানেজমেন্ট</span>
+                  <span>রুট ম্যা���েজমেন্ট</span>
                 </h3>
 
                 <div className="space-y-6">
