@@ -333,11 +333,37 @@ class DataService {
     return csvContent;
   }
 
-  // Clear all data (for testing purposes)
+  // Clear all data (for fresh start)
   clearAllData(): void {
+    // Clear all travel agency data
     localStorage.removeItem(this.BOOKINGS_KEY);
     localStorage.removeItem(this.USERS_KEY);
+
+    // Clear any cached data or settings
+    localStorage.removeItem("air_musafir_user");
+    localStorage.removeItem("air_musafir_theme");
+    localStorage.removeItem("air_musafir_language");
+
+    // Clear any other app-related data
+    const keysToRemove = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && (key.startsWith("travel_") || key.startsWith("air_musafir_"))) {
+        keysToRemove.push(key);
+      }
+    }
+    keysToRemove.forEach(key => localStorage.removeItem(key));
+
+    // Reinitialize with fresh default data
     this.initializeDefaultData();
+  }
+
+  // Reset everything to completely fresh state
+  resetToFreshState(): void {
+    this.clearAllData();
+
+    // Force page reload to ensure clean state
+    window.location.reload();
   }
 }
 
