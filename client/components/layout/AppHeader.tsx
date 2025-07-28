@@ -206,7 +206,7 @@ export default function AppHeader({
                   className="p-3 bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-lg border border-white/20 dark:border-gray-700/30 text-gray-700 dark:text-gray-300 hover:bg-white/20 dark:hover:bg-gray-700/50 transition-colors flex items-center justify-center space-x-2"
                 >
                   <RefreshCw className="w-5 h-5" />
-                  <span className="text-sm">Refresh</span>
+                  <span className="text-sm">{t("refresh")}</span>
                 </motion.button>
 
                 <motion.button
