@@ -128,7 +128,7 @@ export default function TravelLoginForm({
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full max-w-md mx-auto relative"
+      className={cn("w-full max-w-md mx-auto relative", fontClass)}
     >
       {/* Theme and Language Controls */}
       <div className="absolute -top-4 right-0 flex items-center space-x-2">
