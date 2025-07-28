@@ -43,7 +43,7 @@ export const translations = {
     save: "সেভ করুন",
     delete: "ডিলিট",
     edit: "এডিট",
-    view: "দেখুন",
+    view: "���েখুন",
     print: "প্রিন্ট করু���",
     export: "এক্���প��র্ট",
     search: "সার্চ করুন",
@@ -123,7 +123,7 @@ export const translations = {
     deleteConfirm: "আপনি কি এই বুকিংটি মুছে ফেলতে চান?",
     deleteBookingPermission: "কেবল মালিক বুকিং ���ুছতে পারেন",
     totalBookingsFound: "মোট বুকিং পাওয়া গেছে",
-    noBookingsFound: "কোনো বুকিং পাওয়া যায়নি",
+    noBookingsFound: "কোনো বুকি�� পাওয়া যায়নি",
     bookingDetails: "বুকিং বিস্তারিত",
     saveBooking: "বুকিং সেভ করুন",
     addNewBooking: "নতুন বুকিং যোগ করুন",
@@ -155,7 +155,7 @@ export const translations = {
     filteredData: "ফিল্টার করা ডেটা",
     exportSpecificData: "নির্দিষ্ট সময়ে�� ডেটা এক্সপোর্ট করুন",
     filteredBookings: "ফিল্টার করা বুকিং",
-    reportType: "রিপোর্ট ধরন",
+    reportType: "রিপো���্ট ধরন",
     dailyReport: "এর দৈনিক রিপো��্ট",
     monthlyReport: "এর মাসিক রিপোর্ট",
     selectDateRange: "তারিখের রেঞ্জ নির্বাচন করুন",
@@ -204,6 +204,13 @@ export const translations = {
     paidAmountRequired: "পেইড পরিমাণ আবশ্যিক",
     paidAmountRange:
       "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে",
+
+    // Ticket Notifications
+    ticketStockUpdate: "টিকেট স্টক আপডেট",
+    availableTickets: "উপলব্ধ টিকেট",
+    lowStockWarning: "স্টক কম! তাড়াতাড়ি বুক করুন",
+    updated: "আপডেট: ",
+    dhakaTo: "ঢাকা থেকে ",
   },
   en: {
     // Common
