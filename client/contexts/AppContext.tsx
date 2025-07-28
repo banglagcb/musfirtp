@@ -93,7 +93,7 @@ export const translations = {
     pendingPayments: "��েন্ডিং পেমেন্ট",
 
     // Stats
-    totalBookings: "মোট বুকিং",
+    totalBookings: "মোট বু��িং",
     todayBookings: "আজকের বুকিং",
     totalRevenue: "মোট আয়",
     totalProfit: "মোট মুনাফা",
@@ -118,7 +118,7 @@ export const translations = {
     viewOnly: "কেবল দেখার জন্য",
     accessDeniedMsg: "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন",
     redirectingToDashboard: "ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...",
-    updateBookingError: "বুকিং আপডেট করতে সমস্যা হয়েছে",
+    updateBookingError: "��ুকিং আপডেট করতে সমস্যা হয়েছে",
     bookingSuccessful: "বুকিং সফল হয়েছে",
     deleteConfirm: "আপনি কি এই বুকিংটি মুছে ফেলতে চান?",
     deleteBookingPermission: "কেবল মালিক বুকিং মুছতে পারেন",
@@ -129,7 +129,7 @@ export const translations = {
     addNewBooking: "নতুন বুকিং যোগ করুন",
     systemConfig: "সিস্টেম কনফিগারেশন",
     reportsAnalysis: "রিপোর্ট ও বিশ্লেষণ",
-    salesProfitReports: "বিক্রয় ও মুনাফার র���পোর্ট",
+    salesProfitReports: "বিক্রয় ও মুনাফার রিপোর্ট",
     downloadBookingData: "বুকিং ডেটা ডাউনলোড",
     csvExcelDownload: "CSV/Excel ফাইলে ডাউনলোড করুন",
     customerInfo: "গ্রাহকের তথ্য",
@@ -148,7 +148,7 @@ export const translations = {
     exporting: "এক্সপোর্ট হচ্ছে...",
     exportInfo: "এক্সপোর্ট সম্পর্কে তথ্য",
     exportNote:
-      "এক্সপোর��ট করা ফাইল CSV ফরম্যাটে হবে যা Microsoft Excel, Google Sheets এবং অন্যান্য স্প্রেডশিট অ্যাপ্লিকেশনে খোলা যাবে।",
+      "এক্সপোর্ট করা ফাইল CSV ফরম্যাটে হবে যা Microsoft Excel, Google Sheets এবং অন্যান্য স্প্রেডশিট অ্যাপ্লিকেশনে খোলা যাবে।",
     systemManagement: "সিস্টেম কনফিগারেশন ও ম্যানেজমেন্ট",
     totalBookingsStats: "মোট বুকিং",
     completeData: "সম্পূর্ণ ডেটা",
@@ -161,6 +161,12 @@ export const translations = {
     monthlyReport: "এর মাসিক রিপোর্ট",
     selectDateRange: "তারিখের রেঞ্জ নির্বাচন করুন",
     noBookingsInRange: "নির্বাচিত সময়ের মধ্যে কোনো বুকিং পাওয়া যায়নি",
+    username: "ইউজারনেম",
+    password: "পাসওয়ার্ড",
+    demoLoginInfo: "ডেমো লগইন তথ্য:",
+    ownerAccount: "মালিক:",
+    managerAccount: "ম্যানেজার:",
+    onlyOwnerUserManagement: "শুধুমাত্র মালিক ইউজার ম্যানেজমেন্ট করতে পারেন।",
   },
   en: {
     // Common
@@ -287,6 +293,12 @@ export const translations = {
     monthlyReport: "Monthly Report",
     selectDateRange: "Select date range",
     noBookingsInRange: "No bookings found in selected time period",
+    username: "Username",
+    password: "Password",
+    demoLoginInfo: "Demo Login Info:",
+    ownerAccount: "Owner:",
+    managerAccount: "Manager:",
+    onlyOwnerUserManagement: "Only owner can manage users.",
   },
 };
 
