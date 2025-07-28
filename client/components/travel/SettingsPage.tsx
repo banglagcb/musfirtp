@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { User as UserType, AIRLINES, ROUTES } from "@shared/travel-types";
 import dataService from "@/services/dataService";
+import { useTranslation } from "@/contexts/AppContext";
 
 interface SettingsPageProps {
   user: UserType;
@@ -263,7 +264,7 @@ export default function SettingsPage({ user, onClose }: SettingsPageProps) {
               <div>
                 <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2">
                   <MapPin className="w-5 h-5" />
-                  <span>রুট ম্যানেজমেন্ট</span>
+                  <span>রুট ম���যানেজমেন্ট</span>
                 </h3>
 
                 <div className="space-y-6">
