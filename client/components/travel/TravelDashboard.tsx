@@ -656,7 +656,7 @@ export default function TravelDashboard({
             theme === "dark" ? "text-white" : "text-gray-800",
           )}
         >
-          {language === "bn" ? "দ্���ুত অ্যাকশন" : "Quick Actions"}
+          {t('quickActions')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <motion.button
