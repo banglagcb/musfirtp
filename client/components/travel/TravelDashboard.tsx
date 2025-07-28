@@ -197,7 +197,7 @@ export default function TravelDashboard({
         title: t("inventory"),
         description:
           language === "bn"
-            ? "টিকেট স্টক দেখুন ও ম্যানেজ করুন"
+            ? "টিকেট স্টক দেখুন ও ম্যানেজ কর��ন"
             : "View and manage ticket inventory",
         icon: Package,
         color: "from-indigo-500 to-purple-500",
@@ -686,7 +686,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-purple to-neon-pink rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <Search className="w-5 h-5" />
-            <span>{language === "bn" ? "সার্চ করুন" : "Search"}</span>
+            <span>{t('searchAction')}</span>
           </motion.button>
 
           <motion.button
