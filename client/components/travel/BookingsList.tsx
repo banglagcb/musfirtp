@@ -82,10 +82,10 @@ export default function BookingsList({
   const handleDelete = async (id: string) => {
     // Only owners can delete bookings
     if (user.role !== "owner") {
-      alert("কেবল মালিক বুকিং মুছতে পারেন");
+      alert(t("deleteBookingPermission"));
       return;
     }
-    if (window.confirm("আপনি কি এই বুকিংটি মুছে ফেলতে চান?")) {
+    if (window.confirm(t("deleteConfirm"))) {
       const success = dataService.deleteBooking(id);
       if (success) {
         loadBookings();
@@ -109,18 +109,18 @@ export default function BookingsList({
   const getPaymentStatusText = (status: string) => {
     switch (status) {
       case "paid":
-        return "পেইড";
+        return t("paid");
       case "partial":
-        return "আংশিক";
+        return t("partial");
       case "pending":
-        return "পেন্ডিং";
+        return t("pending");
       default:
-        return "অজানা";
+        return language === "bn" ? "অজানা" : "Unknown";
     }
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("bn-BD", {
+    return new Intl.NumberFormat("en-BD", {
       style: "currency",
       currency: "BDT",
     }).format(amount);
@@ -128,7 +128,7 @@ export default function BookingsList({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("bn-BD");
+    return date.toLocaleDateString(language === "bn" ? "bn-BD" : "en-BD");
   };
 
   return (
@@ -141,9 +141,9 @@ export default function BookingsList({
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">বুকিং লিস্ট</h1>
+            <h1 className="text-3xl font-bold text-white mb-2">{t("bookings")}</h1>
             <p className="text-white/70">
-              মোট {filteredBookings.length} টি বুকিং প���ওয়া গেছে
+              {t("totalBookingsFound")}: {filteredBookings.length}
             </p>
           </div>
           <motion.button
@@ -260,7 +260,7 @@ export default function BookingsList({
                       সব
                     </option>
                     <option value="paid" className="bg-slate-800">
-                      প���ইড
+                      পেইড
                     </option>
                     <option value="partial" className="bg-slate-800">
                       আংশিক
