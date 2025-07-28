@@ -184,6 +184,29 @@
     line-height: 1.6;
   }
 
+  /* Apply Bengali font to all text elements when Bengali is selected */
+  .font-bengali h1, .font-bengali h2, .font-bengali h3,
+  .font-bengali h4, .font-bengali h5, .font-bengali h6 {
+    font-family: 'Noto Serif Bengali', serif !important;
+    font-weight: 600;
+  }
+
+  /* Better spacing for Bengali text in UI components */
+  .font-bengali .card-title,
+  .font-bengali .menu-item,
+  .font-bengali .button-text,
+  .font-bengali .nav-link {
+    letter-spacing: 0.02em;
+  }
+
+  /* Improve readability for Bengali text */
+  .font-bengali {
+    font-variant-ligatures: common-ligatures;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   /* Performance optimizations */
   * {
     box-sizing: border-box;
