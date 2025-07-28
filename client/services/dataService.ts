@@ -32,14 +32,14 @@ class DataService {
           username: "admin",
           password: "admin123",
           role: "owner",
-          name: "মালিক",
+          name: "Admin",
         },
         {
           id: "2",
           username: "manager",
           password: "manager123",
           role: "manager",
-          name: "ম্যানেজার",
+          name: "Manager",
         },
       ];
       localStorage.setItem(this.USERS_KEY, JSON.stringify(defaultUsers));
@@ -321,7 +321,7 @@ class DataService {
           booking.paymentStatus === "paid"
             ? "পেইড"
             : booking.paymentStatus === "pending"
-              ? "পেন্ডিং"
+              ? "পেন��ডিং"
               : "আংশিক",
           booking.paidAmount,
           booking.bookingDate,
