@@ -77,7 +77,7 @@ export default function TravelLoginForm({
       }, 1000);
     } else {
       setIsLoading(false);
-      setError(t('invalidCredentials'));
+      setError(t("invalidCredentials"));
     }
   };
 
@@ -140,7 +140,7 @@ export default function TravelLoginForm({
               : "bg-white/20 border-gray-300/50 text-gray-700 hover:bg-white/40",
           )}
           title={
-            language === "bn" ? t('switchToEnglish') : t('switchToBengali')
+            language === "bn" ? t("switchToEnglish") : t("switchToBengali")
           }
         >
           <Globe className="w-4 h-4" />

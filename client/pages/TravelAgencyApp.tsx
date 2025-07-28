@@ -61,7 +61,7 @@ function TravelAgencyAppInner() {
           setUser(validUser);
           setAppState("dashboard");
           setBreadcrumbs([
-            { label: t('dashboard'), path: "/dashboard", isActive: true },
+            { label: t("dashboard"), path: "/dashboard", isActive: true },
           ]);
         } else {
           localStorage.removeItem("air_musafir_user");
@@ -94,7 +94,7 @@ function TravelAgencyAppInner() {
     setUser(loggedInUser);
     setAppState("dashboard");
     setBreadcrumbs([
-      { label: t('dashboard'), path: "/dashboard", isActive: true },
+      { label: t("dashboard"), path: "/dashboard", isActive: true },
     ]);
   }, []);
 
@@ -310,7 +310,7 @@ function TravelAgencyAppInner() {
   const handleBreadcrumbClick = (path: string) => {
     if (path === "/" || path === "/dashboard") {
       setBreadcrumbs([
-        { label: t('dashboard'), path: "/dashboard", isActive: true },
+        { label: t("dashboard"), path: "/dashboard", isActive: true },
       ]);
       setOpenModals([]);
       refreshData();

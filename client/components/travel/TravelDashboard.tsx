@@ -466,7 +466,7 @@ export default function TravelDashboard({
                   theme === "dark" ? "text-white/70" : "text-gray-600",
                 )}
               >
-                {t('paidBookings')}
+                {t("paidBookings")}
               </p>
               <p
                 className={cn(
@@ -497,7 +497,7 @@ export default function TravelDashboard({
                   theme === "dark" ? "text-white/70" : "text-gray-600",
                 )}
               >
-                {t('partialPayments')}
+                {t("partialPayments")}
               </p>
               <p
                 className={cn(
@@ -528,7 +528,7 @@ export default function TravelDashboard({
                   theme === "dark" ? "text-white/70" : "text-gray-600",
                 )}
               >
-                {t('pendingPayments')}
+                {t("pendingPayments")}
               </p>
               <p
                 className={cn(
@@ -656,7 +656,7 @@ export default function TravelDashboard({
             theme === "dark" ? "text-white" : "text-gray-800",
           )}
         >
-          {t('quickActions')}
+          {t("quickActions")}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <motion.button
@@ -676,7 +676,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <FileText className="w-5 h-5" />
-            <span>{t('allBookings')}</span>
+            <span>{t("allBookings")}</span>
           </motion.button>
 
           <motion.button
@@ -686,7 +686,7 @@ export default function TravelDashboard({
             className="p-4 bg-gradient-to-r from-neon-purple to-neon-pink rounded-xl text-white font-medium shadow-glow flex items-center space-x-2"
           >
             <Search className="w-5 h-5" />
-            <span>{t('searchAction')}</span>
+            <span>{t("searchAction")}</span>
           </motion.button>
 
           <motion.button
