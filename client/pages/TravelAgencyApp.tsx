@@ -61,7 +61,7 @@ function TravelAgencyAppInner() {
           setUser(validUser);
           setAppState("dashboard");
           setBreadcrumbs([
-            { label: "ড্যাশবোর্ড", path: "/dashboard", isActive: true },
+            { label: t('dashboard'), path: "/dashboard", isActive: true },
           ]);
         } else {
           localStorage.removeItem("air_musafir_user");
