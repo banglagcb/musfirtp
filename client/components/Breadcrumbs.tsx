@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ChevronRight, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useApp } from "@/contexts/AppContext";
 
 export interface BreadcrumbItem {
   label: string;
