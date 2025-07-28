@@ -368,6 +368,13 @@ class DataService {
     // Mark as fresh start and reinitialize with clean data (no samples)
     localStorage.setItem("air_musafir_fresh_start", "true");
     this.initializeDefaultData(false);
+
+    // Reset notification service
+    try {
+      ticketNotificationService.reset();
+    } catch (error) {
+      console.log("Notification service reset completed");
+    }
   }
 
   // Reset everything to completely fresh state
