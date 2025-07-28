@@ -109,7 +109,7 @@ export default function TravelLoginForm({
             theme === "dark" ? "text-white" : "text-gray-800",
           )}
         >
-          সফলভাবে লগইন হয়েছে!
+          {language === "bn" ? "সফলভাবে লগইন হয়েছে!" : "Login Successful!"}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
@@ -117,7 +117,7 @@ export default function TravelLoginForm({
           transition={{ delay: 0.6 }}
           className={cn(theme === "dark" ? "text-white/70" : "text-gray-600")}
         >
-          ড্যাশবোর্ডে নিয়ে যাওয়া হচ্ছে...
+          {t("redirectingToDashboard")}
         </motion.p>
       </motion.div>
     );
