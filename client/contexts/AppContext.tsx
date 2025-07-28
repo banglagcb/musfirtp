@@ -58,7 +58,8 @@ export const translations = {
     inventory: "টিকেট ইনভেন্টরি",
     bulkPurchase: "বাল্ক টিকেট ক্রয়",
     reports: "রিপোর্ট",
-    settings: "��েটিংস",
+    settings: "সেটিংস",
+    quickActions: "দ্রুত অ্যাকশন",
 
     // User
     owner: "মালিক",
@@ -84,7 +85,7 @@ export const translations = {
     partial: "আংশিক",
     paidBookings: "পেইড বুকিং",
     partialPayments: "আংশিক পেমেন্ট",
-    pendingPayments: "পেন্ডিং পেমেন্ট",
+    pendingPayments: "��েন্ডিং পেমেন্ট",
 
     // Stats
     totalBookings: "মোট বুকিং",
