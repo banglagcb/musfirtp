@@ -109,7 +109,7 @@ export default function TravelLoginForm({
             theme === "dark" ? "text-white" : "text-gray-800",
           )}
         >
-          {language === "bn" ? "সফলভাবে লগইন হয়েছে!" : "Login Successful!"}
+          {t("successfulLogin")}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
