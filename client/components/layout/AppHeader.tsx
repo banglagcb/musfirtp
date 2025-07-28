@@ -34,6 +34,9 @@ export default function AppHeader({
   const { t } = useTranslation();
   const { showMonitor, PerformanceDashboard } = usePerformanceMonitor();
 
+  // Get font class based on language
+  const fontClass = language === 'bn' ? 'font-bengali' : 'font-english';
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
