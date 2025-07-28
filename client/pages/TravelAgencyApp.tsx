@@ -32,8 +32,12 @@ interface OpenModal {
 }
 
 function TravelAgencyAppInner() {
-  const { isMobile, isTablet, theme, setIsLoading } = useApp();
-  const { t } = useTranslation();
+  // Get app context and translation
+  const appContext = useApp();
+  const translationContext = useTranslation();
+
+  const { isMobile, isTablet, theme, setIsLoading } = appContext;
+  const { t } = translationContext;
 
   const [appState, setAppState] = useState<AppState>("login");
   const [user, setUser] = useState<User | null>(null);
