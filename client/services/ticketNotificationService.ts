@@ -244,6 +244,15 @@ class TicketNotificationService {
       );
     }
   }
+
+  // Reset to fresh state
+  reset() {
+    this.stop();
+    this.currentIndex = 0;
+    this.currentNotification = null;
+    this.subscribers = [];
+    this.initializeCountryData();
+  }
 }
 
 export default TicketNotificationService.getInstance();
