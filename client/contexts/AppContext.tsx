@@ -54,7 +54,7 @@ export const translations = {
     // Navigation
     dashboard: "ড্যাশবোর্ড",
     bookings: "বুকিং লিস্ট",
-    newBooking: "নতুন ���ুকিং",
+    newBooking: "নতুন �����ুকিং",
     inventory: "টিকেট ইনভেন্টরি",
     bulkPurchase: "বাল্ক টিকেট ক্রয়",
     reports: "রিপোর্ট",
@@ -86,7 +86,7 @@ export const translations = {
     pending: "পেন্ডিং",
     partial: "আংশিক",
     paidBookings: "পেইড বুকিং",
-    partialPayments: "আংশিক পেমেন্ট",
+    partialPayments: "আংশিক ���েমেন্ট",
     pendingPayments: "��েন্ডিং পেমেন্ট",
 
     // Stats
@@ -169,6 +169,8 @@ export const translations = {
     language: "Language",
     english: "English",
     bengali: "বাংলা",
+    switchToEnglish: "Switch to English",
+    switchToBengali: "বাংলায় পরিবর্তন করুন",
   },
 };
 
