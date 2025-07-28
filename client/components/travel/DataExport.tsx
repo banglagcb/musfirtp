@@ -63,7 +63,7 @@ export default function DataExport({ onClose }: DataExportProps) {
       });
 
       if (filteredBookings.length === 0) {
-        alert('নির্বাচিত সময়ের মধ্যে কোনো বুকিং পাওয়া যায়নি');
+        alert(t('noBookingsInRange'));
         setIsExporting(false);
         return;
       }
@@ -79,7 +79,7 @@ export default function DataExport({ onClose }: DataExportProps) {
         'এয়ারলাইন',
         'ক্রয়মূল্য',
         'বিক্রয়মূল্য',
-        'পেমেন্ট স্ট্যাট��স',
+        'পেমেন্ট স্ট্যাটাস',
         'পেইড পরিমাণ',
         'বুকিং তারিখ',
         'নোট'
@@ -204,7 +204,7 @@ export default function DataExport({ onClose }: DataExportProps) {
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                     className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
                   />
-                  <span>এক্সপোর্ট হচ্ছে...</span>
+                  <span>এক্সপোর্ট হচ্ছ��...</span>
                 </>
               ) : (
                 <>
@@ -236,7 +236,7 @@ export default function DataExport({ onClose }: DataExportProps) {
                 <Filter className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-white">ফিল্টার করা ডেটা</h3>
+                <h3 className="text-xl font-semibold text-white">ফিল্��ার করা ডেটা</h3>
                 <p className="text-white/70 text-sm">নির্��িষ্ট সময়ের ডেটা এক্সপোর্ট করুন</p>
               </div>
             </div>
@@ -340,7 +340,7 @@ export default function DataExport({ onClose }: DataExportProps) {
               <ul className="space-y-2 text-white/70">
                 <li>• ক্রয়মূল্য</li>
                 <li>• বিক্রয়মূল্য</li>
-                <li>�� পেমেন্ট স্ট্যাটাস</li>
+                <li>• পেমেন্ট স্ট্যাটাস</li>
                 <li>• পেইড পরিমাণ</li>
                 <li>• বুকিং তারিখ</li>
                 <li>• অতিরিক্ত নোট</li>
