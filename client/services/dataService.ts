@@ -22,7 +22,7 @@ class DataService {
     return DataService.instance;
   }
 
-  private initializeDefaultData() {
+  private initializeDefaultData(includeSampleData: boolean = false) {
     // Initialize default users if not exists
     const users = this.getUsers();
     if (users.length === 0) {
@@ -45,9 +45,9 @@ class DataService {
       localStorage.setItem(this.USERS_KEY, JSON.stringify(defaultUsers));
     }
 
-    // Initialize sample bookings if not exists
+    // Initialize sample bookings only if requested (for demo purposes)
     const bookings = this.getBookings();
-    if (bookings.length === 0) {
+    if (bookings.length === 0 && includeSampleData) {
       const sampleBookings: Booking[] = [
         {
           id: "1",
@@ -298,7 +298,7 @@ class DataService {
       "রুট",
       "এয়ারলাইন",
       "ক্রয়মূল্য",
-      "বিক্রয়মূল্য",
+      "বিক্রয়���ূল্য",
       "পেমেন��ট স্ট্যাটাস",
       "পেইড পরিমাণ",
       "বুকিং তারিখ",
