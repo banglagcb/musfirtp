@@ -34,14 +34,14 @@ export default function DataExport({ onClose }: DataExportProps) {
     setIsExporting(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate processing
-      
+
       const csvContent = dataService.exportToCSV();
       const filename = `travel_bookings_all_${new Date().toISOString().split('T')[0]}.csv`;
       downloadCSV(csvContent, filename);
-      
-      alert('সফলভাবে এক্সপোর্ট হয়েছে!');
+
+      alert(t('exportSuccessful'));
     } catch (error) {
-      alert('এক্সপোর্ট করতে সমস্যা হয়েছে!');
+      alert(t('exportError'));
     } finally {
       setIsExporting(false);
     }
@@ -49,7 +49,7 @@ export default function DataExport({ onClose }: DataExportProps) {
 
   const handleExportFiltered = async () => {
     if (!dateRange.from || !dateRange.to) {
-      alert('তারিখের রেঞ্জ নির্বাচন করুন');
+      alert('তারিখের রেঞ্জ নি���্বাচন করুন');
       return;
     }
 
@@ -237,7 +237,7 @@ export default function DataExport({ onClose }: DataExportProps) {
               </div>
               <div>
                 <h3 className="text-xl font-semibold text-white">ফিল্টার করা ডেটা</h3>
-                <p className="text-white/70 text-sm">নির্দিষ্ট সময়ের ডেটা এক্সপোর্ট করুন</p>
+                <p className="text-white/70 text-sm">নির্��িষ্ট সময়ের ডেটা এক্সপোর্ট করুন</p>
               </div>
             </div>
 
