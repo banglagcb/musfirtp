@@ -14,10 +14,13 @@ class DataService {
 
   private constructor() {
     // Check if this is first time or fresh start
-    const hasExistingData = localStorage.getItem(this.BOOKINGS_KEY) || localStorage.getItem(this.USERS_KEY);
+    const hasExistingData =
+      localStorage.getItem(this.BOOKINGS_KEY) ||
+      localStorage.getItem(this.USERS_KEY);
 
     // Only include sample data if no data exists AND user hasn't done a fresh reset
-    const isFirstTimeUser = !hasExistingData && !localStorage.getItem("air_musafir_fresh_start");
+    const isFirstTimeUser =
+      !hasExistingData && !localStorage.getItem("air_musafir_fresh_start");
 
     this.initializeDefaultData(isFirstTimeUser);
   }
@@ -388,9 +391,9 @@ class DataService {
     // Clear all data including caches, timers, etc.
     try {
       // Clear service worker registration
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(registrations => {
-          registrations.forEach(registration => registration.unregister());
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          registrations.forEach((registration) => registration.unregister());
         });
       }
 
@@ -400,7 +403,6 @@ class DataService {
         clearTimeout(i);
         clearInterval(i);
       }
-
     } catch (error) {
       console.log("Reset cleanup completed");
     }
