@@ -164,12 +164,14 @@ function TravelAgencyAppInner() {
 
   const handleDashboardCardClick = (cardId: string) => {
     const cardTitles: Record<string, string> = {
-      "new-booking": "নতুন ব��কিং",
-      "bookings-list": "বুকিং ���িস্ট",
-      "search-filter": "সার্চ ও ফিল্টার",
-      reports: "রিপোর্ট",
-      "export-data": "ডেটা এক��সপোর্ট",
-      settings: "সেটিংস",
+      "new-booking": t("newBooking"),
+      "bookings-list": t("bookings"),
+      "search-filter": t("searchAndFilter"),
+      reports: t("reports"),
+      "export-data": t("dataExport"),
+      settings: t("settings"),
+      "ticket-inventory": t("inventory"),
+      "bulk-purchase": t("bulkPurchase"),
     };
 
     const title = cardTitles[cardId] || cardId;
@@ -197,7 +199,7 @@ function TravelAgencyAppInner() {
               closeModal(cardId);
               openModal(
                 "edit-booking",
-                "বুকিং ��ডিট করুন",
+                language === "bn" ? "বুকিং এডিট করুন" : "Edit Booking",
                 <EditBookingForm
                   booking={booking}
                   user={user!}
@@ -230,7 +232,7 @@ function TravelAgencyAppInner() {
             onExportData={() => {
               openModal(
                 "export-data",
-                "ডেটা এক্��পোর্��",
+                t("dataExport"),
                 <DataExport onClose={() => closeModal("export-data")} />,
               );
             }}
@@ -249,7 +251,7 @@ function TravelAgencyAppInner() {
               closeModal(cardId);
               openModal(
                 "bulk-purchase",
-                "বাল্ক টিকেট ক্রয়",
+                t("bulkPurchase"),
                 <BulkTicketPurchaseForm
                   onClose={() => closeModal("bulk-purchase")}
                   onSuccess={() => {
@@ -278,8 +280,8 @@ function TravelAgencyAppInner() {
         } else {
           component = (
             <PlaceholderPage
-              title="অ্যাক্সেস নিষিদ্ধ"
-              description="কেবল মালিক বাল্ক ট���কেট ক্রয় করতে পারে��"
+              title={language === "bn" ? "অ্যাক্সেস নিষিদ্ধ" : "Access Denied"}
+              description={language === "bn" ? "কেবল মালিক বাল্ক টিকেট ক্রয় করতে পারেন" : "Only owner can purchase bulk tickets"}
               onBack={() => closeModal(cardId)}
             />
           );
@@ -294,7 +296,7 @@ function TravelAgencyAppInner() {
         component = (
           <PlaceholderPage
             title={title}
-            description="এই সেকশনটি শীঘ্রই আসছে!"
+            description={language === "bn" ? "এই সেকশনটি শীঘ্রই আসছে!" : "This section is coming soon!"}
             onBack={() => closeModal(cardId)}
           />
         );
@@ -310,7 +312,7 @@ function TravelAgencyAppInner() {
 
     // Update breadcrumbs
     setBreadcrumbs([
-      { label: "ড্য���শ���োর্ড", path: "/dashboard" },
+      { label: t("dashboard"), path: "/dashboard" },
       { label: title, path: `/${cardId}`, isActive: true },
     ]);
   };
@@ -469,7 +471,7 @@ function TravelAgencyAppInner() {
         >
           <p className="text-white/70 text-sm lg:text-base">
             <span className="text-white font-medium">{user.name}</span> -{" "}
-            {user.role === "owner" ? "মালিক" : "ম্যানেজার"}
+            {user.role === "owner" ? t("owner") : t("manager")}
           </p>
         </motion.div>
       )}
