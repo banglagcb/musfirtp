@@ -17,7 +17,7 @@ const bengaliPatterns = [
   /��ির্বাচন/g,
   /পরিমাণ/g,
   /সম্পূর্ণ/g,
-  /এক্সপোর্ট/g
+  /এক্সপোর্ট/g,
 ];
 
 // Test all text nodes for hardcoded Bengali
@@ -26,13 +26,13 @@ function findHardcodedText() {
     document.body,
     NodeFilter.SHOW_TEXT,
     null,
-    false
+    false,
   );
-  
+
   const issues = [];
   let node;
-  
-  while (node = walker.nextNode()) {
+
+  while ((node = walker.nextNode())) {
     const text = node.textContent.trim();
     if (text) {
       bengaliPatterns.forEach((pattern, index) => {
@@ -40,13 +40,13 @@ function findHardcodedText() {
           issues.push({
             text: text,
             element: node.parentElement,
-            pattern: pattern
+            pattern: pattern,
           });
         }
       });
     }
   }
-  
+
   return issues;
 }
 
@@ -59,21 +59,25 @@ issues.forEach((issue, index) => {
 });
 
 // Test language switching
-const languageButton = document.querySelector('[title*="Switch"], [title*="পরিবর্তন"]');
+const languageButton = document.querySelector(
+  '[title*="Switch"], [title*="পরিবর্তন"]',
+);
 if (languageButton) {
   console.log("🔄 Testing language switch...");
-  
+
   // Record current state
   const beforeText = document.body.innerText;
-  
+
   // Switch language
   languageButton.click();
-  
+
   setTimeout(() => {
     const afterText = document.body.innerText;
     const changed = beforeText !== afterText;
-    console.log(changed ? "✅ Language switching works" : "❌ Language switching failed");
-    
+    console.log(
+      changed ? "✅ Language switching works" : "❌ Language switching failed",
+    );
+
     if (changed) {
       const newIssues = findHardcodedText();
       console.log(`After switch: ${newIssues.length} translation issues`);

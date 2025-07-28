@@ -202,7 +202,8 @@ export const translations = {
     salePriceError: "বিক্রয়মূল্য ক্রয়মূল্যের চেয়ে বেশি হতে হবে",
     paidAmountError: "পেইড পরিমাণ বিক্রয়মূল্যের চেয়ে বেশি হতে পারে না",
     paidAmountRequired: "পেইড পরিমাণ আবশ্যিক",
-    paidAmountRange: "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে",
+    paidAmountRange:
+      "পেইড পরিমাণ ০ এর চেয়ে বেশি এবং বিক্রয়মূল্যের চেয়ে কম হতে হবে",
   },
   en: {
     // Common
@@ -370,7 +371,8 @@ export const translations = {
     salePriceError: "Sale price must be higher than purchase price",
     paidAmountError: "Paid amount cannot exceed sale price",
     paidAmountRequired: "Paid amount is required",
-    paidAmountRange: "Paid amount must be greater than 0 and less than sale price",
+    paidAmountRange:
+      "Paid amount must be greater than 0 and less than sale price",
   },
 };
 
