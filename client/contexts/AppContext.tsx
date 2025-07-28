@@ -105,6 +105,7 @@ export const translations = {
     bengali: "বাংলা",
     switchToEnglish: "Switch to English",
     switchToBengali: "বাংলায় পরিবর্তন করুন",
+    invalidCredentials: "ভুল ইউজারনেম বা পাসওয়ার্ড",
   },
   en: {
     // Common
@@ -172,7 +173,7 @@ export const translations = {
     lightMode: "Light Mode",
     language: "Language",
     english: "English",
-    bengali: "বাংলা",
+    bengali: "���াংলা",
     switchToEnglish: "Switch to English",
     switchToBengali: "বাংলায় পরিবর্তন করুন",
   },
