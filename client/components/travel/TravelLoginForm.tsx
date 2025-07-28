@@ -77,7 +77,7 @@ export default function TravelLoginForm({
       }, 1000);
     } else {
       setIsLoading(false);
-      setError("ভুল ইউজারনেম বা পাসওয়ার্ড");
+      setError(t('invalidCredentials'));
     }
   };
 
