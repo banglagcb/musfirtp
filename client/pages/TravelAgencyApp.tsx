@@ -27,6 +27,7 @@ import dataService from "@/services/dataService";
 import { PerformanceMonitor, analyzeBundleUsage } from "@/utils/performance";
 import { registerServiceWorker } from "@/utils/serviceWorker";
 import "@/utils/resetData"; // Enable console reset commands
+import "@/utils/completeReset"; // Enable complete reset utilities
 
 type AppState = "login" | "dashboard";
 
