@@ -10,6 +10,7 @@ interface DataExportProps {
 }
 
 export default function DataExport({ onClose }: DataExportProps) {
+  const { t } = useTranslation();
   const [exportType, setExportType] = useState<'all' | 'filtered'>('all');
   const [dateRange, setDateRange] = useState({
     from: '',
@@ -273,7 +274,7 @@ export default function DataExport({ onClose }: DataExportProps) {
               {/* Filtered Count */}
               {dateRange.from && dateRange.to && (
                 <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
-                  <span className="text-white/70">ফিল্টার করা বুকিং:</span>
+                  <span className="text-white/70">ফিল্টার ক���া বুকিং:</span>
                   <span className="text-white font-medium">{filteredCount} টি</span>
                 </div>
               )}
@@ -301,7 +302,7 @@ export default function DataExport({ onClose }: DataExportProps) {
               ) : (
                 <>
                   <Download className="w-5 h-5" />
-                  <span>ফিল্টার করা ডেটা ডাউনলোড করুন</span>
+                  <span>ফিল্টার করা ডেট�� ডাউনলোড করুন</span>
                 </>
               )}
             </motion.button>
@@ -329,13 +330,13 @@ export default function DataExport({ onClose }: DataExportProps) {
                 <li>• পাসপোর্ট নম্বর</li>
                 <li>• ইমেইল ঠিকানা</li>
                 <li>• ফ্লাইট তারিখ</li>
-                <li>• রুট</li>
+                <li>• রু��</li>
                 <li>• এয়ারলাইন</li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-lg font-medium text-white mb-3">আর্থিক তথ্য:</h4>
+              <h4 className="text-lg font-medium text-white mb-3">আর্থ���ক তথ্য:</h4>
               <ul className="space-y-2 text-white/70">
                 <li>• ক্রয়মূল্য</li>
                 <li>• বিক্রয়মূল্য</li>
