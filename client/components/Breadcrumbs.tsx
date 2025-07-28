@@ -16,6 +16,8 @@ interface BreadcrumbsProps {
 }
 
 export default function Breadcrumbs({ items, onItemClick, className }: BreadcrumbsProps) {
+  const { language } = useApp();
+  const fontClass = language === 'bn' ? 'font-bengali' : 'font-english';
   const containerVariants = {
     hidden: { opacity: 0, x: -20 },
     visible: {
