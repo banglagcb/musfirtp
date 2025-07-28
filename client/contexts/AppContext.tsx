@@ -293,11 +293,17 @@ export const useApp = () => {
 
 // Translation hook
 export const useTranslation = () => {
-  const { language } = useApp();
+  try {
+    const { language } = useApp();
 
-  const t = (key: keyof typeof translations.bn): string => {
-    return translations[language][key] || key;
-  };
+    const t = (key: keyof typeof translations.bn): string => {
+      return translations[language][key] || key;
+    };
 
-  return { t, language };
+    return { t, language };
+  } catch (error) {
+    // Fallback when context is not available
+    const t = (key: keyof typeof translations.bn): string => key;
+    return { t, language: 'bn' as Language };
+  }
 };
