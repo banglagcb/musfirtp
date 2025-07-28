@@ -101,6 +101,8 @@ export const translations = {
     language: "ভাষা",
     english: "English",
     bengali: "বাংলা",
+    switchToEnglish: "Switch to English",
+    switchToBengali: "বাংলায় পরিবর্তন করুন",
   },
   en: {
     // Common
