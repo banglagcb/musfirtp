@@ -99,7 +99,7 @@ export default function EditBookingForm({
     const salePrice = Number(formData.salePrice);
 
     if (salePrice <= purchasePrice) {
-      newErrors.salePrice = "বিক্রয়মূল্য ক্রয়মূল্যের চেয়ে বেশি হতে হবে";
+      newErrors.salePrice = "বিক্রয���মূল্য ক্রয়মূল্যের চেয়ে বেশি হতে হবে";
     }
 
     if (formData.paymentStatus === "partial") {
@@ -165,7 +165,7 @@ export default function EditBookingForm({
       if (success) {
         onSuccess();
       } else {
-        setErrors({ submit: "বুকিং আপডেট করতে সম���্যা হয়েছে" });
+        setErrors({ submit: t("updateBookingError") });
       }
     } catch (error) {
       setErrors({ submit: "একটি ত্রুটি ঘটেছে" });
@@ -212,11 +212,11 @@ export default function EditBookingForm({
           </div>
           <div>
             <h1 className="text-2xl font-bold text-white">
-              {isViewOnly ? "বুকিং দেখুন" : "বুকিং এডিট করুন"}
+              {isViewOnly ? t("viewBooking") : t("editBooking")}
             </h1>
             <p className="text-white/70">
-              বুকিং আইডি: {booking.id}
-              {isViewOnly && " (কেবল দেখার জন্য)"}
+              {t("bookingID")}: {booking.id}
+              {isViewOnly && ` (${t("viewOnly")})`}
             </p>
           </div>
         </div>
